@@ -26,11 +26,11 @@ export const AuthApi = {
 
 // User API endpoints
 export const UserApi = {
-  getUserProfile: () => 
-    api.get('/users/profile'),
-  
-  updateUserProfile: (userData) => 
-    api.put('/users/profile', userData),
+  getUserProfile: () =>
+    api.get('/users/me'),
+
+  updateUserProfile: (userData) =>
+    api.put('/users/me/profile', userData),
   
   updateUserSettings: (settings) => 
     api.put('/users/settings', settings),

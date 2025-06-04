@@ -65,7 +65,7 @@ export const loadUser = createAsyncThunk(
       api.setToken(token);
       
       // Get user profile
-      const response = await api.get('/auth/profile');
+      const response = await api.get('/users/me');
       
       return { user: response.data, token };
     } catch (error: any) {
@@ -80,7 +80,7 @@ export const updateProfile = createAsyncThunk(
   'auth/updateProfile',
   async (profileData: any, { rejectWithValue }) => {
     try {
-      const response = await api.patch(`/users/${profileData.id}`, profileData);
+      const response = await api.put('/users/me/profile', profileData);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || 'Failed to update profile');
