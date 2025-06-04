@@ -1,0 +1,156 @@
+<div class="profile-container">
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Chargement du profil...</p>
+  </div>
+
+  <ng-container *ngIf="!isLoading && userProfile">
+    <div class="profile-header">
+      <div class="profile-avatar-container">
+        <div class="profile-avatar">
+          <img *ngIf="avatarPreview" [src]="avatarPreview" alt="Photo de profil">
+          <mat-icon *ngIf="!avatarPreview">account_circle</mat-icon>
+        </div>
+        <button mat-mini-fab color="primary" class="avatar-upload-btn" (click)="fileInput.click()">
+          <mat-icon>photo_camera</mat-icon>
+        </button>
+        <input type="file" #fileInput hidden (change)="onFileSelected($event)" accept="image/*">
+      </div>
+      <div class="profile-info">
+        <h1>{{ userProfile.firstName }} {{ userProfile.lastName }}</h1>
+        <p class="user-role">{{ userProfile.role }}</p>
+        <p class="user-email">{{ userProfile.email }}</p>
+        <p *ngIf="userProfile.lastLogin" class="last-login">
+          Dernière connexion: {{ userProfile.lastLogin | date:'medium' }}
+        </p>
+      </div>
+    </div>
+
+    <div class="profile-tabs">
+      <mat-tab-group>
+        <mat-tab label="Informations du profil">
+          <form [formGroup]="profileForm" (ngSubmit)="updateProfile()" class="profile-form">
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Prénom</mat-label>
+                <input matInput formControlName="firstName" placeholder="Votre prénom">
+                <mat-error *ngIf="profileForm.get('firstName')?.hasError('required')">
+                  Le prénom est requis
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Nom</mat-label>
+                <input matInput formControlName="lastName" placeholder="Votre nom">
+                <mat-error *ngIf="profileForm.get('lastName')?.hasError('required')">
+                  Le nom est requis
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Numéro de téléphone</mat-label>
+              <input matInput formControlName="phoneNumber" placeholder="Votre numéro de téléphone">
+              <mat-icon matSuffix>phone</mat-icon>
+              <mat-error *ngIf="profileForm.get('phoneNumber')?.hasError('pattern')">
+                Format de téléphone invalide (10 chiffres requis)
+              </mat-error>
+            </mat-form-field>
+
+            <div class="form-actions">
+              <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid || isSaving">
+                <span *ngIf="!isSaving">Enregistrer les modifications</span>
+                <mat-spinner *ngIf="isSaving" diameter="20" class="spinner-in-button"></mat-spinner>
+              </button>
+            </div>
+          </form>
+        </mat-tab>
+
+        <mat-tab label="Sécurité">
+          <form [formGroup]="securityForm" (ngSubmit)="updatePassword()" class="security-form">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Mot de passe actuel</mat-label>
+              <input matInput formControlName="currentPassword" type="password" placeholder="Votre mot de passe actuel">
+              <mat-icon matSuffix>lock</mat-icon>
+              <mat-error *ngIf="securityForm.get('currentPassword')?.hasError('required')">
+                Le mot de passe actuel est requis
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Nouveau mot de passe</mat-label>
+              <input matInput formControlName="newPassword" type="password" placeholder="Votre nouveau mot de passe">
+              <mat-icon matSuffix>enhanced_encryption</mat-icon>
+              <mat-error *ngIf="securityForm.get('newPassword')?.hasError('required')">
+                Le nouveau mot de passe est requis
+              </mat-error>
+              <mat-error *ngIf="securityForm.get('newPassword')?.hasError('minlength')">
+                Le mot de passe doit contenir au moins 8 caractères
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Confirmer le nouveau mot de passe</mat-label>
+              <input matInput formControlName="confirmPassword" type="password" placeholder="Confirmez votre nouveau mot de passe">
+              <mat-icon matSuffix>enhanced_encryption</mat-icon>
+              <mat-error *ngIf="securityForm.get('confirmPassword')?.hasError('required')">
+                La confirmation du mot de passe est requise
+              </mat-error>
+              <mat-error *ngIf="securityForm.hasError('passwordMismatch') && !securityForm.get('confirmPassword')?.hasError('required')">
+                Les mots de passe ne correspondent pas
+              </mat-error>
+            </mat-form-field>
+
+            <div class="form-actions">
+              <button mat-raised-button color="accent" type="submit" [disabled]="securityForm.invalid || isChangingPassword">
+                <span *ngIf="!isChangingPassword">Mettre à jour le mot de passe</span>
+                <mat-spinner *ngIf="isChangingPassword" diameter="20" class="spinner-in-button"></mat-spinner>
+              </button>
+            </div>
+          </form>
+        </mat-tab>
+
+        <mat-tab label="Informations du compte">
+          <div class="account-info">
+            <div class="info-row">
+              <span class="info-label">ID du compte</span>
+              <span class="info-value">{{ userProfile.id }}</span>
+            </div>
+            <mat-divider></mat-divider>
+
+            <div class="info-row">
+              <span class="info-label">Nom d'utilisateur</span>
+              <span class="info-value">{{ userProfile.username }}</span>
+            </div>
+            <mat-divider></mat-divider>
+
+            <div class="info-row">
+              <span class="info-label">Email</span>
+              <span class="info-value">{{ userProfile.email }}</span>
+            </div>
+            <mat-divider></mat-divider>
+
+            <div class="info-row">
+              <span class="info-label">Rôle</span>
+              <span class="info-value">{{ userProfile.role }}</span>
+            </div>
+            <mat-divider></mat-divider>
+
+            <div class="info-row">
+              <span class="info-label">Statut</span>
+              <span class="info-value" [ngClass]="{'status-active': userProfile.isActive, 'status-inactive': !userProfile.isActive}">
+                {{ userProfile.isActive ? 'Actif' : 'Inactif' }}
+              </span>
+            </div>
+            <mat-divider></mat-divider>
+
+            <div class="info-row" *ngIf="userProfile.lastLogin">
+              <span class="info-label">Dernière connexion</span>
+              <span class="info-value">{{ userProfile.lastLogin | date:'medium' }}</span>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </ng-container>
+</div>

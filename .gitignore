@@ -1,0 +1,23 @@
+# Dossiers à ignorer
+**/.angular/
+**/node_modules/
+node_modules/
+dist/
+.angular/
+admin-portal/.angular/
+admin-portal/.angular/cache/
+admin-portal/node_modules/
+admin-portal/dist/
+admin-portal/.cache/
+admin-portal/.cache/
+admin-portal/.angular/cache/
+backend/node_modules/
+backend/dist/
+backend/.angular/
+backend/.cache/
+backend/.env
+mobile-app/node_modules/
+mobile-app/dist/
+# Fichiers à ignorer
+*.log
+*.env

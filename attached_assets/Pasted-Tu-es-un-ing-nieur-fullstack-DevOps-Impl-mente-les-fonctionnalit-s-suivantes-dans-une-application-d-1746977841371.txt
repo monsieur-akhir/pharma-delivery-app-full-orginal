@@ -1,0 +1,58 @@
+Tu es un ingénieur fullstack DevOps. Implémente les fonctionnalités suivantes dans une application de livraison de médicaments en React Native (Expo) avec back-end NestJS.
+
+🔧 1. Logging Backend (NestJS)
+Objectif : S’assurer que toutes les actions du back-end sont bien loggées pour le debug, la traçabilité et l’audit.
+
+Remettre en place un logger global (ex : LoggerService custom ou nestjs-pino)
+
+Logger toutes les requêtes HTTP entrantes (méthode, route, IP, user agent, etc.)
+
+Logger les erreurs avec stack trace
+
+Logger les événements métier (ex: génération OTP, login, création commande, etc.)
+
+🌐 2. API Accessibilité
+Vérifie que toutes les routes API attendues sont exposées dans Swagger (/docs) et testables
+
+Vérifie que les CORS sont bien configurés pour les apps web/mobile
+
+Assure-toi que la documentation est bien synchronisée avec les routes réelles
+
+Possibilité d’ajouter un middleware global pour logger et contrôler l’accès
+
+📍 3. Suivi de livraison par géolocalisation
+Fonctionnalité :
+
+Suivi en temps réel de la position du livreur sur la carte côté client
+
+Mise à jour régulière de la position via WebSocket ou polling REST
+
+Backend :
+
+API pour recevoir les coordonnées GPS du livreur (lat/lng + userId + timestamp)
+
+Stockage temporaire en Redis pour haute fréquence ou persistance en DB si nécessaire
+
+Mobile (livreur) :
+
+Permission GPS avec Expo
+
+Envoi périodique des coordonnées (toutes les 5–10 sec) via background task
+
+Mobile (client) :
+
+Affichage carte avec position temps réel du livreur
+
+📱 4. Amélioration App Mobile (React Native + Expo)
+UI/UX :
+
+Améliorer les écrans de connexion (OTP), commandes, et suivi
+
+Utiliser React Navigation, React Query, AsyncStorage pour la gestion d’état/session
+
+Intégration du SDK TypeScript généré automatiquement à partir du Swagger
+
+Affichage du suivi en temps réel via react-native-maps et WebSocket
+
+🎯 Objectif
+Créer une solution mobile + back-office robuste, traçable et fluide, avec suivi de livraison en temps réel, logs complets et une expérience utilisateur de qualité.

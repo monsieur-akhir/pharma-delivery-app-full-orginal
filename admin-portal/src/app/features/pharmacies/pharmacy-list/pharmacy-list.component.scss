@@ -1,0 +1,120 @@
+.pharmacy-list-container {
+  padding: 20px;
+  
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 500;
+    }
+  }
+  
+  .filters-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    gap: 20px;
+    
+    .search-container {
+      flex: 1;
+      min-width: 300px;
+      
+      mat-form-field {
+        width: 100%;
+      }
+    }
+    
+    .status-filter {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      
+      mat-form-field {
+        width: 150px;
+      }
+    }
+  }
+  
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+  }
+  
+  .error-container {
+    padding: 16px;
+    background-color: #ffe6e6;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    
+    .error-message {
+      color: #d32f2f;
+      margin: 0;
+    }
+  }
+  
+  .table-container {
+    overflow-x: auto;
+    
+    table {
+      width: 100%;
+      
+      th.mat-header-cell, td.mat-cell {
+        padding: 12px 16px;
+      }
+      
+      .status-badge {
+        padding: 5px 10px;
+        border-radius: 16px;
+        font-size: 12px;
+        font-weight: 500;
+        display: inline-block;
+        text-transform: lowercase;
+        
+        &::first-letter {
+          text-transform: uppercase;
+        }
+      }
+      
+      .status-approved {
+        background-color: #e6f7e6;
+        color: #2e7d32;
+      }
+      
+      .status-pending {
+        background-color: #fff8e1;
+        color: #f57c00;
+      }
+      
+      .status-suspended {
+        background-color: #fbe9e7;
+        color: #d32f2f;
+      }
+      
+      .status-rejected {
+        background-color: #efebe9;
+        color: #5d4037;
+      }
+    }
+    
+    .no-data-message {
+      display: flex;
+      justify-content: center;
+      padding: 32px;
+      font-style: italic;
+      color: rgba(0, 0, 0, 0.54);
+    }
+    
+    mat-paginator {
+      margin-top: 20px;
+    }
+  }
+}

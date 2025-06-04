@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Rejeter la pharmacie</h2>
+<div mat-dialog-content>
+  <p>Vous êtes sur le point de rejeter la pharmacie <strong>{{ data.pharmacyName }}</strong>.</p>
+  <p>Veuillez fournir une raison pour ce rejet :</p>
+  
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Raison du rejet</mat-label>
+    <textarea 
+      matInput 
+      [formControl]="reasonControl" 
+      placeholder="Ex: Documentation incomplète, licence invalide, etc." 
+      rows="4">
+    </textarea>
+    <mat-error *ngIf="reasonControl.hasError('required')">
+      Une raison est requise
+    </mat-error>
+    <mat-error *ngIf="reasonControl.hasError('minlength')">
+      La raison doit contenir au moins 5 caractères
+    </mat-error>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Annuler</button>
+  <button mat-raised-button color="warn" (click)="onSubmit()" [disabled]="reasonControl.invalid">Rejeter</button>
+</div>

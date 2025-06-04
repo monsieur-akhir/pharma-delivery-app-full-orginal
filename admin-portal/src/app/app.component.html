@@ -1,0 +1,145 @@
+<div class="facebook-inspired-layout">
+  <!-- Top navbar (Facebook-like) -->
+  <mat-toolbar class="top-navbar">
+    <div class="navbar-left">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span class="app-logo">{{ title }}</span>
+      <div class="search-bar">
+        <mat-icon>search</mat-icon>
+        <input type="text" placeholder="Rechercher...">
+      </div>
+    </div>
+    
+    <div class="navbar-center">
+      <a mat-button routerLink="/dashboard" routerLinkActive="active-top-link">
+        <mat-icon>dashboard</mat-icon>
+      </a>
+      <a mat-button routerLink="/pharmacies" routerLinkActive="active-top-link">
+        <mat-icon>local_pharmacy</mat-icon>
+      </a>
+      <a mat-button routerLink="/users" routerLinkActive="active-top-link">
+        <mat-icon>people</mat-icon>
+      </a>
+      <a mat-button routerLink="/orders" routerLinkActive="active-top-link">
+        <mat-icon>shopping_cart</mat-icon>
+      </a>
+      <a mat-button routerLink="/notifications" routerLinkActive="active-top-link">
+        <mat-icon>notifications</mat-icon>
+      </a>
+    </div>
+    
+    <div class="navbar-right">
+      <ng-container *ngIf="isLoggedIn; else loginButton">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="User menu" class="user-avatar">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <div class="user-profile-header">
+            <mat-icon class="large-avatar">account_circle</mat-icon>
+            <div class="user-info">
+              <strong>{{ currentUser?.name || currentUser?.username }}</strong>
+              <small>{{ currentUser?.email }}</small>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <button mat-menu-item routerLink="/profile">
+            <mat-icon>person</mat-icon>
+            <span>Voir profil</span>
+          </button>
+          <button mat-menu-item routerLink="/settings">
+            <mat-icon>settings</mat-icon>
+            <span>Paramètres</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Se déconnecter</span>
+          </button>
+        </mat-menu>
+      </ng-container>
+      <ng-template #loginButton>
+        <a mat-button routerLink="/login" class="login-button">
+          <mat-icon>login</mat-icon> Se connecter
+        </a>
+      </ng-template>
+    </div>
+  </mat-toolbar>
+
+  <!-- Main content area with sidebar -->
+  <div class="main-content-area">
+    <!-- Left sidebar (Facebook-like) -->
+    <mat-sidenav-container class="sidenav-container">
+      <mat-sidenav #drawer class="sidenav" fixedInViewport
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [opened]="!(isHandset$ | async) && isLoggedIn">
+        
+        <div class="sidebar-user" *ngIf="isLoggedIn">
+          <mat-icon class="large-avatar">account_circle</mat-icon>
+          <h3>{{ currentUser?.name || currentUser?.username }}</h3>
+        </div>
+        
+        <mat-nav-list class="facebook-menu">
+          <a mat-list-item routerLink="/dashboard" routerLinkActive="active">
+            <mat-icon class="menu-icon">dashboard</mat-icon>
+            <span>Tableau de bord</span>
+          </a>
+          <a mat-list-item routerLink="/pharmacies" routerLinkActive="active">
+            <mat-icon class="menu-icon">local_pharmacy</mat-icon>
+            <span>Pharmacies</span>
+          </a>
+          <a mat-list-item routerLink="/users" routerLinkActive="active">
+            <mat-icon class="menu-icon">people</mat-icon>
+            <span>Utilisateurs</span>
+          </a>
+          <a mat-list-item routerLink="/orders" routerLinkActive="active">
+            <mat-icon class="menu-icon">shopping_cart</mat-icon>
+            <span>Commandes</span>
+          </a>
+          <a mat-list-item routerLink="/pharmacy-messages" routerLinkActive="active">
+            <mat-icon class="menu-icon">chat</mat-icon>
+            <span>Messages</span>
+            <span class="new-badge">5</span>
+          </a>
+          <a mat-list-item routerLink="/video-chat" routerLinkActive="active">
+            <mat-icon class="menu-icon">videocam</mat-icon>
+            <span>Appels Vidéo</span>
+          </a>
+          <a mat-list-item routerLink="/supplier-orders" routerLinkActive="active">
+            <mat-icon class="menu-icon">inventory</mat-icon>
+            <span>Commandes Fournisseurs</span>
+          </a>
+          <a mat-list-item routerLink="/stock" routerLinkActive="active">
+            <mat-icon class="menu-icon">inventory_2</mat-icon>
+            <span>Gestion des Stocks</span>
+          </a>
+          <mat-divider></mat-divider>
+          <h3 class="menu-section">Paramètres</h3>
+          <a mat-list-item routerLink="/ai-settings" routerLinkActive="active">
+            <mat-icon class="menu-icon">settings</mat-icon>
+            <span>Paramètres IA</span>
+          </a>
+          <a mat-list-item routerLink="/system-logs" routerLinkActive="active">
+            <mat-icon class="menu-icon">receipt</mat-icon>
+            <span>Logs Système</span>
+          </a>
+        </mat-nav-list>
+      </mat-sidenav>
+      
+      <!-- Main content -->
+      <mat-sidenav-content class="content-container">
+        <!-- Content area -->
+        <div class="content">
+          <router-outlet></router-outlet>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+</div>

@@ -1,0 +1,107 @@
+Tu es un développeur Angular expert. Implémente une application back-office admin Angular entièrement connectée au back-end NestJS via HTTP, avec authentification JWT, dashboard interactif, KPI dynamiques et outils de supervision en temps réel.
+
+🎯 Objectif
+Créer une interface admin Angular claire et responsive, connectée aux APIs back-end, qui permet une gestion complète du système, un suivi en temps réel, et une visualisation graphique des données (IA, commandes, utilisateurs, pharmacies…).
+
+🧩 1. Connexion Angular ↔ API NestJS
+Utiliser HttpClientModule avec un service global pour les requêtes
+
+Gérer les en-têtes Authorization: Bearer <token> automatiquement via un HttpInterceptor
+
+Créer un auth guard pour protéger les routes selon les rôles
+
+Utiliser le SDK TypeScript généré via Swagger (si disponible) ou des services typés manuellement
+
+🖥️ 2. Tableau de bord Admin – Modules Angular
+Modules à implémenter :
+
+📌 Pharmacies (CRUD + validation)
+Liste des pharmacies avec filtres (statut : en attente, validée, suspendue)
+
+Actions : Valider, Suspendre, Bloquer, Supprimer
+
+Formulaire Angular Reactive Forms pour ajouter/modifier une pharmacie
+
+👤 Gestion des utilisateurs
+Liste des utilisateurs avec filtres (rôle, statut)
+
+CRUD utilisateur + gestion des rôles
+
+Formulaire de création avec rôle, email, numéro, etc.
+
+📦 Supervision des commandes & prescriptions
+Liste des commandes :
+
+Filtres par statut, date, utilisateur
+
+Lien vers la prescription liée
+
+Statut en temps réel via polling ou WebSocket si disponible
+
+⚙️ Réglages IA
+Formulaire de réglage :
+
+Seuils déclencheurs d’auto-commandes
+
+Détection intelligente anomalies médicaments
+
+API PUT/PATCH connectée aux règles IA du back-end
+
+🧾 Logs & supervision
+Journal d’activité admin :
+
+Action, utilisateur, date
+
+Filtres : par action, utilisateur
+
+Logs de performance par pharmacie :
+
+Délai moyen de traitement, nombre d’erreurs, commandes traitées
+
+📊 3. KPI & Visualisation graphique
+Outils suggérés :
+
+Utilise ng2-charts (Chart.js wrapper) ou ngx-charts pour les graphiques
+
+KPI dynamiques (top du dashboard) :
+
+Total pharmacies (validées / en attente / bloquées)
+
+Nombre d’utilisateurs par rôle
+
+Nombre total de commandes (en cours / livrées / annulées)
+
+Graphiques :
+
+Courbes de tendance des prescriptions
+
+Histogrammes des délais de livraison
+
+Heatmap ou radar des performances pharmacies
+
+Courbe d’évolution des anomalies IA détectées
+
+🧠 4. Intégration visuelle IA (Angular)
+Composant pour afficher les analyses IA (résultats OCR, détection interactions, alertes)
+
+Affichage graphique des tendances détectées
+
+Interface d’approbation ou rejet manuel des détections IA
+
+🔐 Authentification et sécurité
+Auth avec JWT (stockage sécurisé dans sessionStorage ou HttpOnly cookie recommandé)
+
+Interceptor Angular pour ajouter automatiquement les tokens aux requêtes
+
+Redirection automatique si token expiré ou erreur 401
+
+🧱 Structure technique Angular
+Architecture en modules Angular : dashboard, pharmacy, users, orders, settings, logs
+
+Lazy loading des modules pour performance
+
+Utilisation de Angular Material pour UI admin
+
+Services typés pour chaque entité connectée à l’API
+
+RxJS pour la gestion des flux et état

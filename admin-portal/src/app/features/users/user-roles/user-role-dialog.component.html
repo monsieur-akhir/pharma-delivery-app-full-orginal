@@ -1,0 +1,46 @@
+<h2 mat-dialog-title>Modifier le rôle de l'utilisateur</h2>
+<form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <p>Modifier le rôle de <strong>{{ data.username }}</strong> (ID: {{ data.userId }})</p>
+    
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Sélectionner un rôle</mat-label>
+      <mat-select formControlName="role">
+        <mat-option *ngFor="let role of roles" [value]="role">
+          {{ role }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="roleForm.get('role')?.hasError('required')">
+        Le rôle est obligatoire
+      </mat-error>
+    </mat-form-field>
+    
+    <div class="role-info" *ngIf="roleForm.get('role')?.value">
+      <h3>Description du rôle</h3>
+      <div [ngSwitch]="roleForm.get('role')?.value">
+        <p *ngSwitchCase="'ADMIN'">
+          Accès complet à toutes les fonctionnalités d'administration, gestion des utilisateurs, pharmacies et paramètres système.
+        </p>
+        <p *ngSwitchCase="'PHARMACY_OWNER'">
+          Possibilité de gérer une ou plusieurs pharmacies, accès aux commandes, personnel et inventaire.
+        </p>
+        <p *ngSwitchCase="'PHARMACY_STAFF'">
+          Accès à l'inventaire et aux commandes d'une pharmacie spécifique. Peut préparer les commandes et gérer les prescriptions.
+        </p>
+        <p *ngSwitchCase="'DELIVERY_PERSON'">
+          Accès uniquement aux commandes à livrer. Peut mettre à jour le statut des livraisons.
+        </p>
+        <p *ngSwitchCase="'CUSTOMER'">
+          Utilisateur standard. Peut passer des commandes, gérer son profil et ses prescriptions.
+        </p>
+      </div>
+    </div>
+  </mat-dialog-content>
+  
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="onCancel()">Annuler</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="roleForm.invalid || roleForm.get('role')?.value === data.currentRole">
+      Confirmer
+    </button>
+  </mat-dialog-actions>
+</form>

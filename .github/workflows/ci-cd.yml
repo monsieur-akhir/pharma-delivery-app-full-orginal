@@ -1,0 +1,174 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: medconnect_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+      
+      - name: Install backend dependencies
+        working-directory: ./backend
+        run: npm ci
+      
+      - name: Run backend tests
+        working-directory: ./backend
+        run: npm test
+        env:
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/medconnect_test
+          REDIS_URL: redis://localhost:6379
+          JWT_SECRET: test-jwt-secret
+          NODE_ENV: test
+      
+      - name: Install admin portal dependencies
+        working-directory: ./admin-portal
+        run: npm ci
+      
+      - name: Run admin portal tests
+        working-directory: ./admin-portal
+        run: npm test -- --watch=false --browsers=ChromeHeadless
+      
+      - name: Install mobile app dependencies
+        working-directory: ./mobile-app
+        run: npm ci
+      
+      - name: Run mobile app tests
+        working-directory: ./mobile-app
+        run: npm test
+  
+  build:
+    name: Build
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+      
+      - name: Build backend
+        working-directory: ./backend
+        run: |
+          npm ci
+          npm run build
+      
+      - name: Build admin portal
+        working-directory: ./admin-portal
+        run: |
+          npm ci
+          npm run build
+      
+      - name: Upload backend artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: backend-dist
+          path: backend/dist
+      
+      - name: Upload admin portal artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: admin-portal-dist
+          path: admin-portal/dist
+  
+  deploy-staging:
+    name: Deploy to Staging
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Download backend artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: backend-dist
+          path: backend/dist
+      
+      - name: Download admin portal artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: admin-portal-dist
+          path: admin-portal/dist
+      
+      - name: Deploy to staging
+        run: |
+          echo "Déploiement sur l'environnement de staging..."
+          # Ici, vous implémenteriez la logique de déploiement pour votre environnement de staging
+          # Par exemple, utiliser SSH pour déployer sur un serveur, ou utiliser un service cloud comme AWS, GCP, etc.
+  
+  deploy-production:
+    name: Deploy to Production
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Download backend artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: backend-dist
+          path: backend/dist
+      
+      - name: Download admin portal artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: admin-portal-dist
+          path: admin-portal/dist
+      
+      - name: Deploy to production
+        run: |
+          echo "Déploiement sur l'environnement de production..."
+          # Ici, vous implémenteriez la logique de déploiement pour votre environnement de production
+          # Par exemple, utiliser SSH pour déployer sur un serveur, ou utiliser un service cloud comme AWS, GCP, etc.

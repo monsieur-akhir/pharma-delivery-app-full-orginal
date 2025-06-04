@@ -1,0 +1,165 @@
+.ai-settings-container {
+  padding: 16px;
+}
+
+.ai-settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.ai-settings-title {
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0;
+  color: #3f51b5;
+}
+
+.ai-settings-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.ai-settings-description {
+  display: flex;
+  align-items: flex-start;
+  background-color: #e3f2fd;
+  padding: 16px;
+  border-radius: 4px;
+  margin-bottom: 24px;
+  
+  mat-icon {
+    margin-right: 16px;
+    color: #2196f3;
+  }
+  
+  p {
+    margin: 0;
+    color: #37474f;
+    line-height: 1.5;
+  }
+}
+
+.loading-container, .error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+}
+
+.loading-text, .error-text {
+  margin-top: 16px;
+  font-size: 16px;
+  color: #757575;
+}
+
+.error-icon {
+  font-size: 48px;
+  height: 48px;
+  width: 48px;
+  color: #f44336;
+}
+
+.settings-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 16px;
+  padding: 16px 0;
+}
+
+.setting-card {
+  transition: box-shadow 0.2s;
+  
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  mat-card-header {
+    display: flex;
+    align-items: center;
+    
+    button {
+      margin-left: auto;
+    }
+  }
+}
+
+.setting-category-icon {
+  color: #3f51b5;
+}
+
+.setting-description {
+  color: #616161;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.setting-form {
+  margin-bottom: 16px;
+}
+
+.setting-input {
+  width: 100%;
+}
+
+.setting-toggle {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.setting-details {
+  background-color: #f5f5f5;
+  padding: 16px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.setting-meta {
+  p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #757575;
+  }
+  
+  strong {
+    color: #424242;
+  }
+}
+
+.no-settings {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 0;
+  
+  mat-icon {
+    font-size: 48px;
+    height: 48px;
+    width: 48px;
+    color: #9e9e9e;
+    margin-bottom: 16px;
+  }
+  
+  p {
+    color: #616161;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ai-settings-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .ai-settings-actions {
+    margin-top: 16px;
+  }
+  
+  .settings-list {
+    grid-template-columns: 1fr;
+  }
+}

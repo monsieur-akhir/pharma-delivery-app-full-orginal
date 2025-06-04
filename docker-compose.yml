@@ -1,0 +1,211 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: medconnect-postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-medconnect}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-medconnect}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      medconnect-network:
+        aliases:
+          - postgres.medconnect.local
+
+  redis:
+    image: redis:7-alpine
+    container_name: medconnect-redis
+    ports:
+      - "6379:6379"
+    command: >
+      --requirepass ${REDIS_PASSWORD:-redis}
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-redis}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      medconnect-network:
+        aliases:
+          - redis.medconnect.local
+
+  minio:
+    image: minio/minio:latest
+    container_name: medconnect-minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minio}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minio123}
+    command: server --console-address ":9001" /data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    networks:
+      medconnect-network:
+        aliases:
+          - minio.medconnect.local
+
+  # Service d'initialisation MinIO (pour créer des buckets et des politiques)
+  minio-init:
+    image: minio/mc:latest
+    container_name: medconnect-minio-init
+    depends_on:
+      minio:
+        condition: service_healthy
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minio}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minio123}
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc config host add myminio http://minio:9000 ${MINIO_ROOT_USER:-minio} ${MINIO_ROOT_PASSWORD:-minio123};
+      /usr/bin/mc mb --ignore-existing myminio/${MINIO_BUCKET:-medconnect};
+      /usr/bin/mc policy set public myminio/${MINIO_BUCKET:-medconnect}/public;
+      exit 0;
+      "
+    networks:
+      - medconnect-network
+
+  # Service BullMQ Dashboard pour visualiser les tâches asynchrones
+  bull-board:
+    image: node:20-alpine
+    container_name: medconnect-bull-board
+    working_dir: /app
+    volumes:
+      - ./bull-board:/app
+    ports:
+      - "3000:3000"
+    environment:
+      REDIS_URL: redis://:${REDIS_PASSWORD:-redis}@redis:6379
+    depends_on:
+      redis:
+        condition: service_healthy
+    command: >
+      sh -c "npm install @bull-board/api @bull-board/express bull express && 
+             node ./app.js"
+    networks:
+      - medconnect-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: development
+    container_name: medconnect-backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    environment:
+      NODE_ENV: development
+      PORT: 8000
+      DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-medconnect}
+      REDIS_URL: redis://:${REDIS_PASSWORD:-redis}@redis:6379
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-redis}
+      JWT_SECRET: ${JWT_SECRET:-your-jwt-secret-key}
+      MINIO_ENDPOINT: minio
+      MINIO_PORT: 9000
+      MINIO_USE_SSL: "false"
+      MINIO_ACCESS_KEY: ${MINIO_ROOT_USER:-minio}
+      MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD:-minio123}
+      MINIO_BUCKET: ${MINIO_BUCKET:-medconnect}
+      BREVO_API_KEY_MAIL: ${BREVO_API_KEY_MAIL}
+      BREVO_API_KEY_SMS: ${BREVO_API_KEY_SMS}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      API_PREFIX: api
+      SWAGGER_USER: admin
+      SWAGGER_PASSWORD: ${SWAGGER_PASSWORD:-medconnect}
+      OTP_EXPIRY: 300 # 5 minutes in seconds
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+      - ./backend/logs:/app/logs
+    networks:
+      medconnect-network:
+        aliases:
+          - backend.medconnect.local
+    command: sh -c "npm run db:push && npm run start:dev"
+
+  admin-portal:
+    build:
+      context: ./admin-portal
+      dockerfile: Dockerfile
+      target: development
+    container_name: medconnect-admin-portal
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
+    environment:
+      NODE_ENV: development
+      API_URL: http://backend:8000/api
+    volumes:
+      - ./admin-portal:/app
+      - /app/node_modules
+    networks:
+      medconnect-network:
+        aliases:
+          - admin.medconnect.local
+    command: npm run start:docker
+
+  mobile-app:
+    build:
+      context: ./mobile-app
+      dockerfile: Dockerfile
+    container_name: medconnect-mobile-app
+    ports:
+      - "5000:5000"
+      - "19000-19006:19000-19006"
+    depends_on:
+      - backend
+    environment:
+      NODE_ENV: development
+      API_URL: http://backend:8000/api
+      EXPO_DEVTOOLS_LISTEN_ADDRESS: 0.0.0.0
+      REACT_NATIVE_PACKAGER_HOSTNAME: localhost
+    volumes:
+      - ./mobile-app:/app
+      - /app/node_modules
+    networks:
+      medconnect-network:
+        aliases:
+          - mobile.medconnect.local
+    command: npm run start:docker
+
+networks:
+  medconnect-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+  postgres_data:
+  redis_data:
+  minio_data:

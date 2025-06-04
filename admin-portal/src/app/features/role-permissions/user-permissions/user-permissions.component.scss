@@ -1,0 +1,141 @@
+.user-permissions-card {
+  margin: 20px;
+}
+
+.search-section {
+  margin-bottom: 24px;
+}
+
+.search-field {
+  width: 100%;
+  max-width: 500px;
+}
+
+.user-option {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 0;
+  
+  span {
+    font-weight: 500;
+  }
+  
+  small {
+    color: rgba(0, 0, 0, 0.6);
+  }
+  
+  .user-role {
+    font-size: 12px;
+    background-color: #e0e0e0;
+    padding: 2px 8px;
+    border-radius: 12px;
+    align-self: flex-start;
+    margin-top: 4px;
+  }
+}
+
+.selected-user-info {
+  margin-top: 20px;
+  
+  .user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    
+    h3 {
+      margin: 0;
+      font-weight: 500;
+    }
+  }
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 40px 0;
+  
+  p {
+    margin-top: 16px;
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.no-selection, .no-permissions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 40px 0;
+  color: rgba(0, 0, 0, 0.6);
+  
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+    opacity: 0.6;
+  }
+}
+
+.permissions-container {
+  margin-top: 20px;
+  
+  .permissions-info {
+    background-color: #e3f2fd;
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 20px;
+    
+    p {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      
+      .info-icon {
+        color: #1976d2;
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+.permissions-accordion {
+  margin-bottom: 20px;
+}
+
+.permissions-table {
+  width: 100%;
+  
+  .permission-name {
+    .permission-description {
+      font-size: 12px;
+      color: rgba(0, 0, 0, 0.6);
+      margin-top: 4px;
+    }
+  }
+  
+  .role-status {
+    display: flex;
+    align-items: center;
+    
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+  
+  .user-override-controls {
+    display: flex;
+    align-items: center;
+  }
+  
+  .granted-icon {
+    color: #4caf50;
+  }
+  
+  .denied-icon {
+    color: #f44336;
+  }
+}

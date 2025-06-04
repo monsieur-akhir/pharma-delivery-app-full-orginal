@@ -1,0 +1,99 @@
+<div class="container">
+  <div class="page-header">
+    <h1>Consultations Vidéo</h1>
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="loadVideoSessions()">
+        <mat-icon>refresh</mat-icon> Actualiser
+      </button>
+    </div>
+  </div>
+
+  <mat-card class="main-card">
+    <mat-card-content>
+      <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p>Chargement des sessions vidéo...</p>
+      </div>
+
+      <div *ngIf="!isLoading">
+        <div *ngIf="videoSessions.length === 0" class="empty-state">
+          <mat-icon class="empty-icon">videocam_off</mat-icon>
+          <h2>Aucune session vidéo disponible</h2>
+          <p>Il n'y a pas de sessions vidéo programmées ou en cours actuellement.</p>
+        </div>
+
+        <table mat-table [dataSource]="videoSessions" *ngIf="videoSessions.length > 0" class="mat-elevation-z1 video-sessions-table">
+          <!-- ID Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let session">{{session.id.substring(0, 8)}}</td>
+          </ng-container>
+
+          <!-- Patient Name Column -->
+          <ng-container matColumnDef="patientName">
+            <th mat-header-cell *matHeaderCellDef>Patient</th>
+            <td mat-cell *matCellDef="let session">{{session.patientName}}</td>
+          </ng-container>
+
+          <!-- Pharmacy Name Column -->
+          <ng-container matColumnDef="pharmacyName">
+            <th mat-header-cell *matHeaderCellDef>Pharmacie</th>
+            <td mat-cell *matCellDef="let session">{{session.pharmacyName}}</td>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Statut</th>
+            <td mat-cell *matCellDef="let session">
+              <span class="status-badge" [ngClass]="getStatusClass(session.status)">
+                {{session.status === 'SCHEDULED' ? 'Programmée' : 
+                  session.status === 'IN_PROGRESS' ? 'En cours' :
+                  session.status === 'COMPLETED' ? 'Terminée' : 'Annulée'}}
+              </span>
+            </td>
+          </ng-container>
+
+          <!-- Scheduled Time Column -->
+          <ng-container matColumnDef="scheduledTime">
+            <th mat-header-cell *matHeaderCellDef>Heure prévue</th>
+            <td mat-cell *matCellDef="let session">{{session.scheduledTime | date:'dd/MM/yyyy HH:mm'}}</td>
+          </ng-container>
+
+          <!-- Duration Column -->
+          <ng-container matColumnDef="duration">
+            <th mat-header-cell *matHeaderCellDef>Durée</th>
+            <td mat-cell *matCellDef="let session">
+              <span *ngIf="session.endTime && session.startTime">
+                {{(session.endTime - session.startTime) / 60000 | number:'1.0-0'}} minutes
+              </span>
+              <span *ngIf="!session.endTime || !session.startTime">-</span>
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let session">
+              <button mat-icon-button color="primary" 
+                      [disabled]="session.status !== 'SCHEDULED' && session.status !== 'IN_PROGRESS'"
+                      (click)="openVideoChat(session)" 
+                      matTooltip="Rejoindre l'appel vidéo">
+                <mat-icon>videocam</mat-icon>
+              </button>
+              
+              <button mat-icon-button color="warn" 
+                      [disabled]="session.status !== 'SCHEDULED' && session.status !== 'IN_PROGRESS'"
+                      (click)="endSession(session.id)" 
+                      matTooltip="Terminer la session">
+                <mat-icon>call_end</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

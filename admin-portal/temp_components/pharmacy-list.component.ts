@@ -1,0 +1,268 @@
+// filepath: e:\pharma-delivery-app-full\admin-portal\src\app\features\pharmacies\pharmacy-list\pharmacy-list.component.ts
+import { Component, OnInit, ViewChild, Input, AfterViewInit } from '@angular/core';
+import { CommonModule, NgClass, DatePipe } from '@angular/common';
+import { MatPaginator, PageEvent, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
+// Since we're going to move this component to its original location, using relative paths
+import { PharmaciesService, Pharmacy, PharmacyListResponse, PharmacyListItem } from './pharmacies.service';
+import { PharmacyRejectDialogComponent } from './pharmacy-reject-dialog/pharmacy-reject-dialog.component';
+
+@Component({
+  selector: 'app-pharmacy-list',
+  templateUrl: './pharmacy-list.component.html',
+  styleUrls: ['./pharmacy-list.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatMenuModule,
+    MatAutocompleteModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+    MatDialogModule,
+    NgClass,
+    DatePipe
+  ]
+})
+export class PharmacyListComponent implements OnInit, AfterViewInit {
+  @Input() statusFilter?: string;
+    displayedColumns: string[] = ['id', 'name', 'city', 'status', 'ownerName', 'createdAt', 'medicineCount', 'staffCount', 'actions'];
+  dataSource = new MatTableDataSource<PharmacyListItem>([]);
+  statusOptions: string[] = ['PENDING', 'APPROVED', 'SUSPENDED', 'REJECTED'];
+  filteredStatusOptions: Observable<string[]>;
+  statusFilterControl = new FormControl('');
+
+  isLoading = false;
+  error: string | null = null;
+  searchQuery = '';
+  totalPharmacies = 0;
+  currentPage = 0;
+  pageSize = 10;
+  sortColumn = 'createdAt';
+  sortDirection: 'asc' | 'desc' = 'desc';
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  constructor(
+    private pharmaciesService: PharmaciesService,
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
+  ) { 
+    // Initialize the filteredStatusOptions observable
+    this.filteredStatusOptions = this.statusFilterControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterStatus(value || ''))
+    );
+  }
+
+  ngOnInit(): void {
+    // If we received a status filter from the parent component, apply it
+    if (this.statusFilter) {
+      this.statusFilterControl.setValue(this.statusFilter);
+    }
+    this.loadPharmacies();
+  }
+
+  ngAfterViewInit(): void {
+    // Sort change handler
+    this.sort.sortChange.subscribe((sort: Sort) => {
+      this.sortColumn = sort.active;
+      this.sortDirection = sort.direction as 'asc' | 'desc';
+      this.paginator.pageIndex = 0; // Reset to first page on sort
+      this.loadPharmacies();
+    });
+
+    // Page change handler
+    this.paginator.page.subscribe((pageEvent: PageEvent) => {
+      this.currentPage = pageEvent.pageIndex;
+      this.pageSize = pageEvent.pageSize;
+      this.loadPharmacies();
+    });
+  }
+
+  loadPharmacies(): void {
+    this.isLoading = true;
+    this.error = null;
+
+    const effectiveStatusFilter = this.statusFilter || this.statusFilterControl.value || undefined;
+
+    this.pharmaciesService.getPharmacies(
+      this.currentPage,
+      this.pageSize,
+      this.sortColumn,
+      this.sortDirection,
+      this.searchQuery,
+      effectiveStatusFilter
+    ).subscribe({      next: (response: PharmacyListResponse) => {
+        this.dataSource.data = response.items;
+        this.totalPharmacies = response.total;
+        this.isLoading = false;
+      },
+      error: (err: unknown) => {
+        console.error('Error loading pharmacies', err);
+        this.error = 'Erreur lors du chargement des pharmacies. Veuillez réessayer.';
+        this.isLoading = false;
+      }
+    });
+  }
+
+  onSearch(): void {
+    this.currentPage = 0; // Reset to first page
+    if (this.paginator) {
+      this.paginator.pageIndex = 0;
+    }
+    this.loadPharmacies();
+  }
+
+  applyFilter(): void {
+    this.currentPage = 0; // Reset to first page
+    if (this.paginator) {
+      this.paginator.pageIndex = 0;
+    }
+    this.loadPharmacies();
+  }
+
+  clearFilters(): void {
+    this.searchQuery = '';
+    this.statusFilterControl.setValue('');
+    this.currentPage = 0;
+    if (this.paginator) {
+      this.paginator.pageIndex = 0;
+    }
+    this.loadPharmacies();
+  }
+
+  getStatusClass(status: string): string {
+    switch (status.toUpperCase()) {
+      case 'APPROVED':
+        return 'status-approved';
+      case 'PENDING':
+        return 'status-pending';
+      case 'SUSPENDED':
+        return 'status-suspended';
+      case 'REJECTED':
+        return 'status-rejected';
+      default:
+        return '';
+    }
+  }
+
+  viewPharmacy(id: number): void {
+    this.router.navigate(['/pharmacies', id]);
+  }
+
+  editPharmacy(id: number): void {
+    this.router.navigate(['/pharmacies', id, 'edit']);
+  }  approvePharmacy(id: number): void {
+    this.isLoading = true;
+    this.pharmaciesService.approvePharmacy(id).subscribe({
+      next: (response: PharmacyListItem) => {
+        this.snackBar.open('Pharmacie approuvée avec succès', 'Fermer', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+        });
+        this.loadPharmacies();
+      },
+      error: (error: unknown) => {
+        console.error('Error approving pharmacy', error);
+        this.snackBar.open('Erreur lors de l\'approbation de la pharmacie', 'Fermer', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+        });
+        this.isLoading = false;
+      }
+    });
+  }  suspendPharmacy(id: number): void {
+    this.isLoading = true;
+    this.pharmaciesService.suspendPharmacy(id).subscribe({
+      next: (response: PharmacyListItem) => {
+        this.snackBar.open('Pharmacie suspendue avec succès', 'Fermer', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+        });
+        this.loadPharmacies();
+      },
+      error: (error: unknown) => {
+        console.error('Error suspending pharmacy', error);
+        this.snackBar.open('Erreur lors de la suspension de la pharmacie', 'Fermer', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+        });
+        this.isLoading = false;
+      }
+    });
+  }  
+  openRejectDialog(pharmacy: PharmacyListItem): void {
+    const dialogRef = this.dialog.open(PharmacyRejectDialogComponent, {
+      width: '500px',
+      data: {
+        pharmacyId: pharmacy.id,
+        pharmacyName: pharmacy.name
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(reason => {
+      if (reason) {
+        this.rejectPharmacy(pharmacy.id, reason);
+      }
+    });
+  }    rejectPharmacy(id: number, reason: string): void {
+    this.isLoading = true;
+    this.pharmaciesService.rejectPharmacy(id, reason).subscribe({
+      next: (response: PharmacyListItem) => {
+        this.snackBar.open('Pharmacie rejetée avec succès', 'Fermer', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+        });
+        this.loadPharmacies();
+      },
+      error: (error: unknown) => {
+        console.error('Error rejecting pharmacy', error);
+        this.snackBar.open('Erreur lors du rejet de la pharmacie', 'Fermer', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+        });
+        this.isLoading = false;
+      }
+    });
+  }
+
+  private _filterStatus(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.statusOptions.filter(option => option.toLowerCase().includes(filterValue));
+  }
+}

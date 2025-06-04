@@ -1,0 +1,34 @@
+{
+  "name": "medi-delivery-mobile",
+  "version": "1.0.0",
+  "description": "Mobile Medication Management Platform",
+  "main": "index.js",
+  "scripts": {
+    "start": "node start-app.js",
+    "start:docker": "node start-app.js",
+    "dev": "node start-app.js",
+    "build": "echo 'Build process for mobile app would be executed here'",
+    "test": "echo 'Test process for mobile app would be executed here'"
+  },
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "^2.1.2",
+    "@react-native-community/cli-server-api": "^10.1.0",
+    "@reduxjs/toolkit": "^2.8.2",
+    "axios": "^1.4.0",
+    "expo": "^47.0.0",
+    "expo-camera": "~13.1.0",
+    "expo-cli": "^6.3.2",
+    "expo-dev-client": "^5.1.8",
+    "expo-image-picker": "~14.0.2",
+    "expo-location": "~15.0.1",
+    "expo-notifications": "~0.17.0",
+    "react-native": "0.71.8"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@types/react": "~18.0.14",
+    "@types/react-native": "~0.70.6",
+    "typescript": "^4.9.4"
+  },
+  "private": true
+}

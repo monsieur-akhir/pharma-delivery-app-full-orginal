@@ -1,0 +1,10 @@
+ {
+   "extends": "../tsconfig.base.json",
+   "compilerOptions": {
+     "composite": true,
+    "declaration": true,         // ensure .d.ts files
+     "rootDir": "src",
+     "outDir": "dist"             // ← now shared/dist/{*.js,*.d.ts}
+   },
+   "include": ["src/**/*"]
+ }

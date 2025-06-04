@@ -1,0 +1,89 @@
+modules = ["nodejs-20", "postgresql-16", "python-3.11"]
+
+[nix]
+channel = "stable-24_05"
+packages = ["redis"]
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Backend Server"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "DB Schema Push"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Mobile App"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Admin Portal"
+
+[[workflows.workflow]]
+name = "Backend Server"
+author = "agent"
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd backend && node dist/server.js"
+waitForPort = 8000
+
+[[workflows.workflow]]
+name = "DB Schema Push"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "node scripts/create-db-schema.js"
+
+[[workflows.workflow]]
+name = "Mobile App"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd mobile-app && node start-app.js"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "Admin Portal"
+author = "agent"
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd admin-portal && npx ng serve --port 4200 --host 0.0.0.0 --disable-host-check"
+waitForPort = 4200
+
+[deployment]
+run = ["sh", "-c", "cd backend && npm install && npm run start:dev"]
+
+[[ports]]
+localPort = 4200
+externalPort = 4200
+
+[[ports]]
+localPort = 5000
+externalPort = 5000
+
+[[ports]]
+localPort = 8000
+externalPort = 80
+
+[[ports]]
+localPort = 8080
+externalPort = 8080
+
+[[ports]]
+localPort = 8081
+externalPort = 8081

@@ -1,0 +1,63 @@
+{
+  "expo": {
+    "name": "Medi-Delivery",
+    "slug": "medi-delivery",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0C6B58"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.medi.delivery",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "This app uses your location to find nearby pharmacies and track your medication deliveries.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses your location to track medication deliveries in the background.",
+        "NSLocationAlwaysUsageDescription": "This app uses your location to track medication deliveries in the background.",
+        "UIBackgroundModes": [
+          "location",
+          "fetch"
+        ]
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0C6B58"
+      },
+      "package": "com.medi.delivery",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow Medi-Delivery to use your location to find nearby pharmacies and track your medication deliveries.",
+          "locationAlwaysPermission": "Allow Medi-Delivery to use your location to track medication deliveries in the background.",
+          "locationWhenInUsePermission": "Allow Medi-Delivery to use your location to find nearby pharmacies and track your medication deliveries."
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "YOUR_PROJECT_ID_HERE"
+      }
+    }
+  }
+}

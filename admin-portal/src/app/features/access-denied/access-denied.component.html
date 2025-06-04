@@ -1,0 +1,31 @@
+<div class="access-denied-container">
+  <div class="access-denied-content">
+    <mat-icon class="access-denied-icon">block</mat-icon>
+    <h1 class="access-denied-title">Accès Refusé</h1>
+    
+    <p class="access-denied-message">
+      Vous n'avez pas les permissions nécessaires pour accéder à cette page.
+    </p>
+    
+    <div class="access-denied-details" *ngIf="currentUserRole">
+      <p>
+        Votre rôle actuel (<strong>{{ currentUserRole }}</strong>) ne dispose pas des autorisations 
+        requises pour effectuer cette action ou accéder à cette ressource.
+      </p>
+      <p>
+        Veuillez contacter un administrateur si vous pensez que vous devriez avoir accès à cette fonctionnalité.
+      </p>
+    </div>
+    
+    <div class="access-denied-actions">
+      <button mat-stroked-button color="primary" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Retour
+      </button>
+      <button mat-raised-button color="primary" (click)="goToDashboard()">
+        <mat-icon>dashboard</mat-icon>
+        Tableau de bord
+      </button>
+    </div>
+  </div>
+</div>

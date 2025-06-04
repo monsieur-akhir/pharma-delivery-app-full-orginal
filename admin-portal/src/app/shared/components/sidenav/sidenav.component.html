@@ -1,0 +1,28 @@
+<mat-nav-list class="sidenav-list">
+  <ng-container *ngFor="let item of menuItems">
+    <a 
+      mat-list-item 
+      [routerLink]="item.route" 
+      routerLinkActive="active-link"
+      *ngIf="hasAccess(item)"
+      class="sidenav-item"
+    >
+      <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+      <span matListItemTitle>{{ item.label }}</span>
+      <span 
+        *ngIf="item.badge" 
+        class="sidenav-badge"
+        [class.warning]="item.badge > 10"
+      >
+        {{ item.badge }}
+      </span>
+    </a>
+  </ng-container>
+</mat-nav-list>
+
+<div class="sidenav-footer">
+  <mat-divider></mat-divider>
+  <div class="app-version">
+    <span>Version 1.0.0</span>
+  </div>
+</div>

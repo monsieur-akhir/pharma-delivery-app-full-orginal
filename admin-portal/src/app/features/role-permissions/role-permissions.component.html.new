@@ -1,0 +1,111 @@
+<div class="role-permissions-container">
+  <mat-card class="main-card">
+    <mat-card-header>
+      <mat-card-title>Gestion des Permissions</mat-card-title>
+      <mat-card-subtitle>Définissez les permissions pour les rôles et les utilisateurs</mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <mat-tab-group>
+        <mat-tab label="Permissions par Rôle">
+          <div class="tab-content">
+            <div class="role-selector">
+              <mat-form-field appearance="fill">
+                <mat-label>Sélectionnez un rôle</mat-label>
+                <mat-select [(ngModel)]="selectedRole" (selectionChange)="onRoleChange($event)">
+                  <mat-option *ngFor="let role of roles" [value]="role">
+                    {{role}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            
+            <div *ngIf="loading" class="loading-container">
+              <mat-spinner diameter="40"></mat-spinner>
+              <p>Chargement des permissions...</p>
+            </div>
+            
+            <div *ngIf="!loading && categories.length === 0" class="empty-state">
+              <p>Aucune permission trouvée dans le système.</p>
+            </div>
+            
+            <div *ngIf="!loading && categories.length > 0">
+              <p class="permission-counter">
+                <mat-icon>check_circle</mat-icon>
+                <span>{{selectedPermissionIds.length}} permission(s) sélectionnée(s) sur {{permissions.length}} totales</span>
+              </p>
+              
+              <mat-accordion>
+                <mat-expansion-panel *ngFor="let category of categories">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      {{category | titlecase}}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      {{getCategorySelectedCount(category)}} / {{permissionsByCategory[category]?.length || 0}} permissions
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  
+                  <div class="category-actions">
+                    <button mat-button color="primary" (click)="selectAllInCategory(category)">
+                      <mat-icon>select_all</mat-icon> Sélectionner tout
+                    </button>
+                    <button mat-button color="warn" (click)="deselectAllInCategory(category)">
+                      <mat-icon>clear_all</mat-icon> Désélectionner tout
+                    </button>
+                  </div>
+                  
+                  <mat-divider></mat-divider>
+                  
+                  <div class="permission-list">
+                    <mat-checkbox 
+                      *ngFor="let permission of permissionsByCategory[category]"
+                      [checked]="isPermissionSelected(permission.id)"
+                      (change)="togglePermission(permission)"
+                      [disabled]="selectedRole === 'SUPER_ADMIN'"
+                      class="permission-item">
+                      <div class="permission-details">
+                        <strong>{{permission.name}}</strong>
+                        <small>{{permission.description || 'Aucune description disponible'}}</small>
+                      </div>
+                    </mat-checkbox>
+                  </div>
+                </mat-expansion-panel>
+              </mat-accordion>
+              
+              <mat-card-actions align="end">
+                <button 
+                  mat-raised-button 
+                  color="primary" 
+                  [disabled]="loading || saving || selectedRole === 'SUPER_ADMIN'"
+                  (click)="savePermissions()">
+                  <mat-icon>save</mat-icon>
+                  {{saving ? 'Enregistrement...' : 'Enregistrer les modifications'}}
+                </button>
+              </mat-card-actions>
+              
+              <mat-card-footer *ngIf="selectedRole === 'SUPER_ADMIN'">
+                <div class="super-admin-notice">
+                  <mat-icon color="warn">warning</mat-icon>
+                  <span>Le rôle SUPER_ADMIN a automatiquement toutes les permissions et ne peut pas être modifié.</span>
+                </div>
+              </mat-card-footer>
+            </div>
+          </div>
+        </mat-tab>
+        
+        <mat-tab label="Permissions par Utilisateur">
+          <div class="tab-content user-permissions-tab">
+            <p class="tab-intro">Gérez les dérogations de permissions spécifiques pour les utilisateurs.</p>
+            <div class="user-permissions-actions">
+              <button mat-raised-button color="primary" (click)="navigateToUserPermissions()">
+                <mat-icon>person</mat-icon>
+                Gérer les permissions utilisateur
+              </button>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>

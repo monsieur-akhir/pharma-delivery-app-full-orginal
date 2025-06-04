@@ -1,0 +1,32 @@
+<div class="page-header">
+  <div class="page-header-content">
+    <div class="page-title-section">
+      <button 
+        *ngIf="showBackButton" 
+        mat-icon-button 
+        class="back-button" 
+        (click)="onBackClick()"
+        aria-label="Back"
+      >
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      
+      <div class="page-titles">
+        <h1 class="page-title">{{ title }}</h1>
+        <span *ngIf="subtitle" class="page-subtitle">{{ subtitle }}</span>
+      </div>
+    </div>
+    
+    <div class="page-actions">
+      <button 
+        *ngIf="actionButtonLabel" 
+        mat-raised-button 
+        color="primary" 
+        (click)="onActionClick()"
+      >
+        {{ actionButtonLabel }}
+      </button>
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

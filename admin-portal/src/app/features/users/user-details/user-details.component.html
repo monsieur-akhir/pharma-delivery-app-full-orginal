@@ -1,0 +1,387 @@
+<div class="user-details-container">
+  <app-page-header
+    title="Détails de l'Utilisateur"
+    subtitle="Informations détaillées et gestion"
+    [showBackButton]="true"
+    actionButtonLabel="Modifier"
+    (backClick)="goBack()"
+    (actionClick)="editUser()">
+  </app-page-header>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p class="loading-text">Chargement des informations...</p>
+  </div>
+
+  <div *ngIf="error" class="error-container">
+    <mat-icon class="error-icon">error</mat-icon>
+    <p class="error-text">{{ error }}</p>
+    <button mat-raised-button color="primary" (click)="loadUserData(userId)">Réessayer</button>
+  </div>
+
+  <div *ngIf="!isLoading && !error && user" class="user-content">
+    <!-- Main User Information -->
+    <mat-card class="info-card">
+      <mat-card-header>
+        <div mat-card-avatar class="user-avatar" *ngIf="user.profileImageUrl">
+          <img [src]="user.profileImageUrl" alt="Photo de profil">
+        </div>
+        <div mat-card-avatar class="user-avatar-placeholder" *ngIf="!user.profileImageUrl">
+          <mat-icon>person</mat-icon>
+        </div>
+        <mat-card-title>
+          {{ user.fullName }}
+          <span class="status-badge" [ngClass]="getStatusClass(user.status)">{{ user.status }}</span>
+          <span class="role-badge" [ngClass]="getRoleClass(user.role)">{{ user.role }}</span>
+        </mat-card-title>
+        <mat-card-subtitle>ID: {{ user.id }} | @{{ user.username }}</mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <div class="info-section">
+          <h3>Informations générales</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="label">Email</span>
+              <span class="value">
+                <mat-icon class="info-icon">email</mat-icon> {{ user.email }}
+                <mat-icon *ngIf="user.emailVerified" class="verification-icon">verified</mat-icon>
+                <mat-icon *ngIf="!user.emailVerified" class="unverified-icon">cancel</mat-icon>
+              </span>
+            </div>
+            <div class="info-item">
+              <span class="label">Téléphone</span>
+              <span class="value">
+                <mat-icon class="info-icon">phone</mat-icon> {{ user.phoneNumber }}
+                <mat-icon *ngIf="user.phoneVerified" class="verification-icon">verified</mat-icon>
+                <mat-icon *ngIf="!user.phoneVerified" class="unverified-icon">cancel</mat-icon>
+              </span>
+            </div>
+            <div class="info-item" *ngIf="user.address">
+              <span class="label">Adresse</span>
+              <span class="value">
+                <mat-icon class="info-icon">home</mat-icon> {{ user.address }}, {{ user.city }}, {{ user.country }}
+              </span>
+            </div>
+            <div class="info-item">
+              <span class="label">Inscrit le</span>
+              <span class="value">
+                <mat-icon class="info-icon">event</mat-icon> {{ user.createdAt | date:'dd/MM/yyyy' }}
+              </span>
+            </div>
+            <div class="info-item" *ngIf="user.lastLoginAt">
+              <span class="label">Dernière connexion</span>
+              <span class="value">
+                <mat-icon class="info-icon">schedule</mat-icon> {{ user.lastLoginAt | date:'dd/MM/yyyy HH:mm' }}
+              </span>
+            </div>
+            <div class="info-item" *ngIf="user.dateOfBirth">
+              <span class="label">Date de naissance</span>
+              <span class="value">
+                <mat-icon class="info-icon">cake</mat-icon> {{ user.dateOfBirth | date:'dd/MM/yyyy' }}
+              </span>
+            </div>
+            <div class="info-item" *ngIf="user.gender">
+              <span class="label">Genre</span>
+              <span class="value">
+                <mat-icon class="info-icon">person</mat-icon> {{ user.gender }}
+              </span>
+            </div>
+            <div class="info-item" *ngIf="user.language">
+              <span class="label">Langue</span>
+              <span class="value">
+                <mat-icon class="info-icon">language</mat-icon> {{ user.language }}
+              </span>
+            </div>
+            <div class="info-item">
+              <span class="label">Sécurité</span>
+              <span class="value">
+                <mat-icon class="info-icon">security</mat-icon>
+                2FA: {{ user.twoFactorEnabled ? 'Activé' : 'Désactivé' }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-button [matMenuTriggerFor]="roleMenu">
+          <mat-icon>people</mat-icon>
+          CHANGER LE RÔLE
+        </button>
+        <button mat-button [matMenuTriggerFor]="statusMenu">
+          <mat-icon>swap_horiz</mat-icon>
+          CHANGER LE STATUT
+        </button>
+        <mat-menu #roleMenu="matMenu">
+          <button mat-menu-item *ngIf="user.role !== UserRole.ADMIN" (click)="updateRole(UserRole.ADMIN)">
+            <mat-icon class="role-admin-icon">verified_user</mat-icon>
+            <span>Administrateur</span>
+          </button>
+          <button mat-menu-item *ngIf="user.role !== UserRole.PHARMACY_OWNER" (click)="updateRole(UserRole.PHARMACY_OWNER)">
+            <mat-icon class="role-owner-icon">store</mat-icon>
+            <span>Propriétaire de pharmacie</span>
+          </button>
+          <button mat-menu-item *ngIf="user.role !== UserRole.PHARMACY_STAFF" (click)="updateRole(UserRole.PHARMACY_STAFF)">
+            <mat-icon class="role-staff-icon">medical_services</mat-icon>
+            <span>Personnel de pharmacie</span>
+          </button>
+          <button mat-menu-item *ngIf="user.role !== UserRole.DELIVERY_PERSON" (click)="updateRole(UserRole.DELIVERY_PERSON)">
+            <mat-icon class="role-delivery-icon">delivery_dining</mat-icon>
+            <span>Livreur</span>
+          </button>
+          <button mat-menu-item *ngIf="user.role !== UserRole.CUSTOMER" (click)="updateRole(UserRole.CUSTOMER)">
+            <mat-icon class="role-customer-icon">person</mat-icon>
+            <span>Client</span>
+          </button>
+        </mat-menu>
+        <mat-menu #statusMenu="matMenu">
+          <button mat-menu-item *ngIf="user.status !== UserStatus.ACTIVE" (click)="enableUser()">
+            <mat-icon class="status-active-icon">check_circle</mat-icon>
+            <span>Activer</span>
+          </button>
+          <button mat-menu-item *ngIf="user.status !== UserStatus.INACTIVE" (click)="disableUser()">
+            <mat-icon class="status-inactive-icon">cancel</mat-icon>
+            <span>Désactiver</span>
+          </button>
+          <button mat-menu-item *ngIf="user.status !== UserStatus.SUSPENDED" (click)="disableUser()">
+            <mat-icon class="status-suspended-icon">pause_circle</mat-icon>
+            <span>Suspendre</span>
+          </button>
+        </mat-menu>
+      </mat-card-actions>
+    </mat-card>
+
+    <!-- Statistics Section -->
+    <div class="stats-section">
+      <h2>Statistiques</h2>
+      <div *ngIf="statsLoading" class="section-loading">
+        <mat-spinner diameter="30"></mat-spinner>
+        <span>Chargement des statistiques...</span>
+      </div>
+      
+      <div *ngIf="statsError" class="section-error">
+        <mat-icon>error</mat-icon>
+        <span>{{ statsError }}</span>
+      </div>
+      
+      <div *ngIf="!statsLoading && !statsError && userStats" class="stats-grid">
+        <mat-card class="stat-card">
+          <mat-card-content>
+            <div class="stat-icon-container">
+              <mat-icon class="stat-icon">shopping_cart</mat-icon>
+            </div>
+            <div class="stat-content">
+              <h3 class="stat-title">Commandes</h3>
+              <p class="stat-value">{{ userStats.totalOrders }}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        
+        <mat-card class="stat-card">
+          <mat-card-content>
+            <div class="stat-icon-container">
+              <mat-icon class="stat-icon">payments</mat-icon>
+            </div>
+            <div class="stat-content">
+              <h3 class="stat-title">Montant Total</h3>
+              <p class="stat-value">{{ userStats.totalSpent | currency:'XOF' }}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        
+        <mat-card class="stat-card">
+          <mat-card-content>
+            <div class="stat-icon-container">
+              <mat-icon class="stat-icon">account_balance_wallet</mat-icon>
+            </div>
+            <div class="stat-content">
+              <h3 class="stat-title">Panier Moyen</h3>
+              <p class="stat-value">{{ userStats.averageOrderValue | currency:'XOF' }}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        
+        <mat-card class="stat-card" *ngIf="userStats.lastPurchase">
+          <mat-card-content>
+            <div class="stat-icon-container">
+              <mat-icon class="stat-icon">history</mat-icon>
+            </div>
+            <div class="stat-content">
+              <h3 class="stat-title">Dernier Achat</h3>
+              <p class="stat-value">{{ userStats.lastPurchase | date:'dd/MM/yyyy' }}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        
+        <mat-card class="stat-card" *ngIf="userStats.preferredPharmacy">
+          <mat-card-content>
+            <div class="stat-icon-container">
+              <mat-icon class="stat-icon">local_pharmacy</mat-icon>
+            </div>
+            <div class="stat-content">
+              <h3 class="stat-title">Pharmacie Préférée</h3>
+              <p class="stat-value">{{ userStats.preferredPharmacy }}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        
+        <mat-card class="stat-card" *ngIf="userStats.mostOrderedMedicine">
+          <mat-card-content>
+            <div class="stat-icon-container">
+              <mat-icon class="stat-icon">medication</mat-icon>
+            </div>
+            <div class="stat-content">
+              <h3 class="stat-title">Médicament Préféré</h3>
+              <p class="stat-value">{{ userStats.mostOrderedMedicine }}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- Pharmacies Section (only for pharmacy owners) -->
+    <div class="pharmacies-section" *ngIf="user.role === 'PHARMACY_OWNER'">
+      <h2>Pharmacies</h2>
+      <div *ngIf="pharmaciesLoading" class="section-loading">
+        <mat-spinner diameter="30"></mat-spinner>
+        <span>Chargement des pharmacies...</span>
+      </div>
+      
+      <div *ngIf="pharmaciesError" class="section-error">
+        <mat-icon>error</mat-icon>
+        <span>{{ pharmaciesError }}</span>
+      </div>
+      
+      <div *ngIf="!pharmaciesLoading && !pharmaciesError" class="pharmacies-list">
+        <mat-card *ngIf="userPharmacies.length === 0" class="empty-card">
+          <mat-card-content>
+            <p>Cet utilisateur ne possède aucune pharmacie.</p>
+          </mat-card-content>
+        </mat-card>
+        
+        <div class="grid-list" *ngIf="userPharmacies.length > 0">
+          <mat-card *ngFor="let pharmacy of userPharmacies" class="pharmacy-card" (click)="viewPharmacy(pharmacy.id)">
+            <mat-card-header>
+              <div mat-card-avatar class="pharmacy-avatar" *ngIf="pharmacy.logoUrl">
+                <img [src]="pharmacy.logoUrl" alt="Logo pharmacie">
+              </div>
+              <div mat-card-avatar class="pharmacy-avatar-placeholder" *ngIf="!pharmacy.logoUrl">
+                <mat-icon>local_pharmacy</mat-icon>
+              </div>
+              <mat-card-title>{{ pharmacy.name }}</mat-card-title>
+              <mat-card-subtitle>{{ pharmacy.city }}, {{ pharmacy.country }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="pharmacy-info">
+                <div class="info-row">
+                  <mat-icon>phone</mat-icon>
+                  <span>{{ pharmacy.phoneNumber }}</span>
+                </div>
+                <div class="info-row">
+                  <mat-icon>email</mat-icon>
+                  <span>{{ pharmacy.email }}</span>
+                </div>
+                <div class="info-row">
+                  <mat-icon>inventory_2</mat-icon>
+                  <span>{{ pharmacy.medicineCount }} médicaments</span>
+                </div>
+                <div class="info-row">
+                  <mat-icon>people</mat-icon>
+                  <span>{{ pharmacy.staffCount }} employés</span>
+                </div>
+              </div>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-button color="primary">
+                <mat-icon>visibility</mat-icon>
+                VOIR DÉTAILS
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+
+    <!-- Orders Section -->
+    <div class="orders-section">
+      <h2>Commandes récentes</h2>
+      <div *ngIf="ordersLoading" class="section-loading">
+        <mat-spinner diameter="30"></mat-spinner>
+        <span>Chargement des commandes...</span>
+      </div>
+      
+      <div *ngIf="ordersError" class="section-error">
+        <mat-icon>error</mat-icon>
+        <span>{{ ordersError }}</span>
+      </div>
+      
+      <div *ngIf="!ordersLoading && !ordersError" class="orders-list">
+        <mat-card *ngIf="userOrders.data.length === 0" class="empty-card">
+          <mat-card-content>
+            <p>Cet utilisateur n'a passé aucune commande.</p>
+          </mat-card-content>
+        </mat-card>
+        
+        <mat-table [dataSource]="userOrders.data" *ngIf="userOrders.data.length > 0" class="orders-table">
+          <!-- Order ID Column -->
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+            <mat-cell *matCellDef="let order"> {{order.id}} </mat-cell>
+          </ng-container>
+          
+          <!-- Date Column -->
+          <ng-container matColumnDef="date">
+            <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+            <mat-cell *matCellDef="let order"> {{order.createdAt | date:'dd/MM/yyyy'}} </mat-cell>
+          </ng-container>
+          
+          <!-- Pharmacy Column -->
+          <ng-container matColumnDef="pharmacy">
+            <mat-header-cell *matHeaderCellDef> Pharmacie </mat-header-cell>
+            <mat-cell *matCellDef="let order"> {{order.pharmacyName}} </mat-cell>
+          </ng-container>
+          
+          <!-- Status Column -->
+          <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef> Statut </mat-header-cell>
+            <mat-cell *matCellDef="let order"> 
+              <span class="order-status" [ngClass]="'order-status-' + order.status.toLowerCase()">
+                {{order.status}}
+              </span>
+            </mat-cell>
+          </ng-container>
+          
+          <!-- Total Column -->
+          <ng-container matColumnDef="total">
+            <mat-header-cell *matHeaderCellDef> Total </mat-header-cell>
+            <mat-cell *matCellDef="let order"> {{order.totalAmount | currency:'XOF'}} </mat-cell>
+          </ng-container>
+          
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+            <mat-cell *matCellDef="let order">
+              <button mat-icon-button color="primary" (click)="viewOrder(order.id); $event.stopPropagation()">
+                <mat-icon>visibility</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+          
+          <mat-header-row *matHeaderRowDef="['id', 'date', 'pharmacy', 'status', 'total', 'actions']"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: ['id', 'date', 'pharmacy', 'status', 'total', 'actions'];" 
+                  (click)="viewOrder(row.id)" 
+                  class="order-row"></mat-row>
+        </mat-table>
+        
+        <mat-paginator 
+          *ngIf="userOrders.total > 10"
+          [length]="userOrders.total"
+          [pageSize]="10"
+          [pageSizeOptions]="[5, 10, 25]"
+          showFirstLastButtons>
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

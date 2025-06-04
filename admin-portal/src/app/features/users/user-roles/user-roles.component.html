@@ -1,0 +1,133 @@
+<div class="user-roles-container">
+  <div class="user-roles-header">
+    <h1 class="user-roles-title">Gestion des Rôles Utilisateurs</h1>
+    <div class="user-roles-actions">
+      <button mat-stroked-button color="primary" (click)="loadUsers()">
+        <mat-icon>refresh</mat-icon>
+        Actualiser
+      </button>
+    </div>
+  </div>
+
+  <div class="role-info-panel mat-elevation-z1">
+    <mat-icon color="primary">info</mat-icon>
+    <p>
+      Cette page permet de gérer les rôles et permissions des utilisateurs du système. 
+      Chaque rôle offre un ensemble prédéfini de permissions sur les différentes ressources.
+      Attention: la modification du rôle d'un utilisateur affecte immédiatement ses droits d'accès.
+    </p>
+  </div>
+
+  <!-- Loading and error states -->
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p class="loading-text">Chargement des utilisateurs...</p>
+  </div>
+
+  <div *ngIf="error && !isLoading" class="error-container">
+    <mat-icon class="error-icon">error</mat-icon>
+    <p class="error-text">{{ error }}</p>
+    <button mat-raised-button color="primary" (click)="loadUsers()">Réessayer</button>
+  </div>
+
+  <!-- Users roles table -->
+  <div *ngIf="!isLoading && !error" class="users-table-container mat-elevation-z2">
+    <table mat-table [dataSource]="dataSource">
+      <!-- Username Column -->
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef>Utilisateur</th>
+        <td mat-cell *matCellDef="let user">{{ user.username }}</td>
+      </ng-container>
+
+      <!-- Email Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+      </ng-container>
+
+      <!-- Current Role Column -->
+      <ng-container matColumnDef="currentRole">
+        <th mat-header-cell *matHeaderCellDef>Rôle actuel</th>
+        <td mat-cell *matCellDef="let user">
+          <span class="user-role-badge" [ngClass]="'role-' + user.role.toLowerCase()">
+            {{ user.role }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let user">
+          <mat-form-field appearance="outline" class="role-select" *ngIf="canUpdateUserRole(user)">
+            <mat-label>Modifier le rôle</mat-label>
+            <mat-select [value]="user.role" (selectionChange)="updateUserRole(user, $event.value)">
+              <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div *ngIf="!canUpdateUserRole(user)" class="role-locked">
+            <mat-icon>lock</mat-icon>
+            <span>Modification restreinte</span>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <!-- Row shown when there is no data -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+          Aucun utilisateur trouvé.
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Permissions matrix -->
+  <div *ngIf="!isLoading && !error" class="permissions-section">
+    <h2 class="section-title">Matrice des Permissions par Rôle</h2>
+    
+    <div class="permissions-table-container mat-elevation-z2">
+      <table mat-table [dataSource]="rolePermissionsMatrix">
+        <!-- Resource Column -->
+        <ng-container matColumnDef="resource">
+          <th mat-header-cell *matHeaderCellDef>Ressource</th>
+          <td mat-cell *matCellDef="let item">{{ item.resource }}</td>
+        </ng-container>
+
+        <!-- Role Columns (dynamically created) -->
+        <ng-container *ngFor="let role of roles" [matColumnDef]="role">
+          <th mat-header-cell *matHeaderCellDef>{{ role }}</th>
+          <td mat-cell *matCellDef="let item" [ngClass]="getPermissionClass(item.resource, role, item[role])">
+            <div class="permission-cell" [matTooltip]="getPermissionText(item.resource, role, item[role])">
+              <span *ngIf="item[role].length === 0">❌</span>
+              <span *ngIf="item[role].length > 0 && item[role].length < allActions.length">⚠️</span>
+              <span *ngIf="item[role].length === allActions.length">✅</span>
+              {{ getPermissionText(item.resource, role, item[role]) }}
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="rolePermissionColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: rolePermissionColumns;"></tr>
+      </table>
+    </div>
+
+    <div class="legend">
+      <h3>Légende :</h3>
+      <div class="legend-item">
+        <span class="legend-icon">✅</span>
+        <span>Toutes les actions autorisées</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-icon">⚠️</span>
+        <span>Actions partiellement autorisées</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-icon">❌</span>
+        <span>Aucune action autorisée</span>
+      </div>
+    </div>
+  </div>
+</div>

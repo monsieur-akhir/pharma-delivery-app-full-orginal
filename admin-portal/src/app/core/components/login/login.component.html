@@ -1,0 +1,77 @@
+<div class="login-container">
+  <div class="login-card mat-elevation-z8">
+    <div class="login-header">
+      <h1>Pharmacy Admin Portal</h1>
+      <p>Connectez-vous pour gérer votre pharmacie</p>
+    </div>
+    
+    <!-- Login Form -->
+    <div *ngIf="!showOtpForm" class="login-form">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
+        <mat-form-field appearance="outline">
+          <mat-label>Identifiant</mat-label>
+          <input matInput formControlName="identifier" placeholder="Email ou nom d'utilisateur">
+          <mat-error *ngIf="loginForm.get('identifier')?.hasError('required')">
+            L'identifiant est requis
+          </mat-error>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline">
+          <mat-label>Mot de passe</mat-label>
+          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password">
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+            Le mot de passe est requis
+          </mat-error>
+        </mat-form-field>
+        
+        <!-- Supprimé la sélection de méthode d'envoi OTP car on envoie automatiquement par email et SMS -->
+        
+        <div class="login-actions">
+          <button mat-stroked-button type="button" (click)="requestPasswordReset()" [disabled]="isLoading">
+            Mot de passe oublié?
+          </button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="isLoading || loginForm.invalid" class="login-button">
+            <span *ngIf="!isLoading">Se connecter</span>
+            <span *ngIf="isLoading">Connexion en cours...</span>
+          </button>
+        </div>
+      </form>
+    </div>
+    
+    <!-- OTP Form -->
+    <div *ngIf="showOtpForm" class="otp-form">
+      <h2>Vérification à deux facteurs</h2>
+      <p>Veuillez entrer le code à 6 chiffres qui vous a été envoyé.</p>
+      
+      <form [formGroup]="otpForm" (ngSubmit)="onSubmitOtp()">
+        <mat-form-field appearance="outline" class="otp-input">
+          <mat-label>Code à 6 chiffres</mat-label>
+          <input matInput formControlName="otp" placeholder="123456" maxlength="6">
+          <mat-error *ngIf="otpForm.get('otp')?.hasError('required')">
+            Le code OTP est requis
+          </mat-error>
+          <mat-error *ngIf="otpForm.get('otp')?.hasError('minlength')">
+            Le code OTP doit contenir 6 chiffres
+          </mat-error>
+        </mat-form-field>
+        
+        <div class="otp-actions">
+          <button mat-stroked-button type="button" (click)="backToLogin()" [disabled]="isLoading">
+            Retour
+          </button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="isLoading || otpForm.invalid" class="login-button">
+            <span *ngIf="!isLoading">Vérifier</span>
+            <span *ngIf="isLoading">Vérification...</span>
+          </button>
+        </div>
+      </form>
+    </div>
+    
+    <div class="login-footer">
+      <p>&copy; 2025 MediConnect. Tous droits réservés.</p>
+    </div>
+  </div>
+</div>

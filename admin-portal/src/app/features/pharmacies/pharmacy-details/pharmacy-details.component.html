@@ -1,0 +1,249 @@
+<div class="pharmacy-details-container">
+  <app-page-header
+    title="Détails de la Pharmacie"
+    subtitle="Informations détaillées et gestion"
+    [showBackButton]="true"
+    actionButtonLabel="Modifier"
+    (backClick)="goBack()"
+    (actionClick)="editPharmacy()">
+  </app-page-header>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p class="loading-text">Chargement des informations...</p>
+  </div>
+
+  <div *ngIf="error" class="error-container">
+    <mat-icon class="error-icon">error</mat-icon>
+    <p class="error-text">{{ error }}</p>
+    <button mat-raised-button color="primary" (click)="loadPharmacyData(pharmacyId)">Réessayer</button>
+  </div>
+
+  <div *ngIf="!isLoading && !error && pharmacy" class="pharmacy-content">
+    <!-- Main Pharmacy Information -->
+    <mat-card class="info-card">
+      <mat-card-header>
+        <div mat-card-avatar class="pharmacy-avatar" *ngIf="pharmacy.logoUrl">
+          <img [src]="pharmacy.logoUrl" alt="Logo pharmacie">
+        </div>
+        <mat-card-title>
+          {{ pharmacy.name }}
+          <span class="status-badge" [ngClass]="getStatusClass(pharmacy.status)">{{ pharmacy.status }}</span>
+        </mat-card-title>
+        <mat-card-subtitle>ID: {{ pharmacy.id }} | Licence: {{ pharmacy.licenseNumber }}</mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <div class="info-section">
+          <h3>Informations générales</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="label">Adresse</span>
+              <span class="value">{{ pharmacy.address }}, {{ pharmacy.city }}, {{ pharmacy.country }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Contact</span>
+              <span class="value">
+                <mat-icon class="info-icon">phone</mat-icon> {{ pharmacy.phoneNumber }} | 
+                <mat-icon class="info-icon">email</mat-icon> {{ pharmacy.email }}
+              </span>
+            </div>
+            <div class="info-item">
+              <span class="label">Propriétaire</span>
+              <span class="value">{{ pharmacy.ownerName }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Créée le</span>
+              <span class="value">{{ pharmacy.createdAt | date:'dd/MM/yyyy' }}</span>
+            </div>
+            <div class="info-item" *ngIf="pharmacy.gpsLatitude && pharmacy.gpsLongitude">
+              <span class="label">Coordonnées GPS</span>
+              <span class="value">{{ pharmacy.gpsLatitude }}, {{ pharmacy.gpsLongitude }}</span>
+            </div>
+            <div class="info-item" *ngIf="pharmacy.openingHours">
+              <span class="label">Heures d'ouverture</span>
+              <span class="value">{{ pharmacy.openingHours }}</span>
+            </div>
+            <div class="info-item" *ngIf="pharmacy.websiteUrl">
+              <span class="label">Site Web</span>
+              <span class="value">
+                <a [href]="pharmacy.websiteUrl" target="_blank">{{ pharmacy.websiteUrl }}</a>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-section description-section" *ngIf="pharmacy.description">
+          <h3>Description</h3>
+          <p>{{ pharmacy.description }}</p>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-button [matMenuTriggerFor]="statusMenu">
+          <mat-icon>swap_horiz</mat-icon>
+          CHANGER LE STATUT
+        </button>
+        <mat-menu #statusMenu="matMenu">
+          <button mat-menu-item *ngIf="pharmacy.status !== 'APPROVED'" (click)="updateStatus(PharmacyStatus.APPROVED)">
+            <mat-icon class="status-approved-icon">check_circle</mat-icon>
+            <span>Approuver</span>
+          </button>
+          <button mat-menu-item *ngIf="pharmacy.status !== 'PENDING'" (click)="updateStatus(PharmacyStatus.PENDING)">
+            <mat-icon class="status-pending-icon">pending</mat-icon>
+            <span>Marquer comme en attente</span>
+          </button>
+          <button mat-menu-item *ngIf="pharmacy.status !== 'SUSPENDED'" (click)="updateStatus(PharmacyStatus.SUSPENDED)">
+            <mat-icon class="status-suspended-icon">pause_circle</mat-icon>
+            <span>Suspendre</span>
+          </button>
+          <button mat-menu-item *ngIf="pharmacy.status !== 'REJECTED'" (click)="updateStatus(PharmacyStatus.REJECTED)">
+            <mat-icon class="status-rejected-icon">cancel</mat-icon>
+            <span>Rejeter</span>
+          </button>
+        </mat-menu>
+      </mat-card-actions>
+    </mat-card>
+
+    <!-- Statistics Section -->
+    <div class="stats-section">
+      <h2>Statistiques</h2>
+      <div *ngIf="statsLoading" class="section-loading">
+        <mat-spinner diameter="30"></mat-spinner>
+        <span>Chargement des statistiques...</span>
+      </div>
+      
+      <div *ngIf="statsError" class="section-error">
+        <mat-icon>error</mat-icon>
+        <span>{{ statsError }}</span>
+      </div>
+      
+      <div *ngIf="!statsLoading && !statsError && pharmacyStats" class="stats-grid">
+        <mat-card class="stat-card">
+          <mat-card-content>
+            <div class="stat-icon-container">
+              <mat-icon class="stat-icon">medication</mat-icon>
+            </div>
+            <div class="stat-content">
+              <h3 class="stat-title">Produits</h3>
+              <p class="stat-value">{{ pharmacyStats.totalProducts }}</p>
+              <p class="stat-note" *ngIf="pharmacyStats.lowStockProducts > 0">
+                <mat-icon class="warning-icon">warning</mat-icon>
+                {{ pharmacyStats.lowStockProducts }} en stock faible
+              </p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        
+        <mat-card class="stat-card">
+          <mat-card-content>
+            <div class="stat-icon-container">
+              <mat-icon class="stat-icon">shopping_cart</mat-icon>
+            </div>
+            <div class="stat-content">
+              <h3 class="stat-title">Commandes</h3>
+              <p class="stat-value">{{ pharmacyStats.totalOrders }}</p>
+              <p class="stat-note" *ngIf="pharmacyStats.pendingOrders > 0">
+                {{ pharmacyStats.pendingOrders }} en attente
+              </p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        
+        <mat-card class="stat-card">
+          <mat-card-content>
+            <div class="stat-icon-container">
+              <mat-icon class="stat-icon">payments</mat-icon>
+            </div>
+            <div class="stat-content">
+              <h3 class="stat-title">Ventes</h3>
+              <p class="stat-value">{{ pharmacyStats.totalSales | currency:'XOF' }}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        
+        <mat-card class="stat-card">
+          <mat-card-content>
+            <div class="stat-icon-container">
+              <mat-icon class="stat-icon">people</mat-icon>
+            </div>
+            <div class="stat-content">
+              <h3 class="stat-title">Clients</h3>
+              <p class="stat-value">{{ pharmacyStats.totalCustomers }}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- Staff Section -->
+    <div class="staff-section">
+      <div class="staff-header">
+        <h2>Personnel</h2>
+        <button mat-mini-fab color="primary" (click)="addStaffMember()" aria-label="Ajouter un membre du personnel">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      
+      <div *ngIf="staffLoading" class="section-loading">
+        <mat-spinner diameter="30"></mat-spinner>
+        <span>Chargement du personnel...</span>
+      </div>
+      
+      <div *ngIf="staffError" class="section-error">
+        <mat-icon>error</mat-icon>
+        <span>{{ staffError }}</span>
+      </div>
+      
+      <div *ngIf="!staffLoading && !staffError" class="staff-list">
+        <mat-card *ngIf="staffMembers.length === 0" class="empty-staff-card">
+          <mat-card-content>
+            <p>Aucun membre du personnel n'est associé à cette pharmacie.</p>
+            <button mat-raised-button color="primary" (click)="addStaffMember()">
+              <mat-icon>add</mat-icon>
+              Ajouter un membre du personnel
+            </button>
+          </mat-card-content>
+        </mat-card>
+        
+        <mat-card *ngFor="let staff of staffMembers" class="staff-card">
+          <mat-card-header>
+            <div mat-card-avatar class="staff-avatar">
+              <mat-icon>person</mat-icon>
+            </div>
+            <mat-card-title>{{ staff.fullName }}</mat-card-title>
+            <mat-card-subtitle>{{ staff.position }} ({{ staff.role }})</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="staff-info">
+              <div class="staff-info-item">
+                <mat-icon>email</mat-icon>
+                <span>{{ staff.email }}</span>
+              </div>
+              <div class="staff-info-item">
+                <mat-icon>phone</mat-icon>
+                <span>{{ staff.phoneNumber }}</span>
+              </div>
+              <div class="staff-info-item">
+                <mat-icon>calendar_today</mat-icon>
+                <span>Ajouté le {{ staff.createdAt | date:'dd/MM/yyyy' }}</span>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button color="warn" (click)="removeStaffMember(staff.id)">
+              <mat-icon>delete</mat-icon>
+              SUPPRIMER
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+    
+    <!-- Users Section -->
+    <div class="users-section">
+      <h2>Utilisateurs de la pharmacie</h2>
+      <app-pharmacy-users [pharmacyId]="pharmacyId"></app-pharmacy-users>
+    </div>
+  </div>
+</div>

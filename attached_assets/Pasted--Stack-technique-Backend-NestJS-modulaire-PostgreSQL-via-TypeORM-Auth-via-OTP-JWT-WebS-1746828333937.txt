@@ -1,0 +1,60 @@
+🧱 Stack technique :
+- Backend : NestJS modulaire, PostgreSQL via TypeORM, Auth via OTP + JWT, WebSocket (chat temps réel), BullMQ (tâches planifiées), intégrations tierces (Twilio, OpenAI, Tesseract, Firebase, Stripe).
+- Mobile App : React Native + expo go + Redux Toolkit, avec géolocalisation, carte, chat vidéo, upload photo (ordonnances), paiement mobile.
+- Backoffice Admin : Angular + Angular Material pour la gestion des utilisateurs, pharmacies, fournisseurs, logs, IA.
+- Stockage fichiers : Firebase Storage.
+- Notifications : Firebase FCM 
+✅ Ce que tu dois générer :
+### 1. Backend NestJS
+- Structure modulaire avec les modules suivants :
+  - `AuthModule` (OTP brevo, JWT)
+  - `UserModule` (CRUD utilisateurs avec rôles CLIENT, PHARMACIST, DELIVERY, ADMIN)
+  - `PharmacyModule` (ajout, validation, gestion de stock, horaires)
+  - `MedicineModule` (disponibilité par pharmacie, stock, seuils critiques)
+  - `OrderModule` (création, statut, lien avec livraison et prescription)
+  - `PrescriptionModule` (upload ordonnance + OCR via Tesseract, validation manuelle)
+  - `ReminderModule` (prise médicaments avec cron)
+  - `ChatModule` (chat texte, vidéo, WebSocket)
+  - `SupplierOrderModule` (commande automatique ou manuelle vers fournisseurs)
+  - `AdminModule` (logs, validation pharmacies, réglages IA)
+- Entités TypeORM pour chaque module avec relations correctes (User ↔ Pharmacy ↔ Medicine ↔ Order ↔ SupplierOrder).
+- Middleware d'authentification JWT + Guard par rôle.
+- Intégration :
+  - Tesseract.js pour OCR ordonnances
+  - OpenAI pour assistant IA (analyse prescription)
+  - BullMQ pour rappels de prise, commandes auto
+  - Payement mobile money(orange money, momo, moov money, wave)
+  - Payement à la livraison
+
+### 2. Mobile App (React Native + Redux)
+- Écrans à implémenter :
+  - Onboarding OTP + permission GPS
+  - Recherche médicaments (carte + liste pharmacies autour)
+  - Ajout au panier / choix retrait ou livraison
+  - Upload ordonnance (caméra ou galerie) + preview OCR
+  - Paiement intégré (Stripe/Mobile Money)
+  - Historique commandes / rappels
+  - Chat IA et vidéo avec pharmacien (Stream Chat ou Twilio)
+- Redux :
+  - Slices pour `auth`, `medicines`, `orders`, `prescriptions`, `reminders`, `chat`, `userLocation`
+- UI fluide, intuitive et inspirée des apps Uber : suivi en temps réel, ETA du livreur, chat ouvert post-commande.
+
+### 3. Backoffice Admin (Angular)
+- Tableau de bord admin :
+  - Liste et validation des pharmacies
+  - Gestion des utilisateurs et rôles
+  - Supervision des commandes, prescriptions
+  - Réglage seuils IA / auto-commande
+  - Logs d’activité, performance des pharmacies
+  - Intégration graphique IA pour analyser tendances (via OpenAI ou LangChain)
+
+### 4. API Documentation
+- Swagger UI généré automatiquement
+- Regroupe endpoints par modules (auth, user, medicine, orders, suppliers, admin)
+
+### 5. Setup local
+- Docker Compose avec PostgreSQL, Redis (BullMQ), Minio ou Firebase émulateur
+- README clair avec :
+  - Installation
+  - Variables d’environnement
+  - Scripts de démarrage (backend, mobile, admin)

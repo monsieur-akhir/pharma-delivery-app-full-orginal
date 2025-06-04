@@ -1,0 +1,132 @@
+stages:
+  - test
+  - build
+  - deploy_staging
+  - deploy_production
+
+variables:
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_DB: medconnect_test
+  DATABASE_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}"
+  REDIS_URL: "redis://redis:6379"
+  JWT_SECRET: "test-jwt-secret"
+  NODE_ENV: "test"
+
+# Cache node modules for better performance
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - backend/node_modules/
+    - admin-portal/node_modules/
+    - mobile-app/node_modules/
+
+# Test backend
+test_backend:
+  stage: test
+  image: node:20-alpine
+  services:
+    - name: postgres:15-alpine
+      alias: postgres
+      variables:
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        POSTGRES_DB: ${POSTGRES_DB}
+    - name: redis:7-alpine
+      alias: redis
+  script:
+    - cd backend
+    - npm ci
+    - npm test
+  tags:
+    - docker
+
+# Test admin portal
+test_admin_portal:
+  stage: test
+  image: node:20-alpine
+  script:
+    - cd admin-portal
+    - npm ci
+    - npm test -- --watch=false --browsers=ChromeHeadless
+  tags:
+    - docker
+
+# Test mobile app
+test_mobile_app:
+  stage: test
+  image: node:20-alpine
+  script:
+    - cd mobile-app
+    - npm ci
+    - npm test
+  tags:
+    - docker
+
+# Build backend
+build_backend:
+  stage: build
+  image: node:20-alpine
+  script:
+    - cd backend
+    - npm ci
+    - npm run build
+  artifacts:
+    paths:
+      - backend/dist/
+  only:
+    - main
+    - develop
+  tags:
+    - docker
+
+# Build admin portal
+build_admin_portal:
+  stage: build
+  image: node:20-alpine
+  script:
+    - cd admin-portal
+    - npm ci
+    - npm run build
+  artifacts:
+    paths:
+      - admin-portal/dist/
+  only:
+    - main
+    - develop
+  tags:
+    - docker
+
+# Deploy to staging
+deploy_staging:
+  stage: deploy_staging
+  image: alpine:latest
+  script:
+    - echo "Déploiement sur l'environnement de staging..."
+    # Ici, vous implémenteriez la logique de déploiement pour votre environnement de staging
+    # Par exemple, utiliser SSH pour déployer sur un serveur, ou utiliser un service cloud comme AWS, GCP, etc.
+  only:
+    - develop
+  environment:
+    name: staging
+    url: https://staging.medconnect.example.com
+  when: manual
+  tags:
+    - docker
+
+# Deploy to production
+deploy_production:
+  stage: deploy_production
+  image: alpine:latest
+  script:
+    - echo "Déploiement sur l'environnement de production..."
+    # Ici, vous implémenteriez la logique de déploiement pour votre environnement de production
+    # Par exemple, utiliser SSH pour déployer sur un serveur, ou utiliser un service cloud comme AWS, GCP, etc.
+  only:
+    - main
+  environment:
+    name: production
+    url: https://medconnect.example.com
+  when: manual
+  tags:
+    - docker

@@ -1,0 +1,60 @@
+You're a DevOps fullstack engineer. Implement the following features in a drug delivery app in React Native (Expo) with NestJS back-end.
+
+🔧 1. Logging Backend (NestJS)
+Goal: Ensure that all back-end actions are properly logged for debugging, traceability and auditing and also that all api are accessible I don't want a simplified or minimal version, I want a complex and robust full version.
+
+Re-establish a global logger (e.g. LoggerService custom or nestjs-pino)
+
+Log all incoming HTTP requests (method, route, IP, user agent, etc.)
+
+Log errors with stack trace
+
+Log business events (e.g. OTP generation, login, order creation, etc.).
+
+🌐 2. API Accessibility
+Checks that all expected API routes are exposed in Swagger (/docs) and testable.
+
+Check that CORS are properly configured for web/mobile apps
+
+Make sure that the documentation is synchronised with the actual routes
+
+Possibility of adding global middleware to log and control access.
+
+📍 3. Delivery tracking using geolocation
+Functionality:
+
+Real-time tracking of the deliverer's position on the map on the customer side.
+
+Regular position updates via WebSocket or REST polling.
+
+Backend:
+
+API to receive the delivery driver's GPS coordinates (lat/lng + userId + timestamp)
+
+Temporary storage in Redis for high frequency or persistence in DB if required
+
+Mobile (deliverer) :
+
+GPS permission with Expo
+
+Coordinates sent periodically (every 5-10 sec) via background task
+
+Mobile (customer) :
+
+Map display with real time position of the deliverer
+
+📱 4. Mobile App improvement (React Native + Expo)
+UI/UX:
+
+Improve login screens (OTP), orders, and tracking.
+
+Use React Navigation, React Query, AsyncStorage for state/session management
+
+Integration of TypeScript SDK generated automatically from Swagger
+
+Display tracking in real time via react-native-maps and WebSocket
+
+🎯 Objective
+To create a robust, traceable and fluid mobile + back-office solution, with real-time delivery tracking, full logs and a high-quality user experience.
+
+Translated with DeepL.com (free version)

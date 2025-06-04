@@ -1,0 +1,86 @@
+<div class="container">
+  <div class="page-header">
+    <h1>Messages des Pharmacies</h1>
+  </div>
+
+  <mat-card class="filter-card">
+    <mat-card-content>
+      <mat-form-field appearance="outline">
+        <mat-label>Sélectionner une pharmacie</mat-label>
+        <mat-select [(ngModel)]="selectedPharmacyId" (selectionChange)="onPharmacyChange()">
+          <mat-option>Toutes les pharmacies</mat-option>
+          <mat-option *ngFor="let pharmacy of pharmacies" [value]="pharmacy.id">
+            {{ pharmacy.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="main-card">
+    <mat-card-content>
+      <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p>Chargement des messages...</p>
+      </div>
+
+      <div *ngIf="!selectedPharmacyId && !isLoading" class="empty-state">
+        <mat-icon class="empty-icon">forum</mat-icon>
+        <h2>Sélectionnez une pharmacie</h2>
+        <p>Veuillez sélectionner une pharmacie pour afficher ses messages</p>
+      </div>
+
+      <div *ngIf="selectedPharmacyId && !isLoading && messages.length === 0" class="empty-state">
+        <mat-icon class="empty-icon">forum</mat-icon>
+        <h2>Aucun message</h2>
+        <p>Il n'y a pas de messages pour cette pharmacie</p>
+      </div>
+
+      <div *ngIf="!isLoading && messages.length > 0" class="messages-container">
+        <div *ngFor="let message of messages" class="message-card">
+          <div class="message-header">
+            <div class="user-info">
+              <span class="sender-name">{{ message.senderName }}</span>
+              <span class="timestamp">{{ message.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+            <div class="message-status">
+              <mat-icon [matTooltip]="message.read ? 'Lu' : 'Non lu'">
+                {{ message.read ? 'visibility' : 'visibility_off' }}
+              </mat-icon>
+            </div>
+          </div>
+          
+          <div class="message-content">
+            <p>{{ message.content }}</p>
+          </div>
+          
+          <div *ngIf="message.attachments && message.attachments.length > 0" class="attachments-container">
+            <h4>Pièces jointes ({{ message.attachments.length }})</h4>
+            
+            <div class="attachments-grid">
+              <div *ngFor="let attachment of message.attachments" class="attachment-item">
+                <div *ngIf="isImage(attachment)" class="image-preview" (click)="viewImage(attachment)">
+                  <img [src]="attachment.thumbnailUrl || attachment.url" [alt]="attachment.fileName" />
+                </div>
+                
+                <div *ngIf="!isImage(attachment)" class="file-preview" (click)="downloadFile(attachment)">
+                  <mat-icon>{{ getFileIcon(attachment.fileType) }}</mat-icon>
+                </div>
+                
+                <div class="attachment-info">
+                  <div class="file-name">{{ attachment.fileName }}</div>
+                  <div class="file-size">{{ getFileSize(attachment.fileSize) }}</div>
+                </div>
+                
+                <button mat-icon-button color="primary" matTooltip="Télécharger" 
+                        (click)="downloadFile(attachment)">
+                  <mat-icon>download</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,15 @@
+ {
+   "extends": "../tsconfig.base.json",
+   "compilerOptions": {
+     "rootDir": "src",
+     "outDir": "dist",
+     "baseUrl": ".",           // enable path mapping
+     "paths": {
+       "@shared/*": ["../shared/dist/*"]
+     }
+   },
+   "references": [
+     { "path": "../shared" }
+   ],
+   "include": ["src/**/*"]
+ }

@@ -1,0 +1,67 @@
+<h2 mat-dialog-title>Consultation Vidéo avec {{session.patientName}}</h2>
+
+<mat-dialog-content>
+  <div class="video-chat-container" [ngClass]="{'connecting': isConnecting, 'error': error}">
+    <div *ngIf="isConnecting" class="connecting-overlay">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Établissement de la connexion vidéo...</p>
+    </div>
+    
+    <div *ngIf="error" class="error-overlay">
+      <mat-icon color="warn">error</mat-icon>
+      <p>{{error}}</p>
+      <button mat-raised-button color="primary" (click)="endCall()">Fermer</button>
+    </div>
+    
+    <div class="video-area">
+      <!-- The main video (other participant) -->
+      <div class="subscriber-container">
+        <div #subscriberDiv class="subscriber"></div>
+      </div>
+      
+      <!-- The small self-view video -->
+      <div class="publisher-container">
+        <div #publisherDiv class="publisher"></div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="session-info">
+    <div class="info-item">
+      <span class="label">Patient:</span>
+      <span class="value">{{session.patientName}}</span>
+    </div>
+    <div class="info-item">
+      <span class="label">Status:</span>
+      <span class="value status-badge" 
+            [ngClass]="{'status-scheduled': session.status === 'SCHEDULED', 
+                        'status-in-progress': session.status === 'IN_PROGRESS'}">
+        {{session.status === 'SCHEDULED' ? 'Programmée' : 'En cours'}}
+      </span>
+    </div>
+    <div class="info-item">
+      <span class="label">Date programmée:</span>
+      <span class="value">{{session.scheduledTime | date:'dd/MM/yyyy HH:mm'}}</span>
+    </div>
+    <div *ngIf="session.notes" class="info-item">
+      <span class="label">Notes:</span>
+      <span class="value">{{session.notes}}</span>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <div class="video-controls">
+    <button mat-fab color="primary" (click)="toggleAudio()" matTooltip="Activer/désactiver le microphone">
+      <mat-icon>{{publisher?.stream?.hasAudio ? 'mic' : 'mic_off'}}</mat-icon>
+    </button>
+    
+    <button mat-fab color="primary" (click)="toggleVideo()" matTooltip="Activer/désactiver la caméra">
+      <mat-icon>{{publisher?.stream?.hasVideo ? 'videocam' : 'videocam_off'}}</mat-icon>
+    </button>
+    
+    <button mat-fab color="warn" (click)="endCall()" matTooltip="Terminer l'appel">
+      <mat-icon>call_end</mat-icon>
+    </button>
+  </div>
+</mat-dialog-actions>

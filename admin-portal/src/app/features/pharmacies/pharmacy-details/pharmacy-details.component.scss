@@ -1,0 +1,318 @@
+.pharmacy-details-container {
+  padding: 16px;
+}
+
+.loading-container, .error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 16px;
+  text-align: center;
+}
+
+.loading-text, .error-text {
+  margin-top: 16px;
+  font-size: 16px;
+  color: #757575;
+}
+
+.error-icon {
+  font-size: 48px;
+  height: 48px;
+  width: 48px;
+  color: #f44336;
+}
+
+.pharmacy-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.info-card {
+  margin-bottom: 24px;
+}
+
+.pharmacy-avatar {
+  background-size: cover;
+  background-position: center;
+}
+
+.status-badge {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 16px;
+  margin-left: 12px;
+  vertical-align: middle;
+}
+
+.status-approved {
+  background-color: #e6f4ea;
+  color: #0d652d;
+}
+
+.status-pending {
+  background-color: #fff8e1;
+  color: #856404;
+}
+
+.status-rejected {
+  background-color: #fbe9e7;
+  color: #c62828;
+}
+
+.status-suspended {
+  background-color: #e8eaf6;
+  color: #3949ab;
+}
+
+.status-approved-icon {
+  color: #0d652d;
+}
+
+.status-pending-icon {
+  color: #856404;
+}
+
+.status-rejected-icon {
+  color: #c62828;
+}
+
+.status-suspended-icon {
+  color: #3949ab;
+}
+
+.info-section {
+  margin-bottom: 24px;
+
+  h3 {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    color: #3f51b5;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 8px;
+  }
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+
+  .label {
+    font-size: 12px;
+    color: #757575;
+    margin-bottom: 4px;
+  }
+
+  .value {
+    font-size: 14px;
+  }
+
+  .info-icon {
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+    vertical-align: text-bottom;
+    margin-right: 4px;
+  }
+}
+
+.description-section {
+  p {
+    white-space: pre-line;
+    line-height: 1.5;
+  }
+}
+
+.stats-section, .staff-section, .users-section {
+  h2 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    color: #3f51b5;
+  }
+}
+
+.section-loading, .section-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  margin-bottom: 16px;
+
+  span {
+    margin-left: 12px;
+  }
+}
+
+.section-error {
+  color: #f44336;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.stat-card {
+  .mat-card-content {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.stat-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background-color: #e8eaf6;
+  border-radius: 50%;
+  margin-right: 16px;
+}
+
+.stat-icon {
+  font-size: 28px;
+  color: #3f51b5;
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-title {
+  font-size: 14px;
+  color: #757575;
+  margin: 0 0 4px 0;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0 0 4px 0;
+}
+
+.stat-note {
+  font-size: 12px;
+  color: #757575;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.warning-icon {
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+  color: #f57c00;
+  margin-right: 4px;
+}
+
+.staff-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.staff-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.empty-staff-card {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 24px;
+
+  p {
+    margin-bottom: 16px;
+    color: #757575;
+  }
+}
+
+.staff-card {
+  .mat-card-header {
+    margin-bottom: 16px;
+  }
+}
+
+.staff-avatar {
+  background-color: #e8eaf6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .mat-icon {
+    color: #3f51b5;
+  }
+}
+
+.staff-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.staff-info-item {
+  display: flex;
+  align-items: center;
+  
+  .mat-icon {
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+    margin-right: 8px;
+    color: #757575;
+  }
+}
+
+.users-section {
+  margin-top: 24px;
+  padding: 16px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.users-section h2 {
+  margin-bottom: 16px;
+  color: #333;
+  font-weight: 500;
+}
+
+// Make sure all sections have consistent styling
+.stats-section, .staff-section, .users-section {
+  margin-bottom: 24px;
+}
+
+@media (max-width: 600px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .stats-grid, .staff-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .pharmacy-content {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,132 @@
+.role-permissions-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.main-card {
+  margin-bottom: 20px;
+}
+
+.tab-content {
+  padding: 20px 0;
+}
+
+.user-permissions-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  text-align: center;
+
+  .tab-intro {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.7);
+    margin-bottom: 24px;
+    max-width: 600px;
+  }
+
+  .user-permissions-actions {
+    button {
+      padding: 8px 20px;
+      font-size: 16px;
+
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+.role-selector {
+  margin-bottom: 20px;
+
+  mat-form-field {
+    width: 300px;
+  }
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+
+  p {
+    margin-top: 16px;
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.permission-counter {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 16px;
+  color: rgba(0, 0, 0, 0.6);
+
+  mat-icon {
+    margin-right: 8px;
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+  }
+}
+
+.category-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.permission-list {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-gap: 16px;
+}
+
+.permission-item {
+  margin-bottom: 8px;
+
+  .permission-details {
+    display: flex;
+    flex-direction: column;
+
+    strong {
+      margin-bottom: 4px;
+    }
+
+    small {
+      color: rgba(0, 0, 0, 0.54);
+    }
+  }
+}
+
+mat-expansion-panel {
+  margin-bottom: 16px;
+}
+
+.super-admin-notice {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #fff8e1;
+  border-top: 1px solid #ffe082;
+
+  mat-icon {
+    margin-right: 8px;
+  }
+
+  span {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.7);
+  }
+}

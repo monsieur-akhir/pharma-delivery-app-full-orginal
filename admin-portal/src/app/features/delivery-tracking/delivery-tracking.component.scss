@@ -1,0 +1,87 @@
+/* Basic styling for delivery tracking */
+.delivery-tracking-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.map-area {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden; /* Ensures map corners are rounded if map itself doesn't support border-radius */
+}
+
+#mapId {
+  height: 500px; /* Increased height */
+  width: 100%;
+}
+
+.info-area {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.delivery-selection {
+  margin-bottom: 20px;
+
+  label {
+    margin-right: 10px;
+    font-weight: bold;
+  }
+
+  select {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    min-width: 250px;
+  }
+}
+
+h3 {
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+}
+
+h4 {
+  color: #555;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+p {
+  margin: 5px 0;
+  color: #666;
+  font-size: 0.95em;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+  max-height: 200px; /* Limit history height */
+  overflow-y: auto; /* Add scroll for long histories */
+  border: 1px solid #eee;
+  border-radius: 4px;
+  padding: 10px;
+
+  li {
+    padding: 8px 0;
+    border-bottom: 1px dashed #f0f0f0;
+    font-size: 0.9em;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+/* Utility classes */
+.error-message {
+  color: red;
+  font-weight: bold;
+}

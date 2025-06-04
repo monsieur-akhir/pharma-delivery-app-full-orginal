@@ -1,0 +1,15 @@
+<div class="image-viewer-container">
+  <div class="image-viewer-header">
+    <h2>{{ data.title }}</h2>
+    <button mat-icon-button (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  
+  <div class="image-container">
+    <div *ngIf="loading" class="loading-overlay">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+    <img [src]="data.imageUrl" (load)="onImageLoad()" />
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<!-- Basic structure for delivery tracking -->
+<div class="delivery-tracking-container">
+  <div class="map-area">
+    <div id="mapId" style="height: 400px; width: 100%;"></div>
+  </div>
+  <div class="info-area">
+    <div class="delivery-selection">
+      <label for="delivery-select">Select Delivery:</label>
+      <select id="delivery-select" (change)="onDeliverySelected($event)">
+        <option value="">-- Select a Delivery --</option>
+        <option *ngFor="let delivery of (completedDeliveries$ | async)" [value]="delivery.id">
+          {{ delivery.patientName }} - {{ delivery.medicationName }} ({{ delivery.deliveryId }})
+        </option>
+      </select>
+    </div>
+
+    <div *ngIf="selectedDeliveryId && (currentLocation$ | async) as loc">
+      <h3>Current Location</h3>
+      <p>Latitude: {{ loc.latitude }}</p>
+      <p>Longitude: {{ loc.longitude }}</p>
+      <p>Timestamp: {{ loc.timestamp | date:'medium' }} ({{ getTimeAgo(loc.timestamp) }})</p>
+      <div *ngIf="etaInfo$ | async as eta">
+        <h4>ETA: {{ eta.time }} ({{ eta.distance }})</h4>
+      </div>
+    </div>
+
+    <div *ngIf="selectedDeliveryId && (locationHistory$ | async) as history">
+      <h3>Location History</h3>
+      <ul *ngIf="history.length > 0; else noHistory">
+        <li *ngFor="let point of history">
+          Lat: {{ point.latitude }}, Lng: {{ point.longitude }} at {{ point.timestamp | date:'shortTime' }} ({{ getTimeAgo(point.timestamp) }})
+        </li>
+      </ul>
+      <ng-template #noHistory><p>No location history available for this delivery.</p></ng-template>
+    </div>
+
+    <div *ngIf="!selectedDeliveryId">
+      <p>Please select a delivery to track.</p>
+    </div>
+  </div>
+</div>

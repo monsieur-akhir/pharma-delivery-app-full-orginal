@@ -1,0 +1,150 @@
+<div class="pharmacy-list-container">
+  <div class="header-container">
+    <h1>Gestion des pharmacies</h1>
+    <div class="actions">
+      <button mat-raised-button color="primary" [routerLink]="['/pharmacies/new']">
+        <mat-icon>add</mat-icon> Nouvelle pharmacie
+      </button>
+    </div>
+  </div>
+
+  <mat-card>
+    <mat-card-content>
+      <div class="filters-container">
+        <div class="search-container">
+          <mat-form-field appearance="outline">
+            <mat-label>Rechercher</mat-label>
+            <input matInput [(ngModel)]="searchQuery" placeholder="Nom, ville ou propriétaire" (keyup.enter)="onSearch()">
+            <button mat-icon-button matSuffix (click)="onSearch()">
+              <mat-icon>search</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+        <div class="status-filter">
+          <mat-form-field appearance="outline">
+            <mat-label>Statut</mat-label>
+            <input type="text" matInput [formControl]="statusFilterForm" [matAutocomplete]="statusAuto">
+            <mat-autocomplete #statusAuto="matAutocomplete">
+              <mat-option *ngFor="let option of filteredStatusOptions | async" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <button mat-stroked-button (click)="applyFilter()">Filtrer</button>
+          <button mat-stroked-button (click)="clearFilters()">Réinitialiser</button>
+        </div>
+      </div>
+
+      <div class="loading-container" *ngIf="isLoading">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+      
+      <div class="error-message" *ngIf="error">
+        {{ error }}
+      </div>
+
+      <div class="table-container" *ngIf="!isLoading && !error">
+        <table mat-table [dataSource]="dataSource" matSort>
+          <!-- ID Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let pharmacy"> {{pharmacy.id}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Pharmacie </th>
+            <td mat-cell *matCellDef="let pharmacy"> {{pharmacy.name}} </td>
+          </ng-container>
+
+          <!-- City Column -->
+          <ng-container matColumnDef="city">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Ville </th>
+            <td mat-cell *matCellDef="let pharmacy"> {{pharmacy.city}} </td>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Statut </th>
+            <td mat-cell *matCellDef="let pharmacy">
+              <span class="status-badge" [ngClass]="getStatusClass(pharmacy.status)">
+                {{pharmacy.status}}
+              </span>
+            </td>
+          </ng-container>
+
+          <!-- Owner Name Column -->
+          <ng-container matColumnDef="ownerName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Propriétaire </th>
+            <td mat-cell *matCellDef="let pharmacy"> {{pharmacy.ownerName}} </td>
+          </ng-container>
+
+          <!-- Created At Column -->
+          <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date de création </th>
+            <td mat-cell *matCellDef="let pharmacy"> {{pharmacy.createdAt | date: 'dd/MM/yyyy'}} </td>
+          </ng-container>
+
+          <!-- Medicine Count Column -->
+          <ng-container matColumnDef="medicineCount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Médicaments </th>
+            <td mat-cell *matCellDef="let pharmacy"> {{pharmacy.medicineCount || 0}} </td>
+          </ng-container>
+
+          <!-- Staff Count Column -->
+          <ng-container matColumnDef="staffCount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Personnel </th>
+            <td mat-cell *matCellDef="let pharmacy"> {{pharmacy.staffCount || 0}} </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let pharmacy">
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Actions">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="viewPharmacy(pharmacy.id)">
+                  <mat-icon>visibility</mat-icon>
+                  <span>Voir détails</span>
+                </button>
+                <button mat-menu-item (click)="editPharmacy(pharmacy.id)">
+                  <mat-icon>edit</mat-icon>
+                  <span>Modifier</span>
+                </button>
+                <button mat-menu-item *ngIf="pharmacy.status !== 'APPROVED'" (click)="approvePharmacy(pharmacy.id)">
+                  <mat-icon>check_circle</mat-icon>
+                  <span>Approuver</span>
+                </button>
+                <button mat-menu-item *ngIf="pharmacy.status === 'APPROVED'" (click)="suspendPharmacy(pharmacy.id)">
+                  <mat-icon>block</mat-icon>
+                  <span>Suspendre</span>
+                </button>
+                <button mat-menu-item *ngIf="pharmacy.status === 'SUSPENDED'" (click)="approvePharmacy(pharmacy.id)">
+                  <mat-icon>restore</mat-icon>
+                  <span>Réactiver</span>
+                </button>
+                <button mat-menu-item *ngIf="pharmacy.status !== 'REJECTED'" (click)="openRejectDialog(pharmacy)">
+                  <mat-icon>cancel</mat-icon>
+                  <span>Rejeter</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <!-- No data message -->
+        <div class="no-data-message" *ngIf="dataSource.data.length === 0">
+          Aucune pharmacie trouvée
+        </div>
+
+        <mat-paginator [length]="totalPharmacies" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
