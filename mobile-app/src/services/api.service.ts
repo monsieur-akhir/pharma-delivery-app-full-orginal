@@ -170,7 +170,7 @@ class ApiService {
   // Utilisateurs et profils
   public async updateProfile(userData: Partial<any>): Promise<any> {
     try {
-      const response = await this.api.put('/users/profile', userData);
+      const response = await this.api.put('/users/me/profile', userData);
       return response.data;
     } catch (error) {
       return this.handleError(error);
