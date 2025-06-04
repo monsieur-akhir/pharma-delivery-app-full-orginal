@@ -198,7 +198,9 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     private errorHandler: ErrorHandlerService,
     private notificationService: NotificationService,
     private snackBar: MatSnackBar,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService,
+    private stockService: StockService
   ) { }
 
   ngOnInit(): void {
@@ -432,20 +434,19 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     // Les alertes sont maintenant gérées par le composant StockAlertsDashboardComponent
     // Mais nous devons toujours mettre à jour les statistiques du tableau de bord
     
-    const currentUser = this.authService.currentUserValue;
-    const isPharmacyUser = currentUser?.roles.some(r => 
-      ['PHARMACY_ADMIN', 'PHARMACY_STAFF'].includes(r));
+    const currentUser = this.authService.getCurrentUser();
+    const isPharmacyUser = currentUser?.roles.some((r: string) => r === Role.PHARMACY_ADMIN || r === Role.PHARMACY_USER);
     
     if (isPharmacyUser && currentUser?.pharmacyId) {
       // Si c'est un utilisateur de pharmacie, chargez uniquement ses alertes
       this.subscriptions.add(
         this.stockService.getStockAlerts(currentUser.pharmacyId).subscribe({
-          next: (alerts) => {
+          next: (alerts: any[]) => {
             // Mettre à jour les statistiques pour le tableau de bord
-            this.dashboardStats.medicines.lowStock = alerts.filter(a => a.type === 'LOW').length;
+            this.dashboardStats.medicines.lowStock = alerts.filter((a: any) => a.type === 'LOW').length;
             this.dashboardStats.medicines.outOfStock = 0; // Géré différemment dans notre modèle
           },
-          error: (error) => {
+          error: (error: any) => {
             console.error('Erreur lors du chargement des alertes de stock', error);
           }
         })
@@ -454,12 +455,12 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
       // Pour les admins, chargez toutes les alertes
       this.subscriptions.add(
         this.stockService.getAllStockAlerts().subscribe({
-          next: (alerts) => {
+          next: (alerts: any[]) => {
             // Mettre à jour les statistiques pour le tableau de bord
-            this.dashboardStats.medicines.lowStock = alerts.filter(a => a.type === 'LOW').length;
+            this.dashboardStats.medicines.lowStock = alerts.filter((a: any) => a.type === 'LOW').length;
             this.dashboardStats.medicines.outOfStock = 0; // Géré différemment dans notre modèle
           },
-          error: (error) => {
+          error: (error: any) => {
             console.error('Erreur lors du chargement des alertes de stock', error);
           }
         })

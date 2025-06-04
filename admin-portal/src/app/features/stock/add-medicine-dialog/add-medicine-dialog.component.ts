@@ -15,7 +15,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MedicineService } from '../../../core/services/api/medicine.service';
 import { StockService } from '../../../core/services/api/stock.service';
-import { Medicine } from '../../../core/models/medicine.model';
+import { Medicine, MedicineCategory, MedicineStatus } from '../../../core/models/medicine.model';
 
 export interface AddMedicineToStockDialogData {
   pharmacyId: number;
