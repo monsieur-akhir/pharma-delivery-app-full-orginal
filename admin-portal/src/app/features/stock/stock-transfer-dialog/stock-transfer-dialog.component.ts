@@ -13,6 +13,7 @@ import { StockService } from '../../../core/services/api/stock.service';
 import { PharmacyService } from '../../../core/services/api/pharmacy.service';
 import { Pharmacy, PharmacyListItem } from '../../../core/models/pharmacy.model';
 
+
 export interface StockTransferDialogData {
   stock: MedicineStock;
 }
