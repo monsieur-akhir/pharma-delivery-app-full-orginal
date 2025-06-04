@@ -2,17 +2,22 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { MedicineCategory, MedicineStatus } from '../../models/medicine.model';
 
 export interface Medicine {
   id: number;
   name: string;
-  generic_name: string;
-  manufacturer: string;
-  category: string;
+  genericName: string;
   description: string;
-  requires_prescription: boolean;
+  category: MedicineCategory;
+  manufacturer: string;
+  dosage: string;
   price: number;
-  stock: number;
+  imageUrl?: string;
+  status: MedicineStatus;
+  requiresPrescription: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface MedicineFilter {

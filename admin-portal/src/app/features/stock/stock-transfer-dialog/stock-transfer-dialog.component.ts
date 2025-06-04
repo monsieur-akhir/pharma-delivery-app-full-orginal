@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MedicineStock } from '../../../core/models/stock.model';
 import { StockService } from '../../../core/services/api/stock.service';
 import { PharmacyService } from '../../../core/services/api/pharmacy.service';
-import { Pharmacy } from '../../../core/models/pharmacy.model';
+import { Pharmacy, PharmacyListItem } from '../../../core/models/pharmacy.model';
 
 export interface StockTransferDialogData {
   stock: MedicineStock;
@@ -119,7 +119,7 @@ export interface StockTransferDialogData {
 })
 export class StockTransferDialogComponent implements OnInit {
   transferForm: FormGroup;
-  pharmacies: Pharmacy[] = [];
+  pharmacies: PharmacyListItem[] = [];
   isLoading = true;
   isSubmitting = false;
 
@@ -151,7 +151,7 @@ export class StockTransferDialogComponent implements OnInit {
     // Exclure la pharmacie source des options
     this.pharmacyService.getPharmacies().subscribe({
       next: (response) => {
-        this.pharmacies = response.pharmacies.filter((p: Pharmacy) => p.id !== this.data.stock.pharmacyId);
+        this.pharmacies = response.pharmacies.filter((p: PharmacyListItem) => p.id !== this.data.stock.pharmacyId);
         this.isLoading = false;
       },
       error: (error) => {
