@@ -28,6 +28,7 @@ import { BullQueueModule } from './bull/bull-queue.module';
 import { PrescriptionsModule } from './prescriptions/prescriptions.module';
 import { PrescriptionsController } from './prescriptions/prescriptions.controller';
 import { NotificationsModule } from './notifications/notifications.module';
+import { StockModule } from './stock/stock.module';
 import { QueueService } from './queue/queue.service';
 
 @Module({
@@ -90,6 +91,7 @@ import { QueueService } from './queue/queue.service';
     HealthModule,
     AuthModule,
     NotificationsModule,
+    StockModule,
 
   ],
   controllers: [

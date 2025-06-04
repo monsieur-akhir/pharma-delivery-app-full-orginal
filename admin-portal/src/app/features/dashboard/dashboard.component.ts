@@ -30,6 +30,7 @@ import { PharmacyService } from '../../core/services/api/pharmacy.service';
 import { UserService } from '../../core/services/api/user.service';
 import { StockService } from '../../core/services/api/stock.service';
 import { StockAlertsDashboardComponent } from '../stock/stock-alerts-dashboard/stock-alerts-dashboard.component';
+import { Role } from '@core/auth/rbac.model';
 
 // Define a simple notification service with Angular decorator
 @Injectable()
@@ -435,7 +436,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     // Mais nous devons toujours mettre à jour les statistiques du tableau de bord
     
     const currentUser = this.authService.getCurrentUser();
-    const isPharmacyUser = currentUser?.roles.some((r: string) => r === Role.PHARMACY_ADMIN || r === Role.PHARMACY_USER);
+    const isPharmacyUser = currentUser?.roles.some((r: string) => r === Role.PHARMACIST || r === Role.PHARMACY_STAFF);
     
     if (isPharmacyUser && currentUser?.pharmacyId) {
       // Si c'est un utilisateur de pharmacie, chargez uniquement ses alertes

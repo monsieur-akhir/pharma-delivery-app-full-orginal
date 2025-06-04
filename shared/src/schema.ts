@@ -17,13 +17,29 @@ export const userRoleEnum = pgEnum("user_role", [
   "CUSTOMER",
   "ADMIN",
   "PHARMACY_STAFF",
-  "PHARMACIST",
+  "PHARMACIST", 
   "DELIVERY_PERSON",
   "SUPER_ADMIN",
   "MANAGER",
   "SUPPORT",
   "VIEWER",
-]);
+] as const);
+
+// Export UserRole type for TypeScript
+export const UserRole = {
+  CUSTOMER: "CUSTOMER",
+  ADMIN: "ADMIN", 
+  PHARMACY_STAFF: "PHARMACY_STAFF",
+  PHARMACIST: "PHARMACIST",
+  DELIVERY_PERSON: "DELIVERY_PERSON",
+  SUPER_ADMIN: "SUPER_ADMIN",
+  MANAGER: "MANAGER",
+  SUPPORT: "SUPPORT",
+  VIEWER: "VIEWER",
+  PHARMACY_MANAGER: "PHARMACY_STAFF", // Alias for PHARMACY_STAFF
+} as const;
+
+export type UserRole = typeof UserRole[keyof typeof UserRole];
 
 export const orderStatusEnum = pgEnum("order_status", [
   "PENDING",
@@ -54,6 +70,31 @@ export const pharmacyStatusEnum = pgEnum("pharmacy_status", [
   "REJECTED",
   "PENDING_INFO",
 ]);
+
+export const stockMovementTypeEnum = pgEnum("stock_movement_type", [
+  "PURCHASE",
+  "SALE",
+  "ADJUSTMENT",
+  "TRANSFER_IN",
+  "TRANSFER_OUT",
+  "EXPIRED",
+  "DAMAGED",
+  "RETURNED",
+]);
+
+// Export StockMovementType constants for TypeScript
+export const StockMovementType = {
+  PURCHASE: "PURCHASE",
+  SALE: "SALE",
+  ADJUSTMENT: "ADJUSTMENT",
+  TRANSFER_IN: "TRANSFER_IN",
+  TRANSFER_OUT: "TRANSFER_OUT",
+  EXPIRED: "EXPIRED",
+  DAMAGED: "DAMAGED",
+  RETURNED: "RETURNED",
+} as const;
+
+export type StockMovementType = typeof StockMovementType[keyof typeof StockMovementType];
 
 // User table
 export const users = pgTable("users", {
@@ -147,8 +188,15 @@ export const pharmacy_medicines = pgTable("pharmacy_medicines", {
   price: decimal("price", { precision: 10, scale: 2 }),
   cost_price: decimal("cost_price", { precision: 10, scale: 2 }),
   stock: integer("stock").default(0).notNull(),
+  // Add missing columns for enhanced stock management
+  quantity: integer("quantity").default(0).notNull(), // Alias for stock for consistency
+  alert_threshold: integer("alert_threshold").default(5).notNull(),
+  reorder_level: integer("reorder_level").default(10).notNull(),
   reorder_threshold: integer("reorder_threshold").default(5).notNull(),
   optimal_stock: integer("optimal_stock"),
+  expiry_date: timestamp("expiry_date"),
+  unit_price: decimal("unit_price", { precision: 10, scale: 2 }),
+  location_in_pharmacy: text("location_in_pharmacy"),
   created_at: timestamp("created_at").defaultNow().notNull(),
   updated_at: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -361,6 +409,30 @@ export const delivery_tracking = pgTable("delivery_tracking", {
   battery_level: decimal("battery_level", { precision: 5, scale: 2 }),
 });
 
+// Stock Movements table
+export const stock_movements = pgTable("stock_movements", {
+  id: serial("id").primaryKey(),
+  pharmacy_id: integer("pharmacy_id")
+    .notNull()
+    .references(() => pharmacies.id, { onDelete: "cascade" }),
+  medicine_id: integer("medicine_id")
+    .notNull()
+    .references(() => medicines.id, { onDelete: "cascade" }),
+  movement_type: stockMovementTypeEnum("movement_type").notNull(),
+  quantity: integer("quantity").notNull(),
+  previous_stock: integer("previous_stock").notNull(),
+  new_stock: integer("new_stock").notNull(),
+  unit_price: decimal("unit_price", { precision: 10, scale: 2 }),
+  total_value: decimal("total_value", { precision: 10, scale: 2 }),
+  reference_id: integer("reference_id"), // Can reference order_id, transfer_id, etc.
+  reference_type: varchar("reference_type", { length: 50 }), // 'order', 'transfer', 'adjustment', etc.
+  notes: text("notes"),
+  performed_by: integer("performed_by")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  created_at: timestamp("created_at").defaultNow().notNull(),
+});
+
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
   pharmacy_staff: many(pharmacy_staff),
@@ -371,6 +443,7 @@ export const usersRelations = relations(users, ({ many }) => ({
   messages_received: many(messages, { relationName: "receiver_messages" }),
   reminders: many(reminders),
   delivery_tracking: many(delivery_tracking),
+  stock_movements: many(stock_movements),
 }));
 
 export const pharmaciesRelations = relations(pharmacies, ({ many }) => ({
@@ -378,12 +451,14 @@ export const pharmaciesRelations = relations(pharmacies, ({ many }) => ({
   pharmacy_medicines: many(pharmacy_medicines),
   orders: many(orders),
   supplier_orders: many(supplier_orders),
+  stock_movements: many(stock_movements),
 }));
 
 export const medicinesRelations = relations(medicines, ({ many }) => ({
   pharmacy_medicines: many(pharmacy_medicines),
   order_items: many(order_items),
   supplier_order_items: many(supplier_order_items),
+  stock_movements: many(stock_movements),
   reminders: many(reminders),
 }));
 
@@ -470,12 +545,30 @@ export const deliveryTrackingRelations = relations(delivery_tracking, ({ one }) 
   }),
 }));
 
+export const stockMovementsRelations = relations(stock_movements, ({ one }) => ({
+  pharmacy: one(pharmacies, {
+    fields: [stock_movements.pharmacy_id],
+    references: [pharmacies.id],
+  }),
+  medicine: one(medicines, {
+    fields: [stock_movements.medicine_id],
+    references: [medicines.id],
+  }),
+  performed_by_user: one(users, {
+    fields: [stock_movements.performed_by],
+    references: [users.id],
+  }),
+}));
+
 // Define types based on schema
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
 export type Pharmacy = typeof pharmacies.$inferSelect;
 export type InsertPharmacy = typeof pharmacies.$inferInsert;
+
+export type PharmacyMedicine = typeof pharmacy_medicines.$inferSelect;
+export type InsertPharmacyMedicine = typeof pharmacy_medicines.$inferInsert;
 
 export type Medicine = typeof medicines.$inferSelect;
 export type InsertMedicine = typeof medicines.$inferInsert;
@@ -509,3 +602,6 @@ export type InsertAiSetting = typeof ai_settings.$inferInsert;
 
 export type DeliveryTracking = typeof delivery_tracking.$inferSelect;
 export type InsertDeliveryTracking = typeof delivery_tracking.$inferInsert;
+
+export type StockMovement = typeof stock_movements.$inferSelect;
+export type InsertStockMovement = typeof stock_movements.$inferInsert;

@@ -1,6 +1,5 @@
 const { Pool } = require('pg');
 const { drizzle } = require('drizzle-orm/node-postgres');
-const schema = require('../shared/schema');
 const dotenv = require('dotenv');
 
 // Load environment variables
@@ -23,7 +22,7 @@ async function main() {
 
   // Connect to the database
   try {
-    const db = drizzle(pool, { schema });
+    const db = drizzle(pool);
 
     // Push the schema to the database
     console.log('Connected to database, applying schema...');
@@ -44,6 +43,24 @@ async function main() {
       await pool.query(`
         DO $$ BEGIN
           CREATE TYPE "order_status" AS ENUM ('PENDING', 'CONFIRMED', 'PROCESSING', 'READY_FOR_PICKUP', 'OUT_FOR_DELIVERY', 'DELIVERED', 'CANCELLED');
+        EXCEPTION
+          WHEN duplicate_object THEN null;
+        END $$;
+      `);
+
+      // Create pharmacy_status enum
+      await pool.query(`
+        DO $$ BEGIN
+          CREATE TYPE "pharmacy_status" AS ENUM ('PENDING', 'APPROVED', 'REJECTED', 'PENDING_INFO');
+        EXCEPTION
+          WHEN duplicate_object THEN null;
+        END $$;
+      `);
+
+      // Create stock_movement_type enum
+      await pool.query(`
+        DO $$ BEGIN
+          CREATE TYPE "stock_movement_type" AS ENUM ('PURCHASE', 'SALE', 'ADJUSTMENT', 'TRANSFER_IN', 'TRANSFER_OUT', 'EXPIRED', 'DAMAGED', 'RETURNED');
         EXCEPTION
           WHEN duplicate_object THEN null;
         END $$;
@@ -265,6 +282,26 @@ async function main() {
           "setting_value" JSONB NOT NULL,
           "created_at" TIMESTAMP NOT NULL DEFAULT NOW(),
           "updated_at" TIMESTAMP NOT NULL DEFAULT NOW()
+        );
+      `);
+
+      // Create stock_movements table
+      await pool.query(`
+        CREATE TABLE IF NOT EXISTS "stock_movements" (
+          "id" SERIAL PRIMARY KEY,
+          "pharmacy_id" INTEGER NOT NULL REFERENCES "pharmacies"("id") ON DELETE CASCADE,
+          "medicine_id" INTEGER NOT NULL REFERENCES "medicines"("id") ON DELETE CASCADE,
+          "movement_type" "stock_movement_type" NOT NULL,
+          "quantity" INTEGER NOT NULL,
+          "previous_stock" INTEGER NOT NULL,
+          "new_stock" INTEGER NOT NULL,
+          "unit_price" NUMERIC(10, 2),
+          "total_value" NUMERIC(10, 2),
+          "reference_id" INTEGER,
+          "reference_type" VARCHAR(50),
+          "notes" TEXT,
+          "performed_by" INTEGER NOT NULL REFERENCES "users"("id") ON DELETE CASCADE,
+          "created_at" TIMESTAMP NOT NULL DEFAULT NOW()
         );
       `);
 
