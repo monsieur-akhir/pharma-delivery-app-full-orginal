@@ -5,15 +5,20 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  Image,
 } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { useNavigation, useRoute, NavigationProp } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 import { PaymentMethod, PaymentMethodOption } from '../types/payment';
 import { COLORS, SIZES } from '../constants';
 
+type PaymentStackParamList = {
+  PaymentMethod: { orderId: number; amount: number };
+  CardPayment: { orderId: number; amount: number };
+  MobileMoneyPayment: { orderId: number; amount: number };
+};
+
 const PaymentMethodScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<PaymentStackParamList>>();
   const route = useRoute();
   const { orderId, amount } = route.params as { orderId: number; amount: number };
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(null);
@@ -52,7 +57,7 @@ const PaymentMethodScreen = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-          <Icon name="arrow-back" size={24} color={COLORS.primary} />
+          <Ionicons name="arrow-back" size={24} color={COLORS.primary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Select Payment Method</Text>
       </View>
@@ -70,12 +75,12 @@ const PaymentMethodScreen = () => {
             >
               <View style={styles.optionLeftContent}>
                 <View style={styles.iconContainer}>
-                  <Icon name={option.icon} size={28} color={COLORS.primary} />
+                  <Ionicons name={option.icon} size={28} color={COLORS.primary} />
                 </View>
                 <Text style={styles.optionText}>{option.name}</Text>
               </View>
               {selectedMethod === option.type && (
-                <Icon name="checkmark-circle" size={24} color={COLORS.primary} />
+                <Ionicons name="checkmark-circle" size={24} color={COLORS.primary} />
               )}
             </TouchableOpacity>
           ))}

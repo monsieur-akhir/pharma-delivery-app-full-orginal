@@ -1,45 +1,28 @@
-// Payment types for the mobile application
-
-export enum MobileMoneyProvider {
-  ORANGE = 'ORANGE',
-  MTN = 'MTN',
-  MOOV = 'MOOV',
-  WAVE = 'WAVE',
-}
-
-export enum PaymentMethod {
-  CARD = 'CARD',
-  MOBILE_MONEY = 'MOBILE_MONEY',
-  CASH = 'CASH',
-}
-
-export enum PaymentStatus {
-  PENDING = 'PENDING',
-  COMPLETED = 'COMPLETED',
-  FAILED = 'FAILED',
-}
-
-export interface PaymentIntent {
+export interface PaymentMethod {
   id: string;
-  clientSecret: string;
-  amount: number;
-  currency: string;
-  status: string;
-}
-
-export interface MobileMoneyPayment {
-  transactionReference: string;
-  provider: MobileMoneyProvider;
-  phoneNumber: string;
-  amount: number;
-  currency: string;
-  status: 'pending' | 'completed' | 'failed';
-  message?: string;
+  name: string;
+  type: 'card' | 'mobile_money' | 'cash';
+  icon: string;
+  isDefault?: boolean;
 }
 
 export interface PaymentMethodOption {
   id: string;
-  name: string;
+  title: string;
+  subtitle?: string;
   icon: string;
-  type: PaymentMethod;
+  type: 'card' | 'mobile_money' | 'cash';
+  enabled: boolean;
+}
+
+export interface CardDetails {
+  cardNumber: string;
+  expiryDate: string;
+  cvv: string;
+  cardholderName: string;
+}
+
+export interface MobileMoneyDetails {
+  phoneNumber: string;
+  provider: 'mtn' | 'orange' | 'airtel';
 }

@@ -4,14 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { 
-  useFonts, 
-  Poppins_400Regular,
-  Poppins_500Medium,
-  Poppins_600SemiBold,
-  Poppins_700Bold 
-} from '@expo-google-fonts/poppins';
-import { MaterialIcons, FontAwesome5, Ionicons } from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
 import * as SplashScreen from 'expo-splash-screen';
 
 // Screens
@@ -22,7 +15,7 @@ import ProfileScreen from './src/screens/ProfileScreen';
 import MedicationsScreen from './src/screens/MedicationsScreen';
 import PrescriptionScreen from './src/screens/PrescriptionScreen';
 import DeliveryTrackingScreen from './src/screens/DeliveryTrackingScreen';
-import PharmacyListScreen from './src/screens/PharmacyListScreen';
+import PaymentMethodScreen from './src/screens/PaymentMethodScreen';
 import PharmacyDetailScreen from './src/screens/PharmacyDetailScreen';
 import OrderConfirmationScreen from './src/screens/OrderConfirmationScreen';
 import CheckoutScreen from './src/screens/CheckoutScreen';
@@ -40,7 +33,7 @@ function MainTabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarIcon: ({ color, size }) => {
           if (route.name === 'Home') {
             return <MaterialIcons name="home" size={size} color={color} />;
           } else if (route.name === 'Medications') {
@@ -77,7 +70,7 @@ function AppNavigator() {
         {user ? (
           <>
             <Stack.Screen name="Main" component={MainTabs} />
-            <Stack.Screen name="PharmacyList" component={PharmacyListScreen} />
+            <Stack.Screen name="PaymentMethod" component={PaymentMethodScreen} />
             <Stack.Screen name="PharmacyDetail" component={PharmacyDetailScreen} />
             <Stack.Screen name="DeliveryTracking" component={DeliveryTrackingScreen} />
             <Stack.Screen name="OrderConfirmation" component={OrderConfirmationScreen} />
@@ -97,13 +90,6 @@ function AppNavigator() {
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
 
-  const [fontsLoaded] = useFonts({
-    Poppins_400Regular,
-    Poppins_500Medium,
-    Poppins_600SemiBold,
-    Poppins_700Bold,
-  });
-
   useEffect(() => {
     async function prepare() {
       try {
@@ -122,7 +108,7 @@ export default function App() {
     prepare();
   }, []);
 
-  if (!appIsReady || !fontsLoaded) {
+  if (!appIsReady) {
     return null;
   }
 
