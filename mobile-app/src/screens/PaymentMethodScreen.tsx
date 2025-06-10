@@ -8,8 +8,14 @@ import {
 } from 'react-native';
 import { useNavigation, useRoute, NavigationProp } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import { PaymentMethod, PaymentMethodOption } from '../types/payment';
 import { COLORS, SIZES } from '../constants';
+
+interface PaymentMethodOption {
+  id: string;
+  name: string;
+  icon: string;
+  type: string;
+}
 
 type PaymentStackParamList = {
   PaymentMethod: { orderId: number; amount: number };
@@ -21,7 +27,7 @@ const PaymentMethodScreen = () => {
   const navigation = useNavigation<NavigationProp<PaymentStackParamList>>();
   const route = useRoute();
   const { orderId, amount } = route.params as { orderId: number; amount: number };
-  const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(null);
+  const [selectedMethod, setSelectedMethod] = useState<PaymentMethodOption | null>(null);
 
   // Payment options
   const paymentOptions: PaymentMethodOption[] = [
@@ -29,26 +35,26 @@ const PaymentMethodScreen = () => {
       id: 'card',
       name: 'Credit/Debit Card',
       icon: 'card-outline',
-      type: PaymentMethod.CARD,
+      type: 'CARD',
     },
     {
       id: 'mobile-money',
       name: 'Mobile Money',
       icon: 'phone-portrait-outline',
-      type: PaymentMethod.MOBILE_MONEY,
+      type: 'MOBILE_MONEY',
     },
   ];
 
   // Handle payment option selection
-  const handleSelectMethod = (method: PaymentMethod) => {
+  const handleSelectMethod = (method: PaymentMethodOption | null) => {
     setSelectedMethod(method);
   };
 
   // Continue to payment
   const handleContinue = () => {
-    if (selectedMethod === PaymentMethod.CARD) {
+    if (selectedMethod?.type === 'CARD') {
       navigation.navigate('CardPayment', { orderId, amount });
-    } else if (selectedMethod === PaymentMethod.MOBILE_MONEY) {
+    } else if (selectedMethod?.type === 'MOBILE_MONEY') {
       navigation.navigate('MobileMoneyPayment', { orderId, amount });
     }
   };
@@ -69,17 +75,17 @@ const PaymentMethodScreen = () => {
               key={option.id}
               style={[
                 styles.paymentOption,
-                selectedMethod === option.type && styles.selectedOption,
+                selectedMethod?.id === option.id && styles.selectedOption,
               ]}
-              onPress={() => handleSelectMethod(option.type)}
+              onPress={() => handleSelectMethod(option)}
             >
               <View style={styles.optionLeftContent}>
                 <View style={styles.iconContainer}>
-                  <Ionicons name={option.icon} size={28} color={COLORS.primary} />
+                  <Ionicons name={option.icon as any} size={28} color={COLORS.primary} />
                 </View>
                 <Text style={styles.optionText}>{option.name}</Text>
               </View>
-              {selectedMethod === option.type && (
+              {selectedMethod?.id === option.id && (
                 <Ionicons name="checkmark-circle" size={24} color={COLORS.primary} />
               )}
             </TouchableOpacity>
@@ -115,7 +121,7 @@ const PaymentMethodScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.surface,
     padding: SIZES.padding,
   },
   header: {
@@ -127,7 +133,7 @@ const styles = StyleSheet.create({
     marginRight: SIZES.padding,
   },
   headerTitle: {
-    fontSize: SIZES.large,
+    fontSize: SIZES.h3,
     fontWeight: 'bold',
     color: COLORS.text,
   },
@@ -141,12 +147,12 @@ const styles = StyleSheet.create({
     padding: SIZES.padding,
     marginBottom: SIZES.base,
     borderWidth: 1,
-    borderColor: COLORS.lightGray,
+    borderColor: COLORS.border,
     borderRadius: SIZES.radius,
   },
   selectedOption: {
     borderColor: COLORS.primary,
-    backgroundColor: COLORS.lightPrimary,
+    backgroundColor: COLORS.accent,
   },
   optionLeftContent: {
     flexDirection: 'row',
@@ -156,7 +162,7 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: COLORS.lightPrimary,
+    backgroundColor: COLORS.accent,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: SIZES.padding,
@@ -167,7 +173,7 @@ const styles = StyleSheet.create({
     color: COLORS.text,
   },
   orderSummary: {
-    backgroundColor: COLORS.lightGray2,
+    backgroundColor: COLORS.background,
     padding: SIZES.padding,
     borderRadius: SIZES.radius,
     marginBottom: SIZES.padding * 2,
@@ -184,7 +190,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   summaryLabel: {
-    color: COLORS.gray,
+    color: COLORS.textSecondary,
     fontSize: SIZES.font,
   },
   summaryValue: {
@@ -203,12 +209,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   continueButtonText: {
-    color: COLORS.white,
+    color: COLORS.surface,
     fontSize: SIZES.font,
     fontWeight: 'bold',
   },
   disabledButton: {
-    backgroundColor: COLORS.gray,
+    backgroundColor: COLORS.textSecondary,
     opacity: 0.6,
   },
 });

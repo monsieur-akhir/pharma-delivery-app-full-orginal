@@ -2,6 +2,13 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { API_URL } from '../config';
 import { store } from '../store';
 import { loginSuccess, logoutUser } from '../store/auth/authSlice';
+import { MedicationReminder } from "../features/medication-reminders/services/ReminderService";
+
+interface ApiResponse<T = any> {
+  status: string;
+  data: T;
+  message?: string;
+}
 
 class ApiService {
   private api: AxiosInstance;
@@ -53,18 +60,18 @@ class ApiService {
   }
   
   // Generic request methods
-  public async get<T = any>(url: string, config?: AxiosRequestConfig): Promise<T> {
+  public async get<T = any>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
     try {
-      const response = await this.api.get<T>(url, config);
+      const response = await this.api.get<ApiResponse<T>>(url, config);
       return response.data;
     } catch (error) {
       return this.handleError(error);
     }
   }
   
-  public async post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
+  public async post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
     try {
-      const response = await this.api.post<T>(url, data, config);
+      const response = await this.api.post<ApiResponse<T>>(url, data, config);
       return response.data;
     } catch (error) {
       return this.handleError(error);
@@ -175,6 +182,14 @@ class ApiService {
     } catch (error) {
       return this.handleError(error);
     }
+  }
+
+  public async getActiveReminders(): Promise<ApiResponse<MedicationReminder[]>> {
+    return this.get<MedicationReminder[]>("/reminders/active");
+  }
+
+  public async markReminderAsTaken(reminderId: string | number): Promise<ApiResponse<{ success: boolean }>> {
+    return this.post<{ success: boolean }>(`/reminders/${reminderId}/taken`);
   }
   
   private handleError(error: any): never {

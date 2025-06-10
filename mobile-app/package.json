@@ -2,7 +2,7 @@
   "name": "medi-delivery-mobile",
   "version": "1.0.0",
   "description": "Mobile Medication Management Platform",
-  "main": "index.js",
+  "main": "index.tsx",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
