@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Platform, AppState, AppStateStatus } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AnimationType } from '../animations';
-import { API_BASE_URL } from '../../../config/constants';
+import { API_BASE_URL } from '../../../config/index';
+import ApiService from '../../../services/api.service';
 
 // Types for medication reminders
 export interface MedicationReminder {
@@ -14,6 +16,7 @@ export interface MedicationReminder {
   taken: boolean;
   instructions?: string;
   color?: string;
+  streak_days?: number;
 }
 
 export interface MedicationSchedule {
@@ -69,82 +72,6 @@ export const useReminders = () => {
   const [upcomingReminder, setUpcomingReminder] = useState<MedicationReminder | null>(null);
   const [error, setError] = useState<string | null>(null);
   
-  // Fetch reminders from API
-  const fetchReminders = async () => {
-    try {
-      setIsLoading(true);
-      const response = await fetch(`${API_BASE_URL}/api/reminders/user/active`);
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch reminders');
-      }
-      
-      const data = await response.json();
-      
-      if (data.success) {
-        // Transform API data to our format
-        const transformedReminders = data.data.map((item: any) => ({
-          id: item.id,
-          medicationId: item.medicine_id,
-          medicationName: item.medicine_name,
-          dosage: item.dosage,
-          type: getMedicationType(item.medicine_type),
-          scheduledTime: new Date(item.next_reminder),
-          taken: false,
-          instructions: item.instructions,
-          color: getColorForMedicationType(getMedicationType(item.medicine_type)),
-        }));
-        
-        setReminders(transformedReminders);
-        
-        // Group reminders by medication to create schedules
-        const medicationMap = new Map<string | number, MedicationReminder[]>();
-        
-        transformedReminders.forEach(reminder => {
-          if (!medicationMap.has(reminder.medicationId)) {
-            medicationMap.set(reminder.medicationId, []);
-          }
-          
-          medicationMap.get(reminder.medicationId)?.push(reminder);
-        });
-        
-        // Create schedules
-        const medicationSchedules: MedicationSchedule[] = [];
-        
-        medicationMap.forEach((medicationReminders, medicationId) => {
-          if (medicationReminders.length > 0) {
-            const firstReminder = medicationReminders[0];
-            
-            medicationSchedules.push({
-              id: medicationId,
-              medicationName: firstReminder.medicationName,
-              dosage: firstReminder.dosage,
-              type: firstReminder.type,
-              reminders: medicationReminders,
-              adherenceRate: calculateAdherenceRate(medicationReminders),
-              instructions: firstReminder.instructions,
-              color: firstReminder.color,
-              streakDays: data.data.find((item: any) => item.medicine_id === medicationId)?.streak_days || 0,
-            });
-          }
-        });
-        
-        setSchedules(medicationSchedules);
-        
-        // Find upcoming reminder (closest to current time that hasn't been taken)
-        findUpcomingReminder(transformedReminders);
-        
-      } else {
-        throw new Error(data.message || 'Failed to fetch reminders');
-      }
-    } catch (err: any) {
-      console.error('Error fetching reminders:', err);
-      setError(err.message || 'Failed to fetch reminders');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-  
   // Calculate adherence rate based on taken reminders
   const calculateAdherenceRate = (medicationReminders: MedicationReminder[]): number => {
     if (medicationReminders.length === 0) return 0;
@@ -173,23 +100,75 @@ export const useReminders = () => {
     }
   };
   
+  // Fetch reminders from API
+  const fetchReminders = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      const response = await ApiService.getActiveReminders();
+
+      if (response && response.status === 'success' && response.data) {
+        const transformedReminders = response.data.map((item: any) => ({
+          id: item.id,
+          medicationId: item.medicine_id,
+          medicationName: item.medicine_name,
+          dosage: item.dosage,
+          type: getMedicationType(item.medicine_type),
+          scheduledTime: new Date(item.next_reminder),
+          taken: false,
+          instructions: item.instructions,
+          color: getColorForMedicationType(getMedicationType(item.medicine_type)),
+          streak_days: item.streak_days,
+        }));
+
+        setReminders(transformedReminders);
+
+        const medicationMap = new Map<string | number, MedicationReminder[]>();
+        transformedReminders.forEach((reminder: MedicationReminder) => {
+          if (!medicationMap.has(reminder.medicationId)) {
+            medicationMap.set(reminder.medicationId, []);
+          }
+          medicationMap.get(reminder.medicationId)?.push(reminder);
+        });
+
+        const medicationSchedules: MedicationSchedule[] = [];
+        medicationMap.forEach((medicationReminders, medicationId) => {
+          if (medicationReminders.length > 0) {
+            const firstReminder = medicationReminders[0];
+            medicationSchedules.push({
+              id: medicationId,
+              medicationName: firstReminder.medicationName,
+              dosage: firstReminder.dosage,
+              type: firstReminder.type,
+              reminders: medicationReminders,
+              adherenceRate: calculateAdherenceRate(medicationReminders),
+              instructions: firstReminder.instructions,
+              color: firstReminder.color,
+              streakDays: response.data.find((item: any) => item.medicine_id === medicationId)?.streak_days || 0,
+            });
+          }
+        });
+
+        setSchedules(medicationSchedules);
+        findUpcomingReminder(transformedReminders);
+      } else {
+        throw new Error(response?.message || 'Failed to fetch reminders');
+      }
+    } catch (err: any) {
+      console.error('Error fetching reminders:', err);
+      setError(err.message || 'Failed to fetch reminders');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
   // Mark a reminder as taken
   const markReminderAsTaken = async (reminderId: string | number) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/reminders/${reminderId}/record`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await ApiService.markReminderAsTaken(reminderId);
       
-      if (!response.ok) {
-        throw new Error('Failed to mark reminder as taken');
-      }
-      
-      const data = await response.json();
-      
-      if (data.success) {
+      if (response.status === 'success') {
         // Update local state
         setReminders(prev => prev.map(r => 
           r.id === reminderId ? { ...r, taken: true } : r
@@ -215,7 +194,7 @@ export const useReminders = () => {
         
         return true;
       } else {
-        throw new Error(data.message || 'Failed to mark reminder as taken');
+        throw new Error(response.message || 'Failed to mark reminder as taken');
       }
     } catch (err: any) {
       console.error('Error marking reminder as taken:', err);
@@ -227,10 +206,19 @@ export const useReminders = () => {
   // Skip a reminder
   const skipReminder = async (reminderId: string | number) => {
     try {
+      // For now, use direct fetch as ApiService doesn't have skipReminder method
+      const userData = await AsyncStorage.getItem('@user_data');
+      const token = await AsyncStorage.getItem('@auth_token');
+      
+      if (!userData || !token) {
+        throw new Error('User not authenticated');
+      }
+      
       const response = await fetch(`${API_BASE_URL}/api/reminders/${reminderId}/skip`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
       });
       

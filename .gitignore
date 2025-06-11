@@ -2,7 +2,7 @@
 **/.angular/
 **/node_modules/
 node_modules/
-dist/
+**/dist/
 .angular/
 admin-portal/.angular/
 admin-portal/.angular/cache/
