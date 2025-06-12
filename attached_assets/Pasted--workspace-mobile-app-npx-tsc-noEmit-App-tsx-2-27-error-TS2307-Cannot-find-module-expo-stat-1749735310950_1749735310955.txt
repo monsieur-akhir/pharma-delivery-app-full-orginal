@@ -1,0 +1,3363 @@
+~/workspace/mobile-app$ npx tsc --noEmit
+App.tsx:2:27 - error TS2307: Cannot find module 'expo-status-bar' or its corresponding type declarations.
+
+2 import { StatusBar } from 'expo-status-bar';
+                            ~~~~~~~~~~~~~~~~~
+
+App.tsx:3:37 - error TS2307: Cannot find module '@react-navigation/native' or its corresponding type declarations.
+
+3 import { NavigationContainer } from '@react-navigation/native';
+                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+App.tsx:4:34 - error TS2307: Cannot find module 'react-native-safe-area-context' or its corresponding type declarations.
+
+4 import { SafeAreaProvider } from 'react-native-safe-area-context';
+                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+App.tsx:5:26 - error TS2307: Cannot find module 'react-redux' or its corresponding type declarations.
+
+5 import { Provider } from 'react-redux';
+                           ~~~~~~~~~~~~~
+
+App.tsx:6:29 - error TS2307: Cannot find module 'redux-persist/integration/react' or its corresponding type declarations.
+
+6 import { PersistGate } from 'redux-persist/integration/react';
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+App.tsx:7:31 - error TS2307: Cannot find module 'expo-splash-screen' or its corresponding type declarations.
+
+7 import * as SplashScreen from 'expo-splash-screen';
+                                ~~~~~~~~~~~~~~~~~~~~
+
+src/components/MedicineItem.tsx:37:28 - error TS2820: Type '"medication"' is not assignable to type '"delete" | "link" | "filter" | "search" | "repeat" | "anchor" | "style" | "accessible" | "image" | "opacity" | "android" | "web" | "sort" | "map" | "done" | "gradient" | "description" | ... 1545 more ... | undefined'. Did you mean '"mediation"'?
+
+37             <MaterialIcons name="medication" size={32} color="#ccc" />
+                              ~~~~
+
+  node_modules/@expo/vector-icons/build/createIconSet.d.ts:17:5
+    17     name: GLYPHS;
+           ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<IconProps<"delete" | "link" | "filter" | "search" | "repeat" | "anchor" | "style" | "accessible" | "image" | "opacity" | "android" | ... 1550 more ... | "zoom-out-map">, {}, any>> & Pick<...> & InexactPartial<...> & InexactPartial<...>'
+
+src/components/PaymentMethodSelector.tsx:81:5 - error TS2322: Type '{ gap: number; }' is not assignable to type 'ViewStyle | TextStyle | ImageStyle'.
+  Object literal may only specify known properties, and 'gap' does not exist in type 'ViewStyle | TextStyle | ImageStyle'.
+
+81     gap: 12,
+       ~~~~~~~
+
+  src/components/PaymentMethodSelector.tsx:80:3
+    80   container: {
+         ~~~~~~~~~~~~
+    81     gap: 12,
+       ~~~~~~~~~~~~
+    82   },
+       ~~~
+    The expected type comes from property 'container' which is declared here on type 'NamedStyles<any> | NamedStyles<{ container: { gap: number; }; methodCard: { backgroundColor: string; borderRadius: number; padding: number; borderWidth: number; borderColor: string; flexDirection: "row"; alignItems: "center"; justifyContent: "space-between"; }; ... 6 more ...; methodDescription: { ...; }; }> | Named...'
+
+src/features/medication-reminders/animations/AdherenceCelebration.tsx:63:9 - error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+
+63         color: getRandomColor(),
+           ~~~~~
+
+  src/features/medication-reminders/animations/AdherenceCelebration.tsx:17:3
+    17   color: string;
+         ~~~~~
+    The expected type comes from property 'color' which is declared here on type 'ConfettiPiece'
+
+src/features/medication-reminders/animations/AdherenceCelebration.tsx:212:13 - error TS2322: Type '{ width: number; height: number; backgroundColor: string; borderStyle: string; borderLeftWidth: number; borderRightWidth: number; borderBottomWidth: number; borderLeftColor: string; borderRightColor: string; borderBottomColor: string; }' is not assignable to type 'false | RegisteredStyle<ViewStyle> | Value | AnimatedInterpolation<string | number> | WithAnimatedObject<ViewStyle> | WithAnimatedArray<...> | readonly (false | ... 5 more ... | undefined)[] | null | undefined'.
+  Types of property 'borderStyle' are incompatible.
+    Type 'string' is not assignable to type '"solid" | "dotted" | "dashed" | Value | AnimatedInterpolation<string | number> | undefined'.
+
+212             shapeStyle,
+                ~~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationTakingSteps.tsx:265:19 - error TS2304: Cannot find name 'a10'.
+
+265     borderRadius: a10,
+                      ~~~
+
+src/features/medication-reminders/components/ActiveReminderView.tsx:179:10 - error TS2375: Type '{ type: AnimationType; reminderText: string; onComplete: () => Promise<void>; onDismiss: () => Promise<void>; medicationName: string; dosage: string; instructions: string | undefined; color: string | undefined; }' is not assignable to type 'ReminderAnimationProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'instructions' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+
+179         <ReminderAnimation
+             ~~~~~~~~~~~~~~~~~
+
+src/features/medication-reminders/components/ActiveReminderView.tsx:193:12 - error TS2375: Type '{ type: AnimationType; onComplete: () => Promise<void>; medicationName: string; dosage: string; instructions: string | undefined; }' is not assignable to type 'MedicationTakingStepsProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'instructions' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+
+193           <MedicationTakingSteps
+               ~~~~~~~~~~~~~~~~~~~~~
+
+src/features/medication-reminders/components/MedicationDashboard.tsx:46:50 - error TS18048: 'prev' is possibly 'undefined'.
+
+46         (prev, current) => (current.streakDays > prev.streakDays ? current : prev),
+                                                    ~~~~
+
+src/features/medication-reminders/components/MedicationDashboard.tsx:52:53 - error TS18048: 'prev' is possibly 'undefined'.
+
+52         (prev, current) => (current.adherenceRate > prev.adherenceRate ? current : prev),
+                                                       ~~~~
+
+src/features/medication-reminders/components/MedicationDashboard.tsx:58:10 - error TS18048: 'highestStreakSchedule' is possibly 'undefined'.
+
+58         (highestStreakSchedule.streakDays >= 7 && highestStreakSchedule.streakDays % 7 === 0) ||
+            ~~~~~~~~~~~~~~~~~~~~~
+
+src/features/medication-reminders/components/MedicationDashboard.tsx:58:51 - error TS18048: 'highestStreakSchedule' is possibly 'undefined'.
+
+58         (highestStreakSchedule.streakDays >= 7 && highestStreakSchedule.streakDays % 7 === 0) ||
+                                                     ~~~~~~~~~~~~~~~~~~~~~
+
+src/features/medication-reminders/components/MedicationDashboard.tsx:59:10 - error TS18048: 'highestAdherenceSchedule' is possibly 'undefined'.
+
+59         (highestAdherenceSchedule.adherenceRate >= 0.9 && highestAdherenceSchedule.reminders.length >= 10)
+            ~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/features/medication-reminders/components/MedicationDashboard.tsx:59:59 - error TS18048: 'highestAdherenceSchedule' is possibly 'undefined'.
+
+59         (highestAdherenceSchedule.adherenceRate >= 0.9 && highestAdherenceSchedule.reminders.length >= 10)
+                                                             ~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/features/medication-reminders/components/MedicationDashboard.tsx:61:13 - error TS18048: 'highestStreakSchedule' is possibly 'undefined'.
+
+61         if (highestStreakSchedule.streakDays >= highestAdherenceSchedule.adherenceRate * 100) {
+               ~~~~~~~~~~~~~~~~~~~~~
+
+src/features/medication-reminders/components/MedicationDashboard.tsx:61:49 - error TS18048: 'highestAdherenceSchedule' is possibly 'undefined'.
+
+61         if (highestStreakSchedule.streakDays >= highestAdherenceSchedule.adherenceRate * 100) {
+                                                   ~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:4:30 - error TS2307: Cannot find module '../../../config/constants' or its corresponding type declarations.
+
+4 import { API_BASE_URL } from '../../../config/constants';
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:103:38 - error TS7006: Parameter 'reminder' implicitly has an 'any' type.
+
+103         transformedReminders.forEach(reminder => {
+                                         ~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:118:38 - error TS2379: Argument of type '{ id: string | number; medicationName: string; dosage: string; type: AnimationType; reminders: MedicationReminder[]; adherenceRate: number; instructions: string | undefined; color: string | undefined; streakDays: any; }' is not assignable to parameter of type 'MedicationSchedule' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'instructions' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+
+118             medicationSchedules.push({
+                                         ~
+119               id: medicationId,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+127               streakDays: data.data.find((item: any) => item.medicine_id === medicationId)?.streak_days || 0,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+128             });
+    ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:120:31 - error TS18048: 'firstReminder' is possibly 'undefined'.
+
+120               medicationName: firstReminder.medicationName,
+                                  ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:121:23 - error TS18048: 'firstReminder' is possibly 'undefined'.
+
+121               dosage: firstReminder.dosage,
+                          ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:122:21 - error TS18048: 'firstReminder' is possibly 'undefined'.
+
+122               type: firstReminder.type,
+                        ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:125:29 - error TS18048: 'firstReminder' is possibly 'undefined'.
+
+125               instructions: firstReminder.instructions,
+                                ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:126:22 - error TS18048: 'firstReminder' is possibly 'undefined'.
+
+126               color: firstReminder.color,
+                         ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:168:27 - error TS2345: Argument of type 'MedicationReminder | undefined' is not assignable to parameter of type 'SetStateAction<MedicationReminder | null>'.
+  Type 'undefined' is not assignable to type 'SetStateAction<MedicationReminder | null>'.
+
+168       setUpcomingReminder(upcomingReminders[0]);
+                              ~~~~~~~~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:170:27 - error TS2345: Argument of type 'MedicationReminder | undefined' is not assignable to parameter of type 'SetStateAction<MedicationReminder | null>'.
+
+170       setUpcomingReminder(pastDueReminders[0]);
+                              ~~~~~~~~~~~~~~~~~~~
+
+src/features/video-chat/PharmacistConsultButton.tsx:10:31 - error TS2307: Cannot find module '@react-navigation/native' or its corresponding type declarations.
+
+10 import { useNavigation } from '@react-navigation/native';
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/features/video-chat/PharmacistConsultButton.tsx:11:22 - error TS2307: Cannot find module 'react-native-vector-icons/Ionicons' or its corresponding type declarations.
+
+11 import Ionicons from 'react-native-vector-icons/Ionicons';
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/features/video-chat/PharmacistConsultButton.tsx:12:30 - error TS2307: Cannot find module '../../config/constants' or its corresponding type declarations.
+
+12 import { API_BASE_URL } from '../../config/constants';
+                                ~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:12:41 - error TS2307: Cannot find module '@react-navigation/native' or its corresponding type declarations.
+
+12 import { useNavigation, useRoute } from '@react-navigation/native';
+                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:13:25 - error TS2307: Cannot find module 'react-native-webrtc' or its corresponding type declarations.
+
+13 import { RTCView } from 'react-native-webrtc';
+                           ~~~~~~~~~~~~~~~~~~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:14:22 - error TS2307: Cannot find module 'react-native-vector-icons/Ionicons' or its corresponding type declarations.
+
+14 import Ionicons from 'react-native-vector-icons/Ionicons';
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:33:33 - error TS2304: Cannot find name 'MediaStream'.
+
+33   const localStreamRef = useRef<MediaStream | null>(null);
+                                   ~~~~~~~~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:39:50 - error TS2304: Cannot find name 'MediaStream'.
+
+39   const [localStream, setLocalStream] = useState<MediaStream | null>(null);
+                                                    ~~~~~~~~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:40:66 - error TS2304: Cannot find name 'MediaStream'.
+
+40   const [remoteStreams, setRemoteStreams] = useState<Map<number, MediaStream>>(new Map());
+                                                                    ~~~~~~~~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:159:11 - error TS18047: 'user' is possibly 'null'.
+
+159           user.id,
+              ~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:160:11 - error TS18047: 'user' is possibly 'null'.
+
+160           user.username,
+              ~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:177:36 - error TS18047: 'user' is possibly 'null'.
+
+177           const roomName = `user-${user.id}-pharmacist-${params.pharmacistId}`;
+                                       ~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:182:36 - error TS18047: 'user' is possibly 'null'.
+
+182           const roomName = `user-${user.id}-consultation`;
+                                       ~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:202:52 - error TS7006: Parameter 'track' implicitly has an 'any' type.
+
+202         localStreamRef.current.getTracks().forEach(track => track.stop());
+                                                       ~~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:277:25 - error TS18047: 'user' is possibly 'null'.
+
+277                 userId: user.id,
+                            ~~~~
+
+src/features/video-chat/video-chat.service.ts:2:18 - error TS7016: Could not find a declaration file for module 'simple-peer'. '/home/runner/workspace/node_modules/simple-peer/index.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/simple-peer` if it exists or add a new declaration (.d.ts) file containing `declare module 'simple-peer';`
+
+2 import Peer from 'simple-peer';
+                   ~~~~~~~~~~~~~
+
+src/features/video-chat/video-chat.service.ts:3:30 - error TS2307: Cannot find module '../../config/constants' or its corresponding type declarations.
+
+3 import { API_BASE_URL } from '../../config/constants';
+                               ~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/features/video-chat/video-chat.service.ts:18:12 - error TS2304: Cannot find name 'MediaStream'.
+
+18   stream?: MediaStream;
+              ~~~~~~~~~~~
+
+src/features/video-chat/video-chat.service.ts:23:24 - error TS2304: Cannot find name 'MediaStream'.
+
+23   private localStream: MediaStream | null = null;
+                          ~~~~~~~~~~~
+
+src/features/video-chat/video-chat.service.ts:31:66 - error TS2304: Cannot find name 'MediaStream'.
+
+31   private onRemoteStreamAddedCallback: ((userId: number, stream: MediaStream) => void) | null = null;
+                                                                    ~~~~~~~~~~~
+
+src/features/video-chat/video-chat.service.ts:73:37 - error TS2304: Cannot find name 'MediaStream'.
+
+73   async setupLocalStream(): Promise<MediaStream> {
+                                       ~~~~~~~~~~~
+
+src/features/video-chat/video-chat.service.ts:75:32 - error TS2304: Cannot find name 'navigator'.
+
+75       this.localStream = await navigator.mediaDevices.getUserMedia({
+                                  ~~~~~~~~~
+
+src/features/video-chat/video-chat.service.ts:171:50 - error TS7006: Parameter 'track' implicitly has an 'any' type.
+
+171       this.localStream.getAudioTracks().forEach((track) => {
+                                                     ~~~~~
+
+src/features/video-chat/video-chat.service.ts:180:50 - error TS7006: Parameter 'track' implicitly has an 'any' type.
+
+180       this.localStream.getVideoTracks().forEach((track) => {
+                                                     ~~~~~
+
+src/features/video-chat/video-chat.service.ts:202:31 - error TS2304: Cannot find name 'navigator'.
+
+202       const newStream = await navigator.mediaDevices.getUserMedia({
+                                  ~~~~~~~~~
+
+src/features/video-chat/video-chat.service.ts:217:31 - error TS2304: Cannot find name 'MediaStream'.
+
+217           this.localStream as MediaStream
+                                  ~~~~~~~~~~~
+
+src/features/video-chat/video-chat.service.ts:341:24 - error TS7006: Parameter 'data' implicitly has an 'any' type.
+
+341     peer.on('signal', (data) => {
+                           ~~~~
+
+src/features/video-chat/video-chat.service.ts:354:24 - error TS7006: Parameter 'stream' implicitly has an 'any' type.
+
+354     peer.on('stream', (stream) => {
+                           ~~~~~~
+
+src/features/video-chat/video-chat.service.ts:361:23 - error TS7006: Parameter 'err' implicitly has an 'any' type.
+
+361     peer.on('error', (err) => {
+                          ~~~
+
+src/features/video-chat/video-chat.service.ts:427:61 - error TS2304: Cannot find name 'MediaStream'.
+
+427   setOnRemoteStreamAdded(callback: (userId: number, stream: MediaStream) => void): void {
+                                                                ~~~~~~~~~~~
+
+src/features/video-chat/video-chat.service.ts:465:45 - error TS7006: Parameter 'track' implicitly has an 'any' type.
+
+465       this.localStream.getTracks().forEach((track) => {
+                                                ~~~~~
+
+src/hooks/useAuth.tsx:30:42 - error TS2339: Property 'children' does not exist on type '{}'.
+
+30 export const AuthProvider: React.FC = ({ children }) => {
+                                            ~~~~~~~~
+
+src/navigation/AppNavigator.tsx:2:38 - error TS2307: Cannot find module '@react-navigation/stack' or its corresponding type declarations.
+
+2 import { createStackNavigator } from '@react-navigation/stack';
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:3:42 - error TS2307: Cannot find module '@react-navigation/bottom-tabs' or its corresponding type declarations.
+
+3 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:4:29 - error TS2307: Cannot find module 'react-redux' or its corresponding type declarations.
+
+4 import { useSelector } from 'react-redux';
+                              ~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:43:52 - error TS2304: Cannot find name 'PharmacyDetailScreen'.
+
+43     <Stack.Screen name="PharmacyDetail" component={PharmacyDetailScreen} />
+                                                      ~~~~~~~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:44:52 - error TS2304: Cannot find name 'MedicineDetailScreen'.
+
+44     <Stack.Screen name="MedicineDetail" component={MedicineDetailScreen} />
+                                                      ~~~~~~~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:46:46 - error TS2304: Cannot find name 'CheckoutScreen'.
+
+46     <Stack.Screen name="Checkout" component={CheckoutScreen} />
+                                                ~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:47:54 - error TS2304: Cannot find name 'ScanPrescriptionScreen'.
+
+47     <Stack.Screen name="ScanPrescription" component={ScanPrescriptionScreen} />
+                                                        ~~~~~~~~~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:48:56 - error TS2304: Cannot find name 'PrescriptionDetailScreen'.
+
+48     <Stack.Screen name="PrescriptionDetail" component={PrescriptionDetailScreen} />
+                                                          ~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:49:55 - error TS2304: Cannot find name 'VideoConsultationScreen'.
+
+49     <Stack.Screen name="VideoConsultation" component={VideoConsultationScreen} />
+                                                         ~~~~~~~~~~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:50:42 - error TS2304: Cannot find name 'ChatScreen'.
+
+50     <Stack.Screen name="Chat" component={ChatScreen} />
+                                            ~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:51:48 - error TS2304: Cannot find name 'TrackOrderScreen'.
+
+51     <Stack.Screen name="TrackOrder" component={TrackOrderScreen} />
+                                                  ~~~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:58:48 - error TS2304: Cannot find name 'OrdersScreen'.
+
+58     <Stack.Screen name="OrdersMain" component={OrdersScreen} />
+                                                  ~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:59:49 - error TS2304: Cannot find name 'OrderDetailScreen'.
+
+59     <Stack.Screen name="OrderDetail" component={OrderDetailScreen} />
+                                                   ~~~~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:60:48 - error TS2304: Cannot find name 'TrackOrderScreen'.
+
+60     <Stack.Screen name="TrackOrder" component={TrackOrderScreen} />
+                                                  ~~~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:61:42 - error TS2304: Cannot find name 'ChatScreen'.
+
+61     <Stack.Screen name="Chat" component={ChatScreen} />
+                                            ~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:69:52 - error TS2304: Cannot find name 'PharmacyDetailScreen'.
+
+69     <Stack.Screen name="PharmacyDetail" component={PharmacyDetailScreen} />
+                                                      ~~~~~~~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:70:52 - error TS2304: Cannot find name 'MedicineDetailScreen'.
+
+70     <Stack.Screen name="MedicineDetail" component={MedicineDetailScreen} />
+                                                      ~~~~~~~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:77:51 - error TS2304: Cannot find name 'RemindersScreen'.
+
+77     <Stack.Screen name="RemindersMain" component={RemindersScreen} />
+                                                     ~~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:78:49 - error TS2304: Cannot find name 'AddReminderScreen'.
+
+78     <Stack.Screen name="AddReminder" component={AddReminderScreen} />
+                                                   ~~~~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:85:49 - error TS2304: Cannot find name 'ProfileScreen'.
+
+85     <Stack.Screen name="ProfileMain" component={ProfileScreen} />
+                                                   ~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:86:51 - error TS2304: Cannot find name 'PrescriptionsScreen'.
+
+86     <Stack.Screen name="Prescriptions" component={PrescriptionsScreen} />
+                                                     ~~~~~~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:87:56 - error TS2304: Cannot find name 'PrescriptionDetailScreen'.
+
+87     <Stack.Screen name="PrescriptionDetail" component={PrescriptionDetailScreen} />
+                                                          ~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:114:52 - error TS2304: Cannot find name 'PaymentMethodsScreen'.
+
+114     <Stack.Screen name="PaymentMethods" component={PaymentMethodsScreen} />
+                                                       ~~~~~~~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:116:51 - error TS2304: Cannot find name 'NotificationsScreen'.
+
+116     <Stack.Screen name="Notifications" component={NotificationsScreen} />
+                                                      ~~~~~~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:117:46 - error TS2304: Cannot find name 'SettingsScreen'.
+
+117     <Stack.Screen name="Settings" component={SettingsScreen} />
+                                                 ~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:124:23 - error TS7031: Binding element 'route' implicitly has an 'any' type.
+
+124     screenOptions={({ route }) => ({
+                          ~~~~~
+
+src/navigation/AppNavigator.tsx:125:22 - error TS7031: Binding element 'focused' implicitly has an 'any' type.
+
+125       tabBarIcon: ({ focused, color, size }) => {
+                         ~~~~~~~
+
+src/navigation/AppNavigator.tsx:125:31 - error TS7031: Binding element 'color' implicitly has an 'any' type.
+
+125       tabBarIcon: ({ focused, color, size }) => {
+                                  ~~~~~
+
+src/navigation/AppNavigator.tsx:125:38 - error TS7031: Binding element 'size' implicitly has an 'any' type.
+
+125       tabBarIcon: ({ focused, color, size }) => {
+                                         ~~~~
+
+src/navigation/AppNavigator.tsx:140:26 - error TS2322: Type 'string | undefined' is not assignable to type '"options" | "link" | "square" | "filter" | "search" | "repeat" | "at" | "image" | "push" | "map" | "key" | "body" | "code" | "menu" | "time" | "ellipse" | "stop" | "text" | "reload" | ... 3662 more ... | undefined'.
+  Type 'string' is not assignable to type '"options" | "link" | "square" | "filter" | "search" | "repeat" | "at" | "image" | "push" | "map" | "key" | "body" | "code" | "menu" | "time" | "ellipse" | "stop" | "text" | "reload" | ... 3662 more ... | undefined'.
+
+140         return <Ionicons name={iconName} size={size} color={color} />;
+                             ~~~~
+
+  node_modules/@expo/vector-icons/build/createIconSet.d.ts:17:5
+    17     name: GLYPHS;
+           ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<IconProps<"options" | "link" | "square" | "filter" | "search" | "repeat" | "at" | "image" | "push" | "map" | "key" | "body" | "code" | ... 3667 more ... | "md-woman-sharp">, {}, any>> & Pick<...> & InexactPartial<...> & InexactPartial<...>'
+
+src/navigation/AppNavigator.tsx:186:47 - error TS2304: Cannot find name 'OtpScreen'.
+
+186           <Stack.Screen name="OTP" component={OtpScreen} />
+                                                  ~~~~~~~~~
+
+src/navigation/RootNavigation.ts:2:40 - error TS2307: Cannot find module '@react-navigation/native' or its corresponding type declarations.
+
+2 import { NavigationContainerRef } from '@react-navigation/native';
+                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/ActiveDeliveryScreen.tsx:15:30 - error TS2307: Cannot find module 'react-native-safe-area-context' or its corresponding type declarations.
+
+15 import { SafeAreaView } from 'react-native-safe-area-context';
+                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/ActiveDeliveryScreen.tsx:102:33 - error TS7030: Not all code paths return a value.
+
+102   const startLocationTracking = async () => {
+                                    ~~~~~~~~~~~~~
+
+src/screens/ActiveDeliveryScreen.tsx:324:9 - error TS2607: JSX element class does not support attributes because it does not have a 'props' property.
+
+324         <MapView
+            ~~~~~~~~
+325           ref={mapRef}
+    ~~~~~~~~~~~~~~~~~~~~~~
+... 
+334           }}
+    ~~~~~~~~~~~~
+335         >
+    ~~~~~~~~~
+
+src/screens/ActiveDeliveryScreen.tsx:324:10 - error TS2786: 'MapView' cannot be used as a JSX component.
+  Its instance type 'MapView' is not a valid JSX element.
+
+324         <MapView
+             ~~~~~~~
+
+src/screens/ActiveDeliveryScreen.tsx:337:11 - error TS2607: JSX element class does not support attributes because it does not have a 'props' property.
+
+337           <Marker
+              ~~~~~~~
+338             coordinate={delivery.pickupLocation}
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+341             pinColor="#4CAF50"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+342           />
+    ~~~~~~~~~~~~
+
+src/screens/ActiveDeliveryScreen.tsx:337:12 - error TS2786: 'Marker' cannot be used as a JSX component.
+  Its instance type 'MapMarker' is not a valid JSX element.
+
+337           <Marker
+               ~~~~~~
+
+src/screens/ActiveDeliveryScreen.tsx:345:11 - error TS2607: JSX element class does not support attributes because it does not have a 'props' property.
+
+345           <Marker
+              ~~~~~~~
+346             coordinate={delivery.deliveryLocation}
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+349             pinColor="#2196F3"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+350           />
+    ~~~~~~~~~~~~
+
+src/screens/ActiveDeliveryScreen.tsx:345:12 - error TS2786: 'Marker' cannot be used as a JSX component.
+  Its instance type 'MapMarker' is not a valid JSX element.
+
+345           <Marker
+               ~~~~~~
+
+src/screens/ActiveDeliveryScreen.tsx:354:13 - error TS2607: JSX element class does not support attributes because it does not have a 'props' property.
+
+354             <Polyline
+                ~~~~~~~~~
+355               coordinates={routeCoordinates}
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+357               strokeColor="#0C6B58"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+358             />
+    ~~~~~~~~~~~~~~
+
+src/screens/ActiveDeliveryScreen.tsx:354:14 - error TS2786: 'Polyline' cannot be used as a JSX component.
+  Its instance type 'MapPolyline' is not a valid JSX element.
+
+354             <Polyline
+                 ~~~~~~~~
+
+src/screens/ActiveDeliveryScreen.tsx:424:32 - error TS2322: Type 'string' is not assignable to type '"delete" | "link" | "filter" | "search" | "repeat" | "anchor" | "style" | "accessible" | "image" | "opacity" | "android" | "web" | "sort" | "map" | "done" | "gradient" | "description" | ... 1545 more ... | undefined'.
+
+424                 <MaterialIcons name={action.icon} size={20} color="#FFFFFF" />
+                                   ~~~~
+
+  node_modules/@expo/vector-icons/build/createIconSet.d.ts:17:5
+    17     name: GLYPHS;
+           ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<IconProps<"delete" | "link" | "filter" | "search" | "repeat" | "anchor" | "style" | "accessible" | "image" | "opacity" | "android" | ... 1550 more ... | "zoom-out-map">, {}, any>> & Pick<...> & InexactPartial<...> & InexactPartial<...>'
+
+src/screens/AddPaymentMethodScreen.tsx:14:31 - error TS2307: Cannot find module '@react-navigation/native' or its corresponding type declarations.
+
+14 import { useNavigation } from '@react-navigation/native';
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/AddPaymentMethodScreen.tsx:15:18 - error TS2307: Cannot find module 'react-native-vector-icons/Ionicons' or its corresponding type declarations.
+
+15 import Icon from 'react-native-vector-icons/Ionicons';
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/AddPaymentMethodScreen.tsx:18:10 - error TS2614: Module '"../services/api.service"' has no exported member 'api'. Did you mean to use 'import api from "../services/api.service"' instead?
+
+18 import { api } from '../services/api.service';
+            ~~~
+
+src/screens/AuthScreen.tsx:15:30 - error TS2307: Cannot find module 'react-native-safe-area-context' or its corresponding type declarations.
+
+15 import { SafeAreaView } from 'react-native-safe-area-context';
+                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/AuthScreen.tsx:16:29 - error TS2307: Cannot find module 'react-redux' or its corresponding type declarations.
+
+16 import { useSelector } from 'react-redux';
+                               ~~~~~~~~~~~~~
+
+src/screens/AuthScreen.tsx:63:25 - error TS2339: Property 'requestOtp' does not exist on type 'AuthService'.
+
+63       await authService.requestOtp(phoneNumber);
+                           ~~~~~~~~~~
+
+src/screens/AuthScreen.tsx:123:25 - error TS2339: Property 'completeProfile' does not exist on type 'AuthService'.
+
+123       await authService.completeProfile({
+                            ~~~~~~~~~~~~~~~
+
+src/screens/CardPaymentScreen.tsx:11:41 - error TS2307: Cannot find module '@react-navigation/native' or its corresponding type declarations.
+
+11 import { useNavigation, useRoute } from '@react-navigation/native';
+                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/CardPaymentScreen.tsx:12:54 - error TS2307: Cannot find module '@stripe/stripe-react-native' or its corresponding type declarations.
+
+12 import { StripeProvider, CardField, useStripe } from '@stripe/stripe-react-native';
+                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/CardPaymentScreen.tsx:13:18 - error TS2307: Cannot find module 'react-native-vector-icons/Ionicons' or its corresponding type declarations.
+
+13 import Icon from 'react-native-vector-icons/Ionicons';
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/CardPaymentScreen.tsx:40:11 - error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+
+40           user?.id,
+             ~~~~~~~~
+
+src/screens/CardPaymentScreen.tsx:161:34 - error TS7006: Parameter 'cardDetails' implicitly has an 'any' type.
+
+161                   onCardChange={(cardDetails) => {
+                                     ~~~~~~~~~~~
+
+src/screens/CartScreen.tsx:12:42 - error TS2307: Cannot find module 'react-redux' or its corresponding type declarations.
+
+12 import { useDispatch, useSelector } from 'react-redux';
+                                            ~~~~~~~~~~~~~
+
+src/screens/CartScreen.tsx:13:37 - error TS2307: Cannot find module '@react-navigation/stack' or its corresponding type declarations.
+
+13 import { StackNavigationProp } from '@react-navigation/stack';
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/CartScreen.tsx:14:10 - error TS2614: Module '"@/navigation/AppNavigator"' has no exported member 'MainStackParamList'. Did you mean to use 'import MainStackParamList from "@/navigation/AppNavigator"' instead?
+
+14 import { MainStackParamList } from '@/navigation/AppNavigator';
+            ~~~~~~~~~~~~~~~~~~
+
+src/screens/CartScreen.tsx:41:39 - error TS7006: Parameter 'sum' implicitly has an 'any' type.
+
+41   const subtotal = cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                                         ~~~
+
+src/screens/CartScreen.tsx:41:44 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+41   const subtotal = cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                                              ~~~~
+
+src/screens/CartScreen.tsx:46:48 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+46   const requiresPrescription = cart.items.some(item => item.requiresPrescription);
+                                                  ~~~~
+
+src/screens/ChatScreen.tsx:17:41 - error TS2307: Cannot find module '@react-navigation/native' or its corresponding type declarations.
+
+17 import { useNavigation, useRoute } from '@react-navigation/native';
+                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/ChatScreen.tsx:18:18 - error TS2307: Cannot find module 'react-native-vector-icons/Ionicons' or its corresponding type declarations.
+
+18 import Icon from 'react-native-vector-icons/Ionicons';
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/ChatScreen.tsx:200:22 - error TS2339: Property 'token' does not exist on type 'User'.
+
+200         token: user?.token,
+                         ~~~~~
+
+src/screens/DeliveryDashboardScreen.tsx:14:30 - error TS2307: Cannot find module 'react-native-safe-area-context' or its corresponding type declarations.
+
+14 import { SafeAreaView } from 'react-native-safe-area-context';
+                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/DeliveryDashboardScreen.tsx:34:36 - error TS7031: Binding element 'navigation' implicitly has an 'any' type.
+
+34 const DeliveryDashboardScreen = ({ navigation }) => {
+                                      ~~~~~~~~~~
+
+src/screens/DeliveryDashboardScreen.tsx:284:54 - error TS2339: Property 'getCurrentUser' does not exist on type 'AuthService'.
+
+284           <Text style={styles.username}>{authService.getCurrentUser()?.fullName}</Text>
+                                                         ~~~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:17:30 - error TS2307: Cannot find module 'react-native-safe-area-context' or its corresponding type declarations.
+
+17 import { SafeAreaView } from 'react-native-safe-area-context';
+                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:22:34 - error TS7031: Binding element 'route' implicitly has an 'any' type.
+
+22 const DeliveryDetailsScreen = ({ route, navigation }) => {
+                                    ~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:22:41 - error TS7031: Binding element 'navigation' implicitly has an 'any' type.
+
+22 const DeliveryDetailsScreen = ({ route, navigation }) => {
+                                           ~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:87:72 - error TS18047: 'delivery' is possibly 'null'.
+
+87       action: () => deliveryService.markMedicationPickedUp(deliveryId, delivery.items)
+                                                                          ~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:140:21 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'SetStateAction<null>'.
+
+140       setProofPhoto(result.assets[0].uri);
+                        ~~~~~~~~~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:145:19 - error TS2339: Property 'customerPhone' does not exist on type 'never'.
+
+145     if (delivery?.customerPhone) {
+                      ~~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:146:39 - error TS2339: Property 'customerPhone' does not exist on type 'never'.
+
+146       Linking.openURL(`tel:${delivery.customerPhone}`);
+                                          ~~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:184:12 - error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{ assigned: string; accepted: string; en_route_to_pharmacy: string; arrived_at_pharmacy: string; picked_up: string; en_route_to_customer: string; arrived_at_customer: string; delivered: string; cancelled: string; }'.
+  No index signature with a parameter of type 'string' was found on type '{ assigned: string; accepted: string; en_route_to_pharmacy: string; arrived_at_pharmacy: string; picked_up: string; en_route_to_customer: string; arrived_at_customer: string; delivered: string; cancelled: string; }'.
+
+184     return labels[status] || status;
+               ~~~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:190:22 - error TS2339: Property 'status' does not exist on type 'never'.
+
+190     switch (delivery.status) {
+                         ~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:276:63 - error TS2339: Property 'orderId' does not exist on type 'never'.
+
+276         <Text style={styles.headerTitle}>Livraison #{delivery.orderId}</Text>
+                                                                  ~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:288:72 - error TS2339: Property 'status' does not exist on type 'never'.
+
+288               <Text style={styles.statusText}>{getStatusLabel(delivery.status)}</Text>
+                                                                           ~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:300:57 - error TS2339: Property 'customerName' does not exist on type 'never'.
+
+300             <Text style={styles.customerName}>{delivery.customerName}</Text>
+                                                            ~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:305:56 - error TS2339: Property 'customerPhone' does not exist on type 'never'.
+
+305           <Text style={styles.customerPhone}>{delivery.customerPhone}</Text>
+                                                           ~~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:321:58 - error TS2339: Property 'pickupAddress' does not exist on type 'never'.
+
+321               <Text style={styles.addressText}>{delivery.pickupAddress}</Text>
+                                                             ~~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:324:50 - error TS2339: Property 'pickupAddress' does not exist on type 'never'.
+
+324                 onPress={() => openMaps(delivery.pickupAddress)}
+                                                     ~~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:339:58 - error TS2339: Property 'deliveryAddress' does not exist on type 'never'.
+
+339               <Text style={styles.addressText}>{delivery.deliveryAddress}</Text>
+                                                             ~~~~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:342:50 - error TS2339: Property 'deliveryAddress' does not exist on type 'never'.
+
+342                 onPress={() => openMaps(delivery.deliveryAddress)}
+                                                     ~~~~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:354:67 - error TS2339: Property 'items' does not exist on type 'never'.
+
+354             <Text style={styles.cardTitle}>Médicaments ({delivery.items?.length || 0})</Text>
+                                                                      ~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:356:21 - error TS2339: Property 'items' does not exist on type 'never'.
+
+356           {delivery.items?.map((item, index) => (
+                        ~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:356:33 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+356           {delivery.items?.map((item, index) => (
+                                    ~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:356:39 - error TS7006: Parameter 'index' implicitly has an 'any' type.
+
+356           {delivery.items?.map((item, index) => (
+                                          ~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:366:56 - error TS2339: Property 'totalAmount' does not exist on type 'never'.
+
+366             <Text style={styles.totalAmount}>{delivery.totalAmount} CFA</Text>
+                                                           ~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:383:34 - error TS2322: Type 'string' is not assignable to type '"delete" | "link" | "filter" | "search" | "repeat" | "anchor" | "style" | "accessible" | "image" | "opacity" | "android" | "web" | "sort" | "map" | "done" | "gradient" | "description" | ... 1545 more ... | undefined'.
+
+383                   <MaterialIcons name={action.icon} size={24} color="#FFFFFF" />
+                                     ~~~~
+
+  node_modules/@expo/vector-icons/build/createIconSet.d.ts:17:5
+    17     name: GLYPHS;
+           ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<IconProps<"delete" | "link" | "filter" | "search" | "repeat" | "anchor" | "style" | "accessible" | "image" | "opacity" | "android" | ... 1550 more ... | "zoom-out-map">, {}, any>> & Pick<...> & InexactPartial<...> & InexactPartial<...>'
+
+src/screens/DeliveryDetailsScreen.tsx:392:20 - error TS2339: Property 'status' does not exist on type 'never'.
+
+392         {(delivery.status === 'arrived_at_customer' || proofPhoto) && (
+                       ~~~~~~
+
+src/screens/DeliveryEarningsScreen.tsx:13:30 - error TS2307: Cannot find module 'react-native-safe-area-context' or its corresponding type declarations.
+
+13 import { SafeAreaView } from 'react-native-safe-area-context';
+                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/DeliveryEarningsScreen.tsx:15:47 - error TS2307: Cannot find module 'react-native-chart-kit' or its corresponding type declarations.
+
+15 import { LineChart, BarChart, PieChart } from 'react-native-chart-kit';
+                                                 ~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/DeliveryEarningsScreen.tsx:51:35 - error TS7031: Binding element 'navigation' implicitly has an 'any' type.
+
+51 const DeliveryEarningsScreen = ({ navigation }) => {
+                                     ~~~~~~~~~~
+
+src/screens/DeliveryEarningsScreen.tsx:268:45 - error TS7053: Element implicitly has an 'any' type because expression of type '`type${string}`' can't be used to index type '{ container: { flex: number; backgroundColor: string; }; header: { flexDirection: "row"; justifyContent: "space-between"; alignItems: "center"; paddingHorizontal: number; paddingVertical: number; backgroundColor: string; borderBottomWidth: number; borderBottomColor: string; }; ... 53 more ...; goalText: { ...; }; }'.
+
+268               <View style={[styles.typeTag, styles[`type${delivery.type.charAt(0).toUpperCase() + delivery.type.slice(1)}`]]}>
+                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/DeliveryEarningsScreen.tsx:379:15 - error TS2322: Type 'string' is not assignable to type '"delete" | "link" | "filter" | "search" | "repeat" | "anchor" | "style" | "accessible" | "image" | "opacity" | "android" | "web" | "sort" | "map" | "done" | "gradient" | "description" | ... 1545 more ... | undefined'.
+
+379               name={tab.icon}
+                  ~~~~
+
+  node_modules/@expo/vector-icons/build/createIconSet.d.ts:17:5
+    17     name: GLYPHS;
+           ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<IconProps<"delete" | "link" | "filter" | "search" | "repeat" | "anchor" | "style" | "accessible" | "image" | "opacity" | "android" | ... 1550 more ... | "zoom-out-map">, {}, any>> & Pick<...> & InexactPartial<...> & InexactPartial<...>'
+
+src/screens/DeliveryHistoryScreen.tsx:13:30 - error TS2307: Cannot find module 'react-native-safe-area-context' or its corresponding type declarations.
+
+13 import { SafeAreaView } from 'react-native-safe-area-context';
+                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/DeliveryHistoryScreen.tsx:29:34 - error TS7031: Binding element 'navigation' implicitly has an 'any' type.
+
+29 const DeliveryHistoryScreen = ({ navigation }) => {
+                                    ~~~~~~~~~~
+
+src/screens/DeliveryHistoryScreen.tsx:94:12 - error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{ delivered: string; cancelled: string; returned: string; }'.
+  No index signature with a parameter of type 'string' was found on type '{ delivered: string; cancelled: string; returned: string; }'.
+
+94     return labels[status] || status;
+              ~~~~~~~~~~~~~~
+
+src/screens/HomeScreen.tsx:13:30 - error TS2307: Cannot find module 'react-native-safe-area-context' or its corresponding type declarations.
+
+13 import { SafeAreaView } from 'react-native-safe-area-context';
+                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/LoginScreen.tsx:15:30 - error TS2307: Cannot find module 'react-native-safe-area-context' or its corresponding type declarations.
+
+15 import { SafeAreaView } from 'react-native-safe-area-context';
+                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/MedicationDetailsScreen.tsx:14:41 - error TS2307: Cannot find module '@react-navigation/native' or its corresponding type declarations.
+
+14 import { useRoute, useNavigation } from '@react-navigation/native';
+                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/MedicationDetailsScreen.tsx:234:48 - error TS7006: Parameter 'reminder' implicitly has an 'any' type.
+
+234               {selectedSchedule.reminders.map((reminder, index) => (
+                                                   ~~~~~~~~
+
+src/screens/MedicationDetailsScreen.tsx:234:58 - error TS7006: Parameter 'index' implicitly has an 'any' type.
+
+234               {selectedSchedule.reminders.map((reminder, index) => (
+                                                             ~~~~~
+
+src/screens/MedicineDetailScreen.tsx:14:41 - error TS2307: Cannot find module '@react-navigation/native' or its corresponding type declarations.
+
+14 import { useNavigation, useRoute } from '@react-navigation/native';
+                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/MedicineDetailScreen.tsx:15:18 - error TS2307: Cannot find module 'react-native-vector-icons/Ionicons' or its corresponding type declarations.
+
+15 import Icon from 'react-native-vector-icons/Ionicons';
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/MedicineSearchScreen.tsx:14:42 - error TS2307: Cannot find module 'react-redux' or its corresponding type declarations.
+
+14 import { useDispatch, useSelector } from 'react-redux';
+                                            ~~~~~~~~~~~~~
+
+src/screens/MedicineSearchScreen.tsx:15:37 - error TS2307: Cannot find module '@react-navigation/stack' or its corresponding type declarations.
+
+15 import { StackNavigationProp } from '@react-navigation/stack';
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/MedicineSearchScreen.tsx:16:10 - error TS2614: Module '"@/navigation/AppNavigator"' has no exported member 'MainStackParamList'. Did you mean to use 'import MainStackParamList from "@/navigation/AppNavigator"' instead?
+
+16 import { MainStackParamList } from '@/navigation/AppNavigator';
+            ~~~~~~~~~~~~~~~~~~
+
+src/screens/MobileMoneyPaymentScreen.tsx:13:42 - error TS2307: Cannot find module 'react-redux' or its corresponding type declarations.
+
+13 import { useDispatch, useSelector } from 'react-redux';
+                                            ~~~~~~~~~~~~~
+
+src/screens/MobileMoneyPaymentScreen.tsx:14:37 - error TS2307: Cannot find module '@react-navigation/stack' or its corresponding type declarations.
+
+14 import { StackNavigationProp } from '@react-navigation/stack';
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/MobileMoneyPaymentScreen.tsx:15:27 - error TS2307: Cannot find module '@react-navigation/native' or its corresponding type declarations.
+
+15 import { RouteProp } from '@react-navigation/native';
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/MobileMoneyPaymentScreen.tsx:16:10 - error TS2614: Module '"@/navigation/AppNavigator"' has no exported member 'MainStackParamList'. Did you mean to use 'import MainStackParamList from "@/navigation/AppNavigator"' instead?
+
+16 import { MainStackParamList } from '@/navigation/AppNavigator';
+            ~~~~~~~~~~~~~~~~~~
+
+src/screens/MobileMoneyPaymentScreen.tsx:19:10 - error TS2614: Module '"@/services/payment.service"' has no exported member 'paymentService'. Did you mean to use 'import paymentService from "@/services/payment.service"' instead?
+
+19 import { paymentService } from '@/services/payment.service';
+            ~~~~~~~~~~~~~~
+
+src/screens/NotificationsScreen.tsx:15:47 - error TS2307: Cannot find module '@react-navigation/native' or its corresponding type declarations.
+
+15 import { useNavigation, useFocusEffect } from '@react-navigation/native';
+                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/NotificationsScreen.tsx:16:18 - error TS2307: Cannot find module 'react-native-vector-icons/Ionicons' or its corresponding type declarations.
+
+16 import Icon from 'react-native-vector-icons/Ionicons';
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/NotificationsScreen.tsx:486:10 - error TS2304: Cannot find name 'ScrollView'.
+
+486         <ScrollView style={styles.scrollView}>
+             ~~~~~~~~~~
+
+src/screens/NotificationsScreen.tsx:488:11 - error TS2304: Cannot find name 'ScrollView'.
+
+488         </ScrollView>
+              ~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:11:41 - error TS2307: Cannot find module '@react-navigation/native' or its corresponding type declarations.
+
+11 import { useNavigation, useRoute } from '@react-navigation/native';
+                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:12:18 - error TS2307: Cannot find module 'react-native-vector-icons/Ionicons' or its corresponding type declarations.
+
+12 import Icon from 'react-native-vector-icons/Ionicons';
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:41:18 - error TS2345: Argument of type '"Network error. Please try again later."' is not assignable to parameter of type 'SetStateAction<null>'.
+
+41         setError('Network error. Please try again later.');
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:51:27 - error TS7006: Parameter 'status' implicitly has an 'any' type.
+
+51   const getStatusColor = (status) => {
+                             ~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:69:34 - error TS7006: Parameter 'status' implicitly has an 'any' type.
+
+69   const getPaymentStatusColor = (status) => {
+                                    ~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:83:23 - error TS7006: Parameter 'dateString' implicitly has an 'any' type.
+
+83   const formatDate = (dateString) => {
+                         ~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:136:56 - error TS2339: Property 'status' does not exist on type 'never'.
+
+136               { backgroundColor: getStatusColor(order?.status) }
+                                                           ~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:139:53 - error TS2339: Property 'status' does not exist on type 'never'.
+
+139             <Text style={styles.statusText}>{order?.status}</Text>
+                                                        ~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:141:63 - error TS2339: Property 'order_number' does not exist on type 'never'.
+
+141           <Text style={styles.orderNumberText}>Order #{order?.order_number}</Text>
+                                                                  ~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:142:60 - error TS2339: Property 'created_at' does not exist on type 'never'.
+
+142           <Text style={styles.dateText}>{formatDate(order?.created_at)}</Text>
+                                                               ~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:148:19 - error TS2339: Property 'order_items' does not exist on type 'never'.
+
+148           {order?.order_items?.map((item) => (
+                      ~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:148:37 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+148           {order?.order_items?.map((item) => (
+                                        ~~~~
+
+src/screens/OrderDetailsScreen.tsx:165:23 - error TS2339: Property 'payment_method' does not exist on type 'never'.
+
+165               {order?.payment_method === 'CARD' ? 'Credit/Debit Card' :
+                          ~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:166:23 - error TS2339: Property 'payment_method' does not exist on type 'never'.
+
+166                order?.payment_method === 'MOBILE_MONEY' ? `Mobile Money (${order?.payment_provider})` :
+                          ~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:166:83 - error TS2339: Property 'payment_provider' does not exist on type 'never'.
+
+166                order?.payment_method === 'MOBILE_MONEY' ? `Mobile Money (${order?.payment_provider})` :
+                                                                                      ~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:167:23 - error TS2339: Property 'payment_method' does not exist on type 'never'.
+
+167                order?.payment_method}
+                          ~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:170:19 - error TS2339: Property 'payment_provider' does not exist on type 'never'.
+
+170           {order?.payment_provider && (
+                      ~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:173:56 - error TS2339: Property 'payment_provider' does not exist on type 'never'.
+
+173               <Text style={styles.detailValue}>{order?.payment_provider}</Text>
+                                                           ~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:181:65 - error TS2339: Property 'payment_status' does not exist on type 'never'.
+
+181                 { backgroundColor: getPaymentStatusColor(order?.payment_status) }
+                                                                    ~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:184:62 - error TS2339: Property 'payment_status' does not exist on type 'never'.
+
+184               <Text style={styles.paymentStatusText}>{order?.payment_status}</Text>
+                                                                 ~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:187:19 - error TS2339: Property 'transaction_reference' does not exist on type 'never'.
+
+187           {order?.transaction_reference && (
+                      ~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:190:56 - error TS2339: Property 'transaction_reference' does not exist on type 'never'.
+
+190               <Text style={styles.detailValue}>{order?.transaction_reference}</Text>
+                                                           ~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:195:53 - error TS2339: Property 'total_amount' does not exist on type 'never'.
+
+195             <Text style={styles.totalValue}>{order?.total_amount.toLocaleString()} XOF</Text>
+                                                        ~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:204:54 - error TS2339: Property 'delivery_address' does not exist on type 'never'.
+
+204             <Text style={styles.detailValue}>{order?.delivery_address}</Text>
+                                                         ~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:206:19 - error TS2339: Property 'expected_delivery_time' does not exist on type 'never'.
+
+206           {order?.expected_delivery_time && (
+                      ~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:209:67 - error TS2339: Property 'expected_delivery_time' does not exist on type 'never'.
+
+209               <Text style={styles.detailValue}>{formatDate(order?.expected_delivery_time)}</Text>
+                                                                      ~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:212:19 - error TS2339: Property 'actual_delivery_time' does not exist on type 'never'.
+
+212           {order?.actual_delivery_time && (
+                      ~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:215:67 - error TS2339: Property 'actual_delivery_time' does not exist on type 'never'.
+
+215               <Text style={styles.detailValue}>{formatDate(order?.actual_delivery_time)}</Text>
+                                                                      ~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:222:19 - error TS2339: Property 'status' does not exist on type 'never'.
+
+222           {order?.status === 'PENDING' && order?.payment_status === 'completed' && (
+                      ~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:222:50 - error TS2339: Property 'payment_status' does not exist on type 'never'.
+
+222           {order?.status === 'PENDING' && order?.payment_status === 'completed' && (
+                                                     ~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:228:19 - error TS2339: Property 'status' does not exist on type 'never'.
+
+228           {order?.status === 'PENDING' && order?.payment_status === 'pending' && (
+                      ~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:228:50 - error TS2339: Property 'payment_status' does not exist on type 'never'.
+
+228           {order?.status === 'PENDING' && order?.payment_status === 'pending' && (
+                                                     ~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:232:28 - error TS2339: Property 'payment_method' does not exist on type 'never'.
+
+232                 if (order?.payment_method === 'MOBILE_MONEY') {
+                               ~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:234:36 - error TS2339: Property 'id' does not exist on type 'never'.
+
+234                     orderId: order.id,
+                                       ~~
+
+src/screens/OrderDetailsScreen.tsx:235:35 - error TS2339: Property 'total_amount' does not exist on type 'never'.
+
+235                     amount: order.total_amount,
+                                      ~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:236:49 - error TS2339: Property 'transaction_reference' does not exist on type 'never'.
+
+236                     transactionReference: order.transaction_reference
+                                                    ~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:240:36 - error TS2339: Property 'id' does not exist on type 'never'.
+
+240                     orderId: order.id,
+                                       ~~
+
+src/screens/OrderDetailsScreen.tsx:241:35 - error TS2339: Property 'total_amount' does not exist on type 'never'.
+
+241                     amount: order.total_amount
+                                      ~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:250:19 - error TS2339: Property 'status' does not exist on type 'never'.
+
+250           {order?.status === 'DELIVERED' && !order?.rating && (
+                      ~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:250:53 - error TS2339: Property 'rating' does not exist on type 'never'.
+
+250           {order?.status === 'DELIVERED' && !order?.rating && (
+                                                        ~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:253:80 - error TS2339: Property 'id' does not exist on type 'never'.
+
+253               onPress={() => navigation.navigate('RateOrder', { orderId: order.id })}
+                                                                                   ~~
+
+src/screens/OrderDetailsScreen.tsx:261:70 - error TS18047: 'order' is possibly 'null'.
+
+261             onPress={() => navigation.navigate('Support', { orderId: order.id })}
+                                                                         ~~~~~
+
+src/screens/OrdersScreen.tsx:14:47 - error TS2307: Cannot find module '@react-navigation/native' or its corresponding type declarations.
+
+14 import { useNavigation, useFocusEffect } from '@react-navigation/native';
+                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrdersScreen.tsx:15:18 - error TS2307: Cannot find module 'react-native-vector-icons/Ionicons' or its corresponding type declarations.
+
+15 import Icon from 'react-native-vector-icons/Ionicons';
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OtpVerificationScreen.tsx:14:41 - error TS2307: Cannot find module '@react-navigation/native' or its corresponding type declarations.
+
+14 import { useNavigation, useRoute } from '@react-navigation/native';
+                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OtpVerificationScreen.tsx:23:22 - error TS2339: Property 'resendOtp' does not exist on type 'AuthContextType'.
+
+23   const { verifyOtp, resendOtp, isLoading } = useAuth();
+                        ~~~~~~~~~
+
+src/screens/PaymentMethodScreen.tsx:10:41 - error TS2307: Cannot find module '@react-navigation/native' or its corresponding type declarations.
+
+10 import { useNavigation, useRoute } from '@react-navigation/native';
+                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/PaymentMethodScreen.tsx:11:18 - error TS2307: Cannot find module 'react-native-vector-icons/Ionicons' or its corresponding type declarations.
+
+11 import Icon from 'react-native-vector-icons/Ionicons';
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/PaymentMethodsScreen.tsx:13:31 - error TS2307: Cannot find module '@react-navigation/native' or its corresponding type declarations.
+
+13 import { useNavigation } from '@react-navigation/native';
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/PaymentMethodsScreen.tsx:14:18 - error TS2307: Cannot find module 'react-native-vector-icons/Ionicons' or its corresponding type declarations.
+
+14 import Icon from 'react-native-vector-icons/Ionicons';
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/PaymentScreen.tsx:12:42 - error TS2307: Cannot find module 'react-redux' or its corresponding type declarations.
+
+12 import { useDispatch, useSelector } from 'react-redux';
+                                            ~~~~~~~~~~~~~
+
+src/screens/PaymentScreen.tsx:13:37 - error TS2307: Cannot find module '@react-navigation/stack' or its corresponding type declarations.
+
+13 import { StackNavigationProp } from '@react-navigation/stack';
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/PaymentScreen.tsx:14:27 - error TS2307: Cannot find module '@react-navigation/native' or its corresponding type declarations.
+
+14 import { RouteProp } from '@react-navigation/native';
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/PaymentScreen.tsx:15:10 - error TS2614: Module '"@/navigation/AppNavigator"' has no exported member 'MainStackParamList'. Did you mean to use 'import MainStackParamList from "@/navigation/AppNavigator"' instead?
+
+15 import { MainStackParamList } from '@/navigation/AppNavigator';
+            ~~~~~~~~~~~~~~~~~~
+
+src/screens/PaymentScreen.tsx:20:43 - error TS2307: Cannot find module '@stripe/stripe-react-native' or its corresponding type declarations.
+
+20 import { StripeProvider, useStripe } from '@stripe/stripe-react-native';
+                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/PharmaciesScreen.tsx:704:5 - error TS2322: Type '{ flexDirection: "row"; flexWrap: "wrap"; gap: number; }' is not assignable to type 'ViewStyle | TextStyle | ImageStyle'.
+  Object literal may only specify known properties, and 'gap' does not exist in type 'ViewStyle | TextStyle | ImageStyle'.
+
+704     gap: 8,
+        ~~~~~~
+
+  src/screens/PharmaciesScreen.tsx:701:3
+    701   distanceOptions: {
+          ~~~~~~~~~~~~~~~~~~
+    702     flexDirection: 'row',
+        ~~~~~~~~~~~~~~~~~~~~~~~~~
+    ... 
+    704     gap: 8,
+        ~~~~~~~~~~~
+    705   },
+        ~~~
+    The expected type comes from property 'distanceOptions' which is declared here on type 'NamedStyles<any> | NamedStyles<{ container: { flex: number; backgroundColor: string; }; loadingContainer: { flex: number; justifyContent: "center"; alignItems: "center"; }; loadingText: { ...; }; ... 63 more ...; applyButtonText: { ...; }; }> | NamedStyles<...>'
+
+src/screens/PharmaciesScreen.tsx:723:5 - error TS2322: Type '{ gap: number; }' is not assignable to type 'ViewStyle | TextStyle | ImageStyle'.
+  Object literal may only specify known properties, and 'gap' does not exist in type 'ViewStyle | TextStyle | ImageStyle'.
+
+723     gap: 8,
+        ~~~~~~
+
+  src/screens/PharmaciesScreen.tsx:722:3
+    722   ratingOptions: {
+          ~~~~~~~~~~~~~~~~
+    723     gap: 8,
+        ~~~~~~~~~~~
+    724   },
+        ~~~
+    The expected type comes from property 'ratingOptions' which is declared here on type 'NamedStyles<any> | NamedStyles<{ container: { flex: number; backgroundColor: string; }; loadingContainer: { flex: number; justifyContent: "center"; alignItems: "center"; }; loadingText: { ...; }; ... 63 more ...; applyButtonText: { ...; }; }> | NamedStyles<...>'
+
+src/screens/PharmacyMapScreen.tsx:11:42 - error TS2307: Cannot find module 'react-redux' or its corresponding type declarations.
+
+11 import { useDispatch, useSelector } from 'react-redux';
+                                            ~~~~~~~~~~~~~
+
+src/screens/PharmacyMapScreen.tsx:12:37 - error TS2307: Cannot find module '@react-navigation/stack' or its corresponding type declarations.
+
+12 import { StackNavigationProp } from '@react-navigation/stack';
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/PharmacyMapScreen.tsx:13:27 - error TS2307: Cannot find module '@react-navigation/native' or its corresponding type declarations.
+
+13 import { RouteProp } from '@react-navigation/native';
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/PharmacyMapScreen.tsx:14:10 - error TS2614: Module '"@/navigation/AppNavigator"' has no exported member 'MainStackParamList'. Did you mean to use 'import MainStackParamList from "@/navigation/AppNavigator"' instead?
+
+14 import { MainStackParamList } from '@/navigation/AppNavigator';
+            ~~~~~~~~~~~~~~~~~~
+
+src/screens/PharmacyMapScreen.tsx:57:9 - error TS7006: Parameter 'p' implicitly has an 'any' type.
+
+57         p => p.latitude === route.params?.latitude && p.longitude === route.params?.longitude
+           ~
+
+src/screens/PharmacyMapScreen.tsx:97:38 - error TS7006: Parameter 'p' implicitly has an 'any' type.
+
+97     const pharmacy = pharmacies.find(p => p.id === id);
+                                        ~
+
+src/screens/PharmacyMapScreen.tsx:121:40 - error TS7006: Parameter 'p' implicitly has an 'any' type.
+
+121       const pharmacy = pharmacies.find(p => p.id === selectedMarkerId);
+                                           ~
+
+src/screens/PharmacyMapScreen.tsx:143:7 - error TS2607: JSX element class does not support attributes because it does not have a 'props' property.
+
+143       <MapView
+          ~~~~~~~~
+144         ref={mapRef}
+    ~~~~~~~~~~~~~~~~~~~~
+... 
+155         onMapReady={handleMapReady}
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+156       >
+    ~~~~~~~
+
+src/screens/PharmacyMapScreen.tsx:143:8 - error TS2786: 'MapView' cannot be used as a JSX component.
+  Its instance type 'MapView' is not a valid JSX element.
+
+143       <MapView
+           ~~~~~~~
+
+src/screens/PharmacyMapScreen.tsx:157:26 - error TS7006: Parameter 'pharmacy' implicitly has an 'any' type.
+
+157         {pharmacies.map((pharmacy) => (
+                             ~~~~~~~~
+
+src/screens/PharmacyMapScreen.tsx:158:11 - error TS2607: JSX element class does not support attributes because it does not have a 'props' property.
+
+158           <Marker
+              ~~~~~~~
+159             key={pharmacy.id}
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+167             pinColor={selectedMarkerId === pharmacy.id ? '#4A80F0' : '#F87171'}
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+168           />
+    ~~~~~~~~~~~~
+
+src/screens/PharmacyMapScreen.tsx:158:12 - error TS2786: 'Marker' cannot be used as a JSX component.
+  Its instance type 'MapMarker' is not a valid JSX element.
+
+158           <Marker
+               ~~~~~~
+
+src/screens/PrescriptionUploadScreen.tsx:13:42 - error TS2307: Cannot find module 'react-redux' or its corresponding type declarations.
+
+13 import { useDispatch, useSelector } from 'react-redux';
+                                            ~~~~~~~~~~~~~
+
+src/screens/PrescriptionUploadScreen.tsx:14:37 - error TS2307: Cannot find module '@react-navigation/stack' or its corresponding type declarations.
+
+14 import { StackNavigationProp } from '@react-navigation/stack';
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/PrescriptionUploadScreen.tsx:15:27 - error TS2307: Cannot find module '@react-navigation/native' or its corresponding type declarations.
+
+15 import { RouteProp } from '@react-navigation/native';
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/PrescriptionUploadScreen.tsx:16:10 - error TS2614: Module '"@/navigation/AppNavigator"' has no exported member 'MainStackParamList'. Did you mean to use 'import MainStackParamList from "@/navigation/AppNavigator"' instead?
+
+16 import { MainStackParamList } from '@/navigation/AppNavigator';
+            ~~~~~~~~~~~~~~~~~~
+
+src/screens/PrescriptionUploadScreen.tsx:20:10 - error TS2305: Module '"expo-camera"' has no exported member 'CameraView'.
+
+20 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
+            ~~~~~~~~~~
+
+src/screens/PrescriptionUploadScreen.tsx:20:34 - error TS2305: Module '"expo-camera"' has no exported member 'useCameraPermissions'.
+
+20 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
+                                    ~~~~~~~~~~~~~~~~~~~~
+
+src/screens/PrescriptionUploadScreen.tsx:76:34 - error TS2532: Object is possibly 'undefined'.
+
+76         dispatch(setPreviewImage(result.assets[0].uri));
+                                    ~~~~~~~~~~~~~~~~
+
+src/screens/PrescriptionUploadScreen.tsx:148:17 - error TS7006: Parameter 'ref' implicitly has an 'any' type.
+
+148           ref={(ref) => setCamera(ref)}
+                    ~~~
+
+src/screens/RemindersScreen.tsx:17:42 - error TS2307: Cannot find module 'react-redux' or its corresponding type declarations.
+
+17 import { useDispatch, useSelector } from 'react-redux';
+                                            ~~~~~~~~~~~~~
+
+src/screens/RemindersScreen.tsx:19:28 - error TS2307: Cannot find module '@react-native-community/datetimepicker' or its corresponding type declarations.
+
+19 import DateTimePicker from '@react-native-community/datetimepicker';
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/RemindersScreen.tsx:479:26 - error TS7006: Parameter 'event' implicitly has an 'any' type.
+
+479               onChange={(event, selectedTime) => {
+                             ~~~~~
+
+src/screens/RemindersScreen.tsx:479:33 - error TS7006: Parameter 'selectedTime' implicitly has an 'any' type.
+
+479               onChange={(event, selectedTime) => {
+                                    ~~~~~~~~~~~~
+
+src/screens/ScanPrescriptionScreen.tsx:13:10 - error TS2305: Module '"expo-camera"' has no exported member 'CameraView'.
+
+13 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
+            ~~~~~~~~~~
+
+src/screens/ScanPrescriptionScreen.tsx:13:34 - error TS2305: Module '"expo-camera"' has no exported member 'useCameraPermissions'.
+
+13 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
+                                    ~~~~~~~~~~~~~~~~~~~~
+
+src/screens/ScanPrescriptionScreen.tsx:289:15 - error TS7006: Parameter 'ref' implicitly has an 'any' type.
+
+289         ref={(ref) => setCameraRef(ref)}
+                  ~~~
+
+src/screens/SettingsScreen.tsx:15:42 - error TS2307: Cannot find module 'react-redux' or its corresponding type declarations.
+
+15 import { useDispatch, useSelector } from 'react-redux';
+                                            ~~~~~~~~~~~~~
+
+src/screens/SettingsScreen.tsx:209:24 - error TS2322: Type 'string' is not assignable to type '"delete" | "link" | "filter" | "search" | "repeat" | "anchor" | "style" | "accessible" | "image" | "opacity" | "android" | "web" | "sort" | "map" | "done" | "gradient" | "description" | ... 1545 more ... | undefined'.
+
+209         <MaterialIcons name={icon} size={24} color="#0C6B58" />
+                           ~~~~
+
+  node_modules/@expo/vector-icons/build/createIconSet.d.ts:17:5
+    17     name: GLYPHS;
+           ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<IconProps<"delete" | "link" | "filter" | "search" | "repeat" | "anchor" | "style" | "accessible" | "image" | "opacity" | "android" | ... 1550 more ... | "zoom-out-map">, {}, any>> & Pick<...> & InexactPartial<...> & InexactPartial<...>'
+
+src/screens/SettingsScreen.tsx:232:22 - error TS2322: Type 'string' is not assignable to type '"delete" | "link" | "filter" | "search" | "repeat" | "anchor" | "style" | "accessible" | "image" | "opacity" | "android" | "web" | "sort" | "map" | "done" | "gradient" | "description" | ... 1545 more ... | undefined'.
+
+232       <MaterialIcons name={icon} size={24} color={isDestructive ? '#F44336' : '#0C6B58'} />
+                         ~~~~
+
+  node_modules/@expo/vector-icons/build/createIconSet.d.ts:17:5
+    17     name: GLYPHS;
+           ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<IconProps<"delete" | "link" | "filter" | "search" | "repeat" | "anchor" | "style" | "accessible" | "image" | "opacity" | "android" | ... 1550 more ... | "zoom-out-map">, {}, any>> & Pick<...> & InexactPartial<...> & InexactPartial<...>'
+
+src/screens/TrackOrderScreen.tsx:262:57 - error TS2339: Property 'id' does not exist on type '{ name: string; phone: string; }'.
+
+262                 deliveryPersonId: order.deliveryPerson?.id,
+                                                            ~~
+
+src/screens/VideoConsultationScreen.tsx:13:42 - error TS2307: Cannot find module 'react-redux' or its corresponding type declarations.
+
+13 import { useDispatch, useSelector } from 'react-redux';
+                                            ~~~~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:1:8 - error TS2300: Duplicate identifier 'React'.
+
+1 import React, { useEffect, useRef } from 'react';
+         ~~~~~
+
+src/screens/WelcomeScreen.tsx:3:3 - error TS2300: Duplicate identifier 'View'.
+
+3   View,
+    ~~~~
+
+src/screens/WelcomeScreen.tsx:4:3 - error TS2300: Duplicate identifier 'Text'.
+
+4   Text,
+    ~~~~
+
+src/screens/WelcomeScreen.tsx:5:3 - error TS2300: Duplicate identifier 'StyleSheet'.
+
+5   StyleSheet,
+    ~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:8:3 - error TS2300: Duplicate identifier 'TouchableOpacity'.
+
+8   TouchableOpacity,
+    ~~~~~~~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:9:3 - error TS2300: Duplicate identifier 'Dimensions'.
+
+9   Dimensions,
+    ~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:11:3 - error TS2300: Duplicate identifier 'SafeAreaView'.
+
+11   SafeAreaView,
+     ~~~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:12:3 - error TS2300: Duplicate identifier 'Image'.
+
+12   Image,
+     ~~~~~
+
+src/screens/WelcomeScreen.tsx:17:9 - error TS2451: Cannot redeclare block-scoped variable 'width'.
+
+17 const { width } = Dimensions.get('window');
+           ~~~~~
+
+src/screens/WelcomeScreen.tsx:23:7 - error TS2451: Cannot redeclare block-scoped variable 'WelcomeScreen'.
+
+23 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation }) => {
+         ~~~~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:111:43 - error TS17001: JSX elements cannot have multiple attributes with the same name.
+
+111             <View style={styles.medicine} style={{ top: 50, left: 50 }}>
+                                              ~~~~~
+
+src/screens/WelcomeScreen.tsx:115:43 - error TS17001: JSX elements cannot have multiple attributes with the same name.
+
+115             <View style={styles.medicine} style={{ top: 100, left: 80 }}>
+                                              ~~~~~
+
+src/screens/WelcomeScreen.tsx:150:7 - error TS2451: Cannot redeclare block-scoped variable 'styles'.
+
+150 const styles = StyleSheet.create({
+          ~~~~~~
+
+src/screens/WelcomeScreen.tsx:298:16 - error TS2528: A module cannot have multiple default exports.
+
+298 export default WelcomeScreen;
+                   ~~~~~~~~~~~~~
+
+  src/screens/WelcomeScreen.tsx:475:16
+    475 export default WelcomeScreen;
+                       ~~~~~~~~~~~~~
+    Another export default is here.
+
+src/screens/WelcomeScreen.tsx:299:8 - error TS2300: Duplicate identifier 'React'.
+
+299 import React from 'react';
+           ~~~~~
+
+src/screens/WelcomeScreen.tsx:301:3 - error TS2300: Duplicate identifier 'StyleSheet'.
+
+301   StyleSheet,
+      ~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:302:3 - error TS2300: Duplicate identifier 'View'.
+
+302   View,
+      ~~~~
+
+src/screens/WelcomeScreen.tsx:303:3 - error TS2300: Duplicate identifier 'Text'.
+
+303   Text,
+      ~~~~
+
+src/screens/WelcomeScreen.tsx:304:3 - error TS2300: Duplicate identifier 'TouchableOpacity'.
+
+304   TouchableOpacity,
+      ~~~~~~~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:305:3 - error TS2300: Duplicate identifier 'Image'.
+
+305   Image,
+      ~~~~~
+
+src/screens/WelcomeScreen.tsx:306:3 - error TS2300: Duplicate identifier 'SafeAreaView'.
+
+306   SafeAreaView,
+      ~~~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:307:3 - error TS2300: Duplicate identifier 'Dimensions'.
+
+307   Dimensions,
+      ~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:309:31 - error TS2307: Cannot find module '@react-navigation/native' or its corresponding type declarations.
+
+309 import { useNavigation } from '@react-navigation/native';
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:310:32 - error TS2307: Cannot find module 'expo-linear-gradient' or its corresponding type declarations.
+
+310 import { LinearGradient } from 'expo-linear-gradient';
+                                   ~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:313:9 - error TS2451: Cannot redeclare block-scoped variable 'width'.
+
+313 const { width, height } = Dimensions.get('window');
+            ~~~~~
+
+src/screens/WelcomeScreen.tsx:315:7 - error TS2451: Cannot redeclare block-scoped variable 'WelcomeScreen'.
+
+315 const WelcomeScreen: React.FC = () => {
+          ~~~~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:322:23 - error TS2339: Property 'gradient' does not exist on type '{ container: { flex: number; backgroundColor: string; }; content: { flex: number; padding: number; justifyContent: "space-between"; }; header: { flexDirection: "row"; alignItems: "center"; marginTop: number; }; ... 15 more ...; buttonText: { ...; }; }'.
+
+322         style={styles.gradient}
+                          ~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:326:31 - error TS2551: Property 'logoContainer' does not exist on type '{ container: { flex: number; backgroundColor: string; }; content: { flex: number; padding: number; justifyContent: "space-between"; }; header: { flexDirection: "row"; alignItems: "center"; marginTop: number; }; ... 15 more ...; buttonText: { ...; }; }'. Did you mean 'container'?
+
+326           <View style={styles.logoContainer}>
+                                  ~~~~~~~~~~~~~
+
+  src/screens/WelcomeScreen.tsx:151:3
+    151   container: {
+          ~~~~~~~~~~~~
+    152     flex: 1,
+        ~~~~~~~~~~~~
+    153     backgroundColor: '#f7f9fc',
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    154   },
+        ~~~
+    'container' is declared here.
+
+src/screens/WelcomeScreen.tsx:327:33 - error TS2339: Property 'logoCircle' does not exist on type '{ container: { flex: number; backgroundColor: string; }; content: { flex: number; padding: number; justifyContent: "space-between"; }; header: { flexDirection: "row"; alignItems: "center"; marginTop: number; }; ... 15 more ...; buttonText: { ...; }; }'.
+
+327             <View style={styles.logoCircle}>
+                                    ~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:330:33 - error TS2339: Property 'appName' does not exist on type '{ container: { flex: number; backgroundColor: string; }; content: { flex: number; padding: number; justifyContent: "space-between"; }; header: { flexDirection: "row"; alignItems: "center"; marginTop: number; }; ... 15 more ...; buttonText: { ...; }; }'.
+
+330             <Text style={styles.appName}>Medi-Delivery</Text>
+                                    ~~~~~~~
+
+src/screens/WelcomeScreen.tsx:331:33 - error TS2339: Property 'tagline' does not exist on type '{ container: { flex: number; backgroundColor: string; }; content: { flex: number; padding: number; justifyContent: "space-between"; }; header: { flexDirection: "row"; alignItems: "center"; marginTop: number; }; ... 15 more ...; buttonText: { ...; }; }'.
+
+331             <Text style={styles.tagline}>Votre pharmacie, livrée à votre porte</Text>
+                                    ~~~~~~~
+
+src/screens/WelcomeScreen.tsx:335:31 - error TS2339: Property 'featuresContainer' does not exist on type '{ container: { flex: number; backgroundColor: string; }; content: { flex: number; padding: number; justifyContent: "space-between"; }; header: { flexDirection: "row"; alignItems: "center"; marginTop: number; }; ... 15 more ...; buttonText: { ...; }; }'.
+
+335           <View style={styles.featuresContainer}>
+                                  ~~~~~~~~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:336:33 - error TS2339: Property 'feature' does not exist on type '{ container: { flex: number; backgroundColor: string; }; content: { flex: number; padding: number; justifyContent: "space-between"; }; header: { flexDirection: "row"; alignItems: "center"; marginTop: number; }; ... 15 more ...; buttonText: { ...; }; }'.
+
+336             <View style={styles.feature}>
+                                    ~~~~~~~
+
+src/screens/WelcomeScreen.tsx:337:30 - error TS2820: Type '"medication"' is not assignable to type '"delete" | "link" | "filter" | "search" | "repeat" | "anchor" | "style" | "accessible" | "image" | "opacity" | "android" | "web" | "sort" | "map" | "done" | "gradient" | "description" | ... 1545 more ... | undefined'. Did you mean '"mediation"'?
+
+337               <MaterialIcons name="medication" size={24} color="#fff" />
+                                 ~~~~
+
+  node_modules/@expo/vector-icons/build/createIconSet.d.ts:17:5
+    17     name: GLYPHS;
+           ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<IconProps<"delete" | "link" | "filter" | "search" | "repeat" | "anchor" | "style" | "accessible" | "image" | "opacity" | "android" | ... 1550 more ... | "zoom-out-map">, {}, any>> & Pick<...> & InexactPartial<...> & InexactPartial<...>'
+
+src/screens/WelcomeScreen.tsx:338:35 - error TS2339: Property 'featureText' does not exist on type '{ container: { flex: number; backgroundColor: string; }; content: { flex: number; padding: number; justifyContent: "space-between"; }; header: { flexDirection: "row"; alignItems: "center"; marginTop: number; }; ... 15 more ...; buttonText: { ...; }; }'.
+
+338               <Text style={styles.featureText}>Médicaments authentiques</Text>
+                                      ~~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:340:33 - error TS2339: Property 'feature' does not exist on type '{ container: { flex: number; backgroundColor: string; }; content: { flex: number; padding: number; justifyContent: "space-between"; }; header: { flexDirection: "row"; alignItems: "center"; marginTop: number; }; ... 15 more ...; buttonText: { ...; }; }'.
+
+340             <View style={styles.feature}>
+                                    ~~~~~~~
+
+src/screens/WelcomeScreen.tsx:342:35 - error TS2339: Property 'featureText' does not exist on type '{ container: { flex: number; backgroundColor: string; }; content: { flex: number; padding: number; justifyContent: "space-between"; }; header: { flexDirection: "row"; alignItems: "center"; marginTop: number; }; ... 15 more ...; buttonText: { ...; }; }'.
+
+342               <Text style={styles.featureText}>Livraison rapide</Text>
+                                      ~~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:344:33 - error TS2339: Property 'feature' does not exist on type '{ container: { flex: number; backgroundColor: string; }; content: { flex: number; padding: number; justifyContent: "space-between"; }; header: { flexDirection: "row"; alignItems: "center"; marginTop: number; }; ... 15 more ...; buttonText: { ...; }; }'.
+
+344             <View style={styles.feature}>
+                                    ~~~~~~~
+
+src/screens/WelcomeScreen.tsx:346:35 - error TS2339: Property 'featureText' does not exist on type '{ container: { flex: number; backgroundColor: string; }; content: { flex: number; padding: number; justifyContent: "space-between"; }; header: { flexDirection: "row"; alignItems: "center"; marginTop: number; }; ... 15 more ...; buttonText: { ...; }; }'.
+
+346               <Text style={styles.featureText}>Pharmacies certifiées</Text>
+                                      ~~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:353:29 - error TS2339: Property 'primaryButton' does not exist on type '{ container: { flex: number; backgroundColor: string; }; content: { flex: number; padding: number; justifyContent: "space-between"; }; header: { flexDirection: "row"; alignItems: "center"; marginTop: number; }; ... 15 more ...; buttonText: { ...; }; }'.
+
+353               style={styles.primaryButton}
+                                ~~~~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:356:35 - error TS2339: Property 'primaryButtonText' does not exist on type '{ container: { flex: number; backgroundColor: string; }; content: { flex: number; padding: number; justifyContent: "space-between"; }; header: { flexDirection: "row"; alignItems: "center"; marginTop: number; }; ... 15 more ...; buttonText: { ...; }; }'.
+
+356               <Text style={styles.primaryButtonText}>Commencer</Text>
+                                      ~~~~~~~~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:360:29 - error TS2339: Property 'secondaryButton' does not exist on type '{ container: { flex: number; backgroundColor: string; }; content: { flex: number; padding: number; justifyContent: "space-between"; }; header: { flexDirection: "row"; alignItems: "center"; marginTop: number; }; ... 15 more ...; buttonText: { ...; }; }'.
+
+360               style={styles.secondaryButton}
+                                ~~~~~~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:363:35 - error TS2339: Property 'secondaryButtonText' does not exist on type '{ container: { flex: number; backgroundColor: string; }; content: { flex: number; padding: number; justifyContent: "space-between"; }; header: { flexDirection: "row"; alignItems: "center"; marginTop: number; }; ... 15 more ...; buttonText: { ...; }; }'.
+
+363               <Text style={styles.secondaryButtonText}>J'ai déjà un compte</Text>
+                                      ~~~~~~~~~~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:368:31 - error TS2339: Property 'terms' does not exist on type '{ container: { flex: number; backgroundColor: string; }; content: { flex: number; padding: number; justifyContent: "space-between"; }; header: { flexDirection: "row"; alignItems: "center"; marginTop: number; }; ... 15 more ...; buttonText: { ...; }; }'.
+
+368           <Text style={styles.terms}>
+                                  ~~~~~
+
+src/screens/WelcomeScreen.tsx:370:33 - error TS2339: Property 'termsLink' does not exist on type '{ container: { flex: number; backgroundColor: string; }; content: { flex: number; padding: number; justifyContent: "space-between"; }; header: { flexDirection: "row"; alignItems: "center"; marginTop: number; }; ... 15 more ...; buttonText: { ...; }; }'.
+
+370             <Text style={styles.termsLink}>Conditions d'utilisation</Text> et notre{' '}
+                                    ~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:371:33 - error TS2339: Property 'termsLink' does not exist on type '{ container: { flex: number; backgroundColor: string; }; content: { flex: number; padding: number; justifyContent: "space-between"; }; header: { flexDirection: "row"; alignItems: "center"; marginTop: number; }; ... 15 more ...; buttonText: { ...; }; }'.
+
+371             <Text style={styles.termsLink}>Politique de confidentialité</Text>
+                                    ~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:379:7 - error TS2451: Cannot redeclare block-scoped variable 'styles'.
+
+379 const styles = StyleSheet.create({
+          ~~~~~~
+
+src/screens/WelcomeScreen.tsx:420:5 - error TS2322: Type '{ alignItems: "center"; gap: number; }' is not assignable to type 'ViewStyle | TextStyle | ImageStyle'.
+  Object literal may only specify known properties, and 'gap' does not exist in type 'ViewStyle | TextStyle | ImageStyle'.
+
+420     gap: 20,
+        ~~~~~~~
+
+  src/screens/WelcomeScreen.tsx:418:3
+    418   featuresContainer: {
+          ~~~~~~~~~~~~~~~~~~~~
+    419     alignItems: 'center',
+        ~~~~~~~~~~~~~~~~~~~~~~~~~
+    420     gap: 20,
+        ~~~~~~~~~~~~
+    421   },
+        ~~~
+    The expected type comes from property 'featuresContainer' which is declared here on type 'NamedStyles<any> | NamedStyles<{ container: { flex: number; }; gradient: { flex: number; }; content: { flex: number; paddingHorizontal: number; justifyContent: "space-between"; paddingTop: number; paddingBottom: number; }; ... 13 more ...; termsLink: { ...; }; }> | NamedStyles<...>'
+
+src/screens/WelcomeScreen.tsx:438:5 - error TS2322: Type '{ gap: number; }' is not assignable to type 'ViewStyle | TextStyle | ImageStyle'.
+  Object literal may only specify known properties, and 'gap' does not exist in type 'ViewStyle | TextStyle | ImageStyle'.
+
+438     gap: 15,
+        ~~~~~~~
+
+  src/screens/WelcomeScreen.tsx:437:3
+    437   buttonContainer: {
+          ~~~~~~~~~~~~~~~~~~
+    438     gap: 15,
+        ~~~~~~~~~~~~
+    439   },
+        ~~~
+    The expected type comes from property 'buttonContainer' which is declared here on type 'NamedStyles<any> | NamedStyles<{ container: { flex: number; }; gradient: { flex: number; }; content: { flex: number; paddingHorizontal: number; justifyContent: "space-between"; paddingTop: number; paddingBottom: number; }; ... 13 more ...; termsLink: { ...; }; }> | NamedStyles<...>'
+
+src/screens/WelcomeScreen.tsx:475:16 - error TS2528: A module cannot have multiple default exports.
+
+475 export default WelcomeScreen;
+                   ~~~~~~~~~~~~~
+
+  src/screens/WelcomeScreen.tsx:298:16
+    298 export default WelcomeScreen;
+                       ~~~~~~~~~~~~~
+    The first export default is here.
+
+src/screens/auth/OnboardingScreen.tsx:15:42 - error TS2307: Cannot find module 'react-redux' or its corresponding type declarations.
+
+15 import { useDispatch, useSelector } from 'react-redux';
+                                            ~~~~~~~~~~~~~
+
+src/screens/auth/OnboardingScreen.tsx:16:37 - error TS2307: Cannot find module '@react-navigation/stack' or its corresponding type declarations.
+
+16 import { StackNavigationProp } from '@react-navigation/stack';
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/auth/OnboardingScreen.tsx:17:10 - error TS2614: Module '"@/navigation/AppNavigator"' has no exported member 'AuthStackParamList'. Did you mean to use 'import AuthStackParamList from "@/navigation/AppNavigator"' instead?
+
+17 import { AuthStackParamList } from '@/navigation/AppNavigator';
+            ~~~~~~~~~~~~~~~~~~
+
+src/screens/auth/OtpScreen.tsx:14:29 - error TS2307: Cannot find module 'react-redux' or its corresponding type declarations.
+
+14 import { useDispatch } from 'react-redux';
+                               ~~~~~~~~~~~~~
+
+src/screens/auth/OtpScreen.tsx:41:13 - error TS7030: Not all code paths return a value.
+
+41   useEffect(() => {
+               ~~~~~~~
+
+src/screens/auth/OtpVerificationScreen.tsx:14:42 - error TS2307: Cannot find module 'react-redux' or its corresponding type declarations.
+
+14 import { useDispatch, useSelector } from 'react-redux';
+                                            ~~~~~~~~~~~~~
+
+src/screens/auth/OtpVerificationScreen.tsx:15:37 - error TS2307: Cannot find module '@react-navigation/stack' or its corresponding type declarations.
+
+15 import { StackNavigationProp } from '@react-navigation/stack';
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/auth/OtpVerificationScreen.tsx:16:27 - error TS2307: Cannot find module '@react-navigation/native' or its corresponding type declarations.
+
+16 import { RouteProp } from '@react-navigation/native';
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/auth/OtpVerificationScreen.tsx:17:10 - error TS2614: Module '"@/navigation/AppNavigator"' has no exported member 'AuthStackParamList'. Did you mean to use 'import AuthStackParamList from "@/navigation/AppNavigator"' instead?
+
+17 import { AuthStackParamList } from '@/navigation/AppNavigator';
+            ~~~~~~~~~~~~~~~~~~
+
+src/services/auth.service.ts:110:22 - error TS18048: 'base64Url' is possibly 'undefined'.
+
+110       const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                         ~~~~~~~~~
+
+src/services/auth.service.ts:132:31 - error TS2339: Property 'requestOtp' does not exist on type 'ApiService'.
+
+132       return await apiService.requestOtp(phone, userType);
+                                  ~~~~~~~~~~
+
+src/services/auth.service.ts:148:41 - error TS2339: Property 'login' does not exist on type 'ApiService'.
+
+148       const response = await apiService.login(phone, otp, userType);
+                                            ~~~~~
+
+src/services/auth.service.ts:167:41 - error TS2339: Property 'refreshToken' does not exist on type 'ApiService'.
+
+167       const response = await apiService.refreshToken();
+                                            ~~~~~~~~~~~~
+
+src/services/auth.service.ts:195:41 - error TS2339: Property 'updateProfile' does not exist on type 'ApiService'.
+
+195       const response = await apiService.updateProfile(userData);
+                                            ~~~~~~~~~~~~~
+
+src/services/auth.service.ts:220:24 - error TS2339: Property 'logout' does not exist on type 'ApiService'.
+
+220       await apiService.logout();
+                           ~~~~~~
+
+src/services/chat.service.ts:74:14 - error TS18046: 'response' is of type 'unknown'.
+
+74       return response.data;
+                ~~~~~~~~
+
+src/services/chat.service.ts:87:14 - error TS18046: 'response' is of type 'unknown'.
+
+87       return response.data;
+                ~~~~~~~~
+
+src/services/chat.service.ts:100:14 - error TS18046: 'response' is of type 'unknown'.
+
+100       return response.data;
+                 ~~~~~~~~
+
+src/services/chat.service.ts:120:14 - error TS18046: 'response' is of type 'unknown'.
+
+120       return response.data;
+                 ~~~~~~~~
+
+src/services/chat.service.ts:140:14 - error TS18046: 'response' is of type 'unknown'.
+
+140       return response.data;
+                 ~~~~~~~~
+
+src/services/chat.service.ts:159:14 - error TS18046: 'response' is of type 'unknown'.
+
+159       return response.data;
+                 ~~~~~~~~
+
+src/services/chat.service.ts:171:14 - error TS18046: 'response' is of type 'unknown'.
+
+171       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:21:31 - error TS2339: Property 'getToken' does not exist on type 'AuthService'.
+
+21     const token = authService.getToken();
+                                 ~~~~~~~~
+
+src/services/delivery.service.ts:60:5 - error TS2532: Object is possibly 'undefined'.
+
+60     this.deliveryListeners[event].push(callback);
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/services/delivery.service.ts:68:39 - error TS2532: Object is possibly 'undefined'.
+
+68       this.deliveryListeners[event] = this.deliveryListeners[event].filter(
+                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/services/delivery.service.ts:79:7 - error TS2532: Object is possibly 'undefined'.
+
+79       this.deliveryListeners[event].forEach((callback) => callback(data));
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/services/delivery.service.ts:105:14 - error TS18046: 'response' is of type 'unknown'.
+
+105       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:118:14 - error TS18046: 'response' is of type 'unknown'.
+
+118       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:131:14 - error TS18046: 'response' is of type 'unknown'.
+
+131       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:146:14 - error TS18046: 'response' is of type 'unknown'.
+
+146       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:161:14 - error TS18046: 'response' is of type 'unknown'.
+
+161       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:174:14 - error TS18046: 'response' is of type 'unknown'.
+
+174       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:187:14 - error TS18046: 'response' is of type 'unknown'.
+
+187       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:200:14 - error TS18046: 'response' is of type 'unknown'.
+
+200       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:216:14 - error TS18046: 'response' is of type 'unknown'.
+
+216       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:229:14 - error TS18046: 'response' is of type 'unknown'.
+
+229       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:242:14 - error TS18046: 'response' is of type 'unknown'.
+
+242       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:257:14 - error TS18046: 'response' is of type 'unknown'.
+
+257       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:275:14 - error TS18046: 'response' is of type 'unknown'.
+
+275       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:294:98 - error TS2554: Expected 1-2 arguments, but got 3.
+
+294       const response = await apiService.post(`/deliveries/${deliveryId}/upload-proof`, formData, {
+                                                                                                     ~
+295         headers: {
+    ~~~~~~~~~~~~~~~~~~
+... 
+297         },
+    ~~~~~~~~~~
+298       });
+    ~~~~~~~
+
+src/services/delivery.service.ts:299:14 - error TS18046: 'response' is of type 'unknown'.
+
+299       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:314:14 - error TS18046: 'response' is of type 'unknown'.
+
+314       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:327:14 - error TS18046: 'response' is of type 'unknown'.
+
+327       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:340:14 - error TS18046: 'response' is of type 'unknown'.
+
+340       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:353:14 - error TS18046: 'response' is of type 'unknown'.
+
+353       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:366:14 - error TS18046: 'response' is of type 'unknown'.
+
+366       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:379:14 - error TS18046: 'response' is of type 'unknown'.
+
+379       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:398:14 - error TS18046: 'response' is of type 'unknown'.
+
+398       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:416:14 - error TS18046: 'response' is of type 'unknown'.
+
+416       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:439:14 - error TS18046: 'response' is of type 'unknown'.
+
+439       return response.data;
+                 ~~~~~~~~
+
+src/services/location.service.ts:51:7 - error TS2375: Type '{ latitude: number; longitude: number; timestamp: number; accuracy: number | undefined; speed: number | undefined; heading: number | undefined; }' is not assignable to type 'LocationData' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'accuracy' are incompatible.
+    Type 'number | undefined' is not assignable to type 'number'.
+      Type 'undefined' is not assignable to type 'number'.
+
+ 51       return {
+          ~~~~~~~~
+ 52         latitude: location.coords.latitude,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+ 57         heading: location.coords.heading || undefined,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 58       };
+    ~~~~~~~~
+
+src/services/location.service.ts:82:5 - error TS2322: Type 'LocationSubscription' is not assignable to type 'number'.
+
+82     this.watchId = await Location.watchPositionAsync(
+       ~~~~~~~~~~~~
+
+src/services/location.service.ts:89:35 - error TS2379: Argument of type '{ latitude: number; longitude: number; timestamp: number; accuracy: number | undefined; speed: number | undefined; heading: number | undefined; }' is not assignable to parameter of type 'LocationData' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'accuracy' are incompatible.
+    Type 'number | undefined' is not assignable to type 'number'.
+      Type 'undefined' is not assignable to type 'number'.
+
+ 89         this.handleLocationUpdate({
+                                      ~
+ 90           latitude: location.coords.latitude,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+ 95           heading: location.coords.heading || undefined,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 96         });
+    ~~~~~~~~~
+
+src/services/order.service.ts:75:14 - error TS18046: 'response' is of type 'unknown'.
+
+75       return response.data.medicines;
+                ~~~~~~~~
+
+src/services/order.service.ts:88:14 - error TS18046: 'response' is of type 'unknown'.
+
+88       return response.data.categories;
+                ~~~~~~~~
+
+src/services/order.service.ts:101:14 - error TS18046: 'response' is of type 'unknown'.
+
+101       return response.data.order;
+                 ~~~~~~~~
+
+src/services/order.service.ts:119:14 - error TS18046: 'response' is of type 'unknown'.
+
+119       return response.data.orders;
+                 ~~~~~~~~
+
+src/services/order.service.ts:132:14 - error TS18046: 'response' is of type 'unknown'.
+
+132       return response.data.order;
+                 ~~~~~~~~
+
+src/services/order.service.ts:145:14 - error TS18046: 'response' is of type 'unknown'.
+
+145       return response.data;
+                 ~~~~~~~~
+
+src/services/order.service.ts:160:74 - error TS2554: Expected 1-2 arguments, but got 3.
+
+160       const response = await api.post('/prescriptions/upload', formData, {
+                                                                             ~
+161         headers: {
+    ~~~~~~~~~~~~~~~~~~
+... 
+163         }
+    ~~~~~~~~~
+164       });
+    ~~~~~~~
+
+src/services/order.service.ts:166:14 - error TS18046: 'response' is of type 'unknown'.
+
+166       return response.data.prescription;
+                 ~~~~~~~~
+
+src/services/order.service.ts:179:14 - error TS18046: 'response' is of type 'unknown'.
+
+179       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:2:28 - error TS2307: Cannot find module '@stripe/stripe-react-native' or its corresponding type declarations.
+
+2 import { initStripe } from '@stripe/stripe-react-native';
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/services/payment.service.ts:3:10 - error TS2305: Module '"../config"' has no exported member 'VITE_STRIPE_PUBLIC_KEY'.
+
+3 import { VITE_STRIPE_PUBLIC_KEY } from '../config';
+           ~~~~~~~~~~~~~~~~~~~~~~
+
+src/services/payment.service.ts:67:14 - error TS18046: 'response' is of type 'unknown'.
+
+67       return response.data;
+                ~~~~~~~~
+
+src/services/payment.service.ts:82:14 - error TS18046: 'response' is of type 'unknown'.
+
+82       return response.data;
+                ~~~~~~~~
+
+src/services/payment.service.ts:108:14 - error TS18046: 'response' is of type 'unknown'.
+
+108       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:121:14 - error TS18046: 'response' is of type 'unknown'.
+
+121       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:133:14 - error TS18046: 'response' is of type 'unknown'.
+
+133       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:148:14 - error TS18046: 'response' is of type 'unknown'.
+
+148       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:161:14 - error TS18046: 'response' is of type 'unknown'.
+
+161       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:173:14 - error TS18046: 'response' is of type 'unknown'.
+
+173       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:185:14 - error TS18046: 'response' is of type 'unknown'.
+
+185       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:204:14 - error TS18046: 'response' is of type 'unknown'.
+
+204       return response.data;
+                 ~~~~~~~~
+
+src/services/pharmacy.service.ts:37:14 - error TS18046: 'response' is of type 'unknown'.
+
+37       return response.data;
+                ~~~~~~~~
+
+src/services/pharmacy.service.ts:50:14 - error TS18046: 'response' is of type 'unknown'.
+
+50       return response.data;
+                ~~~~~~~~
+
+src/services/pharmacy.service.ts:66:14 - error TS18046: 'response' is of type 'unknown'.
+
+66       return response.data;
+                ~~~~~~~~
+
+src/services/prescription.service.ts:52:14 - error TS18046: 'response' is of type 'unknown'.
+
+52       return response.data;
+                ~~~~~~~~
+
+src/services/prescription.service.ts:64:14 - error TS18046: 'response' is of type 'unknown'.
+
+64       return response.data;
+                ~~~~~~~~
+
+src/services/prescription.service.ts:77:14 - error TS18046: 'response' is of type 'unknown'.
+
+77       return response.data;
+                ~~~~~~~~
+
+src/services/prescription.service.ts:90:14 - error TS18046: 'response' is of type 'unknown'.
+
+90       return response.data;
+                ~~~~~~~~
+
+src/services/prescription.service.ts:111:14 - error TS18046: 'response' is of type 'unknown'.
+
+111       return response.data;
+                 ~~~~~~~~
+
+src/services/reminder.service.ts:50:14 - error TS18046: 'response' is of type 'unknown'.
+
+50       return response.data;
+                ~~~~~~~~
+
+src/services/reminder.service.ts:63:14 - error TS18046: 'response' is of type 'unknown'.
+
+63       return response.data;
+                ~~~~~~~~
+
+src/services/reminder.service.ts:77:14 - error TS18046: 'response' is of type 'unknown'.
+
+77       return response.data;
+                ~~~~~~~~
+
+src/services/reminder.service.ts:90:14 - error TS18046: 'response' is of type 'unknown'.
+
+90       return response.data;
+                ~~~~~~~~
+
+src/services/reminder.service.ts:103:14 - error TS18046: 'response' is of type 'unknown'.
+
+103       return response.data;
+                 ~~~~~~~~
+
+src/services/reminder.service.ts:115:14 - error TS18046: 'response' is of type 'unknown'.
+
+115       return response.data;
+                 ~~~~~~~~
+
+src/services/reminder.service.ts:127:14 - error TS18046: 'response' is of type 'unknown'.
+
+127       return response.data;
+                 ~~~~~~~~
+
+src/services/video.service.ts:3:24 - error TS7016: Could not find a declaration file for module 'simple-peer'. '/home/runner/workspace/node_modules/simple-peer/index.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/simple-peer` if it exists or add a new declaration (.d.ts) file containing `declare module 'simple-peer';`
+
+3 import SimplePeer from 'simple-peer';
+                         ~~~~~~~~~~~~~
+
+src/services/video.service.ts:31:19 - error TS2304: Cannot find name 'MediaStream'.
+
+31   private stream: MediaStream | null = null;
+                     ~~~~~~~~~~~
+
+src/services/video.service.ts:32:25 - error TS2304: Cannot find name 'MediaStream'.
+
+32   private remoteStream: MediaStream | null = null;
+                           ~~~~~~~~~~~
+
+src/services/video.service.ts:33:40 - error TS2304: Cannot find name 'MediaStream'.
+
+33   private onStreamCallbacks: ((stream: MediaStream) => void)[] = [];
+                                          ~~~~~~~~~~~
+
+src/services/video.service.ts:90:14 - error TS18046: 'response' is of type 'unknown'.
+
+90       return response.data;
+                ~~~~~~~~
+
+src/services/video.service.ts:102:14 - error TS18046: 'response' is of type 'unknown'.
+
+102       return response.data;
+                 ~~~~~~~~
+
+src/services/video.service.ts:104:11 - error TS18046: 'error' is of type 'unknown'.
+
+104       if (error.response && error.response.status === 404) {
+              ~~~~~
+
+src/services/video.service.ts:104:29 - error TS18046: 'error' is of type 'unknown'.
+
+104       if (error.response && error.response.status === 404) {
+                                ~~~~~
+
+src/services/video.service.ts:120:27 - error TS2304: Cannot find name 'navigator'.
+
+120       this.stream = await navigator.mediaDevices.getUserMedia({
+                              ~~~~~~~~~
+
+src/services/video.service.ts:150:29 - error TS7006: Parameter 'data' implicitly has an 'any' type.
+
+150     this.peer.on('signal', (data) => {
+                                ~~~~
+
+src/services/video.service.ts:157:29 - error TS7006: Parameter 'stream' implicitly has an 'any' type.
+
+157     this.peer.on('stream', (stream) => {
+                                ~~~~~~
+
+src/services/video.service.ts:167:28 - error TS7006: Parameter 'err' implicitly has an 'any' type.
+
+167     this.peer.on('error', (err) => {
+                               ~~~
+
+src/services/video.service.ts:183:39 - error TS7006: Parameter 'track' implicitly has an 'any' type.
+
+183       this.stream.getTracks().forEach(track => track.stop());
+                                          ~~~~~
+
+src/services/video.service.ts:196:37 - error TS2304: Cannot find name 'MediaStream'.
+
+196   onRemoteStream(callback: (stream: MediaStream) => void) {
+                                        ~~~~~~~~~~~
+
+src/services/video.service.ts:262:31 - error TS2304: Cannot find name 'navigator'.
+
+262       const newStream = await navigator.mediaDevices.getUserMedia({
+                                  ~~~~~~~~~
+
+src/services/video.service.ts:297:14 - error TS18046: 'response' is of type 'unknown'.
+
+297       return response.data;
+                 ~~~~~~~~
+
+src/services/video.service.ts:312:14 - error TS18046: 'response' is of type 'unknown'.
+
+312       return response.data;
+                 ~~~~~~~~
+
+src/store/index.ts:3:46 - error TS2307: Cannot find module 'redux-persist' or its corresponding type declarations.
+
+3 import { persistStore, persistReducer } from 'redux-persist';
+                                               ~~~~~~~~~~~~~~~
+
+src/store/slices/authSlice.ts:44:11 - error TS2339: Property 'setToken' does not exist on type 'AxiosInstance'.
+
+44       api.setToken(response.data.token);
+             ~~~~~~~~
+
+src/store/slices/authSlice.ts:65:11 - error TS2339: Property 'setToken' does not exist on type 'AxiosInstance'.
+
+65       api.setToken(token);
+             ~~~~~~~~
+
+src/store/slices/authSlice.ts:99:11 - error TS2339: Property 'clearToken' does not exist on type 'AxiosInstance'.
+
+99       api.clearToken();
+             ~~~~~~~~~~
+
+src/store/slices/chatSlice.ts:19:3 - error TS2375: Type '{ userId: undefined; orderId: undefined; messages: never[]; }' is not assignable to type '{ userId?: number; orderId?: number; messages: any[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'userId' are incompatible.
+    Type 'undefined' is not assignable to type 'number'.
+
+19   activeConversation: {
+     ~~~~~~~~~~~~~~~~~~
+
+  src/store/slices/chatSlice.ts:6:3
+    6   activeConversation: {
+        ~~~~~~~~~~~~~~~~~~
+    The expected type comes from property 'activeConversation' which is declared here on type 'ChatState'
+
+src/store/slices/chatSlice.ts:123:7 - error TS2375: Type '{ userId: undefined; orderId: undefined; messages: never[]; }' is not assignable to type 'WritableDraft<{ userId?: number; orderId?: number; messages: any[]; }>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'userId' are incompatible.
+    Type 'undefined' is not assignable to type 'number'.
+
+123       state.activeConversation = {
+          ~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/store/slices/chatSlice.ts:141:7 - error TS2375: Type '{ userId: number | undefined; orderId: number | undefined; messages: any; }' is not assignable to type 'WritableDraft<{ userId?: number; orderId?: number; messages: any[]; }>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'userId' are incompatible.
+    Type 'number | undefined' is not assignable to type 'number'.
+      Type 'undefined' is not assignable to type 'number'.
+
+141       state.activeConversation = action.payload;
+          ~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/store/slices/locationSlice.ts:111:7 - error TS2375: Type '{ latitude: number; longitude: number; address: string | undefined; }' is not assignable to type 'WritableDraft<{ latitude: number; longitude: number; address?: string; }>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'address' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+
+111       state.currentLocation = action.payload;
+          ~~~~~~~~~~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:1:10 - error TS2300: Duplicate identifier 'createSlice'.
+
+1 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+           ~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:1:23 - error TS2300: Duplicate identifier 'createAsyncThunk'.
+
+1 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+                        ~~~~~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:1:41 - error TS2300: Duplicate identifier 'PayloadAction'.
+
+1 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+                                          ~~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:15:7 - error TS2451: Cannot redeclare block-scoped variable 'initialState'.
+
+15 const initialState: MedicineState = {
+         ~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:15:7 - error TS2739: Type '{ medicines: never[]; currentMedicine: null; pharmacies: never[]; selectedPharmacy: null; searchQuery: string; searchResults: never[]; isLoading: false; error: null; }' is missing the following properties from type 'MedicineState': selectedMedicine, categories, loading, selectedCategory
+
+15 const initialState: MedicineState = {
+         ~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:27:14 - error TS2451: Cannot redeclare block-scoped variable 'searchMedicines'.
+
+27 export const searchMedicines = createAsyncThunk(
+                ~~~~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:89:7 - error TS2451: Cannot redeclare block-scoped variable 'medicineSlice'.
+
+89 const medicineSlice = createSlice({
+         ~~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:180:3 - error TS2451: Cannot redeclare block-scoped variable 'setSearchQuery'.
+
+180   setSearchQuery,
+      ~~~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:183:3 - error TS2451: Cannot redeclare block-scoped variable 'clearSearchResults'.
+
+183   clearSearchResults,
+      ~~~~~~~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:186:1 - error TS2528: A module cannot have multiple default exports.
+
+186 export default medicineSlice.reducer;
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  src/store/slices/medicineSlice.ts:301:1
+    301 export default medicineSlice.reducer;
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Another export default is here.
+
+src/store/slices/medicineSlice.ts:187:10 - error TS2300: Duplicate identifier 'createSlice'.
+
+187 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+             ~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:187:23 - error TS2300: Duplicate identifier 'createAsyncThunk'.
+
+187 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+                          ~~~~~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:187:41 - error TS2300: Duplicate identifier 'PayloadAction'.
+
+187 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+                                            ~~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:203:3 - error TS2717: Subsequent property declarations must have the same type.  Property 'medicines' must be of type 'any[]', but here has type 'Medicine[]'.
+
+203   medicines: Medicine[];
+      ~~~~~~~~~
+
+  src/store/slices/medicineSlice.ts:5:3
+    5   medicines: any[];
+        ~~~~~~~~~
+    'medicines' was also declared here.
+
+src/store/slices/medicineSlice.ts:204:3 - error TS2717: Subsequent property declarations must have the same type.  Property 'searchResults' must be of type 'any[]', but here has type 'Medicine[]'.
+
+204   searchResults: Medicine[];
+      ~~~~~~~~~~~~~
+
+  src/store/slices/medicineSlice.ts:10:3
+    10   searchResults: any[];
+         ~~~~~~~~~~~~~
+    'searchResults' was also declared here.
+
+src/store/slices/medicineSlice.ts:213:7 - error TS2451: Cannot redeclare block-scoped variable 'initialState'.
+
+213 const initialState: MedicineState = {
+          ~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:213:7 - error TS2739: Type '{ medicines: never[]; searchResults: never[]; selectedMedicine: null; categories: never[]; loading: false; error: null; searchQuery: string; selectedCategory: null; }' is missing the following properties from type 'MedicineState': currentMedicine, pharmacies, selectedPharmacy, isLoading
+
+213 const initialState: MedicineState = {
+          ~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:233:14 - error TS2451: Cannot redeclare block-scoped variable 'searchMedicines'.
+
+233 export const searchMedicines = createAsyncThunk(
+                 ~~~~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:249:7 - error TS2451: Cannot redeclare block-scoped variable 'medicineSlice'.
+
+249 const medicineSlice = createSlice({
+          ~~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:294:3 - error TS2451: Cannot redeclare block-scoped variable 'setSearchQuery'.
+
+294   setSearchQuery,
+      ~~~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:295:3 - error TS2339: Property 'setSelectedCategory' does not exist on type 'CaseReducerActions<{ setSearchQuery(state: WritableDraft<MedicineState>, action: { payload: string; type: string; }): void; setSelectedPharmacy(state: WritableDraft<MedicineState>, action: { ...; }): void; resetMedicineError(state: WritableDraft<...>): void; clearSearchResults(state: WritableDraft<...>): void; }, "m...'.
+
+295   setSelectedCategory,
+      ~~~~~~~~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:296:3 - error TS2451: Cannot redeclare block-scoped variable 'clearSearchResults'.
+
+296   clearSearchResults,
+      ~~~~~~~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:297:3 - error TS2339: Property 'setSelectedMedicine' does not exist on type 'CaseReducerActions<{ setSearchQuery(state: WritableDraft<MedicineState>, action: { payload: string; type: string; }): void; setSelectedPharmacy(state: WritableDraft<MedicineState>, action: { ...; }): void; resetMedicineError(state: WritableDraft<...>): void; clearSearchResults(state: WritableDraft<...>): void; }, "m...'.
+
+297   setSelectedMedicine,
+      ~~~~~~~~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:298:3 - error TS2339: Property 'clearError' does not exist on type 'CaseReducerActions<{ setSearchQuery(state: WritableDraft<MedicineState>, action: { payload: string; type: string; }): void; setSelectedPharmacy(state: WritableDraft<MedicineState>, action: { ...; }): void; resetMedicineError(state: WritableDraft<...>): void; clearSearchResults(state: WritableDraft<...>): void; }, "m...'.
+
+298   clearError,
+      ~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:301:1 - error TS2528: A module cannot have multiple default exports.
+
+301 export default medicineSlice.reducer;
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  src/store/slices/medicineSlice.ts:186:1
+    186 export default medicineSlice.reducer;
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    The first export default is here.
+
+src/utils/errorHandler.ts:2:25 - error TS2307: Cannot find module '@sentry/react-native' or its corresponding type declarations.
+
+2 import * as Sentry from '@sentry/react-native';
+                          ~~~~~~~~~~~~~~~~~~~~~~
+
+src/utils/validation.ts:1:22 - error TS2307: Cannot find module 'yup' or its corresponding type declarations.
+
+1 import * as yup from 'yup';
+                       ~~~~~
+
+src/utils/validation.ts:169:7 - error TS18046: 'error' is of type 'unknown'.
+
+169       error.inner.forEach((err) => {
+          ~~~~~
+
+src/utils/validation.ts:169:28 - error TS7006: Parameter 'err' implicitly has an 'any' type.
+
+169       error.inner.forEach((err) => {
+                               ~~~
+
+src/utils/validation.ts:226:24 - error TS18048: 'fieldRules' is possibly 'undefined'.
+
+226     for (const rule of fieldRules) {
+                           ~~~~~~~~~~
+
+../node_modules/react-native-maps/src/Geojson.tsx:1:24 - error TS7016: Could not find a declaration file for module 'react'. '/home/runner/workspace/node_modules/react/index.js' implicitly has an 'any' type.
+  If the 'react' package actually exposes this module, consider sending a pull request to amend 'https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react'
+
+1 import * as React from 'react';
+                         ~~~~~~~
+
+../node_modules/react-native-maps/src/Geojson.tsx:250:11 - error TS2607: JSX element class does not support attributes because it does not have a 'props' property.
+
+250           <Marker
+              ~~~~~~~
+251             key={index}
+    ~~~~~~~~~~~~~~~~~~~~~~~
+... 
+259             centerOffset={centerOffset}
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+260             onPress={() => onPress && onPress(overlay)}>
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+../node_modules/react-native-maps/src/Geojson.tsx:250:12 - error TS2786: 'Marker' cannot be used as a JSX component.
+  Its instance type 'MapMarker' is not a valid JSX element.
+    Type 'MapMarker' is missing the following properties from type 'ElementClass': setState, forceUpdate, props, state, refs
+
+250           <Marker
+               ~~~~~~
+
+../node_modules/react-native-maps/src/Geojson.tsx:270:11 - error TS2607: JSX element class does not support attributes because it does not have a 'props' property.
+
+270           <Polyline
+              ~~~~~~~~~
+271             key={index}
+    ~~~~~~~~~~~~~~~~~~~~~~~
+... 
+282             onPress={() => onPress && onPress(overlay)}
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+283           />
+    ~~~~~~~~~~~~
+
+../node_modules/react-native-maps/src/Geojson.tsx:270:12 - error TS2786: 'Polyline' cannot be used as a JSX component.
+  Its instance type 'MapPolyline' is not a valid JSX element.
+    Type 'MapPolyline' is missing the following properties from type 'ElementClass': setState, forceUpdate, props, state, refs
+
+270           <Polyline
+               ~~~~~~~~
+
+../node_modules/react-native-maps/src/Geojson.tsx:292:11 - error TS2607: JSX element class does not support attributes because it does not have a 'props' property.
+
+292           <MapPolygon
+              ~~~~~~~~~~~
+293             key={index}
+    ~~~~~~~~~~~~~~~~~~~~~~~
+... 
+306             zIndex={zIndex}
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+307           />
+    ~~~~~~~~~~~~
+
+../node_modules/react-native-maps/src/Geojson.tsx:292:12 - error TS2786: 'MapPolygon' cannot be used as a JSX component.
+  Its instance type 'MapPolygon' is not a valid JSX element.
+    Type 'MapPolygon' is missing the following properties from type 'ElementClass': setState, forceUpdate, props, state, refs
+
+292           <MapPolygon
+               ~~~~~~~~~~
+
+../node_modules/react-native-maps/src/Geojson.tsx:388:5 - error TS2322: Type 'LatLng[] | undefined' is not assignable to type 'LatLng[]'.
+  Type 'undefined' is not assignable to type 'LatLng[]'.
+
+388     coordinates: coordinates[0],
+        ~~~~~~~~~~~
+
+  ../node_modules/react-native-maps/src/Geojson.tsx:532:3
+    532   coordinates: LatLng[];
+          ~~~~~~~~~~~
+    The expected type comes from property 'coordinates' which is declared here on type 'Omit<AnyPolygonOverlay, "type">'
+
+../node_modules/react-native-maps/src/Geojson.tsx:394:3 - error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+
+394   latitude: c[1],
+      ~~~~~~~~
+
+  ../node_modules/react-native-maps/src/sharedTypes.ts:6:3
+    6   latitude: number;
+        ~~~~~~~~
+    The expected type comes from property 'latitude' which is declared here on type 'LatLng'
+
+../node_modules/react-native-maps/src/Geojson.tsx:395:3 - error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+
+395   longitude: c[0],
+      ~~~~~~~~~
+
+  ../node_modules/react-native-maps/src/sharedTypes.ts:7:3
+    7   longitude: number;
+        ~~~~~~~~~
+    The expected type comes from property 'longitude' which is declared here on type 'LatLng'
+
+../node_modules/react-native-maps/src/MapCallout.tsx:1:24 - error TS7016: Could not find a declaration file for module 'react'. '/home/runner/workspace/node_modules/react/index.js' implicitly has an 'any' type.
+  If the 'react' package actually exposes this module, consider sending a pull request to amend 'https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react'
+
+1 import * as React from 'react';
+                         ~~~~~~~
+
+../node_modules/react-native-maps/src/MapCallout.tsx:53:58 - error TS2339: Property 'props' does not exist on type 'MapCallout'.
+
+53     const {tooltip = false, alphaHitTest = false} = this.props;
+                                                            ~~~~~
+
+../node_modules/react-native-maps/src/MapCallout.tsx:57:18 - error TS2339: Property 'props' does not exist on type 'MapCallout'.
+
+57         {...this.props}
+                    ~~~~~
+
+../node_modules/react-native-maps/src/MapCallout.tsx:60:38 - error TS2339: Property 'props' does not exist on type 'MapCallout'.
+
+60         style={[styles.callout, this.props.style]}
+                                        ~~~~~
+
+../node_modules/react-native-maps/src/MapCalloutSubview.tsx:1:24 - error TS7016: Could not find a declaration file for module 'react'. '/home/runner/workspace/node_modules/react/index.js' implicitly has an 'any' type.
+  If the 'react' package actually exposes this module, consider sending a pull request to amend 'https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react'
+
+1 import * as React from 'react';
+                         ~~~~~~~
+
+../node_modules/react-native-maps/src/MapCalloutSubview.tsx:36:18 - error TS2339: Property 'props' does not exist on type 'MapCalloutSubview'.
+
+36         {...this.props}
+                    ~~~~~
+
+../node_modules/react-native-maps/src/MapCalloutSubview.tsx:37:45 - error TS2339: Property 'props' does not exist on type 'MapCalloutSubview'.
+
+37         style={[styles.calloutSubview, this.props.style]}
+                                               ~~~~~
+
+../node_modules/react-native-maps/src/MapCircle.tsx:1:24 - error TS7016: Could not find a declaration file for module 'react'. '/home/runner/workspace/node_modules/react/index.js' implicitly has an 'any' type.
+  If the 'react' package actually exposes this module, consider sending a pull request to amend 'https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react'
+
+1 import * as React from 'react';
+                         ~~~~~~~
+
+../node_modules/react-native-maps/src/MapCircle.tsx:144:58 - error TS2339: Property 'props' does not exist on type 'MapCircle'.
+
+144     const {strokeColor = '#000', strokeWidth = 1} = this.props;
+                                                             ~~~~~
+
+../node_modules/react-native-maps/src/MapCircle.tsx:148:18 - error TS2339: Property 'props' does not exist on type 'MapCircle'.
+
+148         {...this.props}
+                     ~~~~~
+
+../node_modules/react-native-maps/src/MapHeatmap.tsx:1:24 - error TS7016: Could not find a declaration file for module 'react'. '/home/runner/workspace/node_modules/react/index.js' implicitly has an 'any' type.
+  If the 'react' package actually exposes this module, consider sending a pull request to amend 'https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react'
+
+1 import * as React from 'react';
+                         ~~~~~~~
+
+../node_modules/react-native-maps/src/MapHeatmap.tsx:104:31 - error TS2339: Property 'props' does not exist on type 'MapHeatmap'.
+
+104     const propGradient = this.props?.gradient;
+                                  ~~~~~
+
+../node_modules/react-native-maps/src/MapHeatmap.tsx:107:46 - error TS7006: Parameter 'c' implicitly has an 'any' type.
+
+107       const colors = propGradient.colors.map(c => processColor(c));
+                                                 ~
+
+../node_modules/react-native-maps/src/MapHeatmap.tsx:111:31 - error TS2339: Property 'props' does not exist on type 'MapHeatmap'.
+
+111       <AIRMapHeatmap {...this.props} gradient={gradient} ref={this.heatmap} />
+                                  ~~~~~
+
+../node_modules/react-native-maps/src/MapLocalTile.tsx:1:24 - error TS7016: Could not find a declaration file for module 'react'. '/home/runner/workspace/node_modules/react/index.js' implicitly has an 'any' type.
+  If the 'react' package actually exposes this module, consider sending a pull request to amend 'https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react'
+
+1 import * as React from 'react';
+                         ~~~~~~~
+
+../node_modules/react-native-maps/src/MapLocalTile.tsx:51:38 - error TS2339: Property 'props' does not exist on type 'MapLocalTile'.
+
+51     return <AIRMapLocalTile {...this.props} />;
+                                        ~~~~~
+
+../node_modules/react-native-maps/src/MapMarker.tsx:1:24 - error TS7016: Could not find a declaration file for module 'react'. '/home/runner/workspace/node_modules/react/index.js' implicitly has an 'any' type.
+  If the 'react' package actually exposes this module, consider sending a pull request to amend 'https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react'
+
+1 import * as React from 'react';
+                         ~~~~~~~
+
+../node_modules/react-native-maps/src/MapMarker.tsx:476:44 - error TS2339: Property 'props' does not exist on type 'MapMarker'.
+
+476     const {stopPropagation = false} = this.props;
+                                               ~~~~~
+
+../node_modules/react-native-maps/src/MapMarker.tsx:485:14 - error TS2339: Property 'props' does not exist on type 'MapMarker'.
+
+485     if (this.props.icon && this.fabricMarker) {
+                 ~~~~~
+
+../node_modules/react-native-maps/src/MapMarker.tsx:486:32 - error TS2339: Property 'props' does not exist on type 'MapMarker'.
+
+486       icon = fixImageProp(this.props.icon);
+                                   ~~~~~
+
+../node_modules/react-native-maps/src/MapMarker.tsx:489:14 - error TS2339: Property 'props' does not exist on type 'MapMarker'.
+
+489     if (this.props.image && this.fabricMarker) {
+                 ~~~~~
+
+../node_modules/react-native-maps/src/MapMarker.tsx:490:33 - error TS2339: Property 'props' does not exist on type 'MapMarker'.
+
+490       image = fixImageProp(this.props.image);
+                                    ~~~~~
+
+../node_modules/react-native-maps/src/MapMarker.tsx:497:18 - error TS2339: Property 'props' does not exist on type 'MapMarker'.
+
+497         {...this.props}
+                     ~~~~~
+
+../node_modules/react-native-maps/src/MapMarker.tsx:503:37 - error TS2339: Property 'props' does not exist on type 'MapMarker'.
+
+503         style={[styles.marker, this.props.style]}
+                                        ~~~~~
+
+../node_modules/react-native-maps/src/MapMarker.tsx:506:19 - error TS2339: Property 'stopPropagation' does not exist on type 'MarkerPressEvent'.
+
+506             event.stopPropagation();
+                      ~~~~~~~~~~~~~~~
+
+../node_modules/react-native-maps/src/MapMarker.tsx:508:20 - error TS2339: Property 'props' does not exist on type 'MapMarker'.
+
+508           if (this.props.onPress) {
+                       ~~~~~
+
+../node_modules/react-native-maps/src/MapMarker.tsx:509:18 - error TS2339: Property 'props' does not exist on type 'MapMarker'.
+
+509             this.props.onPress(event);
+                     ~~~~~
+
+../node_modules/react-native-maps/src/MapOverlay.tsx:1:24 - error TS7016: Could not find a declaration file for module 'react'. '/home/runner/workspace/node_modules/react/index.js' implicitly has an 'any' type.
+  If the 'react' package actually exposes this module, consider sending a pull request to amend 'https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react'
+
+1 import * as React from 'react';
+                         ~~~~~~~
+
+../node_modules/react-native-maps/src/MapOverlay.tsx:82:27 - error TS2532: Object is possibly 'undefined'.
+
+82     northEast: {latitude: bounds[0][0], longitude: bounds[0][1]},
+                             ~~~~~~~~~
+
+../node_modules/react-native-maps/src/MapOverlay.tsx:82:52 - error TS2532: Object is possibly 'undefined'.
+
+82     northEast: {latitude: bounds[0][0], longitude: bounds[0][1]},
+                                                      ~~~~~~~~~
+
+../node_modules/react-native-maps/src/MapOverlay.tsx:83:27 - error TS2532: Object is possibly 'undefined'.
+
+83     southWest: {latitude: bounds[1][0], longitude: bounds[1][1]},
+                             ~~~~~~~~~
+
+../node_modules/react-native-maps/src/MapOverlay.tsx:83:52 - error TS2532: Object is possibly 'undefined'.
+
+83     southWest: {latitude: bounds[1][0], longitude: bounds[1][1]},
+                                                      ~~~~~~~~~
+
+../node_modules/react-native-maps/src/MapOverlay.tsx:100:42 - error TS2339: Property 'props' does not exist on type 'MapOverlay'.
+
+100     const {opacity = 1.0, bounds} = this.props;
+                                             ~~~~~
+
+../node_modules/react-native-maps/src/MapOverlay.tsx:107:27 - error TS2339: Property 'props' does not exist on type 'MapOverlay'.
+
+107     let image: any = this.props.image;
+                              ~~~~~
+
+../node_modules/react-native-maps/src/MapOverlay.tsx:111:16 - error TS2339: Property 'props' does not exist on type 'MapOverlay'.
+
+111       if (this.props.image) {
+                   ~~~~~
+
+../node_modules/react-native-maps/src/MapOverlay.tsx:112:35 - error TS2339: Property 'props' does not exist on type 'MapOverlay'.
+
+112         image = fixImageProp(this.props.image);
+                                      ~~~~~
+
+../node_modules/react-native-maps/src/MapOverlay.tsx:118:16 - error TS2339: Property 'props' does not exist on type 'MapOverlay'.
+
+118       if (this.props.image) {
+                   ~~~~~
+
+../node_modules/react-native-maps/src/MapOverlay.tsx:119:35 - error TS2339: Property 'props' does not exist on type 'MapOverlay'.
+
+119         image = fixImageProp(this.props.image);
+                                      ~~~~~
+
+../node_modules/react-native-maps/src/MapOverlay.tsx:132:38 - error TS2339: Property 'props' does not exist on type 'MapOverlay'.
+
+132         style={[styles.overlay, this.props.style]}
+                                         ~~~~~
+
+../node_modules/react-native-maps/src/MapPolygon.tsx:1:24 - error TS7016: Could not find a declaration file for module 'react'. '/home/runner/workspace/node_modules/react/index.js' implicitly has an 'any' type.
+  If the 'react' package actually exposes this module, consider sending a pull request to amend 'https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react'
+
+1 import * as React from 'react';
+                         ~~~~~~~
+
+../node_modules/react-native-maps/src/MapPolygon.tsx:170:58 - error TS2339: Property 'props' does not exist on type 'MapPolygon'.
+
+170     const {strokeColor = '#000', strokeWidth = 1} = this.props;
+                                                             ~~~~~
+
+../node_modules/react-native-maps/src/MapPolygon.tsx:174:18 - error TS2339: Property 'props' does not exist on type 'MapPolygon'.
+
+174         {...this.props}
+                     ~~~~~
+
+../node_modules/react-native-maps/src/MapPolyline.tsx:1:24 - error TS7016: Could not find a declaration file for module 'react'. '/home/runner/workspace/node_modules/react/index.js' implicitly has an 'any' type.
+  If the 'react' package actually exposes this module, consider sending a pull request to amend 'https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react'
+
+1 import * as React from 'react';
+                         ~~~~~~~
+
+../node_modules/react-native-maps/src/MapPolyline.tsx:176:14 - error TS2339: Property 'props' does not exist on type 'MapPolyline'.
+
+176     } = this.props;
+                 ~~~~~
+
+../node_modules/react-native-maps/src/MapPolyline.tsx:180:18 - error TS2339: Property 'props' does not exist on type 'MapPolyline'.
+
+180         {...this.props}
+                     ~~~~~
+
+../node_modules/react-native-maps/src/MapUrlTile.tsx:1:24 - error TS7016: Could not find a declaration file for module 'react'. '/home/runner/workspace/node_modules/react/index.js' implicitly has an 'any' type.
+  If the 'react' package actually exposes this module, consider sending a pull request to amend 'https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react'
+
+1 import * as React from 'react';
+                         ~~~~~~~
+
+../node_modules/react-native-maps/src/MapUrlTile.tsx:160:36 - error TS2339: Property 'props' does not exist on type 'MapUrlTile'.
+
+160     return <AIRMapUrlTile {...this.props} />;
+                                       ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1:24 - error TS7016: Could not find a declaration file for module 'react'. '/home/runner/workspace/node_modules/react/index.js' implicitly has an 'any' type.
+  If the 'react' package actually exposes this module, consider sending a pull request to amend 'https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react'
+
+1 import * as React from 'react';
+                         ~~~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:760:10 - error TS2339: Property 'state' does not exist on type 'MapView'.
+
+760     this.state = {
+             ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:774:31 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+774     const {onMapReady} = this.props;
+                                  ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:775:10 - error TS2339: Property 'setState' does not exist on type 'MapView'.
+
+775     this.setState({isReady: true}, () => {
+             ~~~~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:782:22 - error TS2339: Property 'nativeEvent' does not exist on type 'ChangeEvent'.
+
+782   private _onChange({nativeEvent}: ChangeEvent) {
+                         ~~~~~~~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:787:16 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+787       if (this.props.onRegionChange) {
+                   ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:788:14 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+788         this.props.onRegionChange(nativeEvent.region, details);
+                 ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:790:21 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+790     } else if (this.props.onRegionChangeComplete) {
+                        ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:791:12 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+791       this.props.onRegionChangeComplete(nativeEvent.region, details);
+               ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1047:14 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1047     if (this.props.onPress) {
+                  ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1048:12 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1048       this.props.onPress(event);
+                ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1053:14 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1053     if (this.props.onMarkerPress) {
+                  ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1054:12 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1054       this.props.onMarkerPress(event);
+                ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1059:14 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1059     if (this.props.onMarkerSelect) {
+                  ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1060:12 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1060       this.props.onMarkerSelect(event);
+                ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1065:14 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1065     if (this.props.onKmlReady) {
+                  ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1066:12 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1066       this.props.onKmlReady(event);
+                ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1071:14 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1071     if (this.props.onMarkerDeselect) {
+                  ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1072:12 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1072       this.props.onMarkerDeselect(event);
+                ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1076:29 - error TS2339: Property 'nativeEvent' does not exist on type 'NativeSyntheticEvent<any>'.
+
+1076     const isGesture = event.nativeEvent.isGesture;
+                                 ~~~~~~~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1078:15 - error TS2339: Property 'nativeEvent' does not exist on type 'NativeSyntheticEvent<any>'.
+
+1078     if (event.nativeEvent.continuous) {
+                   ~~~~~~~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1079:16 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1079       if (this.props.onRegionChange) {
+                    ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1080:14 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1080         this.props.onRegionChange(event.nativeEvent.region, details);
+                  ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1080:41 - error TS2339: Property 'nativeEvent' does not exist on type 'NativeSyntheticEvent<any>'.
+
+1080         this.props.onRegionChange(event.nativeEvent.region, details);
+                                             ~~~~~~~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1082:21 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1082     } else if (this.props.onRegionChangeComplete) {
+                         ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1083:12 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1083       this.props.onRegionChangeComplete(event.nativeEvent.region, details);
+                ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1083:47 - error TS2339: Property 'nativeEvent' does not exist on type 'NativeSyntheticEvent<any>'.
+
+1083       this.props.onRegionChangeComplete(event.nativeEvent.region, details);
+                                                   ~~~~~~~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1087:14 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1087     if (this.props.onRegionChangeStart) {
+                  ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1088:12 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1088       this.props.onRegionChangeStart(event);
+                ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1093:14 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1093     if (this.props.onIndoorBuildingFocused) {
+                  ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1097:12 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1097       this.props.onIndoorBuildingFocused(event);
+                ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1102:14 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1102     if (this.props.onIndoorLevelActivated) {
+                  ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1103:12 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1103       this.props.onIndoorLevelActivated(event);
+                ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1108:29 - error TS2339: Property 'nativeEvent' does not exist on type 'NativeSyntheticEvent<any>'.
+
+1108     const isGesture = event.nativeEvent.isGesture;
+                                 ~~~~~~~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1110:14 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1110     if (this.props.onRegionChangeComplete) {
+                  ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1111:12 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1111       this.props.onRegionChangeComplete(event.nativeEvent.region, details);
+                ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1111:47 - error TS2339: Property 'nativeEvent' does not exist on type 'NativeSyntheticEvent<any>'.
+
+1111       this.props.onRegionChangeComplete(event.nativeEvent.region, details);
+                                                   ~~~~~~~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1116:14 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1116     if (this.props.onLongPress) {
+                  ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1117:12 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1117       this.props.onLongPress(event);
+                ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1144:14 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1144     } = this.props;
+                  ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1147:37 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1147     const userInterfaceStyle = this.props.userInterfaceStyle || 'system';
+                                         ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1149:29 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1149       ? JSON.stringify(this.props.customMapStyle)
+                                 ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1154:22 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1154       liteMode: this.props.liteMode,
+                          ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1155:25 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1155       googleMapId: this.props.googleMapId,
+                             ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1156:28 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1156       googleRenderer: this.props.googleRenderer,
+                                ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1175:14 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1175     if (this.props.region) {
+                  ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1177:24 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1177         latitude: this.props.region.latitude,
+                            ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1178:25 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1178         longitude: this.props.region.longitude,
+                             ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1179:29 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1179         latitudeDelta: this.props.region.latitudeDelta,
+                                 ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1180:30 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1180         longitudeDelta: this.props.region.longitudeDelta,
+                                  ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1184:14 - error TS2339: Property 'state' does not exist on type 'MapView'.
+
+1184     if (this.state.isReady) {
+                  ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1189:26 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1189       props.style = this.props.style;
+                              ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1190:34 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1190       props.initialCamera = this.props.initialCamera;
+                                      ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1191:29 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1191       props.onLayout = this.props.onLayout;
+                                 ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1194:32 - error TS2339: Property 'state' does not exist on type 'MapView'.
+
+1194     const childrenNodes = this.state.isReady ? children : null;
+                                    ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1198:47 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1198         <ProviderContext.Provider value={this.props.provider}>
+                                                   ~~~~~
+
+../node_modules/react-native-maps/src/MapView.tsx:1206:47 - error TS2339: Property 'props' does not exist on type 'MapView'.
+
+1206         <ProviderContext.Provider value={this.props.provider}>
+                                                   ~~~~~
+
+../node_modules/react-native-maps/src/MapWMSTile.tsx:1:24 - error TS7016: Could not find a declaration file for module 'react'. '/home/runner/workspace/node_modules/react/index.js' implicitly has an 'any' type.
+  If the 'react' package actually exposes this module, consider sending a pull request to amend 'https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react'
+
+1 import * as React from 'react';
+                         ~~~~~~~
+
+../node_modules/react-native-maps/src/MapWMSTile.tsx:139:36 - error TS2339: Property 'props' does not exist on type 'MapWMSTile'.
+
+139     return <AIRMapWMSTile {...this.props} />;
+                                       ~~~~~
+
+../node_modules/react-native-maps/src/createFabricMap.tsx:1:62 - error TS7016: Could not find a declaration file for module 'react'. '/home/runner/workspace/node_modules/react/index.js' implicitly has an 'any' type.
+  If the 'react' package actually exposes this module, consider sending a pull request to amend 'https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react'
+
+1 import React, {forwardRef, useImperativeHandle, useRef} from 'react';
+                                                               ~~~~~~~
+
+../node_modules/react-native-maps/src/createFabricMap.tsx:45:6 - error TS7006: Parameter 'props' implicitly has an 'any' type.
+
+45     (props, ref) => {
+        ~~~~~
+
+../node_modules/react-native-maps/src/createFabricMap.tsx:45:13 - error TS7006: Parameter 'ref' implicitly has an 'any' type.
+
+45     (props, ref) => {
+               ~~~
+
+../node_modules/react-native-maps/src/decorateMapComponent.ts:1:29 - error TS7016: Could not find a declaration file for module 'react'. '/home/runner/workspace/node_modules/react/index.js' implicitly has an 'any' type.
+  If the 'react' package actually exposes this module, consider sending a pull request to amend 'https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react'
+
+1 import {createContext} from 'react';
+                              ~~~~~~~
+
+../node_modules/react-native-maps/src/decorateMapComponent.ts:76:13 - error TS2339: Property 'contextType' does not exist on type 'Component'.
+  Property 'contextType' does not exist on type 'typeof MapCallout'.
+
+76   Component.contextType = ProviderContext;
+               ~~~~~~~~~~~
+
+../node_modules/react-native-maps/src/decorateMapComponent.ts:121:9 - error TS2322: Type 'NativeComponent<unknown> | undefined' is not assignable to type 'NativeComponent<unknown>'.
+  Type 'undefined' is not assignable to type 'NativeComponent<unknown>'.
+
+121         return components[key];
+            ~~~~~~~~~~~~~~~~~~~~~~~
+
+../node_modules/react-native-maps/src/decorateMapComponent.ts:126:9 - error TS2322: Type 'NativeComponent<unknown> | undefined' is not assignable to type 'NativeComponent<unknown>'.
+
+126         return components[key];
+            ~~~~~~~~~~~~~~~~~~~~~~~
+
+../node_modules/react-native-maps/src/decorateMapComponent.ts:133:28 - error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type 'Providers'.
+
+133       const providerInfo = providers[provider];
+                               ~~~~~~~~~~~~~~~~~~~
+
+../node_modules/react-native-maps/src/decorateMapComponent.ts:164:7 - error TS2322: Type 'NativeComponent<unknown> | undefined' is not assignable to type 'NativeComponent<unknown>'.
+
+164       return components[key];
+          ~~~~~~~~~~~~~~~~~~~~~~~
+
+../node_modules/react-native-maps/src/decorateMapComponent.ts:174:5 - error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+
+174     return UIManager.getViewManagerConfig(nativeComponentName).Commands[name];
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Found 590 errors in 81 files.
+
+Errors  Files
+     6  App.tsx:2
+     1  src/components/MedicineItem.tsx:37
+     1  src/components/PaymentMethodSelector.tsx:81
+     2  src/features/medication-reminders/animations/AdherenceCelebration.tsx:63
+     1  src/features/medication-reminders/animations/MedicationTakingSteps.tsx:265
+     2  src/features/medication-reminders/components/ActiveReminderView.tsx:179
+     8  src/features/medication-reminders/components/MedicationDashboard.tsx:46
+    10  src/features/medication-reminders/services/ReminderService.ts:4
+     3  src/features/video-chat/PharmacistConsultButton.tsx:10
+    12  src/features/video-chat/VideoChatScreen.tsx:12
+    16  src/features/video-chat/video-chat.service.ts:2
+     1  src/hooks/useAuth.tsx:30
+    31  src/navigation/AppNavigator.tsx:2
+     1  src/navigation/RootNavigation.ts:2
+    11  src/screens/ActiveDeliveryScreen.tsx:15
+     3  src/screens/AddPaymentMethodScreen.tsx:14
+     4  src/screens/AuthScreen.tsx:15
+     5  src/screens/CardPaymentScreen.tsx:11
+     6  src/screens/CartScreen.tsx:12
+     3  src/screens/ChatScreen.tsx:17
+     3  src/screens/DeliveryDashboardScreen.tsx:14
+    24  src/screens/DeliveryDetailsScreen.tsx:17
+     5  src/screens/DeliveryEarningsScreen.tsx:13
+     3  src/screens/DeliveryHistoryScreen.tsx:13
+     1  src/screens/HomeScreen.tsx:13
+     1  src/screens/LoginScreen.tsx:15
+     3  src/screens/MedicationDetailsScreen.tsx:14
+     2  src/screens/MedicineDetailScreen.tsx:14
+     3  src/screens/MedicineSearchScreen.tsx:14
+     5  src/screens/MobileMoneyPaymentScreen.tsx:13
+     4  src/screens/NotificationsScreen.tsx:15
+    42  src/screens/OrderDetailsScreen.tsx:11
+     2  src/screens/OrdersScreen.tsx:14
+     2  src/screens/OtpVerificationScreen.tsx:14
+     2  src/screens/PaymentMethodScreen.tsx:10
+     2  src/screens/PaymentMethodsScreen.tsx:13
+     5  src/screens/PaymentScreen.tsx:12
+     2  src/screens/PharmaciesScreen.tsx:704
+    12  src/screens/PharmacyMapScreen.tsx:11
+     8  src/screens/PrescriptionUploadScreen.tsx:13
+     4  src/screens/RemindersScreen.tsx:17
+     3  src/screens/ScanPrescriptionScreen.tsx:13
+     3  src/screens/SettingsScreen.tsx:15
+     1  src/screens/TrackOrderScreen.tsx:262
+     1  src/screens/VideoConsultationScreen.tsx:13
+    50  src/screens/WelcomeScreen.tsx:1
+     3  src/screens/auth/OnboardingScreen.tsx:15
+     2  src/screens/auth/OtpScreen.tsx:14
+     4  src/screens/auth/OtpVerificationScreen.tsx:14
+     6  src/services/auth.service.ts:110
+     7  src/services/chat.service.ts:74
+    28  src/services/delivery.service.ts:21
+     3  src/services/location.service.ts:51
+     9  src/services/order.service.ts:75
+    12  src/services/payment.service.ts:2
+     3  src/services/pharmacy.service.ts:37
+     5  src/services/prescription.service.ts:52
+     7  src/services/reminder.service.ts:50
+    17  src/services/video.service.ts:3
+     1  src/store/index.ts:3
+     3  src/store/slices/authSlice.ts:44
+     3  src/store/slices/chatSlice.ts:19
+     1  src/store/slices/locationSlice.ts:111
+    25  src/store/slices/medicineSlice.ts:1
+     1  src/utils/errorHandler.ts:2
+     4  src/utils/validation.ts:1
+    10  ../node_modules/react-native-maps/src/Geojson.tsx:1
+     4  ../node_modules/react-native-maps/src/MapCallout.tsx:1
+     3  ../node_modules/react-native-maps/src/MapCalloutSubview.tsx:1
+     3  ../node_modules/react-native-maps/src/MapCircle.tsx:1
+     4  ../node_modules/react-native-maps/src/MapHeatmap.tsx:1
+     2  ../node_modules/react-native-maps/src/MapLocalTile.tsx:1
+    11  ../node_modules/react-native-maps/src/MapMarker.tsx:1
+    12  ../node_modules/react-native-maps/src/MapOverlay.tsx:1
+     3  ../node_modules/react-native-maps/src/MapPolygon.tsx:1
+     3  ../node_modules/react-native-maps/src/MapPolyline.tsx:1
+     2  ../node_modules/react-native-maps/src/MapUrlTile.tsx:1
+    57  ../node_modules/react-native-maps/src/MapView.tsx:1
+     2  ../node_modules/react-native-maps/src/MapWMSTile.tsx:1
+     3  ../node_modules/react-native-maps/src/createFabricMap.tsx:1
+     7  ../node_modules/react-native-maps/src/decorateMapComponent.ts:1
