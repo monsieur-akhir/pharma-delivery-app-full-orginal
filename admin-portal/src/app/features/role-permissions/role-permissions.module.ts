@@ -37,9 +37,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    RolePermissionsComponent,
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     FormsModule,
@@ -61,7 +59,8 @@ const routes: Routes = [
     MatPaginatorModule,
     MatSortModule,
     MatTabsModule,
-    UserPermissionsComponent
+    UserPermissionsComponent,
+    RolePermissionsComponent
   ],
   providers: [
     PermissionsService

@@ -151,7 +151,7 @@ export class StockTransferDialogComponent implements OnInit {
     // Exclure la pharmacie source des options
     this.pharmacyService.getPharmacies().subscribe({
       next: (response) => {
-        this.pharmacies = response.pharmacies.filter((p: any) => p.id !== this.data.stock.pharmacyId);
+        this.pharmacies = response.pharmacies.filter((p: any) => p.id !== this.data.stock.pharmacyId) as any;
         this.isLoading = false;
       },
       error: (error) => {

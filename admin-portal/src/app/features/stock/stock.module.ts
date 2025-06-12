@@ -27,7 +27,7 @@ import { StockAdjustDialogComponent } from './stock-adjust-dialog/stock-adjust-d
 import { StockTransferDialogComponent } from './stock-transfer-dialog/stock-transfer-dialog.component';
 import { StockMovementsDialogComponent } from './stock-movements-dialog/stock-movements-dialog.component';
 import { AuthGuard } from '../../core/guards/auth.guard';
-import { RoleGuard } from '../../core/guards/role.guard';
+// import { RoleGuard } from '../../core/guards/role.guard';
 
 const routes: Routes = [
   { 
