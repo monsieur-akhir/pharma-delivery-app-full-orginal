@@ -26,7 +26,7 @@ export interface ConsultationSession {
  * Service for handling video consultation functionality
  */
 class VideoService {
-  private socket: any;
+  private socket!: ReturnType<typeof io>;  // '!' tells TypeScript this will be initialized
   private peer: SimplePeer.Instance | null = null;
   private stream: MediaStream | null = null;
   private remoteStream: MediaStream | null = null;
@@ -64,7 +64,7 @@ class VideoService {
       this.onDisconnectCallbacks.forEach(callback => callback());
     });
 
-    this.socket.on('signal', (data: any) => {
+    this.socket.on('signal', (data: { signal: SimplePeer.SignalData }) => {
       if (this.peer && !this.peer.destroyed) {
         this.peer.signal(data.signal);
       }
@@ -88,7 +88,7 @@ class VideoService {
         prescriptionId
       });
       return response.data;
-    } catch (error) {
+    } catch (error: unknown) {
       throw error;
     }
   }
@@ -100,8 +100,10 @@ class VideoService {
     try {
       const response = await api.get('/consultations/active');
       return response.data;
-    } catch (error) {
-      if (error.response && error.response.status === 404) {
+    } catch (error: unknown) {
+      if (error && typeof error === 'object' && 'response' in error && 
+          error.response && typeof error.response === 'object' && 
+          'status' in error.response && error.response.status === 404) {
         return null;
       }
       throw error;
@@ -147,14 +149,14 @@ class VideoService {
   private setupPeerListeners() {
     if (!this.peer) return;
 
-    this.peer.on('signal', (data) => {
+    this.peer.on('signal', (data: SimplePeer.SignalData) => {
       this.socket.emit('signal', {
         signal: data,
-        consultationId: this.socket.consultationId
+        consultationId: (this.socket as any).consultationId
       });
     });
 
-    this.peer.on('stream', (stream) => {
+    this.peer.on('stream', (stream: MediaStream) => {
       this.remoteStream = stream;
       this.onStreamCallbacks.forEach(callback => callback(stream));
     });
@@ -164,7 +166,7 @@ class VideoService {
       this.onConnectCallbacks.forEach(callback => callback());
     });
 
-    this.peer.on('error', (err) => {
+    this.peer.on('error', (err: Error) => {
       console.error('Peer connection error:', err);
       this.endCall();
     });
@@ -268,7 +270,7 @@ class VideoService {
       
       // Replace the track in the peer connection
       if (this.peer) {
-        const sender = this.peer._senders.find((s: any) => s.track.kind === 'video');
+        const sender = (this.peer as any)._senders.find((s: { track: MediaStreamTrack }) => s.track.kind === 'video');
         if (sender) {
           sender.replaceTrack(newVideoTrack);
         }

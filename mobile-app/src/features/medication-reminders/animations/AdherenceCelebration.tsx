@@ -7,6 +7,7 @@ import {
   Easing,
   Dimensions,
   TouchableOpacity,
+  ViewStyle,
 } from 'react-native';
 
 interface ConfettiPiece {
@@ -19,6 +20,8 @@ interface ConfettiPiece {
   shape: 'circle' | 'square' | 'triangle';
   opacity: Animated.Value;
 }
+
+type ConfettiStyle = Partial<ViewStyle>;
 
 interface AdherenceCelebrationProps {
   streakDays: number;
@@ -172,24 +175,22 @@ const AdherenceCelebration: React.FC<AdherenceCelebrationProps> = ({
         inputRange: [0, 1],
         outputRange: ['0deg', '360deg'],
       });
-      
-      // Different shapes for confetti
-      let shapeStyle;
+
+      let shapeStyle: ConfettiStyle = {};
       if (piece.shape === 'circle') {
         shapeStyle = { borderRadius: piece.size / 2 };
       } else if (piece.shape === 'triangle') {
-        // Note: Triangles are approximated using borders in this simple example
         shapeStyle = {
           width: 0,
           height: 0,
           backgroundColor: 'transparent',
-          borderStyle: 'solid',
+          borderStyle: 'solid' as const,
           borderLeftWidth: piece.size / 2,
           borderRightWidth: piece.size / 2,
           borderBottomWidth: piece.size,
           borderLeftColor: 'transparent',
           borderRightColor: 'transparent',
-          borderBottomColor: piece.color,
+          borderBottomColor: piece.color
         };
       }
       

@@ -15,6 +15,8 @@ import { useDispatch } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import authService from '../../services/auth.service';
 import { APP_NAME } from '../../config';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { AppStackParamList } from '../../navigation/types';
 
 interface OtpScreenProps {
   route: {
@@ -22,7 +24,7 @@ interface OtpScreenProps {
       phone: string;
     };
   };
-  navigation: any;
+  navigation: StackNavigationProp<AppStackParamList, 'OTP'>;
 }
 
 const OtpScreen: React.FC<OtpScreenProps> = ({ route, navigation }) => {
@@ -154,7 +156,7 @@ const OtpScreen: React.FC<OtpScreenProps> = ({ route, navigation }) => {
             {Array(6).fill(0).map((_, index) => (
               <TextInput
                 key={index}
-                ref={(ref) => (inputRefs.current[index] = ref)}
+                ref={(ref) => { inputRefs.current[index] = ref; }}
                 style={[
                   styles.otpInput,
                   otp[index] ? styles.otpInputFilled : null,

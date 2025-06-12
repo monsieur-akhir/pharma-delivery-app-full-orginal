@@ -23,7 +23,7 @@ import {
 import { getCurrentLocation } from '@/store/slices/locationSlice';
 import { AppDispatch, RootState } from '@/store';
 import { Feather } from '@expo/vector-icons';
-import MedicineItem from '@/components/MedicineItem';
+import MedicineItem from '../components/MedicineItem';
 import PharmacyCard from '@/components/PharmacyCard';
 
 type HomeScreenNavigationProp = StackNavigationProp<MainStackParamList, 'MainTabs'>;
@@ -139,10 +139,11 @@ const MedicineSearchScreen: React.FC<Props> = ({ navigation }) => {
             renderItem={({ item }) => (
               <PharmacyCard 
                 pharmacy={item} 
+                selected={false} 
                 onPress={() => navigation.navigate('PharmacyMap', { 
                   latitude: item.latitude, 
                   longitude: item.longitude 
-                })}
+                })} 
               />
             )}
             keyExtractor={(item) => item.id.toString()}

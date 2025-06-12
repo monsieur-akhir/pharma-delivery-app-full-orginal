@@ -11,16 +11,17 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import { MainStackParamList } from '@/navigation/AppNavigator';
+import { AppStackParamList } from '@/navigation/types';
 import { getNearbyPharmacies, getPharmacyById, setSelectedPharmacy } from '@/store/slices/medicineSlice';
 import { getCurrentLocation } from '@/store/slices/locationSlice';
 import { AppDispatch, RootState } from '@/store';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Marker, PROVIDER_GOOGLE, MapViewProps } from 'react-native-maps';
 import { Feather } from '@expo/vector-icons';
 import PharmacyCard from '@/components/PharmacyCard';
+import { Pharmacy } from '@/types';
 
-type PharmacyMapScreenNavigationProp = StackNavigationProp<MainStackParamList, 'PharmacyMap'>;
-type PharmacyMapScreenRouteProp = RouteProp<MainStackParamList, 'PharmacyMap'>;
+type PharmacyMapScreenNavigationProp = StackNavigationProp<AppStackParamList, 'PharmaciesMain'>;
+type PharmacyMapScreenRouteProp = RouteProp<AppStackParamList, 'PharmaciesMain'>;
 
 interface Props {
   navigation: PharmacyMapScreenNavigationProp;
@@ -32,17 +33,20 @@ const { width } = Dimensions.get('window');
 const PharmacyMapScreen: React.FC<Props> = ({ navigation, route }) => {
   const [selectedMarkerId, setSelectedMarkerId] = useState<number | null>(null);
   const [mapReady, setMapReady] = useState(false);
-  const mapRef = React.useRef<MapView>(null);
+  const mapRef = React.useRef<MapView | null>(null);
   
   const dispatch = useDispatch<AppDispatch>();
   const { pharmacies, selectedPharmacy, isLoading } = useSelector((state: RootState) => state.medicine);
   const { currentLocation } = useSelector((state: RootState) => state.location);
-  
-  // Get initial location
-  const initialLocation = route.params || currentLocation || {
+    // Get initial location
+  const defaultLocation = {
     latitude: 37.78825,
     longitude: -122.4324,
   };
+  
+  const initialLocation = route.params?.latitude && route.params?.longitude
+    ? { latitude: route.params.latitude, longitude: route.params.longitude }
+    : currentLocation || defaultLocation;
 
   // Load nearby pharmacies on component mount
   useEffect(() => {
@@ -52,9 +56,8 @@ const PharmacyMapScreen: React.FC<Props> = ({ navigation, route }) => {
     
     // If a specific pharmacy location was passed, select it
     if (route.params?.latitude && route.params?.longitude) {
-      // Find the pharmacy that matches these coordinates
       const foundPharmacy = pharmacies.find(
-        p => p.latitude === route.params?.latitude && p.longitude === route.params?.longitude
+        (pharmacy: Pharmacy) => pharmacy.latitude === route.params?.latitude && pharmacy.longitude === route.params?.longitude
       );
       
       if (foundPharmacy) {
@@ -69,14 +72,14 @@ const PharmacyMapScreen: React.FC<Props> = ({ navigation, route }) => {
       if (!currentLocation) {
         const locationResult = await dispatch(getCurrentLocation()).unwrap();
         if (locationResult) {
-          dispatch(getNearbyPharmacies({
+          await dispatch(getNearbyPharmacies({
             latitude: locationResult.latitude,
             longitude: locationResult.longitude,
             radius: 10 // 10km radius
           }));
         }
       } else {
-        dispatch(getNearbyPharmacies({
+        await dispatch(getNearbyPharmacies({
           latitude: currentLocation.latitude,
           longitude: currentLocation.longitude,
           radius: 10
@@ -94,7 +97,7 @@ const PharmacyMapScreen: React.FC<Props> = ({ navigation, route }) => {
     await dispatch(getPharmacyById(id));
     
     // Find the pharmacy to center map on it
-    const pharmacy = pharmacies.find(p => p.id === id);
+    const pharmacy = pharmacies.find((pharmacy: Pharmacy) => pharmacy.id === id);
     if (pharmacy && mapRef.current && mapReady) {
       mapRef.current.animateToRegion({
         latitude: pharmacy.latitude,
@@ -118,7 +121,7 @@ const PharmacyMapScreen: React.FC<Props> = ({ navigation, route }) => {
     
     // If there are pharmacies and a selected marker, center the map
     if (selectedMarkerId && mapRef.current) {
-      const pharmacy = pharmacies.find(p => p.id === selectedMarkerId);
+      const pharmacy = pharmacies.find((pharmacy: Pharmacy) => pharmacy.id === selectedMarkerId);
       if (pharmacy) {
         mapRef.current.animateToRegion({
           latitude: pharmacy.latitude,
@@ -154,7 +157,7 @@ const PharmacyMapScreen: React.FC<Props> = ({ navigation, route }) => {
         showsMyLocationButton
         onMapReady={handleMapReady}
       >
-        {pharmacies.map((pharmacy) => (
+        {pharmacies.map((pharmacy: Pharmacy) => (
           <Marker
             key={pharmacy.id}
             coordinate={{
@@ -198,14 +201,14 @@ const PharmacyMapScreen: React.FC<Props> = ({ navigation, route }) => {
         
         <FlatList
           data={pharmacies}
-          renderItem={({ item }) => (
+          renderItem={({ item }: { item: Pharmacy }) => (
             <PharmacyCard
               pharmacy={item}
               selected={selectedMarkerId === item.id}
               onPress={() => handleSelectPharmacy(item.id)}
             />
           )}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item: Pharmacy) => item.id.toString()}
           horizontal
           pagingEnabled
           snapToInterval={width - 40}

@@ -1,6 +1,6 @@
 import api from './api.service';
 import { initStripe } from '@stripe/stripe-react-native';
-import { VITE_STRIPE_PUBLIC_KEY } from '../config';
+import { STRIPE_PUBLIC_KEY } from '../config';
 
 /**
  * Payment method type
@@ -40,11 +40,10 @@ export interface MobileMoneyDetails {
 class PaymentService {
   /**
    * Initialize Stripe with publishable key
-   */
-  async initializeStripe() {
+   */  async initializeStripe() {
     try {
       await initStripe({
-        publishableKey: VITE_STRIPE_PUBLIC_KEY,
+        publishableKey: STRIPE_PUBLIC_KEY,
         merchantIdentifier: 'merchant.com.medicinedelivery',
       });
     } catch (error) {

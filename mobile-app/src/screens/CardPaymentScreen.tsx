@@ -12,18 +12,12 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { StripeProvider, CardField, useStripe } from '@stripe/stripe-react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useAuth } from '../hooks/useAuth';
-import { ApiService } from '../services/api';
-import { COLORS, SIZES } from '../constants';
+import { COLORS, SIZES } from '../config/constants';
 
-// Get your Stripe publishable key from environment variables
-const STRIPE_PUBLISHABLE_KEY = process.env.VITE_STRIPE_PUBLIC_KEY || '';
-
-const CardPaymentScreen = () => {
-  const navigation = useNavigation();
-  const route = useRoute();
+const CardPaymentScreen: React.FC<{ navigation: any; route: any }> = ({ navigation, route }) => {
   const { user } = useAuth();
-  const { orderId, amount } = route.params as { orderId: number; amount: number };
-  const { confirmPayment, createPaymentMethod } = useStripe();
+  const { orderId, amount } = route.params;
+  const { confirmPayment } = useStripe();
 
   const [isLoading, setIsLoading] = useState(false);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
@@ -36,16 +30,19 @@ const CardPaymentScreen = () => {
     const createIntent = async () => {
       try {
         setIsLoading(true);
-        const response = await ApiService.payments.createPaymentIntent(
-          user?.id,
-          orderId,
-          amount
-        );
+        const response = await fetch('/api/payment-intent', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userId: user?.id, orderId, amount }),
+        });
 
-        if (response.data.status === 'success') {
-          setClientSecret(response.data.data.clientSecret);
+        const data = await response.json();
+        if (data.status === 'success') {
+          setClientSecret(data.clientSecret);
         } else {
-          setErrorMessage(response.data.message || 'Failed to initialize payment');
+          setErrorMessage(data.message || 'Failed to initialize payment');
         }
       } catch (error) {
         console.error('Error creating payment intent:', error);
@@ -74,9 +71,8 @@ const CardPaymentScreen = () => {
       setPaymentStatus('processing');
       setIsLoading(true);
 
-      // Confirm the payment with the card
       const { error, paymentIntent } = await confirmPayment(clientSecret, {
-        type: 'Card',
+        paymentMethodType: 'Card',
       });
 
       if (error) {
@@ -85,7 +81,7 @@ const CardPaymentScreen = () => {
         setPaymentStatus('failed');
       } else if (paymentIntent) {
         setPaymentStatus('succeeded');
-        
+
         // Navigate to the order success screen
         Alert.alert(
           'Payment Successful',
@@ -108,7 +104,7 @@ const CardPaymentScreen = () => {
   };
 
   return (
-    <StripeProvider publishableKey={STRIPE_PUBLISHABLE_KEY}>
+    <StripeProvider publishableKey="your-publishable-key">
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
@@ -153,11 +149,20 @@ const CardPaymentScreen = () => {
               <View style={styles.cardContainer}>
                 <CardField
                   postalCodeEnabled={false}
-                  placeholder={{
+                  placeholders={{
                     number: '4242 4242 4242 4242',
                   }}
-                  cardStyle={styles.cardStyle}
-                  style={styles.cardField}
+                  cardStyle={{
+                    backgroundColor: COLORS.lightGray2,
+                    borderRadius: SIZES.radius,
+                    borderWidth: 1,
+                    borderColor: COLORS.lightGray,
+                  }}
+                  style={{
+                    width: '100%',
+                    height: 50,
+                    marginVertical: 5,
+                  }}
                   onCardChange={(cardDetails) => {
                     setCardComplete(cardDetails.complete);
                   }}
@@ -268,7 +273,6 @@ const styles = StyleSheet.create({
   },
   cardStyle: {
     backgroundColor: COLORS.lightGray2,
-    textColor: COLORS.text,
     borderRadius: SIZES.radius,
     borderWidth: 1,
     borderColor: COLORS.lightGray,

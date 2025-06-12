@@ -14,10 +14,15 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import { AuthStackParamList } from '@/navigation/AppNavigator';
 import { verifyOtp, sendOtp, resetError } from '@/store/slices/authSlice';
 import { AppDispatch, RootState } from '@/store';
 import { Feather } from '@expo/vector-icons';
+
+// Redefine `AuthStackParamList` as a type
+export type AuthStackParamList = {
+  OtpVerification: { phone: string };
+  // Add other routes as needed
+};
 
 type OtpVerificationScreenNavigationProp = StackNavigationProp<AuthStackParamList, 'OtpVerification'>;
 type OtpVerificationScreenRouteProp = RouteProp<AuthStackParamList, 'OtpVerification'>;
@@ -28,7 +33,7 @@ interface Props {
 }
 
 const OtpVerificationScreen: React.FC<Props> = ({ navigation, route }) => {
-  const { phone } = route.params;
+  const { phone } = route.params as { phone: string };
   const [otp, setOtp] = useState('');
   const [countdown, setCountdown] = useState(30);
   const [resendDisabled, setResendDisabled] = useState(true);

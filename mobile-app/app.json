@@ -10,8 +10,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#0C6B58"
     },
+    "jsEngine": "jsc",                    
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "enabled": false
     },
     "assetBundlePatterns": [
       "**/*"
@@ -38,7 +39,10 @@
       "permissions": [
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION",
-        "ACCESS_BACKGROUND_LOCATION"
+        "ACCESS_BACKGROUND_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.FOREGROUND_SERVICE"
       ]
     },
     "web": {
@@ -56,8 +60,9 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "YOUR_PROJECT_ID_HERE"
+        "projectId": "d7ad685c-c08c-44df-8b38-1d731b7756d0"
       }
-    }
+    },
+    "owner": "monsieur-akhir"
   }
 }

@@ -8,17 +8,15 @@ import {
   ActivityIndicator,
   Alert,
   ScrollView,
-  Image,
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useAuth } from '../hooks/useAuth';
 import { api } from '../services/api';
-import { MobileMoneyProvider } from '../types/payment';
-import { COLORS, FONTS, SIZES } from '../constants';
+import { COLORS, SIZES } from '../constants';
 
 const MobileMoneyPaymentScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const route = useRoute();
   const { user } = useAuth();
   const { orderId, amount } = route.params as { orderId: number; amount: number };
@@ -132,7 +130,13 @@ const MobileMoneyPaymentScreen = () => {
   };
 
   // Provider selection component
-  const ProviderOption = ({ provider, selected, onSelect }) => (
+  type ProviderOptionProps = {
+    provider: { code: string; name: string };
+    selected: boolean;
+    onSelect: (code: string) => void;
+  };
+
+  const ProviderOption: React.FC<ProviderOptionProps> = ({ provider, selected, onSelect }) => (
     <TouchableOpacity
       style={[styles.providerOption, selected && styles.selectedProvider]}
       onPress={() => onSelect(provider.code)}
@@ -186,7 +190,7 @@ const MobileMoneyPaymentScreen = () => {
         disabled={isLoading || !selectedProvider || !phoneNumber}
       >
         {isLoading ? (
-          <ActivityIndicator color={COLORS.white} />
+          <ActivityIndicator color="white" />
         ) : (
           <Text style={styles.payButtonText}>Pay Now</Text>
         )}
@@ -228,7 +232,7 @@ const MobileMoneyPaymentScreen = () => {
           disabled={isLoading}
         >
           {isLoading ? (
-            <ActivityIndicator color={COLORS.white} />
+            <ActivityIndicator color={'#ffffff'} />
           ) : (
             <Text style={styles.verifyButtonText}>Check Payment Status</Text>
           )}

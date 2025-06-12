@@ -1,70 +1,62 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  StyleSheet, 
-  View, 
-  Text, 
-  TouchableOpacity, 
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
   SafeAreaView,
-  Image,
   ActivityIndicator,
   Alert,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
 import { MainStackParamList } from '@/navigation/AppNavigator';
-import { uploadPrescription, setPreviewImage, clearPrescriptionData } from '@/store/slices/prescriptionSlice';
+import {
+  uploadPrescription,
+  setPreviewImage,
+  clearPrescriptionData,
+} from '@/store/slices/prescriptionSlice';
 import { AppDispatch, RootState } from '@/store';
 import * as ImagePicker from 'expo-image-picker';
 import { Camera } from 'expo-camera';
 import { Feather } from '@expo/vector-icons';
-import PrescriptionPreview from '@/components/PrescriptionPreview';
+import PrescriptionPreview from '../components/PrescriptionPreview';
 
-type PrescriptionUploadScreenNavigationProp = StackNavigationProp<MainStackParamList, 'PrescriptionUpload'>;
-type PrescriptionUploadScreenRouteProp = RouteProp<MainStackParamList, 'PrescriptionUpload'>;
-
-interface Props {
-  navigation: PrescriptionUploadScreenNavigationProp;
-  route: PrescriptionUploadScreenRouteProp;
-}
+type Props = StackScreenProps<MainStackParamList, 'PrescriptionUpload'>;
 
 const PrescriptionUploadScreen: React.FC<Props> = ({ navigation, route }) => {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [cameraVisible, setCameraVisible] = useState(false);
-  const [camera, setCamera] = useState<Camera | null>(null);
-  
-  const dispatch = useDispatch<AppDispatch>();
-  const { previewImage, isLoading, error, currentPrescription } = useSelector((state: RootState) => state.prescription);
-  
-  // Get orderId from route params
-  const orderId = route.params?.orderId;
+  const cameraRef = useRef<Camera>(null);
 
-  // Request camera permissions
+  const dispatch = useDispatch<AppDispatch>();
+  const { previewImage, isLoading, error } = useSelector(
+    (state: RootState) => state.prescription
+  );
+
+  const { orderId } = route.params;
+
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
     })();
-    
-    // Clean up when component unmounts
+
     return () => {
       dispatch(clearPrescriptionData());
     };
   }, []);
 
   const takePicture = async () => {
-    if (camera) {
+    if (cameraRef.current) {
       try {
-        const photo = await camera.takePictureAsync({
-          quality: 0.8,
-        });
-        
+        const photo = await cameraRef.current.takePictureAsync({ quality: 0.8 });
         dispatch(setPreviewImage(photo.uri));
         setCameraVisible(false);
       } catch (error) {
-        console.error('Error taking picture:', error);
-        Alert.alert('Error', 'Failed to take picture. Please try again.');
+        console.error('Erreur lors de la prise de photo:', error);
+        Alert.alert('Erreur', 'Échec de la prise de photo. Veuillez réessayer.');
       }
     }
   };
@@ -77,43 +69,38 @@ const PrescriptionUploadScreen: React.FC<Props> = ({ navigation, route }) => {
         aspect: [4, 3],
         quality: 0.8,
       });
-      
+
       if (!result.canceled) {
         dispatch(setPreviewImage(result.assets[0].uri));
       }
     } catch (error) {
-      console.error('Error picking image:', error);
-      Alert.alert('Error', 'Failed to pick image. Please try again.');
+      console.error('Erreur lors de la sélection d\'image:', error);
+      Alert.alert('Erreur', 'Échec de la sélection d\'image. Veuillez réessayer.');
     }
   };
 
   const handleUpload = async () => {
     if (!previewImage) {
-      Alert.alert('Error', 'Please take or select a prescription image first.');
+      Alert.alert('Erreur', 'Veuillez prendre ou sélectionner une image d\'ordonnance d\'abord.');
       return;
     }
-    
+
     try {
       await dispatch(uploadPrescription({ uri: previewImage, orderId })).unwrap();
-      Alert.alert(
-        'Success',
-        'Your prescription has been uploaded successfully.',
-        [
-          {
-            text: 'OK',
-            onPress: () => {
-              // Navigate to payment or order tracking
-              if (orderId) {
-                navigation.navigate('Payment', { orderId });
-              } else {
-                navigation.goBack();
-              }
-            },
+      Alert.alert('Succès', 'Votre ordonnance a été téléchargée avec succès.', [
+        {
+          text: 'OK',
+          onPress: () => {
+            if (orderId) {
+              navigation.navigate('Payment', { orderId });
+            } else {
+              navigation.goBack();
+            }
           },
-        ]
-      );
+        },
+      ]);
     } catch (err) {
-      Alert.alert('Error', error || 'Failed to upload prescription. Please try again.');
+      Alert.alert('Erreur', error || 'Échec du téléchargement de l\'ordonnance. Veuillez réessayer.');
     }
   };
 
@@ -128,12 +115,9 @@ const PrescriptionUploadScreen: React.FC<Props> = ({ navigation, route }) => {
   if (hasPermission === false) {
     return (
       <View style={styles.centered}>
-        <Text style={styles.errorText}>No access to camera</Text>
-        <TouchableOpacity 
-          style={styles.permissionButton}
-          onPress={pickImage}
-        >
-          <Text style={styles.permissionButtonText}>Select from Gallery</Text>
+        <Text style={styles.errorText}>Pas d'accès à la caméra</Text>
+        <TouchableOpacity style={styles.permissionButton} onPress={pickImage}>
+          <Text style={styles.permissionButtonText}>Sélectionner depuis la galerie</Text>
         </TouchableOpacity>
       </View>
     );
@@ -145,23 +129,17 @@ const PrescriptionUploadScreen: React.FC<Props> = ({ navigation, route }) => {
         <Camera
           style={styles.camera}
           type={Camera.Constants.Type.back}
-          ref={(ref) => setCamera(ref)}
+          ref={cameraRef}
         >
           <View style={styles.cameraControls}>
-            <TouchableOpacity 
-              style={styles.cameraButton}
-              onPress={() => setCameraVisible(false)}
-            >
+            <TouchableOpacity style={styles.cameraButton} onPress={() => setCameraVisible(false)}>
               <Feather name="x" size={24} color="#fff" />
             </TouchableOpacity>
-            
-            <TouchableOpacity 
-              style={styles.shutterButton}
-              onPress={takePicture}
-            >
+
+            <TouchableOpacity style={styles.shutterButton} onPress={takePicture}>
               <View style={styles.shutterButtonInner} />
             </TouchableOpacity>
-            
+
             <View style={{ width: 48 }} />
           </View>
         </Camera>
@@ -172,83 +150,65 @@ const PrescriptionUploadScreen: React.FC<Props> = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.content}>
-        <Text style={styles.title}>Upload Prescription</Text>
-        <Text style={styles.subtitle}>
-          Take a photo of your prescription or upload from your gallery
-        </Text>
-        
+        <Text style={styles.title}>Télécharger une ordonnance</Text>
+        <Text style={styles.subtitle}>Prenez une photo de votre ordonnance ou téléchargez depuis votre galerie</Text>
+
         {previewImage ? (
-          <PrescriptionPreview 
-            imageUri={previewImage} 
+          <PrescriptionPreview
+            imageUri={previewImage}
             onRemove={() => dispatch(setPreviewImage(null))}
           />
         ) : (
           <View style={styles.uploadContainer}>
             <Feather name="file-text" size={60} color="#CBD5E1" />
-            <Text style={styles.uploadText}>No prescription selected</Text>
-            
+            <Text style={styles.uploadText}>Aucune ordonnance sélectionnée</Text>
+
             <View style={styles.buttonRow}>
-              <TouchableOpacity 
-                style={styles.uploadButton}
-                onPress={() => setCameraVisible(true)}
-              >
+              <TouchableOpacity style={styles.uploadButton} onPress={() => setCameraVisible(true)}>
                 <Feather name="camera" size={20} color="#fff" style={styles.uploadButtonIcon} />
-                <Text style={styles.uploadButtonText}>Take Photo</Text>
+                <Text style={styles.uploadButtonText}>Prendre une photo</Text>
               </TouchableOpacity>
-              
-              <TouchableOpacity 
+
+              <TouchableOpacity
                 style={[styles.uploadButton, styles.secondaryButton]}
                 onPress={pickImage}
               >
                 <Feather name="image" size={20} color="#4A80F0" style={styles.uploadButtonIcon} />
-                <Text style={[styles.uploadButtonText, styles.secondaryButtonText]}>
-                  From Gallery
-                </Text>
+                <Text style={[styles.uploadButtonText, styles.secondaryButtonText]}>Depuis la galerie</Text>
               </TouchableOpacity>
             </View>
           </View>
         )}
-        
-        {error && (
-          <Text style={styles.errorText}>{error}</Text>
-        )}
-        
+
+        {error && <Text style={styles.errorText}>{error}</Text>}
+
         <View style={styles.instructionsContainer}>
           <Text style={styles.instructionsTitle}>Instructions</Text>
           <View style={styles.instruction}>
             <Feather name="check-circle" size={20} color="#10B981" style={styles.instructionIcon} />
-            <Text style={styles.instructionText}>
-              Make sure the prescription is clear and legible
-            </Text>
+            <Text style={styles.instructionText}>Assurez-vous que l'ordonnance est claire et lisible</Text>
           </View>
           <View style={styles.instruction}>
             <Feather name="check-circle" size={20} color="#10B981" style={styles.instructionIcon} />
-            <Text style={styles.instructionText}>
-              Ensure all details including medicines and dosage are visible
-            </Text>
+            <Text style={styles.instructionText}>Vérifiez que tous les détails (médicaments et posologie) sont visibles</Text>
           </View>
           <View style={styles.instruction}>
             <Feather name="check-circle" size={20} color="#10B981" style={styles.instructionIcon} />
-            <Text style={styles.instructionText}>
-              Your prescription will be reviewed by a pharmacist before processing
-            </Text>
+            <Text style={styles.instructionText}>Votre ordonnance sera vérifiée par un pharmacien avant traitement</Text>
           </View>
         </View>
       </ScrollView>
-      
+
       <View style={styles.bottomBar}>
         <TouchableOpacity
-          style={[
-            styles.submitButton,
-            (!previewImage || isLoading) && styles.disabledButton
-          ]}
+          style={[styles.submitButton, (!previewImage || isLoading) && styles.disabledButton]}
           onPress={handleUpload}
           disabled={!previewImage || isLoading}
         >
           {isLoading ? (
             <ActivityIndicator color="#fff" size="small" />
           ) : (
-            <Text style={styles.submitButtonText}>Upload Prescription</Text>
+            <Text style={styles.submitButtonText}>Télécharger l'ordonnance</Text>
           )}
         </TouchableOpacity>
       </View>
@@ -257,25 +217,10 @@ const PrescriptionUploadScreen: React.FC<Props> = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F8FAFC',
-  },
-  content: {
-    flex: 1,
-    padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#1E293B',
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#64748B',
-    marginBottom: 24,
-  },
+  container: { flex: 1, backgroundColor: '#F8FAFC' },
+  content: { flex: 1, padding: 16 },
+  title: { fontSize: 24, fontWeight: 'bold', color: '#1E293B', marginBottom: 8 },
+  subtitle: { fontSize: 16, color: '#64748B', marginBottom: 24 },
   uploadContainer: {
     backgroundColor: '#fff',
     borderRadius: 12,
@@ -286,16 +231,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 24,
   },
-  uploadText: {
-    fontSize: 16,
-    color: '#64748B',
-    marginTop: 16,
-    marginBottom: 24,
-  },
-  buttonRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
+  uploadText: { fontSize: 16, color: '#64748B', marginTop: 16, marginBottom: 24 },
+  buttonRow: { flexDirection: 'row', justifyContent: 'center' },
   uploadButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -310,56 +247,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#4A80F0',
   },
-  uploadButtonIcon: {
-    marginRight: 8,
-  },
-  uploadButtonText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  secondaryButtonText: {
-    color: '#4A80F0',
-  },
-  errorText: {
-    color: '#EF4444',
-    fontSize: 14,
-    marginBottom: 16,
-    textAlign: 'center',
-  },
-  instructionsContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 80,
-    borderWidth: 1,
-    borderColor: '#E2E8F0',
-  },
-  instructionsTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#1E293B',
-    marginBottom: 16,
-  },
-  instruction: {
-    flexDirection: 'row',
-    marginBottom: 12,
-  },
-  instructionIcon: {
-    marginRight: 12,
-  },
-  instructionText: {
-    flex: 1,
-    fontSize: 14,
-    color: '#1E293B',
-    lineHeight: 20,
-  },
-  centered: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
+  uploadButtonIcon: { marginRight: 8 },
+  uploadButtonText: { color: '#fff', fontSize: 14, fontWeight: '600' },
+  secondaryButtonText: { color: '#4A80F0' },
+  errorText: { color: '#EF4444', fontSize: 14, marginBottom: 16, textAlign: 'center' },
+  centered: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20 },
   permissionButton: {
     backgroundColor: '#4A80F0',
     borderRadius: 8,
@@ -367,17 +259,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     marginTop: 16,
   },
-  permissionButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  cameraContainer: {
-    flex: 1,
-  },
-  camera: {
-    flex: 1,
-  },
+  permissionButtonText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  cameraContainer: { flex: 1 },
+  camera: { flex: 1 },
   cameraControls: {
     flex: 1,
     backgroundColor: 'transparent',
@@ -426,13 +310,34 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  disabledButton: {
-    backgroundColor: '#94A3B8',
+  disabledButton: { backgroundColor: '#94A3B8' },
+  submitButtonText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  instructionsContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 80,
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
   },
-  submitButtonText: {
-    color: '#fff',
-    fontSize: 16,
+  instructionsTitle: {
+    fontSize: 18,
     fontWeight: '600',
+    color: '#1E293B',
+    marginBottom: 16,
+  },
+  instruction: {
+    flexDirection: 'row',
+    marginBottom: 12,
+  },
+  instructionIcon: {
+    marginRight: 12,
+  },
+  instructionText: {
+    flex: 1,
+    fontSize: 14,
+    color: '#1E293B',
+    lineHeight: 20,
   },
 });
 

@@ -26,3 +26,7 @@ export const SUPPORTED_LANGUAGES = ['eng', 'fra']; // English and French
 // Misc Configuration
 export const TERMS_URL = 'https://example.com/terms';
 export const PRIVACY_URL = 'https://example.com/privacy';
+
+// Payment Configuration
+export const STRIPE_PUBLIC_KEY = process.env.EXPO_PUBLIC_STRIPE_KEY || 'pk_test_your_key_here';
+export const MOBILE_MONEY_PROVIDERS = ['orange', 'mtn', 'moov', 'wave'] as const;

@@ -1,6 +1,8 @@
 import { Socket, io } from 'socket.io-client';
 import Peer from 'simple-peer';
+import { MediaStream as WebRTCMediaStream, mediaDevices } from 'react-native-webrtc';
 import { API_BASE_URL } from '../../config/constants';
+
 
 // Interface for the video chat session
 export interface VideoChatSession {
@@ -15,12 +17,12 @@ export interface VideoChatParticipant {
   isPharmacist: boolean;
   socketId: string;
   peer?: Peer.Instance;
-  stream?: MediaStream;
+  stream?: WebRTCMediaStream;
 }
 
 export class VideoChatService {
   private socket: Socket | null = null;
-  private localStream: MediaStream | null = null;
+  private localStream: WebRTCMediaStream | null = null;
   private peers: Map<string, Peer.Instance> = new Map();
   private currentRoom: string | null = null;
   private userId: number | null = null;
@@ -28,7 +30,7 @@ export class VideoChatService {
   private isPharmacist: boolean = false;
   
   // Event callbacks
-  private onRemoteStreamAddedCallback: ((userId: number, stream: MediaStream) => void) | null = null;
+  private onRemoteStreamAddedCallback: ((userId: number, stream: WebRTCMediaStream) => void) | null = null;
   private onRemoteStreamRemovedCallback: ((userId: number) => void) | null = null;
   private onPharmacistJoinedCallback: ((pharmacist: VideoChatParticipant) => void) | null = null;
   private onPharmacistLeftCallback: (() => void) | null = null;
@@ -70,17 +72,19 @@ export class VideoChatService {
   }
 
   // Set up the local media stream (camera and microphone)
-  async setupLocalStream(): Promise<MediaStream> {
+  async setupLocalStream(): Promise<WebRTCMediaStream> {
     try {
-      this.localStream = await navigator.mediaDevices.getUserMedia({
+      // Use react-native-webrtc's mediaDevices
+      this.localStream = await mediaDevices.getUserMedia({
         video: true,
         audio: true,
-      });
+      }) as WebRTCMediaStream;
       return this.localStream;
-    } catch (error) {
+    } catch (err: unknown) {
+      const error = err as Error;
       console.error('Error accessing media devices:', error);
       if (this.onErrorCallback) {
-        this.onErrorCallback(error as Error);
+        this.onErrorCallback(error);
       }
       throw error;
     }
@@ -194,15 +198,13 @@ export class VideoChatService {
     // Stop current track
     videoTrack.stop();
     
-    // Find current facing mode
-    const currentFacingMode = (videoTrack.getSettings().facingMode || 'user') === 'user' ? 'environment' : 'user';
-    
     try {
-      // Get new stream with opposite facing mode
-      const newStream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: currentFacingMode },
+      // Use react-native-webrtc's mediaDevices
+      // Get new stream with switched camera
+      const newStream = await mediaDevices.getUserMedia({
+        video: true, // In react-native-webrtc, this will automatically switch camera
         audio: false,
-      });
+      }) as WebRTCMediaStream;
       
       // Replace track in local stream
       const newVideoTrack = newStream.getVideoTracks()[0];
@@ -211,11 +213,13 @@ export class VideoChatService {
       
       // Replace track in all peer connections
       this.peers.forEach((peer) => {
-        peer.replaceTrack(
-          videoTrack,
-          newVideoTrack,
-          this.localStream as MediaStream
-        );
+        if (this.localStream) {
+          peer.replaceTrack(
+            videoTrack as unknown as MediaStreamTrack,
+            newVideoTrack as unknown as MediaStreamTrack,
+            this.localStream as unknown as MediaStream // Cast to standard MediaStream for simple-peer
+          );
+        }
       });
     } catch (error) {
       console.error('Error switching camera:', error);
@@ -328,7 +332,7 @@ export class VideoChatService {
     const peer = new Peer({
       initiator,
       trickle: true,
-      stream: this.localStream || undefined,
+      stream: this.localStream ? (this.localStream as unknown as MediaStream) : undefined,
       config: {
         iceServers: [
           { urls: 'stun:stun.l.google.com:19302' },
@@ -351,10 +355,12 @@ export class VideoChatService {
       console.log('Peer connected:', targetSocketId);
     });
     
-    peer.on('stream', (stream) => {
+    peer.on('stream', (stream: MediaStream) => {
       console.log('Remote stream received:', stream);
       if (this.onRemoteStreamAddedCallback && userData) {
-        this.onRemoteStreamAddedCallback(userData.userId, stream);
+        // Convert the standard MediaStream to WebRTCMediaStream
+        const webRTCStream = stream as unknown as WebRTCMediaStream;
+        this.onRemoteStreamAddedCallback(userData.userId, webRTCStream);
       }
     });
     
@@ -424,7 +430,7 @@ export class VideoChatService {
   }
 
   // Set the callback for when a remote stream is added
-  setOnRemoteStreamAdded(callback: (userId: number, stream: MediaStream) => void): void {
+  setOnRemoteStreamAdded(callback: (userId: number, stream: WebRTCMediaStream) => void): void {
     this.onRemoteStreamAddedCallback = callback;
   }
 

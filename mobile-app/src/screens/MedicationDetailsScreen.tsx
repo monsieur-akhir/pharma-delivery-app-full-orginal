@@ -11,13 +11,15 @@ import {
 } from 'react-native';
 import { BodySystem, MedicationImpactVisualization } from '../features/medication-reminders/animations';
 import { useReminders } from '../features/medication-reminders/services/ReminderService';
-import { useRoute, useNavigation } from '@react-navigation/native';
+import { RouteProp, useRoute, useNavigation } from '@react-navigation/native';
+
+type MedicationDetailsRouteProp = RouteProp<{ MedicationDetails: { scheduleId: string } }, 'MedicationDetails'>;
 
 /**
  * Screen for displaying detailed information about a specific medication
  */
 const MedicationDetailsScreen: React.FC = () => {
-  const route = useRoute();
+  const route = useRoute<MedicationDetailsRouteProp>();
   const navigation = useNavigation();
   
   // Get the schedule ID from the route params
@@ -231,7 +233,7 @@ const MedicationDetailsScreen: React.FC = () => {
               </View>
               
               <Text style={styles.reminderTitle}>Today's Reminder Times:</Text>
-              {selectedSchedule.reminders.map((reminder, index) => (
+              {selectedSchedule.reminders.map((reminder: { scheduledTime: string; taken: boolean }, index: number) => (
                 <View key={index} style={styles.reminderItem}>
                   <Text style={styles.reminderTime}>
                     {new Date(reminder.scheduledTime).toLocaleTimeString([], {

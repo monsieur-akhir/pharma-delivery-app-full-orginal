@@ -10,6 +10,8 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { API_BASE_URL } from '../../config/constants';
+import { AppStackParamList } from '../../navigation/types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 interface PharmacistConsultButtonProps {
   pharmacistId?: number;
@@ -23,8 +25,7 @@ const PharmacistConsultButton: React.FC<PharmacistConsultButtonProps> = ({
   orderId,
   label = 'Consulter un pharmacien',
   style,
-}) => {
-  const navigation = useNavigation();
+}) => {  const navigation = useNavigation<NativeStackNavigationProp<AppStackParamList>>();
   const [loading, setLoading] = useState(false);
   const [pharmacistsAvailable, setPharmacistsAvailable] = useState(false);
   

@@ -1,39 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AppStackParamList } from './types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 // Import screen components
 import WelcomeScreen from '../screens/WelcomeScreen';
 import AuthScreen from '../screens/AuthScreen';
 import OtpScreen from '../screens/auth/OtpScreen';
 import HomeScreen from '../screens/HomeScreen';
-import PharmaciesScreen from '../screens/PharmaciesScreen';
+import PharmaciesScreen from '@/screens/PharmaciesScreen';
 import PharmacyDetailScreen from '../screens/PharmacyDetailScreen';
-import MedicineDetailScreen from '../screens/MedicineDetailScreen';
+import MedicineDetailScreen from '@/screens/MedicineDetailScreen';
 import CartScreen from '../screens/CartScreen';
 import CheckoutScreen from '../screens/CheckoutScreen';
-import OrdersScreen from '../screens/OrdersScreen';
-import OrderDetailScreen from '../screens/OrderDetailScreen';
+import OrdersScreen from '@/screens/OrdersScreen';
+import OrderDetailScreen from '@/screens/OrderDetailScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import PrescriptionsScreen from '../screens/PrescriptionsScreen';
-import PrescriptionDetailScreen from '../screens/PrescriptionDetailScreen';
-import ScanPrescriptionScreen from '../screens/ScanPrescriptionScreen';
-import RemindersScreen from '../screens/RemindersScreen';
-import AddReminderScreen from '../screens/AddReminderScreen';
-import VideoConsultationScreen from '../screens/VideoConsultationScreen';
-import ChatScreen from '../screens/ChatScreen';
-import NotificationsScreen from '../screens/NotificationsScreen';
-import PaymentMethodsScreen from '../screens/PaymentMethodsScreen';
-import AddPaymentMethodScreen from '../screens/AddPaymentMethodScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import PrescriptionsScreen from '@/screens/PrescriptionsScreen';
+import PrescriptionDetailScreen from '@/screens/PrescriptionDetailScreen';
+import ScanPrescriptionScreen from '@/screens/ScanPrescriptionScreen';
+import RemindersScreen from '@/screens/RemindersScreen';
+import AddReminderScreen from '@/screens/AddReminderScreen';
+import VideoConsultationScreen from '@/screens/VideoConsultationScreen';
+import ChatScreen from '@/screens/ChatScreen';
+import NotificationsScreen from '@/screens/NotificationsScreen';
+import PaymentMethodsScreen from '@/screens/PaymentMethodsScreen';
+import AddPaymentMethodScreen from '@/screens/AddPaymentMethodScreen';
+import SettingsScreen from '@/screens/SettingsScreen';
 import TrackOrderScreen from '../screens/TrackOrderScreen';
 
 // Create navigators
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator<AppStackParamList>();
 const Tab = createBottomTabNavigator();
 
 // Home tab stack
@@ -97,7 +99,7 @@ const TabNavigator = () => (
   <Tab.Navigator
     screenOptions={({ route }) => ({
       tabBarIcon: ({ focused, color, size }) => {
-        let iconName;
+        let iconName: keyof typeof Ionicons.glyphMap | undefined;
 
         if (route.name === 'Home') {
           iconName = focused ? 'home' : 'home-outline';
@@ -124,6 +126,15 @@ const TabNavigator = () => (
     <Tab.Screen name="Profile" component={ProfileStack} />
   </Tab.Navigator>
 );
+
+// Define MainStackParamList type
+export type MainStackParamList = {
+  MainTabs: undefined;
+  PharmacyMap: { latitude: number; longitude: number };
+  MedicineSearch: undefined;
+  PrescriptionUpload: { orderId?: string };
+  // Add other routes as needed
+};
 
 // Root navigator
 const AppNavigator = () => {
@@ -157,7 +168,7 @@ const AppNavigator = () => {
       ) : !isAuthenticated ? (
         <>
           <Stack.Screen name="Auth" component={AuthScreen} />
-          <Stack.Screen name="OTP" component={OtpScreen} />
+          <Stack.Screen name="OTP" component={OtpScreen as React.ComponentType<any>} />
         </>
       ) : (
         <Stack.Screen name="Main" component={TabNavigator} />

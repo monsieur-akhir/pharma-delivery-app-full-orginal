@@ -9,10 +9,14 @@ import {
   Vibration,
   Platform,
   Image,
+  ViewStyle,
 } from 'react-native';
 
 /**
  * Types of animations available for medication reminders
+ */
+/**
+ * The types of medications that can be animated
  */
 export enum AnimationType {
   PILL = 'pill',
@@ -21,6 +25,12 @@ export enum AnimationType {
   TOPICAL = 'topical',
   INHALER = 'inhaler',
 }
+
+type AnimationConfig = {
+  icon: NodeRequire;
+  vibratePattern: number[];
+  animationDuration: number;
+};
 
 interface ReminderAnimationProps {
   type: AnimationType;
@@ -57,7 +67,7 @@ const ReminderAnimation: React.FC<ReminderAnimationProps> = ({
   const [isTaken, setIsTaken] = useState(false);
   
   // Animation configurations based on medication type
-  const getAnimationConfig = () => {
+  const getAnimationConfig = (): AnimationConfig => {
     switch (type) {
       case AnimationType.PILL:
         return {
@@ -237,7 +247,7 @@ const ReminderAnimation: React.FC<ReminderAnimationProps> = ({
   });
   
   // Component styling based on type
-  const getTypeStyle = () => {
+  const getTypeStyle = (): ViewStyle => {
     switch (type) {
       case AnimationType.PILL:
         return {

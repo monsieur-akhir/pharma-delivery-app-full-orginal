@@ -13,6 +13,7 @@ export interface UserProfile {
   lastLogin?: string;
   createdAt: string;
   updatedAt: string;
+  firstName?: string; // Added firstName property
 }
 
 // Clés de stockage utilisées pour les tokens et données utilisateur

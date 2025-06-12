@@ -7,7 +7,8 @@
     "jsx": "react-native",
     "target": "esnext",
     "lib": [
-      "ES2021"
+      "ES2021",
+      "DOM"
     ],
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
@@ -15,6 +16,10 @@
     "resolveJsonModule": true,
     "noEmit": true,
     "isolatedModules": true,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"
+    ],
     "paths": {
       "@/*": [
         "src/*"
@@ -45,9 +50,7 @@
     "metro.config.js"
   ],
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "src/**/*",
+    "src/types/*.d.ts"
   ]
 }
