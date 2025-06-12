@@ -1,4 +1,4 @@
-modules = ["nodejs-20", "postgresql-16", "python-3.11"]
+modules = ["nodejs-20", "web", "python-3.11"]
 
 [nix]
 channel = "stable-24_05"
@@ -35,7 +35,7 @@ mode = "sequential"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd backend && node dist/server.js"
+args = "cd backend && node dist/main.js"
 waitForPort = 8000
 
 [[workflows.workflow]]
