@@ -26,10 +26,10 @@ const MedicationRemindersDemoScreen: React.FC = () => {
   const [showTakingSteps, setShowTakingSteps] = useState(false);
   const [showAdherenceCelebration, setShowAdherenceCelebration] = useState(false);
   const [showImpactVisualization, setShowImpactVisualization] = useState(false);
-  
+
   // State for the selected medication type in demos
   const [selectedMedicationType, setSelectedMedicationType] = useState<AnimationType>(AnimationType.PILL);
-  
+
   // Demo data for medication schedules
   const demoSchedules = [
     {
@@ -91,7 +91,7 @@ const MedicationRemindersDemoScreen: React.FC = () => {
       color: '#D94CFF',
     },
   ];
-  
+
   // Demo data for medication impact visualization
   const demoMedicationEffects = [
     {
@@ -125,22 +125,22 @@ const MedicationRemindersDemoScreen: React.FC = () => {
       positiveEffect: true,
     },
   ];
-  
+
   // Handle medication dose press
   const handlePressDose = (scheduleId: string | number, doseId: string | number) => {
     console.log(`Pressed dose ${doseId} for schedule ${scheduleId}`);
   };
-  
+
   // Handle medication schedule press
   const handlePressSchedule = (scheduleId: string | number) => {
     console.log(`Pressed schedule ${scheduleId}`);
   };
-  
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView style={styles.container}>
         <Text style={styles.title}>Medication Reminders Demo</Text>
-        
+
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Medication Type</Text>
           <View style={styles.medicationTypesContainer}>
@@ -165,31 +165,31 @@ const MedicationRemindersDemoScreen: React.FC = () => {
             ))}
           </View>
         </View>
-        
+
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Interactive Animations</Text>
-          
+
           <TouchableOpacity
             style={styles.demoButton}
             onPress={() => setShowReminderAnimation(true)}
           >
             <Text style={styles.demoButtonText}>Show Reminder Animation</Text>
           </TouchableOpacity>
-          
+
           <TouchableOpacity
             style={styles.demoButton}
             onPress={() => setShowTakingSteps(true)}
           >
             <Text style={styles.demoButtonText}>Show Taking Steps Guide</Text>
           </TouchableOpacity>
-          
+
           <TouchableOpacity
             style={styles.demoButton}
             onPress={() => setShowAdherenceCelebration(true)}
           >
             <Text style={styles.demoButtonText}>Show Adherence Celebration</Text>
           </TouchableOpacity>
-          
+
           <TouchableOpacity
             style={styles.demoButton}
             onPress={() => setShowImpactVisualization(true)}
@@ -197,10 +197,10 @@ const MedicationRemindersDemoScreen: React.FC = () => {
             <Text style={styles.demoButtonText}>Show Medication Impact</Text>
           </TouchableOpacity>
         </View>
-        
+
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Medication Schedule Progress</Text>
-          
+
           <MedicationScheduleProgress
             schedules={demoSchedules}
             onPressDose={handlePressDose}
@@ -208,7 +208,7 @@ const MedicationRemindersDemoScreen: React.FC = () => {
           />
         </View>
       </ScrollView>
-      
+
       {/* Pop-up Animations */}
       {showReminderAnimation && (
         <ReminderAnimation
@@ -222,7 +222,7 @@ const MedicationRemindersDemoScreen: React.FC = () => {
           color="#FF5733"
         />
       )}
-      
+
       {showTakingSteps && (
         <View style={styles.fullScreenContainer}>
           <MedicationTakingSteps
@@ -234,7 +234,7 @@ const MedicationRemindersDemoScreen: React.FC = () => {
           />
         </View>
       )}
-      
+
       {showAdherenceCelebration && (
         <AdherenceCelebration
           streakDays={14}
@@ -242,7 +242,7 @@ const MedicationRemindersDemoScreen: React.FC = () => {
           onClose={() => setShowAdherenceCelebration(false)}
         />
       )}
-      
+
       {showImpactVisualization && (
         <View style={styles.fullScreenContainer}>
           <MedicationImpactVisualization

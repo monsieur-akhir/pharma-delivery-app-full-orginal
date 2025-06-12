@@ -1,4 +1,31 @@
-export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000/api';
+// API Configuration
+export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://0.0.0.0:3000/api';
+export const API_URL = API_BASE_URL;
+
+// App Configuration
+export const APP_CONFIG = {
+  API_BASE_URL,
+  API_TIMEOUT: 10000,
+  RETRY_ATTEMPTS: 3,
+};
+
+// Environment
+export const ENV = {
+  isDevelopment: __DEV__,
+  isProduction: !__DEV__,
+};
+
+// Stripe Configuration
+export const STRIPE_CONFIG = {
+  publishableKey: process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY || '',
+};
+
+// Video Chat Configuration
+export const VIDEO_CHAT_CONFIG = {
+  iceServers: [
+    { urls: 'stun:stun.l.google.com:19302' },
+  ],
+};
 
 export const COLORS = {
   primary: '#0C6B58',
@@ -49,3 +76,12 @@ export const STORAGE_KEYS = {
 };
 
 export const VITE_STRIPE_PUBLIC_KEY = process.env.EXPO_PUBLIC_STRIPE_PUBLIC_KEY || '';
+
+export default {
+  API_BASE_URL,
+  API_URL,
+  APP_CONFIG,
+  ENV,
+  STRIPE_CONFIG,
+  VIDEO_CHAT_CONFIG,
+};

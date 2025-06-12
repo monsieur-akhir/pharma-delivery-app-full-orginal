@@ -1,61 +1,12 @@
-import { NavigatorScreenParams } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
-export type MainStackParamList = {
+import { StackNavigationProp } from '@react-navigation/stack';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
+
+export type RootStackParamList = {
   Welcome: undefined;
   Auth: undefined;
   Login: undefined;
-  OTP: { phone: string; userType: 'customer' | 'deliverer' };
-  MainTabs: undefined;
-  MedicineDetail: { medicineId: string };
-  MedicineSearch: undefined;
-  Cart: undefined;
-  Checkout: { items: any[] };
-  Payment: { orderId: string; amount: number };
-  CardPayment: { orderId: string; amount: number };
-  MobileMoneyPayment: { orderId: string; amount: number };
-  OrderDetails: { orderId: string };
-  TrackOrder: { orderId: string };
-  PrescriptionDetail: { prescriptionId: string };
-  ScanPrescription: undefined;
-  PrescriptionUpload: { orderId?: string };
-  PharmacyDetail: { pharmacyId: string };
-  MedicationDetails: { scheduleId: string };
-  VideoChat: { pharmacistId?: string; orderId?: string; roomId?: string };
-  RateOrder: { orderId: string };
-  Support: { orderId: string };
-  AddPaymentMethod: undefined;
-  PaymentMethods: undefined;
-  MedicationReminders: undefined;
-  DeliveryDashboard: undefined;
-  DeliveryDetail: { deliveryId: string };
-  ActiveDelivery: { deliveryId: string };
-  PharmacyMap: { latitude?: number; longitude?: number };
-};
-
-export type TabParamList = {
-  Home: undefined;
-  Pharmacies: undefined;
-  PharmacyMap: { latitude?: number; longitude?: number };
-  Orders: undefined;
-  Reminders: undefined;
-  Profile: undefined;
-  MedicineSearch: undefined;
-  Cart: undefined;
-};
-
-export type AuthStackParamList = {
-  Welcome: undefined;
-  Auth: undefined;
-  Login: undefined;
-  OTP: { phone: string; userType: 'customer' | 'deliverer' };
-  Onboarding: undefined;
-  OtpVerification: { phone: string; userType: 'customer' | 'deliverer' };
-};
-
-export type RootParamList = {
-  Auth: undefined;
   MainTabs: undefined;
   VideoChat: {
     pharmacistId?: string;
@@ -63,36 +14,86 @@ export type RootParamList = {
     roomId?: string;
   };
   OrderDetails: { orderId: string };
-  TrackOrder: { orderId: string };
-  PrescriptionDetail: { prescriptionId: string };
-  MedicationReminders: undefined;
   OrderTracking: { orderId: string };
-  Support: { orderId: string };
-  RateOrder: { orderId: string };
-  Checkout: { medicineId: string; quantity: number };
-  PharmacyDetail: { pharmacyId: string };
-  Pharmacies: undefined;
-  AddPaymentMethod: undefined;
-  MobileMoneyPayment: { orderId: string; amount: number; transactionReference?: string };
+  TrackOrder: { orderId: string };
+  Payment: { orderId: string; amount: number };
   CardPayment: { orderId: string; amount: number };
+  MobileMoneyPayment: { 
+    orderId: string; 
+    amount: number; 
+    transactionReference?: string;
+  };
+  PaymentMethod: { orderId: string; amount: number };
+  Checkout: { items: any[] };
+  PharmacyDetail: { pharmacyId: string };
+  PrescriptionDetail: { prescriptionId: string };
+  RateOrder: { orderId: string };
+  Support: { orderId: string };
+  MedicationReminders: undefined;
+  AddPaymentMethod: undefined;
+  Pharmacies: undefined;
+};
+
+export type AuthStackParamList = {
+  Welcome: undefined;
+  Auth: undefined;
+  Login: undefined;
+  OTP: { phone: string; userType: 'customer' | 'deliverer' };
   OtpVerification: { phone: string; userType: 'customer' | 'deliverer' };
 };
 
-// Navigation prop types
-import { NavigationProp } from '@react-navigation/native';
+export type TabParamList = {
+  Home: undefined;
+  Medicine: undefined;
+  Orders: undefined;
+  Prescriptions: undefined;
+  Profile: undefined;
+  PharmacyMap: { 
+    latitude?: number; 
+    longitude?: number; 
+  };
+  Cart: undefined;
+  Notifications: undefined;
+  Reminders: undefined;
+  Settings: undefined;
+  PaymentMethods: undefined;
+  Chat: undefined;
+};
 
-export type MainStackNavigationProp = NavigationProp<MainStackParamList>;
-export type TabNavigationProp = NavigationProp<TabParamList>;
-export type AuthStackNavigationProp = NavigationProp<AuthStackParamList>;
+export type HomeStackParamList = {
+  HomeScreen: undefined;
+  MedicineDetail: { medicineId: string };
+  PharmacyDetail: { pharmacyId: string };
+  ScanPrescription: undefined;
+  PrescriptionUpload: { orderId?: string };
+  MedicineSearch: undefined;
+  VideoConsultation: undefined;
+};
 
-export type RootStackScreenProps<Screen extends keyof RootParamList> =
-  StackScreenProps<RootParamList, Screen>;
+export type OrderStackParamList = {
+  OrdersList: undefined;
+  OrderDetails: { orderId: string };
+  TrackOrder: { orderId: string };
+  Payment: { orderId: string; amount: number };
+};
 
-export type MainStackScreenProps<Screen extends keyof MainStackParamList> =
-  StackScreenProps<MainStackParamList, Screen>;
+export type ProfileStackParamList = {
+  ProfileScreen: undefined;
+  Settings: undefined;
+  PaymentMethods: undefined;
+  MedicationReminders: undefined;
+  NotificationSettings: undefined;
+};
 
-export type AuthStackScreenProps<Screen extends keyof AuthStackParamList> =
-  StackScreenProps<AuthStackParamList, Screen>;
+export type RootNavigationProp = StackNavigationProp<RootStackParamList>;
+export type AuthNavigationProp = StackNavigationProp<AuthStackParamList>;
+export type TabNavigationProp = BottomTabNavigationProp<TabParamList>;
 
-export type TabScreenProps<Screen extends keyof TabParamList> =
-  BottomTabScreenProps<TabParamList, Screen>;
+export type CompositeNavProp = CompositeNavigationProp<
+  StackNavigationProp<RootStackParamList>,
+  BottomTabNavigationProp<TabParamList>
+>;
+
+export type AuthScreenRouteProp = RouteProp<AuthStackParamList, 'Auth'>;
+export type OTPScreenRouteProp = RouteProp<AuthStackParamList, 'OTP'>;
+export type HomeScreenRouteProp = RouteProp<TabParamList, 'Home'>;

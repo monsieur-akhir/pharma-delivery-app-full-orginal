@@ -29,7 +29,7 @@ const LoginScreen = ({ navigation }: any) => {
     }
 
     const success = await login(identifier);
-    if (success) {
+    if (result && result.success) {
       navigation.navigate('OtpVerification', { identifier });
     }
   };

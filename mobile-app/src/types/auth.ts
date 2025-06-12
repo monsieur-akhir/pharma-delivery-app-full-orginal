@@ -1,17 +1,41 @@
+
 export interface User {
   id: number;
-  email: string;
   first_name?: string;
   last_name?: string;
-  firstName?: string;
   username?: string;
   fullName?: string;
+  phone: string;
+  email?: string;
+  role: 'customer' | 'delivery_person' | 'admin';
   token?: string;
-  phone?: string;
-  address?: string;
-  role: 'customer' | 'pharmacist' | 'delivery_person' | 'admin';
-  isVerified?: boolean;
+  isActive?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  profile?: UserProfile;
   preferences?: UserPreferences;
+}
+
+export interface UserProfile {
+  firstName?: string;
+  lastName?: string;
+  dateOfBirth?: string;
+  address?: string;
+  city?: string;
+  emergencyContact?: string;
+  medicalConditions?: string[];
+  allergies?: string[];
+  avatar?: string;
+}
+
+export interface UserPreferences {
+  notifications: {
+    email: boolean;
+    sms: boolean;
+    push: boolean;
+  };
+  language: string;
+  timezone: string;
 }
 
 export interface LoginResponse {
@@ -22,25 +46,21 @@ export interface LoginResponse {
   isNewUser?: boolean;
 }
 
-export interface OtpResponse {
-  success: boolean;
-  message: string;
-  otpId?: string;
-}
-
-export interface AuthContextType {
+export interface AuthState {
   user: User | null;
   token: string | null;
-  login: (phone: string, otp: string, userType: 'customer' | 'deliverer') => Promise<LoginResponse>;
-  logout: () => void;
+  isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
 }
 
-export interface ProfileData {
-  name: string;
-  email?: string;
-  address?: string;
-  city?: string;
-  postalCode?: string;
+export interface SendOtpRequest {
+  phone: string;
+  userType: 'customer' | 'deliverer';
+}
+
+export interface VerifyOtpRequest {
+  phone: string;
+  otp: string;
+  userType: 'customer' | 'deliverer';
 }

@@ -1,61 +1,70 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface LocationState {
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import * as Location from 'expo-location';
+
+interface LocationState {
   currentLocation: {
     latitude: number;
     longitude: number;
   } | null;
-  address: string | null;
   isLoading: boolean;
   error: string | null;
+  permissionGranted: boolean;
 }
 
 const initialState: LocationState = {
   currentLocation: null,
-  address: null,
   isLoading: false,
   error: null,
+  permissionGranted: false,
 };
+
+export const getCurrentLocation = createAsyncThunk(
+  'location/getCurrentLocation',
+  async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    
+    if (status !== 'granted') {
+      throw new Error('Permission to access location was denied');
+    }
+
+    const location = await Location.getCurrentPositionAsync({});
+    return {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    };
+  }
+);
 
 const locationSlice = createSlice({
   name: 'location',
   initialState,
   reducers: {
-    setCurrentLocation: (state, action: PayloadAction<{ latitude: number; longitude: number }>) => {
+    setLocation: (state, action: PayloadAction<{ latitude: number; longitude: number }>) => {
       state.currentLocation = action.payload;
     },
-    setAddress: (state, action: PayloadAction<string>) => {
-      state.address = action.payload;
+    clearError: (state) => {
+      state.error = null;
     },
-    setLoading: (state, action: PayloadAction<boolean>) => {
-      state.isLoading = action.payload;
-    },
-    setError: (state, action: PayloadAction<string | null>) => {
-      state.error = action.payload;
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getCurrentLocation.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getCurrentLocation.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.currentLocation = action.payload;
+        state.permissionGranted = true;
+      })
+      .addCase(getCurrentLocation.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Failed to get location';
+        state.permissionGranted = false;
+      });
   },
 });
 
-export const { setCurrentLocation, setAddress, setLoading, setError } = locationSlice.actions;
-
-// Export getCurrentLocation as a selector function
-export const getCurrentLocation = createAsyncThunk(
-  'location/getCurrentLocation',
-  async () => {
-    // Implementation pour récupérer la position actuelle
-    return new Promise<{latitude: number; longitude: number}>((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          resolve({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude
-          });
-        },
-        (error) => reject(error),
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-      );
-    });
-  }
-);
-
+export const { setLocation, clearError } = locationSlice.actions;
 export default locationSlice.reducer;

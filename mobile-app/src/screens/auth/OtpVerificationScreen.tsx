@@ -34,14 +34,17 @@ const OtpVerificationScreen: React.FC<Props> = ({ navigation, route }) => {
   const [resendDisabled, setResendDisabled] = useState(true);
   const dispatch = useDispatch<AppDispatch>();
   const { isLoading, error } = useSelector((state: RootState) => state.auth);
-  
+  const { isAuthenticated, user, token, dispatch: authDispatch } = useAuth();
+
   const inputRefs = useRef<Array<TextInput | null>>([]);
   const [otpDigits, setOtpDigits] = useState(['', '', '', '', '', '']);
+  const [timer, setTimer] = useState(30);
+  let interval: ReturnType<typeof setInterval>;
 
   // Start countdown timer
   useEffect(() => {
-    let interval: NodeJS.Timeout;
     
+
     if (countdown > 0) {
       interval = setInterval(() => {
         setCountdown((prev) => prev - 1);
@@ -49,7 +52,7 @@ const OtpVerificationScreen: React.FC<Props> = ({ navigation, route }) => {
     } else {
       setResendDisabled(false);
     }
-    
+
     return () => {
       if (interval) clearInterval(interval);
     };
@@ -60,21 +63,21 @@ const OtpVerificationScreen: React.FC<Props> = ({ navigation, route }) => {
     const newOtpDigits = [...otpDigits];
     newOtpDigits[index] = text;
     setOtpDigits(newOtpDigits);
-    
+
     // Combine all digits to get the complete OTP
     const newOtp = newOtpDigits.join('');
     setOtp(newOtp);
-    
+
     // Auto focus next input
     if (text && index < 5) {
       inputRefs.current[index + 1]?.focus();
     }
-    
+
     // Auto submit if all digits are entered
     if (newOtp.length === 6) {
       handleVerify(newOtp);
     }
-    
+
     if (error) {
       dispatch(resetError());
     }

@@ -1,22 +1,19 @@
-
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import authService from '../../services/auth.service';
+import { AuthState, User, SendOtpRequest, VerifyOtpRequest, LoginResponse } from '../../types/auth';
+import { API_BASE_URL } from '../../config';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export interface User {
-  id: number;
-  phone: string;
-  first_name?: string;
-  last_name?: string;
-  email?: string;
-  role: string;
-}
-
-export interface AuthState {
+interface AuthState {
   user: User | null;
   token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  phone?: string;
+  role?: string;
 }
 
 const initialState: AuthState = {
@@ -28,64 +25,59 @@ const initialState: AuthState = {
 };
 
 // Async thunks
-export const loginUser = createAsyncThunk(
-  'auth/login',
-  async ({ phone, password }: { phone: string; password: string }, { rejectWithValue }) => {
-    try {
-      const response = await authService.login(phone, password);
-      return response;
-    } catch (error: any) {
-      return rejectWithValue(error.message || 'Login failed');
-    }
-  }
-);
-
 export const sendOtp = createAsyncThunk(
   'auth/sendOtp',
-  async ({ phone, userType }: { phone: string; userType: 'customer' | 'deliverer' }, { rejectWithValue }) => {
-    try {
-      const response = await authService.requestOtp(phone, userType);
-      return response;
-    } catch (error: any) {
-      return rejectWithValue(error.message || 'Failed to send OTP');
+  async (request: SendOtpRequest) => {
+    const response = await fetch(`${API_BASE_URL}/auth/send-otp`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(request),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to send OTP');
     }
+
+    return response.json();
   }
 );
 
 export const verifyOtp = createAsyncThunk(
   'auth/verifyOtp',
-  async ({ phone, otp, userType }: { phone: string; otp: string; userType: 'customer' | 'deliverer' }, { rejectWithValue }) => {
-    try {
-      const response = await authService.verifyOtp(phone, otp, userType);
-      return response;
-    } catch (error: any) {
-      return rejectWithValue(error.message || 'OTP verification failed');
+  async (request: VerifyOtpRequest): Promise<LoginResponse> => {
+    const response = await fetch(`${API_BASE_URL}/auth/verify-otp`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(request),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || 'OTP verification failed');
     }
+
+    if (data.token) {
+      await AsyncStorage.setItem('authToken', data.token);
+      await AsyncStorage.setItem('user', JSON.stringify(data.user));
+    }
+
+    return data;
   }
 );
 
-export const logoutUser = createAsyncThunk(
-  'auth/logout',
-  async (_, { rejectWithValue }) => {
-    try {
-      await authService.logout();
-      return {};
-    } catch (error: any) {
-      return rejectWithValue(error.message || 'Logout failed');
-    }
-  }
-);
+export const loadStoredAuth = createAsyncThunk(
+  'auth/loadStoredAuth',
+  async () => {
+    const token = await AsyncStorage.getItem('authToken');
+    const userStr = await AsyncStorage.getItem('user');
+    const user = userStr ? JSON.parse(userStr) : null;
 
-export const getCurrentUser = createAsyncThunk(
-  'auth/getCurrentUser',
-  async (_, { rejectWithValue }) => {
-    try {
-      const user = await authService.getCurrentUser();
-      const token = await authService.getToken();
-      return { user, token };
-    } catch (error: any) {
-      return rejectWithValue(error.message || 'Failed to get current user');
-    }
+    return { token, user };
   }
 );
 
@@ -99,131 +91,54 @@ const authSlice = createSlice({
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
-    resetAuth: (state) => {
+    logout: (state) => {
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
       state.error = null;
+      AsyncStorage.multiRemove(['authToken', 'user']);
+    },
+    resetAuth: (state) => {
+      return initialState;
     },
   },
   extraReducers: (builder) => {
-    // Login
     builder
-      .addCase(loginUser.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(loginUser.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.user = action.payload.user;
-        state.token = action.payload.token;
-        state.isAuthenticated = true;
-        state.error = null;
-      })
-      .addCase(loginUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload as string;
-        state.isAuthenticated = false;
-      });
-
-    // Send OTP
-    builder
+      // Send OTP
       .addCase(sendOtp.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(sendOtp.fulfilled, (state) => {
         state.isLoading = false;
-        state.error = null;
       })
       .addCase(sendOtp.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload as string;
-      });
-
-    // Verify OTP
-    builder
+        state.error = action.error.message || 'Failed to send OTP';
+      })
+      // Verify OTP
       .addCase(verifyOtp.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(verifyOtp.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload.user;
-        state.token = action.payload.token;
-        state.isAuthenticated = true;
-        state.error = null;
+        state.user = action.payload.user || null;
+        state.token = action.payload.token || null;
+        state.isAuthenticated = !!action.payload.token;
       })
       .addCase(verifyOtp.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload as string;
-        state.isAuthenticated = false;
-      });
-
-    // Logout
-    builder
-      .addCase(logoutUser.pending, (state) => {
-        state.isLoading = true;
+        state.error = action.error.message || 'OTP verification failed';
       })
-      .addCase(logoutUser.fulfilled, (state) => {
-        state.isLoading = false;
-        state.user = null;
-        state.token = null;
-        state.isAuthenticated = false;
-        state.error = null;
-      })
-      .addCase(logoutUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload as string;
-      });
-
-    // Get current user
-    builder
-      .addCase(getCurrentUser.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(getCurrentUser.fulfilled, (state, action) => {
-        state.isLoading = false;
-        if (action.payload.user && action.payload.token) {
-          state.user = action.payload.user;
-          state.token = action.payload.token;
-          state.isAuthenticated = true;
-        }
-        state.error = null;
-      })
-      .addCase(getCurrentUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload as string;
-        state.isAuthenticated = false;
+      // Load stored auth
+      .addCase(loadStoredAuth.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.isAuthenticated = !!action.payload.token;
       });
   },
 });
 
-export const { clearError, setLoading, resetAuth } = authSlice.actions;
-export const logout = authSlice.actions.logout;
-export const resetError = authSlice.actions.resetError;
-export const sendOtp = createAsyncThunk(
-  'auth/sendOtp',
-  async (data: { phone: string; userType: 'customer' | 'deliverer' }) => {
-    const response = await fetch(`${API_URL}/auth/send-otp`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    return response.json();
-  }
-);
-
-export const verifyOtp = createAsyncThunk(
-  'auth/verifyOtp',
-  async (data: { phone: string; otp: string; userType: 'customer' | 'deliverer' }) => {
-    const response = await fetch(`${API_URL}/auth/verify-otp`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    return response.json();
-  }
-);
-
+export const { clearError, setLoading, logout, resetAuth } = authSlice.actions;
 export default authSlice.reducer;
