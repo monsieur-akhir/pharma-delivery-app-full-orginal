@@ -1,0 +1,43 @@
+npm warn ERESOLVE overriding peer dependency
+npm error code ERESOLVE
+npm error ERESOLVE could not resolve
+npm error
+npm error While resolving: react-native@0.76.3
+npm error Found: @types/react@18.0.38
+npm error node_modules/@types/react
+npm error   peerOptional @types/react@"^18.2.6" from @react-native/virtualized-lists@0.76.3
+npm error   node_modules/react-native/node_modules/@react-native/virtualized-lists
+npm error     @react-native/virtualized-lists@"0.76.3" from react-native@0.76.3
+npm error     node_modules/react-native
+npm error       react-native@"0.76.3" from the root project
+npm error       22 more (@expo/vector-icons, expo, ...)
+npm error
+npm error Could not resolve dependency:
+npm error peerOptional @types/react@"^18.2.6" from react-native@0.76.3
+npm error node_modules/react-native
+npm error   react-native@"0.76.3" from the root project
+npm error   peer react-native@"*" from @expo/vector-icons@14.1.0
+npm error   node_modules/@expo/vector-icons
+npm error     @expo/vector-icons@"^14.0.4" from the root project
+npm error     1 more (expo)
+npm error   21 more (expo, @react-native-community/netinfo, ...)
+npm error
+npm error Conflicting peer dependency: @types/react@18.3.23
+npm error node_modules/@types/react
+npm error   peerOptional @types/react@"^18.2.6" from react-native@0.76.3
+npm error   node_modules/react-native
+npm error     react-native@"0.76.3" from the root project
+npm error     peer react-native@"*" from @expo/vector-icons@14.1.0
+npm error     node_modules/@expo/vector-icons
+npm error       @expo/vector-icons@"^14.0.4" from the root project
+npm error       1 more (expo)
+npm error     21 more (expo, @react-native-community/netinfo, ...)
+npm error
+npm error Fix the upstream dependency conflict, or retry
+npm error this command with --force or --legacy-peer-deps
+npm error to accept an incorrect (and potentially broken) dependency resolution.
+npm error
+npm error
+npm error For a full report see:
+npm error /home/runner/.npm/_logs/2025-06-12T14_14_40_033Z-eresolve-report.txt
+npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2025-06-12T14_14_40_033Z-debug-0.log
