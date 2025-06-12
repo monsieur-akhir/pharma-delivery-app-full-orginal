@@ -5,6 +5,20 @@ import { Alert } from 'react-native';
 const API_BASE_URL = 'http://0.0.0.0:8000/api'; // Use 0.0.0.0 for Replit
 
 export class ApiService {
+  private baseURL: string;
+  public instance: any;
+
+  constructor() {
+    this.baseURL = API_BASE_URL;
+    this.instance = {
+      defaults: {
+        headers: {
+          common: {}
+        }
+      }
+    };
+  }
+
   setToken(token: string) {
     this.instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   }
@@ -33,18 +47,6 @@ export class ApiService {
     return this.post('/auth/logout');
   }
   private api: AxiosInstance;
-
-  constructor() {
-    this.api = axios.create({
-      baseURL: API_BASE_URL,
-      timeout: 30000,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    this.setupInterceptors();
-  }
 
   private setupInterceptors() {
     // Request interceptor to add auth token

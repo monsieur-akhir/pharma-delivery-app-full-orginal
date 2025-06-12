@@ -22,6 +22,8 @@ const TOKEN_EXPIRY_KEY = 'token_expiry';
 
 class AuthService {
   private tokenRefreshTimer: any = null;
+  private currentUser: any = null;
+  private token: string | null = null;
 
   constructor() {
     // Initialiser la vérification du token au démarrage de l'application
@@ -118,6 +120,30 @@ class AuthService {
     } catch (error) {
       console.error('Erreur parse JWT:', error);
       return null;
+    }
+  }
+
+  getCurrentUser(): any | null {
+    return this.currentUser;
+  }
+
+  getToken(): string | null {
+    return this.token;
+  }
+
+  async requestOtp(phone: string, userType: string = 'customer'): Promise<{ success: boolean; message: string; }> {
+    try {
+      return await apiService.post('/auth/request-otp', { phone, userType });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async completeProfile(profileData: any): Promise<any> {
+    try {
+      return await apiService.post('/auth/complete-profile', profileData);
+    } catch (error) {
+      throw error;
     }
   }
 

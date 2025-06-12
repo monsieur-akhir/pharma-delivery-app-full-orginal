@@ -100,7 +100,7 @@ export const useReminders = () => {
         // Group reminders by medication to create schedules
         const medicationMap = new Map<string | number, MedicationReminder[]>();
 
-        transformedReminders.forEach(reminder => {
+        transformedReminders.forEach((reminder: any) => {
           if (!medicationMap.has(reminder.medicationId)) {
             medicationMap.set(reminder.medicationId, []);
           }

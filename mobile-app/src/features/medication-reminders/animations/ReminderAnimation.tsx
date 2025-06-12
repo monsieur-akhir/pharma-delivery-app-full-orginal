@@ -20,6 +20,8 @@ export enum AnimationType {
   INJECTION = 'injection',
   TOPICAL = 'topical',
   INHALER = 'inhaler',
+  TABLET = 'tablet',
+  CAPSULE = 'capsule',
 }
 
 interface ReminderAnimationProps {
@@ -51,11 +53,11 @@ const ReminderAnimation: React.FC<ReminderAnimationProps> = ({
   const rotateAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
-  
+
   // Component state
   const [showInstructions, setShowInstructions] = useState(false);
   const [isTaken, setIsTaken] = useState(false);
-  
+
   // Animation configurations based on medication type
   const getAnimationConfig = () => {
     switch (type) {
@@ -89,6 +91,18 @@ const ReminderAnimation: React.FC<ReminderAnimationProps> = ({
           vibratePattern: [0, 200, 100, 200, 100, 200],
           animationDuration: 1300,
         };
+      case AnimationType.TABLET:
+        return {
+          icon: require('../assets/pill-icon.png'), // This will be replaced later
+          vibratePattern: [0, 100, 100, 100],
+          animationDuration: 1000,
+        };
+      case AnimationType.CAPSULE:
+        return {
+          icon: require('../assets/pill-icon.png'), // This will be replaced later
+          vibratePattern: [0, 100, 100, 100],
+          animationDuration: 1000,
+        };
       default:
         return {
           icon: require('../assets/pill-icon.png'), // This will be replaced later
@@ -97,18 +111,18 @@ const ReminderAnimation: React.FC<ReminderAnimationProps> = ({
         };
     }
   };
-  
+
   const config = getAnimationConfig();
-  
+
   // Start animation when component mounts
   useEffect(() => {
     startAnimation();
-    
+
     // Vibrate to get user attention
     if (Platform.OS !== 'web') {
       Vibration.vibrate(config.vibratePattern, true);
     }
-    
+
     return () => {
       // Clean up vibration when component unmounts
       if (Platform.OS !== 'web') {
@@ -116,7 +130,7 @@ const ReminderAnimation: React.FC<ReminderAnimationProps> = ({
       }
     };
   }, []);
-  
+
   // Start all animations
   const startAnimation = () => {
     // Reset animation values
@@ -124,7 +138,7 @@ const ReminderAnimation: React.FC<ReminderAnimationProps> = ({
     rotateAnim.setValue(0);
     scaleAnim.setValue(0);
     fadeAnim.setValue(0);
-    
+
     // Pulse animation
     Animated.loop(
       Animated.sequence([
@@ -143,7 +157,7 @@ const ReminderAnimation: React.FC<ReminderAnimationProps> = ({
       ]),
       { iterations: -1 }
     ).start();
-    
+
     // Rotation animation for some medication types
     if (type === AnimationType.LIQUID || type === AnimationType.INJECTION) {
       Animated.loop(
@@ -156,7 +170,7 @@ const ReminderAnimation: React.FC<ReminderAnimationProps> = ({
         { iterations: -1 }
       ).start();
     }
-    
+
     // Scale up animation
     Animated.timing(scaleAnim, {
       toValue: 1,
@@ -164,7 +178,7 @@ const ReminderAnimation: React.FC<ReminderAnimationProps> = ({
       easing: Easing.out(Easing.back(1.5)),
       useNativeDriver: true,
     }).start();
-    
+
     // Fade in animation
     Animated.timing(fadeAnim, {
       toValue: 1,
@@ -172,14 +186,14 @@ const ReminderAnimation: React.FC<ReminderAnimationProps> = ({
       useNativeDriver: true,
     }).start();
   };
-  
+
   // Handle marking medication as taken
   const handleTaken = () => {
     // Stop vibration
     if (Platform.OS !== 'web') {
       Vibration.cancel();
     }
-    
+
     // Play completion animation
     Animated.sequence([
       Animated.timing(scaleAnim, {
@@ -193,7 +207,7 @@ const ReminderAnimation: React.FC<ReminderAnimationProps> = ({
         useNativeDriver: true,
       }),
     ]).start();
-    
+
     // Fade out
     Animated.timing(fadeAnim, {
       toValue: 0,
@@ -205,14 +219,14 @@ const ReminderAnimation: React.FC<ReminderAnimationProps> = ({
       onComplete();
     });
   };
-  
+
   // Handle dismissing the reminder
   const handleDismiss = () => {
     // Stop vibration
     if (Platform.OS !== 'web') {
       Vibration.cancel();
     }
-    
+
     // Play dismiss animation
     Animated.parallel([
       Animated.timing(scaleAnim, {
@@ -229,13 +243,13 @@ const ReminderAnimation: React.FC<ReminderAnimationProps> = ({
       onDismiss();
     });
   };
-  
+
   // Calculate rotation for animated elements
   const rotate = rotateAnim.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '360deg'],
   });
-  
+
   // Component styling based on type
   const getTypeStyle = () => {
     switch (type) {
@@ -269,6 +283,18 @@ const ReminderAnimation: React.FC<ReminderAnimationProps> = ({
           borderRadius: 15,
           padding: 15,
         };
+      case AnimationType.TABLET:
+        return {
+          backgroundColor: color,
+          borderRadius: 20,
+          padding: 15,
+        };
+      case AnimationType.CAPSULE:
+        return {
+          backgroundColor: color,
+          borderRadius: 20,
+          padding: 15,
+        };
       default:
         return {
           backgroundColor: color,
@@ -277,7 +303,7 @@ const ReminderAnimation: React.FC<ReminderAnimationProps> = ({
         };
     }
   };
-  
+
   return (
     <Animated.View
       style={[
@@ -291,21 +317,21 @@ const ReminderAnimation: React.FC<ReminderAnimationProps> = ({
       <View style={styles.card}>
         <Text style={styles.title}>Time for your medication</Text>
         <Text style={styles.reminderText}>{reminderText}</Text>
-        
+
         <TouchableOpacity
           style={styles.medicationInfo}
           onPress={() => setShowInstructions(!showInstructions)}
         >
           <Text style={styles.medicationName}>{medicationName}</Text>
           <Text style={styles.dosage}>{dosage}</Text>
-          
+
           {showInstructions && instructions ? (
             <View style={styles.instructionsContainer}>
               <Text style={styles.instructions}>{instructions}</Text>
             </View>
           ) : null}
         </TouchableOpacity>
-        
+
         <Animated.View
           style={[
             styles.iconContainer,
@@ -325,7 +351,7 @@ const ReminderAnimation: React.FC<ReminderAnimationProps> = ({
             </Text>
           </View>
         </Animated.View>
-        
+
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={[styles.button, styles.dismissButton]}
@@ -333,7 +359,7 @@ const ReminderAnimation: React.FC<ReminderAnimationProps> = ({
           >
             <Text style={styles.buttonText}>Dismiss</Text>
           </TouchableOpacity>
-          
+
           <TouchableOpacity
             style={[styles.button, styles.takenButton]}
             onPress={handleTaken}

@@ -132,7 +132,7 @@ const MedicationDashboard: React.FC<MedicationDashboardProps> = ({
 
         {schedules.length === 0 ? (
           <View style={styles.emptyState}>
-            <MaterialIcons name="medication" size={64} color="#CCC" />
+            <MaterialIcons name="local-pharmacy" size={64} color="#CCC" />
             <Text style={styles.emptyTitle}>Aucun médicament</Text>
             <Text style={styles.emptyDescription}>
               Ajoutez vos premiers médicaments pour commencer le suivi

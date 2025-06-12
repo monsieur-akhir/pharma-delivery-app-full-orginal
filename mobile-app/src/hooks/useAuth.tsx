@@ -21,6 +21,7 @@ interface AuthContextType {
   login: (phone: string) => Promise<{ success: boolean; message: string }>;
   verifyOtp: (phone: string, otp: string) => Promise<{ success: boolean; message: string }>;
   logout: () => Promise<void>;
+  resendOtp: (phone: string) => Promise<void>;
 }
 
 // Create the auth context
@@ -53,7 +54,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (phone: string): Promise<{ success: boolean; message: string }> => {
     try {
       const response = await ApiService.auth.login(phone);
-      
+
       if (response.data.status === 'success') {
         return { success: true, message: 'OTP sent successfully' };
       } else {
@@ -69,17 +70,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const verifyOtp = async (phone: string, otp: string): Promise<{ success: boolean; message: string }> => {
     try {
       const response = await ApiService.auth.verifyOtp(phone, otp);
-      
+
       if (response.data.status === 'success') {
         const { token, user: userData, isNewUser } = response.data.data;
-        
+
         // Save auth token and user data
         await AsyncStorage.setItem('@auth_token', token);
         await AsyncStorage.setItem('@user_data', JSON.stringify(userData));
-        
+
         // Update state
         setUser(userData);
-        
+
         return { 
           success: true, 
           message: isNewUser ? 'Account created successfully' : 'Logged in successfully' 
@@ -93,12 +94,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const resendOtp = async (phone: string): Promise<void> => {
+    try {
+      await ApiService.auth.login(phone);
+    } catch (error) {
+      console.error('Resend OTP error:', error);
+      throw error;
+    }
+  };
+
+
   // Logout function
   const logout = async (): Promise<void> => {
     try {
       // Clear storage
       await AsyncStorage.multiRemove(['@auth_token', '@user_data']);
-      
+
       // Reset state
       setUser(null);
     } catch (error) {
@@ -114,10 +125,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     login,
     verifyOtp,
     logout,
+    resendOtp,
   };
 
   return (
-    <AuthContext.Provider value={contextValue}>
+    AuthContext.Provider value={contextValue}>
       {children}
     </AuthContext.Provider>
   );
@@ -126,11 +138,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 // Custom hook to use auth context
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
-  
+
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
-  
+
   return context;
 };
 

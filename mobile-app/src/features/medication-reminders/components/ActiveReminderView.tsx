@@ -18,7 +18,7 @@ export interface MedicationReminder {
   timeUntilNext?: string;
 }
 
-export type AnimationType = 'pill' | 'liquid' | 'injection' | 'inhaler';
+export type AnimationType = 'pill' | 'liquid' | 'injection' | 'inhaler' | 'tablet' | 'capsule';
 
 export interface ReminderAnimationProps {
   type: AnimationType;

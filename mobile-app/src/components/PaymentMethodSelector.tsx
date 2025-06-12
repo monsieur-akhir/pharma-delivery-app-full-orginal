@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -27,7 +26,7 @@ const PaymentMethodSelector: React.FC<PaymentMethodSelectorProps> = ({
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Méthode de paiement</Text>
-      
+
       {methods.map((method, index) => (
         <TouchableOpacity
           key={method.id}
@@ -47,7 +46,7 @@ const PaymentMethodSelector: React.FC<PaymentMethodSelectorProps> = ({
               color={method.enabled ? '#4A80F0' : '#CCC'}
             />
           </View>
-          
+
           <View style={styles.methodInfo}>
             <Text style={[
               styles.methodName,
@@ -62,7 +61,7 @@ const PaymentMethodSelector: React.FC<PaymentMethodSelectorProps> = ({
               {method.description}
             </Text>
           </View>
-          
+
           <View style={styles.radioContainer}>
             <View style={[
               styles.radioButton,
@@ -75,7 +74,7 @@ const PaymentMethodSelector: React.FC<PaymentMethodSelectorProps> = ({
           </View>
         </TouchableOpacity>
       ))}
-      
+
       {onAddPaymentMethod && (
         <TouchableOpacity
           style={styles.addMethodButton}

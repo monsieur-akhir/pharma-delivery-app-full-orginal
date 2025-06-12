@@ -23,7 +23,7 @@ const MedicineItem: React.FC<MedicineItemProps> = ({ medicine, onPress, onAddToC
           {medicine.requiresPrescription ? (
             <MaterialIcons name="local-pharmacy" size={32} color="#4A80F0" />
           ) : (
-            <MaterialIcons name="healing" size={32} color="#ccc" />
+            <MaterialIcons name="local-pharmacy" size={32} color="#ccc" />
           )}
         </View>
         <View style={styles.details}>

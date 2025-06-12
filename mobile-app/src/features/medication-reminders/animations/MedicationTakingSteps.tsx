@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Animated, Dimensions } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -187,14 +186,14 @@ const MedicationTakingSteps: React.FC<MedicationTakingStepsProps> = ({
       >
         <View style={styles.iconContainer}>
           <MaterialIcons
-            name={currentStepData.icon as any}
+            name={currentStepData?.icon as any || 'medication'}
             size={64}
             color="#4A80F0"
           />
         </View>
 
-        <Text style={styles.stepTitle}>{currentStepData.title}</Text>
-        <Text style={styles.stepDescription}>{currentStepData.description}</Text>
+        <Text style={styles.stepTitle}>{currentStepData?.title || ''}</Text>
+        <Text style={styles.stepDescription}>{currentStepData?.description || ''}</Text>
 
         {instructions && (
           <View style={styles.instructionsContainer}>
@@ -208,7 +207,7 @@ const MedicationTakingSteps: React.FC<MedicationTakingStepsProps> = ({
         <Text style={styles.stepCounter}>
           Étape {currentStep + 1} sur {steps.length}
         </Text>
-        
+
         <View style={[styles.nextButton, { borderRadius: 10 }]} />
       </View>
     </View>

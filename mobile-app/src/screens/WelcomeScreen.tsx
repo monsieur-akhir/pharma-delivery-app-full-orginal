@@ -40,7 +40,7 @@ const WelcomeScreen: React.FC = () => {
           {/* Features */}
           <View style={styles.featuresContainer}>
             <View style={styles.feature}>
-              <MaterialIcons name="medication" size={24} color="#fff" />
+              <MaterialIcons name="local-pharmacy" size={24} color="#fff" />
               <Text style={styles.featureText}>Médicaments authentiques</Text>
             </View>
             <View style={styles.feature}>
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   },
   featuresContainer: {
     alignItems: 'center',
-    gap: 20,
+    paddingVertical: 10,
   },
   feature: {
     flexDirection: 'row',
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   buttonContainer: {
-    gap: 15,
+    paddingVertical: 7.5,
   },
   primaryButton: {
     backgroundColor: '#fff',
