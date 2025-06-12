@@ -225,12 +225,12 @@ export class StockAlertsDashboardComponent implements OnInit {
   }
 
   checkUserRole(): void {
-    const user = this.authService.currentUserValue;
+    const user = this.authService.currentUser;
     if (user) {
       // Check if user is pharmacy admin or staff and get their pharmacy ID
-      this.isPharmacyAdmin = user.roles.includes('PHARMACY_ADMIN') || user.roles.includes('PHARMACY_STAFF');
-      if (this.isPharmacyAdmin && user.pharmacyId) {
-        this.currentPharmacyId = user.pharmacyId;
+      this.isPharmacyAdmin = user.role === 'PHARMACY_ADMIN' || user.role === 'PHARMACY_STAFF';
+      if (this.isPharmacyAdmin && (user as any).pharmacyId) {
+        this.currentPharmacyId = (user as any).pharmacyId;
       }
     }
   }

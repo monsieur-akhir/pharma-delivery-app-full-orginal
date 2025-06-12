@@ -8,17 +8,16 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { PageHeaderComponent } from './components/page-header/page-header.component';
 
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    SidenavComponent,
-    PageHeaderComponent
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     MaterialModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HeaderComponent,
+    SidenavComponent,
+    PageHeaderComponent
   ],
   exports: [
     CommonModule,
