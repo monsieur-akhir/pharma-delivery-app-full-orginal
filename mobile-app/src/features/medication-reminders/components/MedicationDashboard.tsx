@@ -1,387 +1,363 @@
+
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  ActivityIndicator,
-  RefreshControl,
-  Alert,
-} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import AdherenceCelebration from '../animations/AdherenceCelebration';
 
-import { MedicationScheduleProgress, AdherenceCelebration } from '../animations';
-import { useReminders } from '../services/ReminderService';
-import ActiveReminderView from './ActiveReminderView';
-
-interface MedicationDashboardProps {
-  userId: number;
-  navigateToDetails?: (scheduleId: string | number) => void;
+export interface MedicationSchedule {
+  id: string | number;
+  medicationName: string;
+  dosage: string;
+  type: 'pill' | 'liquid' | 'injection' | 'inhaler';
+  reminders: MedicationReminder[];
+  adherenceRate: number;
+  instructions: string;
+  color: string;
+  streakDays: number;
 }
 
-/**
- * A comprehensive dashboard showing medication reminders and adherence stats
- */
+export interface MedicationReminder {
+  id: string;
+  medicationName: string;
+  dosage: string;
+  scheduledTime: Date;
+  type: 'pill' | 'liquid' | 'injection' | 'inhaler';
+  instructions?: string;
+  color?: string;
+  isOverdue: boolean;
+  timeUntilNext?: string;
+}
+
+interface MedicationDashboardProps {
+  schedules: MedicationSchedule[];
+  onSchedulePress: (schedule: MedicationSchedule) => void;
+  onAddSchedule: () => void;
+}
+
 const MedicationDashboard: React.FC<MedicationDashboardProps> = ({
-  userId,
-  navigateToDetails,
+  schedules,
+  onSchedulePress,
+  onAddSchedule,
 }) => {
-  const {
-    isLoading,
-    schedules,
-    error,
-    fetchReminders,
-    markReminderAsTaken,
-  } = useReminders();
-
-  const [refreshing, setRefreshing] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
-  const [selectedSchedule, setSelectedSchedule] = useState<any>(null);
 
-  // Check for achievements when schedules change
+  // Calculate overall adherence rate
+  const overallAdherence = schedules.length > 0
+    ? schedules.reduce((sum, schedule) => sum + schedule.adherenceRate, 0) / schedules.length
+    : 0;
+
+  // Find schedule with highest streak
+  const highestStreakSchedule = schedules.length > 0
+    ? schedules.reduce((prev, current) => {
+        if (!prev) return current;
+        return current.streakDays > prev.streakDays ? current : prev;
+      })
+    : null;
+
+  // Find schedule with highest adherence
+  const highestAdherenceSchedule = schedules.length > 0
+    ? schedules.reduce((prev, current) => {
+        if (!prev) return current;
+        return current.adherenceRate > prev.adherenceRate ? current : prev;
+      })
+    : null;
+
+  // Check for celebration triggers
+  const shouldCelebrate = schedules.length > 0 && (
+    (highestStreakSchedule && highestStreakSchedule.streakDays >= 7 && highestStreakSchedule.streakDays % 7 === 0) ||
+    (highestAdherenceSchedule && highestAdherenceSchedule.adherenceRate >= 0.9 && highestAdherenceSchedule.reminders.length >= 10)
+  );
+
   useEffect(() => {
-    if (schedules.length > 0) {
-      // Filter out schedules without reminders
-      const filteredSchedules = schedules.filter(schedule => schedule.reminders && schedule.reminders.length > 0);
-
-      // If no schedules with reminders, return
-      if (filteredSchedules.length === 0) return;
-
-      // Find the schedule with the highest streak
-      const highestStreakSchedule = filteredSchedules.reduce(
-        (prev, current) => (current.streakDays > (prev?.streakDays || 0) ? current : prev),
-        filteredSchedules[0]
-      );
-
-      // Find the schedule with the highest adherence
-      const highestAdherenceSchedule = filteredSchedules.reduce(
-        (prev, current) => (current.adherenceRate > (prev?.adherenceRate || 0) ? current : prev),
-        filteredSchedules[0]
-      );
-
-      const shouldCelebrate = 
-        (highestStreakSchedule?.streakDays >= 7 && highestStreakSchedule?.streakDays % 7 === 0) ||
-        (highestAdherenceSchedule?.adherenceRate >= 0.9 && highestAdherenceSchedule?.reminders.length >= 10);
-
-      if (shouldCelebrate && highestStreakSchedule && highestAdherenceSchedule) {
+    if (shouldCelebrate) {
+      if (highestStreakSchedule && highestAdherenceSchedule) {
         if (highestStreakSchedule.streakDays >= highestAdherenceSchedule.adherenceRate * 100) {
-          setSelectedSchedule(highestStreakSchedule);
-        } else {
-          setSelectedSchedule(highestAdherenceSchedule);
+          setShowCelebration(true);
         }
-
-        // Only show once when the component mounts or data refreshes
-        setShowCelebration(true);
       }
     }
-  }, [schedules]);
+  }, [shouldCelebrate, highestStreakSchedule, highestAdherenceSchedule]);
 
-  // Refresh the data
-  const onRefresh = async () => {
-    setRefreshing(true);
-    try {
-      await fetchReminders();
-    } catch (error) {
-      console.error('Error refreshing data:', error);
-    } finally {
-      setRefreshing(false);
+  const getAdherenceColor = (rate: number) => {
+    if (rate >= 0.9) return '#4CAF50';
+    if (rate >= 0.7) return '#FF9500';
+    return '#FF4757';
+  };
+
+  const getTypeIcon = (type: string) => {
+    switch (type) {
+      case 'pill': return 'medication';
+      case 'liquid': return 'local-drink';
+      case 'injection': return 'medical-services';
+      case 'inhaler': return 'air';
+      default: return 'medication';
     }
   };
-
-  // Handle press on a medication schedule
-  const handlePressSchedule = (scheduleId: string | number) => {
-    if (navigateToDetails) {
-      navigateToDetails(scheduleId);
-    }
-  };
-
-  // Handle press on a specific dose
-  const handlePressDose = async (scheduleId: string | number, doseId: string | number) => {
-    // Find the schedule and dose
-    const schedule = schedules.find(s => s.id === scheduleId);
-    if (!schedule) return;
-
-    const reminder = schedule.reminders.find(r => r.id === doseId);
-    if (!reminder) return;
-
-    // If already taken, show message
-    if (reminder.taken) {
-      Alert.alert(
-        'Already Taken',
-        `You have already taken this dose of ${schedule.medicationName}.`
-      );
-      return;
-    }
-
-    // Otherwise, prompt to take
-    Alert.alert(
-      'Take Medication',
-      `Do you want to mark this dose of ${schedule.medicationName} as taken?`,
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Take',
-          onPress: async () => {
-            try {
-              await markReminderAsTaken(doseId);
-              // Refresh after marking as taken
-              fetchReminders();
-            } catch (error) {
-              console.error('Error marking dose as taken:', error);
-              Alert.alert('Error', 'Failed to mark dose as taken');
-            }
-          },
-        },
-      ]
-    );
-  };
-
-  // Calculate overall adherence rate for all medications
-  const calculateOverallAdherence = () => {
-    if (schedules.length === 0) return 0;
-
-    const total = schedules.reduce((sum, schedule) => sum + schedule.adherenceRate, 0);
-    return total / schedules.length;
-  };
-
-  if (isLoading && !refreshing) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#0066CC" />
-        <Text style={styles.loadingText}>Loading your medication data...</Text>
-      </View>
-    );
-  }
-
-  if (error && !refreshing) {
-    return (
-      <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>Error: {error}</Text>
-        <TouchableOpacity
-          style={styles.retryButton}
-          onPress={fetchReminders}
-        >
-          <Text style={styles.retryButtonText}>Retry</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-
-  const overallAdherence = calculateOverallAdherence();
 
   return (
-    <View style={styles.container}>
-      {/* Active reminder view for upcoming medications */}
-      <View style={styles.activeReminderContainer}>
-        <ActiveReminderView onComplete={fetchReminders} />
+    <ScrollView style={styles.container}>
+      <AdherenceCelebration
+        isVisible={showCelebration}
+        onComplete={() => setShowCelebration(false)}
+      />
+
+      {/* Header Stats */}
+      <View style={styles.statsContainer}>
+        <View style={styles.statCard}>
+          <Text style={styles.statValue}>{schedules.length}</Text>
+          <Text style={styles.statLabel}>Médicaments</Text>
+        </View>
+        <View style={styles.statCard}>
+          <Text style={[styles.statValue, { color: getAdherenceColor(overallAdherence) }]}>
+            {(overallAdherence * 100).toFixed(0)}%
+          </Text>
+          <Text style={styles.statLabel}>Observance</Text>
+        </View>
+        <View style={styles.statCard}>
+          <Text style={[styles.statValue, { color: '#4A80F0' }]}>
+            {highestStreakSchedule ? highestStreakSchedule.streakDays : 0}
+          </Text>
+          <Text style={styles.statLabel}>Jours consécutifs</Text>
+        </View>
       </View>
 
-      <ScrollView
-        style={styles.scrollView}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      >
-        {/* Adherence overview */}
-        <View style={styles.adherenceContainer}>
-          <Text style={styles.sectionTitle}>Medication Adherence</Text>
-          <View style={styles.adherenceCard}>
-            <Text style={styles.adherenceLabel}>Overall Adherence</Text>
-            <Text style={[
-              styles.adherenceValue,
-              overallAdherence >= 0.9 ? styles.excellentAdherence : 
-              overallAdherence >= 0.7 ? styles.goodAdherence : 
-              styles.poorAdherence
-            ]}>
-              {Math.round(overallAdherence * 100)}%
+      {/* Medication Schedules */}
+      <View style={styles.schedulesContainer}>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Mes Médicaments</Text>
+          <TouchableOpacity onPress={onAddSchedule} style={styles.addButton}>
+            <MaterialIcons name="add" size={24} color="#4A80F0" />
+          </TouchableOpacity>
+        </View>
+
+        {schedules.length === 0 ? (
+          <View style={styles.emptyState}>
+            <MaterialIcons name="medication" size={64} color="#CCC" />
+            <Text style={styles.emptyTitle}>Aucun médicament</Text>
+            <Text style={styles.emptyDescription}>
+              Ajoutez vos premiers médicaments pour commencer le suivi
             </Text>
-            <View style={styles.progressBar}>
-              <View 
-                style={[
-                  styles.progressBarFill, 
-                  { 
-                    width: `${Math.round(overallAdherence * 100)}%`,
-                    backgroundColor: 
-                      overallAdherence >= 0.9 ? '#4CD964' : 
-                      overallAdherence >= 0.7 ? '#FFCC00' : 
-                      '#FF3B30'
-                  }
-                ]} 
-              />
-            </View>
-            <Text style={styles.adherenceMessage}>
-              {overallAdherence >= 0.9 
-                ? 'Excellent! Keep up the good work.' 
-                : overallAdherence >= 0.7 
-                  ? 'Good progress. Try to be more consistent.' 
-                  : 'Needs improvement. Consistent medication is important.'}
-            </Text>
+            <TouchableOpacity onPress={onAddSchedule} style={styles.emptyAddButton}>
+              <Text style={styles.emptyAddButtonText}>Ajouter un médicament</Text>
+            </TouchableOpacity>
           </View>
-        </View>
+        ) : (
+          schedules.map((schedule) => (
+            <TouchableOpacity
+              key={schedule.id}
+              style={styles.scheduleCard}
+              onPress={() => onSchedulePress(schedule)}
+            >
+              <View style={styles.scheduleHeader}>
+                <View style={[styles.typeIcon, { backgroundColor: schedule.color + '20' }]}>
+                  <MaterialIcons
+                    name={getTypeIcon(schedule.type) as any}
+                    size={24}
+                    color={schedule.color}
+                  />
+                </View>
+                <View style={styles.scheduleInfo}>
+                  <Text style={styles.medicationName}>{schedule.medicationName}</Text>
+                  <Text style={styles.dosage}>{schedule.dosage}</Text>
+                </View>
+                <View style={styles.adherenceIndicator}>
+                  <Text style={[
+                    styles.adherenceText,
+                    { color: getAdherenceColor(schedule.adherenceRate) }
+                  ]}>
+                    {(schedule.adherenceRate * 100).toFixed(0)}%
+                  </Text>
+                </View>
+              </View>
 
-        {/* Medication schedules */}
-        <View style={styles.schedulesContainer}>
-          <Text style={styles.sectionTitle}>Your Medications</Text>
-          {schedules.length > 0 ? (
-            <MedicationScheduleProgress
-              schedules={schedules.map(schedule => ({
-                ...schedule,
-                doses: schedule.reminders.map(reminder => ({
-                  id: reminder.id,
-                  time: new Date(reminder.scheduledTime).toLocaleTimeString([], {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  }),
-                  taken: reminder.taken,
-                  scheduledTime: new Date(reminder.scheduledTime),
-                })),
-              }))}
-              onPressDose={handlePressDose}
-              onPressSchedule={handlePressSchedule}
-            />
-          ) : (
-            <View style={styles.emptyStateContainer}>
-              <Text style={styles.emptyStateText}>
-                No medication schedules found. Your doctor may prescribe medications later.
-              </Text>
-            </View>
-          )}
-        </View>
+              <View style={styles.scheduleStats}>
+                <View style={styles.stat}>
+                  <MaterialIcons name="timeline" size={16} color="#666" />
+                  <Text style={styles.statText}>
+                    {schedule.streakDays} jour{schedule.streakDays > 1 ? 's' : ''}
+                  </Text>
+                </View>
+                <View style={styles.stat}>
+                  <MaterialIcons name="schedule" size={16} color="#666" />
+                  <Text style={styles.statText}>
+                    {schedule.reminders.length} rappel{schedule.reminders.length > 1 ? 's' : ''}
+                  </Text>
+                </View>
+              </View>
 
-        {/* Padding at the bottom for better scrolling */}
-        <View style={{ height: 40 }} />
-      </ScrollView>
-
-      {/* Celebration pop-up */}
-      {showCelebration && selectedSchedule && (
-        <AdherenceCelebration
-          streakDays={selectedSchedule.streakDays}
-          adherencePercentage={selectedSchedule.adherenceRate * 100}
-          onClose={() => setShowCelebration(false)}
-        />
-      )}
-    </View>
+              <View style={styles.progressBar}>
+                <View
+                  style={[
+                    styles.progressFill,
+                    {
+                      width: `${schedule.adherenceRate * 100}%`,
+                      backgroundColor: getAdherenceColor(schedule.adherenceRate),
+                    },
+                  ]}
+                />
+              </View>
+            </TouchableOpacity>
+          ))
+        )}
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: '#F8F9FF',
   },
-  activeReminderContainer: {
-    height: 120,
-    backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
-  },
-  scrollView: {
-    flex: 1,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  loadingText: {
-    marginTop: 10,
-    fontSize: 16,
-    color: '#333',
-    textAlign: 'center',
-  },
-  errorContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  errorText: {
-    fontSize: 16,
-    color: '#FF3B30',
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  retryButton: {
-    backgroundColor: '#0066CC',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-  },
-  retryButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  adherenceContainer: {
+  statsContainer: {
+    flexDirection: 'row',
     padding: 16,
+    marginBottom: 8,
+  },
+  statCard: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    padding: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginHorizontal: 4,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  statValue: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 4,
+  },
+  statLabel: {
+    fontSize: 12,
+    color: '#666',
+    textAlign: 'center',
+  },
+  schedulesContainer: {
+    padding: 16,
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
   },
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#333',
-    marginBottom: 12,
   },
-  adherenceCard: {
-    backgroundColor: 'white',
-    borderRadius: 10,
+  addButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#F0F4FF',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  emptyState: {
+    alignItems: 'center',
+    padding: 40,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+  },
+  emptyTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    marginTop: 16,
+    marginBottom: 8,
+  },
+  emptyDescription: {
+    fontSize: 14,
+    color: '#666',
+    textAlign: 'center',
+    lineHeight: 20,
+    marginBottom: 24,
+  },
+  emptyAddButton: {
+    backgroundColor: '#4A80F0',
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 8,
+  },
+  emptyAddButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#FFFFFF',
+  },
+  scheduleCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
     padding: 16,
+    marginBottom: 12,
+    elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 3,
   },
-  adherenceLabel: {
+  scheduleHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  typeIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  scheduleInfo: {
+    flex: 1,
+  },
+  medicationName: {
     fontSize: 16,
-    color: '#666',
-    marginBottom: 5,
-  },
-  adherenceValue: {
-    fontSize: 32,
     fontWeight: 'bold',
-    marginBottom: 10,
+    color: '#333',
+    marginBottom: 4,
   },
-  excellentAdherence: {
-    color: '#4CD964',
-  },
-  goodAdherence: {
-    color: '#FFCC00',
-  },
-  poorAdherence: {
-    color: '#FF3B30',
-  },
-  progressBar: {
-    height: 8,
-    backgroundColor: '#e0e0e0',
-    borderRadius: 4,
-    marginBottom: 10,
-    overflow: 'hidden',
-  },
-  progressBarFill: {
-    height: '100%',
-  },
-  adherenceMessage: {
+  dosage: {
     fontSize: 14,
     color: '#666',
   },
-  schedulesContainer: {
-    padding: 16,
-  },
-  emptyStateContainer: {
-    padding: 20,
-    backgroundColor: 'white',
-    borderRadius: 10,
+  adherenceIndicator: {
     alignItems: 'center',
-    marginTop: 10,
   },
-  emptyStateText: {
-    fontSize: 16,
+  adherenceText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  scheduleStats: {
+    flexDirection: 'row',
+    marginBottom: 12,
+  },
+  stat: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 16,
+  },
+  statText: {
+    fontSize: 12,
     color: '#666',
-    textAlign: 'center',
+    marginLeft: 4,
+  },
+  progressBar: {
+    height: 4,
+    backgroundColor: '#E5E5E5',
+    borderRadius: 2,
+    overflow: 'hidden',
+  },
+  progressFill: {
+    height: '100%',
+    borderRadius: 2,
   },
 });
 

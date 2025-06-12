@@ -1,227 +1,217 @@
+
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ActivityIndicator,
-  Alert,
-  Platform,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import ReminderAnimation from '../animations/ReminderAnimation';
+import MedicationTakingSteps from '../animations/MedicationTakingSteps';
+import AdherenceCelebration from '../animations/AdherenceCelebration';
 
-import { ReminderAnimation, MedicationTakingSteps } from '../animations';
-import { MedicationReminder, useReminders } from '../services/ReminderService';
-
-interface ActiveReminderViewProps {
-  onComplete?: () => void;
+export interface MedicationReminder {
+  id: string;
+  medicationName: string;
+  dosage: string;
+  scheduledTime: Date;
+  type: 'pill' | 'liquid' | 'injection' | 'inhaler';
+  instructions?: string;
+  color?: string;
+  isOverdue: boolean;
+  timeUntilNext?: string;
 }
 
-/**
- * Component that shows the currently active medication reminder with animations
- */
-const ActiveReminderView: React.FC<ActiveReminderViewProps> = ({ onComplete }) => {
-  const {
-    isLoading,
-    upcomingReminder,
-    error,
-    markReminderAsTaken,
-    skipReminder,
-    fetchReminders,
-  } = useReminders();
+export type AnimationType = 'pill' | 'liquid' | 'injection' | 'inhaler';
 
+export interface ReminderAnimationProps {
+  type: AnimationType;
+  reminderText: string;
+  onComplete: () => Promise<void>;
+  onDismiss: () => Promise<void>;
+  medicationName: string;
+  dosage: string;
+  instructions: string;
+  color: string;
+}
+
+export interface MedicationTakingStepsProps {
+  type: AnimationType;
+  onComplete: () => Promise<void>;
+  medicationName: string;
+  dosage: string;
+  instructions: string;
+}
+
+interface ActiveReminderViewProps {
+  reminder: MedicationReminder | null;
+  onMarkAsTaken: (reminderId: string) => Promise<void>;
+  onSnooze: (reminderId: string, minutes: number) => Promise<void>;
+  onDismiss: (reminderId: string) => Promise<void>;
+}
+
+const ActiveReminderView: React.FC<ActiveReminderViewProps> = ({
+  reminder,
+  onMarkAsTaken,
+  onSnooze,
+  onDismiss,
+}) => {
   const [showAnimation, setShowAnimation] = useState(false);
-  const [showTakingSteps, setShowTakingSteps] = useState(false);
-  const [selectedReminder, setSelectedReminder] = useState<MedicationReminder | null>(null);
+  const [showSteps, setShowSteps] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [animationType, setAnimationType] = useState<AnimationType>('pill');
 
-  // Show animation for upcoming reminder if it's time or past due
   useEffect(() => {
-    if (upcomingReminder) {
-      const now = new Date();
-      const reminderTime = new Date(upcomingReminder.scheduledTime);
-      const timeDiff = Math.abs(now.getTime() - reminderTime.getTime()) / 60000; // diff in minutes
-
-      // Show animation if it's within 5 minutes of the scheduled time or past due
-      if (timeDiff <= 5 || reminderTime < now) {
-        setSelectedReminder(upcomingReminder);
-        setShowAnimation(true);
-      }
+    if (reminder) {
+      setAnimationType(reminder.type);
+      setShowAnimation(true);
     }
-  }, [upcomingReminder]);
+  }, [reminder]);
 
-  // Handle marking a reminder as taken
-  const handleTaken = async () => {
-    if (!selectedReminder) return;
-
-    // Hide animation and show steps
-    setShowAnimation(false);
-    setShowTakingSteps(true);
-  };
-
-  // Handle completing medication taking steps
-  const handleStepsComplete = async () => {
-    if (!selectedReminder) return;
+  const handleMarkAsTaken = async () => {
+    if (!reminder) return;
 
     try {
-      const success = await markReminderAsTaken(selectedReminder.id);
-
-      if (success) {
-        // Clear selected reminder and close the steps view
-        setSelectedReminder(null);
-        setShowTakingSteps(false);
-
-        // Fetch updated reminders
-        fetchReminders();
-
-        // Notify parent component
-        if (onComplete) {
-          onComplete();
-        }
-      } else {
-        Alert.alert(
-          'Error',
-          'Failed to mark medication as taken. Please try again.',
-          [{ text: 'OK' }]
-        );
-      }
+      await onMarkAsTaken(reminder.id);
+      setShowAnimation(false);
+      setShowSteps(true);
     } catch (error) {
-      console.error('Error completing medication steps:', error);
+      Alert.alert('Erreur', 'Impossible de marquer le médicament comme pris');
     }
   };
 
-  // Handle dismissing a reminder
+  const handleSnooze = async (minutes: number) => {
+    if (!reminder) return;
+
+    try {
+      await onSnooze(reminder.id, minutes);
+      setShowAnimation(false);
+    } catch (error) {
+      Alert.alert('Erreur', 'Impossible de reporter le rappel');
+    }
+  };
+
   const handleDismiss = async () => {
-    if (!selectedReminder) return;
+    if (!reminder) return;
 
-    Alert.alert(
-      'Skip Medication',
-      'Are you sure you want to skip this medication? This will affect your adherence record.',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Skip',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              const success = await skipReminder(selectedReminder.id);
-
-              if (success) {
-                // Clear selected reminder and close animations
-                setSelectedReminder(null);
-                setShowAnimation(false);
-                setShowTakingSteps(false);
-
-                // Fetch updated reminders
-                fetchReminders();
-              } else {
-                Alert.alert(
-                  'Error',
-                  'Failed to skip medication. Please try again.',
-                  [{ text: 'OK' }]
-                );
-              }
-            } catch (error) {
-              console.error('Error skipping medication:', error);
-            }
-          },
-        },
-      ]
-    );
+    try {
+      await onDismiss(reminder.id);
+      setShowAnimation(false);
+    } catch (error) {
+      Alert.alert('Erreur', 'Impossible de supprimer le rappel');
+    }
   };
 
-  // Handle manually checking for due reminders
-  const checkForDueReminders = () => {
-    fetchReminders();
+  const handleStepsComplete = async () => {
+    setShowSteps(false);
+    setShowCelebration(true);
+    
+    // Hide celebration after 3 seconds
+    setTimeout(() => {
+      setShowCelebration(false);
+    }, 3000);
   };
 
-  if (isLoading) {
+  const formatTime = (date: Date) => {
+    return date.toLocaleTimeString('fr-FR', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
+  if (!reminder) {
+    return null;
+  }
+
+  if (showCelebration) {
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#0066CC" />
-        <Text style={styles.loadingText}>Checking for medication reminders...</Text>
+      <AdherenceCelebration
+        isVisible={showCelebration}
+        onComplete={() => setShowCelebration(false)}
+      />
+    );
+  }
+
+  if (showSteps) {
+    return (
+      <View style={styles.container}>
+        <MedicationTakingSteps
+          type={animationType}
+          onComplete={handleStepsComplete}
+          medicationName={reminder.medicationName}
+          dosage={reminder.dosage}
+          instructions={reminder.instructions || ''}
+        />
       </View>
     );
   }
 
-  if (error) {
+  if (showAnimation) {
     return (
-      <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>Error: {error}</Text>
-        <TouchableOpacity
-          style={styles.retryButton}
-          onPress={fetchReminders}
-        >
-          <Text style={styles.retryButtonText}>Retry</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-
-  if (!upcomingReminder && !showAnimation && !showTakingSteps) {
-    return (
-      <View style={styles.noReminderContainer}>
-        <Text style={styles.noReminderText}>No upcoming medication reminders.</Text>
-        <TouchableOpacity
-          style={styles.checkButton}
-          onPress={checkForDueReminders}
-        >
-          <Text style={styles.checkButtonText}>Check Now</Text>
-        </TouchableOpacity>
+      <View style={styles.container}>
+        <ReminderAnimation
+          type={animationType}
+          reminderText={`Il est temps de prendre ${reminder.medicationName}`}
+          onComplete={handleMarkAsTaken}
+          onDismiss={handleDismiss}
+          medicationName={reminder.medicationName}
+          dosage={reminder.dosage}
+          instructions={reminder.instructions || ''}
+          color={reminder.color || '#4A80F0'}
+        />
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
-      {showAnimation && selectedReminder && (
-        <ReminderAnimation
-          type={selectedReminder.type}
-          reminderText={`Time to take your ${selectedReminder.medicationName}`}
-          onComplete={handleTaken}
-          onDismiss={handleDismiss}
-          medicationName={selectedReminder.medicationName}
-          dosage={selectedReminder.dosage}
-          instructions={selectedReminder.instructions || ''}
-          color={selectedReminder.color}
-        />
-      )}
-
-      {showTakingSteps && selectedReminder && (
-        <View style={styles.fullScreenContainer}>
-          <MedicationTakingSteps
-            type={selectedReminder.type}
-            onComplete={handleStepsComplete}
-            medicationName={selectedReminder.medicationName}
-            dosage={selectedReminder.dosage}
-            instructions={selectedReminder.instructions || ''}
-          />
+    <View style={styles.reminderCard}>
+      <View style={styles.reminderHeader}>
+        <View style={[styles.timeIndicator, { backgroundColor: reminder.color || '#4A80F0' }]}>
+          <MaterialIcons name="schedule" size={24} color="#FFFFFF" />
         </View>
-      )}
-
-      {!showAnimation && !showTakingSteps && upcomingReminder && (
-        <View style={styles.upcomingReminderContainer}>
-          <Text style={styles.upcomingReminderTitle}>Upcoming Medication:</Text>
-          <Text style={styles.medicationName}>{upcomingReminder.medicationName}</Text>
-          <Text style={styles.medicationDetails}>
-            {upcomingReminder.dosage} at{' '}
-            {new Date(upcomingReminder.scheduledTime).toLocaleTimeString([], {
-              hour: '2-digit',
-              minute: '2-digit',
-            })}
+        <View style={styles.reminderInfo}>
+          <Text style={styles.medicationName}>{reminder.medicationName}</Text>
+          <Text style={styles.dosage}>{reminder.dosage}</Text>
+          <Text style={[styles.time, reminder.isOverdue && styles.overdueTime]}>
+            {reminder.isOverdue ? 'En retard' : formatTime(reminder.scheduledTime)}
           </Text>
-
-          <TouchableOpacity
-            style={styles.takeMedicationButton}
-            onPress={() => {
-              setSelectedReminder(upcomingReminder);
-              setShowAnimation(true);
-            }}
-          >
-            <Text style={styles.takeMedicationButtonText}>Take Now</Text>
-          </TouchableOpacity>
         </View>
+        <View style={styles.statusBadge}>
+          <Text style={styles.statusText}>
+            {reminder.isOverdue ? 'RETARD' : 'MAINTENANT'}
+          </Text>
+        </View>
+      </View>
+
+      {reminder.instructions && (
+        <View style={styles.instructionsContainer}>
+          <MaterialIcons name="info" size={16} color="#666" />
+          <Text style={styles.instructions}>{reminder.instructions}</Text>
+        </View>
+      )}
+
+      <View style={styles.actionButtons}>
+        <TouchableOpacity
+          style={[styles.actionButton, styles.snoozeButton]}
+          onPress={() => handleSnooze(15)}
+        >
+          <MaterialIcons name="snooze" size={20} color="#FF9500" />
+          <Text style={[styles.actionButtonText, { color: '#FF9500' }]}>
+            Reporter 15min
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.actionButton, styles.takenButton]}
+          onPress={handleMarkAsTaken}
+        >
+          <MaterialIcons name="check" size={20} color="#4CAF50" />
+          <Text style={[styles.actionButtonText, { color: '#4CAF50' }]}>
+            Pris
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      {reminder.timeUntilNext && (
+        <Text style={styles.nextReminder}>
+          Prochain rappel dans {reminder.timeUntilNext}
+        </Text>
       )}
     </View>
   );
@@ -230,114 +220,114 @@ const ActiveReminderView: React.FC<ActiveReminderViewProps> = ({ onComplete }) =
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: '#FFFFFF',
   },
-  fullScreenContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: '#f8f8f8',
-    zIndex: 1000,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  reminderCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
     padding: 20,
-  },
-  loadingText: {
-    marginTop: 10,
-    fontSize: 16,
-    color: '#333',
-    textAlign: 'center',
-  },
-  errorContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  errorText: {
-    fontSize: 16,
-    color: '#FF3B30',
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  retryButton: {
-    backgroundColor: '#0066CC',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-  },
-  retryButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  noReminderContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  noReminderText: {
-    fontSize: 16,
-    color: '#666',
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  checkButton: {
-    backgroundColor: '#0066CC',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-  },
-  checkButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  upcomingReminderContainer: {
-    padding: 20,
-    backgroundColor: 'white',
-    borderRadius: 10,
     margin: 16,
+    elevation: 8,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-    alignItems: 'center',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
   },
-  upcomingReminderTitle: {
+  reminderHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  timeIndicator: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  reminderInfo: {
+    flex: 1,
+  },
+  medicationName: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
-    marginBottom: 10,
+    marginBottom: 4,
   },
-  medicationName: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#0066CC',
-    marginBottom: 5,
-  },
-  medicationDetails: {
-    fontSize: 16,
+  dosage: {
+    fontSize: 14,
     color: '#666',
-    marginBottom: 20,
+    marginBottom: 4,
   },
-  takeMedicationButton: {
-    backgroundColor: '#4CD964',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 25,
+  time: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#4A80F0',
   },
-  takeMedicationButtonText: {
-    color: 'white',
-    fontSize: 16,
+  overdueTime: {
+    color: '#FF4757',
+  },
+  statusBadge: {
+    backgroundColor: '#FF4757',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  statusText: {
+    fontSize: 12,
     fontWeight: 'bold',
+    color: '#FFFFFF',
+  },
+  instructionsContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    backgroundColor: '#F8F9FF',
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 16,
+  },
+  instructions: {
+    fontSize: 14,
+    color: '#666',
+    marginLeft: 8,
+    flex: 1,
+    lineHeight: 20,
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  actionButton: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    marginHorizontal: 4,
+  },
+  snoozeButton: {
+    backgroundColor: '#FFF5E6',
+    borderWidth: 1,
+    borderColor: '#FF9500',
+  },
+  takenButton: {
+    backgroundColor: '#F0F9F0',
+    borderWidth: 1,
+    borderColor: '#4CAF50',
+  },
+  actionButtonText: {
+    fontSize: 14,
+    fontWeight: '600',
+    marginLeft: 6,
+  },
+  nextReminder: {
+    fontSize: 12,
+    color: '#999',
+    textAlign: 'center',
+    marginTop: 12,
   },
 });
 

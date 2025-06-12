@@ -1,128 +1,184 @@
 
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
+interface PaymentMethod {
+  id: string;
+  name: string;
+  icon: keyof typeof MaterialIcons.glyphMap;
+  description: string;
+  enabled: boolean;
+}
+
 interface PaymentMethodSelectorProps {
-  selectedMethod: string;
-  onSelect: (method: string) => void;
+  methods: PaymentMethod[];
+  selectedMethodId?: string;
+  onSelectMethod: (methodId: string) => void;
+  onAddPaymentMethod?: () => void;
 }
 
 const PaymentMethodSelector: React.FC<PaymentMethodSelectorProps> = ({
-  selectedMethod,
-  onSelect,
+  methods,
+  selectedMethodId,
+  onSelectMethod,
+  onAddPaymentMethod,
 }) => {
-  const paymentMethods = [
-    {
-      id: 'CARD',
-      name: 'Carte bancaire',
-      icon: 'credit-card',
-      description: 'Visa, Mastercard, American Express',
-    },
-    {
-      id: 'MOBILE_MONEY',
-      name: 'Mobile Money',
-      icon: 'phone-android',
-      description: 'Orange Money, MTN Money, Moov Money',
-    },
-    {
-      id: 'CASH',
-      name: 'Espèces à la livraison',
-      icon: 'payments',
-      description: 'Payez en espèces lors de la livraison',
-    },
-  ];
-
   return (
     <View style={styles.container}>
-      {paymentMethods.map((method) => (
+      <Text style={styles.title}>Méthode de paiement</Text>
+      
+      {methods.map((method, index) => (
         <TouchableOpacity
           key={method.id}
           style={[
             styles.methodCard,
-            selectedMethod === method.id && styles.selectedCard,
+            { marginBottom: index < methods.length - 1 ? 12 : 0 },
+            selectedMethodId === method.id && styles.selectedCard,
+            !method.enabled && styles.disabledCard,
           ]}
-          onPress={() => onSelect(method.id)}
+          onPress={() => method.enabled && onSelectMethod(method.id)}
+          disabled={!method.enabled}
         >
-          <View style={styles.methodContent}>
-            <View style={styles.iconContainer}>
-              <MaterialIcons
-                name={method.icon as any}
-                size={24}
-                color={selectedMethod === method.id ? '#4A80F0' : '#64748B'}
-              />
-            </View>
-            <View style={styles.methodInfo}>
-              <Text style={[
-                styles.methodName,
-                selectedMethod === method.id && styles.selectedText,
-              ]}>
-                {method.name}
-              </Text>
-              <Text style={styles.methodDescription}>{method.description}</Text>
+          <View style={styles.methodIcon}>
+            <MaterialIcons
+              name={method.icon}
+              size={24}
+              color={method.enabled ? '#4A80F0' : '#CCC'}
+            />
+          </View>
+          
+          <View style={styles.methodInfo}>
+            <Text style={[
+              styles.methodName,
+              !method.enabled && styles.disabledText
+            ]}>
+              {method.name}
+            </Text>
+            <Text style={[
+              styles.methodDescription,
+              !method.enabled && styles.disabledText
+            ]}>
+              {method.description}
+            </Text>
+          </View>
+          
+          <View style={styles.radioContainer}>
+            <View style={[
+              styles.radioButton,
+              selectedMethodId === method.id && styles.radioSelected
+            ]}>
+              {selectedMethodId === method.id && (
+                <View style={styles.radioInner} />
+              )}
             </View>
           </View>
-          {selectedMethod === method.id && (
-            <MaterialIcons name="check-circle" size={20} color="#4A80F0" />
-          )}
         </TouchableOpacity>
       ))}
+      
+      {onAddPaymentMethod && (
+        <TouchableOpacity
+          style={styles.addMethodButton}
+          onPress={onAddPaymentMethod}
+        >
+          <MaterialIcons name="add" size={24} color="#4A80F0" />
+          <Text style={styles.addMethodText}>Ajouter une méthode de paiement</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 6,
+    // Removed gap property, using marginBottom instead
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 16,
   },
   methodCard: {
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
     borderRadius: 12,
     padding: 16,
     borderWidth: 1,
-    borderColor: '#E2E8F0',
+    borderColor: '#E5E5E5',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
   selectedCard: {
     borderColor: '#4A80F0',
-    backgroundColor: '#F0F7FF',
+    backgroundColor: '#F8F9FF',
   },
-  methodContent: {
-    flexDirection: 'row',
+  disabledCard: {
+    backgroundColor: '#F5F5F5',
+    opacity: 0.6,
+  },
+  methodIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#F0F4FF',
     alignItems: 'center',
-    flex: 1,
-  },
-  iconContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#F1F5F9',
     justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 12,
   },
   methodInfo: {
     flex: 1,
+    marginLeft: 12,
   },
   methodName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1E293B',
-    marginBottom: 2,
-  },
-  selectedText: {
-    color: '#4A80F0',
+    color: '#333',
+    marginBottom: 4,
   },
   methodDescription: {
-    fontSize: 12,
-    color: '#64748B',
+    fontSize: 14,
+    color: '#666',
+  },
+  disabledText: {
+    color: '#999',
+  },
+  radioContainer: {
+    marginLeft: 12,
+  },
+  radioButton: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: '#DDD',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  radioSelected: {
+    borderColor: '#4A80F0',
+  },
+  radioInner: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: '#4A80F0',
+  },
+  addMethodButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 16,
+    borderWidth: 2,
+    borderColor: '#4A80F0',
+    borderStyle: 'dashed',
+    borderRadius: 12,
+    marginTop: 12,
+  },
+  addMethodText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#4A80F0',
+    marginLeft: 8,
   },
 });
 
