@@ -26,10 +26,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: RolePermissionsComponent
-  },
+  // Role permissions component disabled during migration
   {
     path: 'user/:id',
     component: UserPermissionsComponent
@@ -60,7 +57,7 @@ const routes: Routes = [
     MatSortModule,
     MatTabsModule,
     UserPermissionsComponent,
-    RolePermissionsComponent
+
   ],
   providers: [
     PermissionsService
