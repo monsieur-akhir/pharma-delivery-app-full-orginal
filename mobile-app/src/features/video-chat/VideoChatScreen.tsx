@@ -27,11 +27,11 @@ const VideoChatScreen: React.FC = () => {
   const route = useRoute();
   const params = route.params as VideoChatScreenParams;
   const { user } = useAuth();
-  
+
   // References
   const videoChatServiceRef = useRef<VideoChatService | null>(null);
   const localStreamRef = useRef<MediaStream | null>(null);
-  
+
   // State
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -45,7 +45,7 @@ const VideoChatScreen: React.FC = () => {
   const [waitingForPharmacist, setWaitingForPharmacist] = useState(!params.fromPharmacist);
   const [callDuration, setCallDuration] = useState(0);
   const durationTimerRef = useRef<NodeJS.Timeout | null>(null);
-  
+
   // Initialize video chat service
   useEffect(() => {
     const initializeVideoChat = async () => {
@@ -53,7 +53,7 @@ const VideoChatScreen: React.FC = () => {
         // Create video chat service
         videoChatServiceRef.current = new VideoChatService();
         const videoChatService = videoChatServiceRef.current;
-        
+
         // Set up event listeners
         videoChatService.setOnRemoteStreamAdded((userId, stream) => {
           console.log('Remote stream added from user:', userId);
@@ -62,13 +62,13 @@ const VideoChatScreen: React.FC = () => {
             newStreams.set(userId, stream);
             return newStreams;
           });
-          
+
           // If a pharmacist joined, update state
           const isFromPharmacist = participants.find(p => p.userId === userId)?.isPharmacist;
           if (isFromPharmacist) {
             setPharmacistJoined(true);
             setWaitingForPharmacist(false);
-            
+
             // Start call duration timer
             if (!durationTimerRef.current) {
               durationTimerRef.current = setInterval(() => {
@@ -77,7 +77,7 @@ const VideoChatScreen: React.FC = () => {
             }
           }
         });
-        
+
         videoChatService.setOnRemoteStreamRemoved((userId) => {
           console.log('Remote stream removed from user:', userId);
           setRemoteStreams(prev => {
@@ -85,7 +85,7 @@ const VideoChatScreen: React.FC = () => {
             newStreams.delete(userId);
             return newStreams;
           });
-          
+
           // If a pharmacist left, update state
           const isFromPharmacist = participants.find(p => p.userId === userId)?.isPharmacist;
           if (isFromPharmacist) {
@@ -107,13 +107,13 @@ const VideoChatScreen: React.FC = () => {
             );
           }
         });
-        
+
         videoChatService.setOnPharmacistJoined((pharmacist) => {
           console.log('Pharmacist joined:', pharmacist);
           setPharmacistJoined(true);
           setWaitingForPharmacist(false);
           setParticipants(prev => [...prev, pharmacist]);
-          
+
           // Start call duration timer
           if (!durationTimerRef.current) {
             durationTimerRef.current = setInterval(() => {
@@ -121,17 +121,17 @@ const VideoChatScreen: React.FC = () => {
             }, 1000);
           }
         });
-        
+
         videoChatService.setOnPharmacistLeft(() => {
           console.log('Pharmacist left');
           setPharmacistJoined(false);
-          
+
           // Clear call duration timer
           if (durationTimerRef.current) {
             clearInterval(durationTimerRef.current);
             durationTimerRef.current = null;
           }
-          
+
           Alert.alert(
             'Pharmacist Left',
             'The pharmacist has left the consultation. Would you like to wait for another pharmacist or end the call?',
@@ -148,43 +148,43 @@ const VideoChatScreen: React.FC = () => {
             ]
           );
         });
-        
+
         videoChatService.setOnError((err) => {
           console.error('Video chat error:', err);
           setError(err.message);
         });
-        
+
         // Initialize video chat service with user info
         await videoChatService.initialize(
           user.id,
           user.username,
           params.fromPharmacist || false
         );
-        
+
         // Set up local media stream
         const stream = await videoChatService.setupLocalStream();
         localStreamRef.current = stream;
         setLocalStream(stream);
-        
+
         // Create or join a room
         if (params.fromPharmacist && params.orderId) {
           // For pharmacists joining a specific consultation
           const roomName = `order-${params.orderId}`;
           setRoomId(roomName);
           await videoChatService.joinRoom(roomName);
-        } else if (params.pharmacistId) {
+        } else if (params.pharmacistId && user?.id) {
           // For customers wanting to talk to a specific pharmacist
           const roomName = `user-${user.id}-pharmacist-${params.pharmacistId}`;
           setRoomId(roomName);
           await videoChatService.joinRoom(roomName);
-        } else {
+        } else if (user?.id) {
           // For customers requesting a consultation with any available pharmacist
           const roomName = `user-${user.id}-consultation`;
           const createdRoomId = await videoChatService.createRoom(roomName);
           setRoomId(createdRoomId);
           setWaitingForPharmacist(true);
         }
-        
+
         setLoading(false);
       } catch (err: any) {
         console.error('Failed to initialize video chat:', err);
@@ -192,35 +192,35 @@ const VideoChatScreen: React.FC = () => {
         setLoading(false);
       }
     };
-    
+
     initializeVideoChat();
-    
+
     // Cleanup function
     return () => {
       // Stop local stream
       if (localStreamRef.current) {
         localStreamRef.current.getTracks().forEach(track => track.stop());
       }
-      
+
       // Clean up video chat service
       if (videoChatServiceRef.current) {
         videoChatServiceRef.current.cleanup();
       }
-      
+
       // Clear duration timer
       if (durationTimerRef.current) {
         clearInterval(durationTimerRef.current);
       }
     };
   }, []);
-  
+
   // Function to format call duration
   const formatDuration = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   };
-  
+
   // Function to toggle mute
   const toggleMute = () => {
     if (videoChatServiceRef.current) {
@@ -228,7 +228,7 @@ const VideoChatScreen: React.FC = () => {
       setIsMuted(!isMuted);
     }
   };
-  
+
   // Function to toggle video
   const toggleVideo = () => {
     if (videoChatServiceRef.current) {
@@ -236,7 +236,7 @@ const VideoChatScreen: React.FC = () => {
       setIsVideoEnabled(!isVideoEnabled);
     }
   };
-  
+
   // Function to switch camera
   const switchCamera = async () => {
     if (videoChatServiceRef.current) {
@@ -248,19 +248,19 @@ const VideoChatScreen: React.FC = () => {
       }
     }
   };
-  
+
   // Function to end the call
   const endCall = async () => {
     try {
       if (videoChatServiceRef.current) {
         await videoChatServiceRef.current.leaveRoom();
       }
-      
+
       // Clear duration timer
       if (durationTimerRef.current) {
         clearInterval(durationTimerRef.current);
       }
-      
+
       // Log call duration if we had a pharmacist join
       if (pharmacistJoined && roomId) {
         // Find the pharmacist participant
@@ -280,7 +280,7 @@ const VideoChatScreen: React.FC = () => {
                 duration: callDuration,
               }),
             });
-            
+
             if (!response.ok) {
               console.error('Failed to log call end:', await response.text());
             }
@@ -289,7 +289,7 @@ const VideoChatScreen: React.FC = () => {
           }
         }
       }
-      
+
       // Navigate back
       navigation.goBack();
     } catch (err: any) {
@@ -297,7 +297,7 @@ const VideoChatScreen: React.FC = () => {
       Alert.alert('Error', 'Failed to end call');
     }
   };
-  
+
   // Show loading screen
   if (loading) {
     return (
@@ -307,7 +307,7 @@ const VideoChatScreen: React.FC = () => {
       </View>
     );
   }
-  
+
   // Show error screen
   if (error) {
     return (
@@ -323,10 +323,10 @@ const VideoChatScreen: React.FC = () => {
       </View>
     );
   }
-  
+
   // Get remote streams as array for rendering
   const remoteStreamsArray = Array.from(remoteStreams.values());
-  
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
@@ -344,7 +344,7 @@ const VideoChatScreen: React.FC = () => {
           </Text>
         )}
       </View>
-      
+
       {/* Video Streams */}
       <View style={styles.videoContainer}>
         {waitingForPharmacist ? (
@@ -373,7 +373,7 @@ const VideoChatScreen: React.FC = () => {
             </Text>
           </View>
         )}
-        
+
         {/* Local Video (Picture-in-Picture) */}
         {localStream && (
           <View style={styles.localVideoContainer}>
@@ -386,7 +386,7 @@ const VideoChatScreen: React.FC = () => {
           </View>
         )}
       </View>
-      
+
       {/* Control Buttons */}
       <View style={styles.controlsContainer}>
         <TouchableOpacity
@@ -399,7 +399,7 @@ const VideoChatScreen: React.FC = () => {
             color={isMuted ? '#FFF' : '#0066CC'}
           />
         </TouchableOpacity>
-        
+
         <TouchableOpacity
           style={[styles.controlButton, !isVideoEnabled && styles.controlButtonActive]}
           onPress={toggleVideo}
@@ -410,14 +410,14 @@ const VideoChatScreen: React.FC = () => {
             color={isVideoEnabled ? '#0066CC' : '#FFF'}
           />
         </TouchableOpacity>
-        
+
         <TouchableOpacity
           style={styles.controlButton}
           onPress={switchCamera}
         >
           <Ionicons name="camera-reverse" size={24} color="#0066CC" />
         </TouchableOpacity>
-        
+
         <TouchableOpacity
           style={[styles.controlButton, styles.endCallButton]}
           onPress={() => {

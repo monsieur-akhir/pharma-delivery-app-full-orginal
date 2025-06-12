@@ -11,8 +11,9 @@ interface PaymentMethod {
 }
 
 interface PaymentMethodSelectorProps {
-  methods: PaymentMethod[];
+  selectedMethod?: string;
   selectedMethodId?: string;
+  methods: PaymentMethod[];
   onSelectMethod: (methodId: string) => void;
   onAddPaymentMethod?: () => void;
 }

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -101,7 +100,7 @@ const ActiveReminderView: React.FC<ActiveReminderViewProps> = ({
   const handleStepsComplete = async () => {
     setShowSteps(false);
     setShowCelebration(true);
-    
+
     // Hide celebration after 3 seconds
     setTimeout(() => {
       setShowCelebration(false);

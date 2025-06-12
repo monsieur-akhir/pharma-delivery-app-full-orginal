@@ -1,16 +1,16 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   TouchableOpacity,
   FlatList,
+  StyleSheet,
+  Alert,
   RefreshControl,
   SafeAreaView,
   ActivityIndicator,
-  Alert,
   Switch,
+  ScrollView,
 } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -73,7 +73,7 @@ const NotificationsScreen = () => {
     try {
       setIsLoading(true);
       const response = await api.get('/api/notifications?limit=50');
-      
+
       if (response.data.status === 'success') {
         setNotifications(response.data.data);
       } else {
@@ -91,7 +91,7 @@ const NotificationsScreen = () => {
   const fetchPreferences = async () => {
     try {
       const response = await api.get('/api/notifications/preferences');
-      
+
       if (response.data.status === 'success') {
         setPreferences(response.data.data);
       }
@@ -108,7 +108,7 @@ const NotificationsScreen = () => {
   const markAsRead = async (notificationId: number) => {
     try {
       await api.put(`/api/notifications/${notificationId}/read`);
-      
+
       setNotifications(prev =>
         prev.map(notification =>
           notification.id === notificationId
@@ -124,7 +124,7 @@ const NotificationsScreen = () => {
   const markAllAsRead = async () => {
     try {
       const response = await api.put('/api/notifications/mark-all-read');
-      
+
       if (response.data.status === 'success') {
         setNotifications(prev =>
           prev.map(notification => ({ ...notification, isRead: true }))
@@ -164,7 +164,7 @@ const NotificationsScreen = () => {
     try {
       const updatedPreferences = { ...preferences, [key]: value };
       setPreferences(updatedPreferences);
-      
+
       await api.put('/api/notifications/preferences', updatedPreferences);
     } catch (error) {
       console.error('Error updating notification preferences:', error);
@@ -226,7 +226,7 @@ const NotificationsScreen = () => {
   const getNotificationColor = (type: string, priority: string) => {
     if (priority === 'URGENT') return COLORS.error;
     if (priority === 'HIGH') return COLORS.warning;
-    
+
     switch (type) {
       case 'ORDER':
         return COLORS.primary;
@@ -291,7 +291,7 @@ const NotificationsScreen = () => {
             color={getNotificationColor(notification.type, notification.priority)}
           />
         </View>
-        
+
         <View style={styles.notificationText}>
           <View style={styles.notificationHeader}>
             <Text style={[
@@ -304,11 +304,11 @@ const NotificationsScreen = () => {
               {formatDate(notification.createdAt)}
             </Text>
           </View>
-          
+
           <Text style={styles.notificationMessage} numberOfLines={2}>
             {notification.message}
           </Text>
-          
+
           <View style={styles.notificationFooter}>
             <View style={[
               styles.typeBadge,
@@ -316,7 +316,7 @@ const NotificationsScreen = () => {
             ]}>
               <Text style={styles.typeText}>{notification.type}</Text>
             </View>
-            
+
             {notification.priority === 'URGENT' && (
               <View style={styles.urgentBadge}>
                 <Icon name="warning" size={12} color={COLORS.white} />
@@ -325,7 +325,7 @@ const NotificationsScreen = () => {
             )}
           </View>
         </View>
-        
+
         <TouchableOpacity
           style={styles.deleteButton}
           onPress={() => deleteNotification(notification.id)}
@@ -333,7 +333,7 @@ const NotificationsScreen = () => {
           <Icon name="close" size={20} color={COLORS.gray} />
         </TouchableOpacity>
       </View>
-      
+
       {!notification.isRead && <View style={styles.unreadDot} />}
     </TouchableOpacity>
   );
@@ -341,10 +341,10 @@ const NotificationsScreen = () => {
   const renderSettings = () => (
     <View style={styles.settingsContainer}>
       <Text style={styles.settingsTitle}>Notification Preferences</Text>
-      
+
       <View style={styles.settingsSection}>
         <Text style={styles.sectionTitle}>Content Types</Text>
-        
+
         <View style={styles.settingItem}>
           <Text style={styles.settingLabel}>Order Updates</Text>
           <Switch
@@ -354,7 +354,7 @@ const NotificationsScreen = () => {
             thumbColor={preferences.orderUpdates ? COLORS.primary : COLORS.gray}
           />
         </View>
-        
+
         <View style={styles.settingItem}>
           <Text style={styles.settingLabel}>Delivery Notifications</Text>
           <Switch
@@ -364,7 +364,7 @@ const NotificationsScreen = () => {
             thumbColor={preferences.deliveryNotifications ? COLORS.primary : COLORS.gray}
           />
         </View>
-        
+
         <View style={styles.settingItem}>
           <Text style={styles.settingLabel}>Medication Reminders</Text>
           <Switch
@@ -374,7 +374,7 @@ const NotificationsScreen = () => {
             thumbColor={preferences.medicationReminders ? COLORS.primary : COLORS.gray}
           />
         </View>
-        
+
         <View style={styles.settingItem}>
           <Text style={styles.settingLabel}>Prescription Status</Text>
           <Switch
@@ -384,7 +384,7 @@ const NotificationsScreen = () => {
             thumbColor={preferences.prescriptionStatus ? COLORS.primary : COLORS.gray}
           />
         </View>
-        
+
         <View style={styles.settingItem}>
           <Text style={styles.settingLabel}>Promotions</Text>
           <Switch
@@ -395,10 +395,10 @@ const NotificationsScreen = () => {
           />
         </View>
       </View>
-      
+
       <View style={styles.settingsSection}>
         <Text style={styles.sectionTitle}>Delivery Methods</Text>
-        
+
         <View style={styles.settingItem}>
           <Text style={styles.settingLabel}>Push Notifications</Text>
           <Switch
@@ -408,7 +408,7 @@ const NotificationsScreen = () => {
             thumbColor={preferences.pushNotifications ? COLORS.primary : COLORS.gray}
           />
         </View>
-        
+
         <View style={styles.settingItem}>
           <Text style={styles.settingLabel}>Email Notifications</Text>
           <Switch
@@ -418,7 +418,7 @@ const NotificationsScreen = () => {
             thumbColor={preferences.emailNotifications ? COLORS.primary : COLORS.gray}
           />
         </View>
-        
+
         <View style={styles.settingItem}>
           <Text style={styles.settingLabel}>SMS Notifications</Text>
           <Switch
@@ -470,7 +470,7 @@ const NotificationsScreen = () => {
           >
             <Icon name="settings-outline" size={24} color={COLORS.primary} />
           </TouchableOpacity>
-          
+
           {unreadCount > 0 && (
             <TouchableOpacity
               style={styles.headerButton}
@@ -503,7 +503,7 @@ const NotificationsScreen = () => {
                 All ({notifications.length})
               </Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
               style={[
                 styles.filterButton,

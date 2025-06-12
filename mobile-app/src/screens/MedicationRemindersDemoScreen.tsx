@@ -227,7 +227,7 @@ const MedicationRemindersDemoScreen: React.FC = () => {
         <View style={styles.fullScreenContainer}>
           <MedicationTakingSteps
             type={selectedMedicationType}
-            onComplete={() => setShowTakingSteps(false)}
+            onComplete={async () => setShowTakingSteps(false)}
             medicationName="Medication Name"
             dosage="10mg"
             instructions="Special instructions for taking this medication properly."

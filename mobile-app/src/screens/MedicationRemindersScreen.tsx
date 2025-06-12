@@ -8,22 +8,21 @@ import { MedicationDashboard } from '../features/medication-reminders';
 const MedicationRemindersScreen: React.FC = ({ navigation }: any) => {
   // Mock user ID - in a real app, this would come from authentication
   const userId = 1;
-  
+
   // Navigate to medication details
   const navigateToDetails = (scheduleId: string | number) => {
     navigation.navigate('MedicationDetails', { scheduleId });
   };
-  
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Medication Reminders</Text>
       </View>
-      
-      <MedicationDashboard 
-        userId={userId}
-        navigateToDetails={navigateToDetails}
-      />
+
+      <MedicationDashboard
+          navigateToDetails={navigateToDetails}
+        />
     </SafeAreaView>
   );
 };
