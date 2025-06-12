@@ -1,0 +1,257 @@
+./node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:4:50 - error TS1139: Type parameter declaration expected.
+
+4 export declare function createBottomTabNavigator<const ParamList extends ParamListBase, const NavigatorID extends string | undefined = undefined, const TypeBag extends NavigatorTypeBagBase = {
+                                                   ~~~~~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:4:66 - error TS1005: ',' expected.
+
+4 export declare function createBottomTabNavigator<const ParamList extends ParamListBase, const NavigatorID extends string | undefined = undefined, const TypeBag extends NavigatorTypeBagBase = {
+                                                                   ~~~~~~~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:4:89 - error TS1389: 'const' is not allowed as a variable declaration name.
+
+4 export declare function createBottomTabNavigator<const ParamList extends ParamListBase, const NavigatorID extends string | undefined = undefined, const TypeBag extends NavigatorTypeBagBase = {
+                                                                                          ~~~~~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:4:107 - error TS1005: ',' expected.
+
+4 export declare function createBottomTabNavigator<const ParamList extends ParamListBase, const NavigatorID extends string | undefined = undefined, const TypeBag extends NavigatorTypeBagBase = {
+                                                                                                            ~~~~~~~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:4:122 - error TS1005: ',' expected.
+
+4 export declare function createBottomTabNavigator<const ParamList extends ParamListBase, const NavigatorID extends string | undefined = undefined, const TypeBag extends NavigatorTypeBagBase = {
+                                                                                                                           ~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:4:134 - error TS1005: ';' expected.
+
+4 export declare function createBottomTabNavigator<const ParamList extends ParamListBase, const NavigatorID extends string | undefined = undefined, const TypeBag extends NavigatorTypeBagBase = {
+                                                                                                                                       ~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:4:147 - error TS1109: Expression expected.
+
+4 export declare function createBottomTabNavigator<const ParamList extends ParamListBase, const NavigatorID extends string | undefined = undefined, const TypeBag extends NavigatorTypeBagBase = {
+                                                                                                                                                    ~~~~~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:4:161 - error TS1005: ',' expected.
+
+4 export declare function createBottomTabNavigator<const ParamList extends ParamListBase, const NavigatorID extends string | undefined = undefined, const TypeBag extends NavigatorTypeBagBase = {
+                                                                                                                                                                  ~~~~~~~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:5:25 - error TS1005: ',' expected.
+
+5     ParamList: ParamList;
+                          ~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:6:29 - error TS1005: ',' expected.
+
+6     NavigatorID: NavigatorID;
+                              ~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:7:41 - error TS1005: ',' expected.
+
+7     State: TabNavigationState<ParamList>;
+                                          ~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:8:46 - error TS1005: ',' expected.
+
+8     ScreenOptions: BottomTabNavigationOptions;
+                                               ~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:9:42 - error TS1005: ',' expected.
+
+9     EventMap: BottomTabNavigationEventMap;
+                                           ~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:11:29 - error TS1005: ']' expected.
+
+11         [RouteName in keyof ParamList]: BottomTabNavigationProp<ParamList, RouteName, NavigatorID>;
+                               ~~~~~~~~~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:11:38 - error TS1005: ',' expected.
+
+11         [RouteName in keyof ParamList]: BottomTabNavigationProp<ParamList, RouteName, NavigatorID>;
+                                        ~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:11:39 - error TS1136: Property assignment expected.
+
+11         [RouteName in keyof ParamList]: BottomTabNavigationProp<ParamList, RouteName, NavigatorID>;
+                                         ~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:11:99 - error TS1005: '(' expected.
+
+11         [RouteName in keyof ParamList]: BottomTabNavigationProp<ParamList, RouteName, NavigatorID>;
+                                                                                                     ~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:12:6 - error TS1005: ',' expected.
+
+12     };
+        ~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:13:41 - error TS1005: ',' expected.
+
+13     Navigator: typeof BottomTabNavigator;
+                                           ~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:14:4 - error TS1389: 'const' is not allowed as a variable declaration name.
+
+14 }, const Config extends StaticConfig<TypeBag> = StaticConfig<TypeBag>>(config?: Config): TypedNavigator<TypeBag, Config>;
+      ~~~~~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:14:17 - error TS1005: ',' expected.
+
+14 }, const Config extends StaticConfig<TypeBag> = StaticConfig<TypeBag>>(config?: Config): TypedNavigator<TypeBag, Config>;
+                   ~~~~~~~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:14:37 - error TS1005: ',' expected.
+
+14 }, const Config extends StaticConfig<TypeBag> = StaticConfig<TypeBag>>(config?: Config): TypedNavigator<TypeBag, Config>;
+                                       ~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:14:47 - error TS1109: Expression expected.
+
+14 }, const Config extends StaticConfig<TypeBag> = StaticConfig<TypeBag>>(config?: Config): TypedNavigator<TypeBag, Config>;
+                                                 ~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:14:79 - error TS1109: Expression expected.
+
+14 }, const Config extends StaticConfig<TypeBag> = StaticConfig<TypeBag>>(config?: Config): TypedNavigator<TypeBag, Config>;
+                                                                                 ~
+
+../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:14:88 - error TS1005: ';' expected.
+
+14 }, const Config extends StaticConfig<TypeBag> = StaticConfig<TypeBag>>(config?: Config): TypedNavigator<TypeBag, Config>;
+                                                                                          ~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:4:46 - error TS1139: Type parameter declaration expected.
+
+4 export declare function createStackNavigator<const ParamList extends ParamListBase, const NavigatorID extends string | undefined = undefined, const TypeBag extends NavigatorTypeBagBase = {
+                                               ~~~~~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:4:62 - error TS1005: ',' expected.
+
+4 export declare function createStackNavigator<const ParamList extends ParamListBase, const NavigatorID extends string | undefined = undefined, const TypeBag extends NavigatorTypeBagBase = {
+                                                               ~~~~~~~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:4:85 - error TS1389: 'const' is not allowed as a variable declaration name.
+
+4 export declare function createStackNavigator<const ParamList extends ParamListBase, const NavigatorID extends string | undefined = undefined, const TypeBag extends NavigatorTypeBagBase = {
+                                                                                      ~~~~~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:4:103 - error TS1005: ',' expected.
+
+4 export declare function createStackNavigator<const ParamList extends ParamListBase, const NavigatorID extends string | undefined = undefined, const TypeBag extends NavigatorTypeBagBase = {
+                                                                                                        ~~~~~~~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:4:118 - error TS1005: ',' expected.
+
+4 export declare function createStackNavigator<const ParamList extends ParamListBase, const NavigatorID extends string | undefined = undefined, const TypeBag extends NavigatorTypeBagBase = {
+                                                                                                                       ~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:4:130 - error TS1005: ';' expected.
+
+4 export declare function createStackNavigator<const ParamList extends ParamListBase, const NavigatorID extends string | undefined = undefined, const TypeBag extends NavigatorTypeBagBase = {
+                                                                                                                                   ~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:4:143 - error TS1109: Expression expected.
+
+4 export declare function createStackNavigator<const ParamList extends ParamListBase, const NavigatorID extends string | undefined = undefined, const TypeBag extends NavigatorTypeBagBase = {
+                                                                                                                                                ~~~~~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:4:157 - error TS1005: ',' expected.
+
+4 export declare function createStackNavigator<const ParamList extends ParamListBase, const NavigatorID extends string | undefined = undefined, const TypeBag extends NavigatorTypeBagBase = {
+                                                                                                                                                              ~~~~~~~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:5:25 - error TS1005: ',' expected.
+
+5     ParamList: ParamList;
+                          ~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:6:29 - error TS1005: ',' expected.
+
+6     NavigatorID: NavigatorID;
+                              ~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:7:43 - error TS1005: ',' expected.
+
+7     State: StackNavigationState<ParamList>;
+                                            ~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:8:42 - error TS1005: ',' expected.
+
+8     ScreenOptions: StackNavigationOptions;
+                                           ~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:9:38 - error TS1005: ',' expected.
+
+9     EventMap: StackNavigationEventMap;
+                                       ~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:11:29 - error TS1005: ']' expected.
+
+11         [RouteName in keyof ParamList]: StackNavigationProp<ParamList, RouteName, NavigatorID>;
+                               ~~~~~~~~~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:11:38 - error TS1005: ',' expected.
+
+11         [RouteName in keyof ParamList]: StackNavigationProp<ParamList, RouteName, NavigatorID>;
+                                        ~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:11:39 - error TS1136: Property assignment expected.
+
+11         [RouteName in keyof ParamList]: StackNavigationProp<ParamList, RouteName, NavigatorID>;
+                                         ~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:11:95 - error TS1005: '(' expected.
+
+11         [RouteName in keyof ParamList]: StackNavigationProp<ParamList, RouteName, NavigatorID>;
+                                                                                                 ~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:12:6 - error TS1005: ',' expected.
+
+12     };
+        ~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:13:37 - error TS1005: ',' expected.
+
+13     Navigator: typeof StackNavigator;
+                                       ~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:14:4 - error TS1389: 'const' is not allowed as a variable declaration name.
+
+14 }, const Config extends StaticConfig<TypeBag> = StaticConfig<TypeBag>>(config?: Config): TypedNavigator<TypeBag, Config>;
+      ~~~~~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:14:17 - error TS1005: ',' expected.
+
+14 }, const Config extends StaticConfig<TypeBag> = StaticConfig<TypeBag>>(config?: Config): TypedNavigator<TypeBag, Config>;
+                   ~~~~~~~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:14:37 - error TS1005: ',' expected.
+
+14 }, const Config extends StaticConfig<TypeBag> = StaticConfig<TypeBag>>(config?: Config): TypedNavigator<TypeBag, Config>;
+                                       ~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:14:47 - error TS1109: Expression expected.
+
+14 }, const Config extends StaticConfig<TypeBag> = StaticConfig<TypeBag>>(config?: Config): TypedNavigator<TypeBag, Config>;
+                                                 ~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:14:79 - error TS1109: Expression expected.
+
+14 }, const Config extends StaticConfig<TypeBag> = StaticConfig<TypeBag>>(config?: Config): TypedNavigator<TypeBag, Config>;
+                                                                                 ~
+
+../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:14:88 - error TS1005: ';' expected.
+
+14 }, const Config extends StaticConfig<TypeBag> = StaticConfig<TypeBag>>(config?: Config): TypedNavigator<TypeBag, Config>;
+                                                                                          ~
+
+
+Found 50 errors in 2 files.
+
+Errors  Files
+    25  ../node_modules/@react-navigation/bottom-tabs/lib/typescript/src/navigators/createBottomTabNavigator.d.ts:4
+    25  ../node_modules/@react-navigation/stack/lib/typescript/src/navigators/createStackNavigator.d.ts:4
+~/workspace/mobile-app$ 
