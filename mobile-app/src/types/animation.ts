@@ -9,13 +9,29 @@ export enum AnimationType {
   CAPSULE = 'capsule'
 }
 
-export enum BodySystem {
-  CARDIOVASCULAR = 'cardiovascular',
-  RESPIRATORY = 'respiratory',
-  DIGESTIVE = 'digestive',
-  NERVOUS = 'nervous',
-  IMMUNE = 'immune',
-  ENDOCRINE = 'endocrine',
-  MUSCULOSKELETAL = 'musculoskeletal',
-  REPRODUCTIVE = 'reproductive'
+export interface AnimationProps {
+  type: AnimationType;
+  isVisible?: boolean;
+  onComplete?: () => void;
+  duration?: number;
+}
+
+export interface MedicationTakingStepsProps {
+  type: 'pill' | 'liquid' | 'injection' | 'inhaler';
+  onComplete?: () => void;
+}
+
+export interface ReminderAnimationProps {
+  type: AnimationType;
+  isVisible?: boolean;
+  onComplete?: () => void;
+}
+
+export interface AdherenceCelebrationProps {
+  adherencePercentage: number;
+  onClose: () => void;
+}
+
+export interface MedicationDashboardProps {
+  onMedicationSelect?: (medicationId: string) => void;
 }

@@ -1,65 +1,36 @@
-import React, { createContext, useContext, useReducer, ReactNode } from 'react';
-interface AuthState {
-  isAuthenticated: boolean;
-  user: any;
+import React, { createContext, useContext, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, AppDispatch } from '../store';
+import { User } from '../store/slices/authSlice';
+
+export interface AuthContextType {
+  user: User | null;
   token: string | null;
+  isAuthenticated: boolean;
+  dispatch: AppDispatch;
 }
-interface AuthContextType {
-  state: AuthState;
-  login: (user: any, token: string) => void;
-  logout: () => void;
-}
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-const initialState: AuthState = {
-  isAuthenticated: false,
-  user: null,
-  token: null,
-};
-type AuthAction = 
-  | { type: 'LOGIN'; payload: { user: any; token: string } }
-  | { type: 'LOGOUT' };
-const authReducer = (state: AuthState, action: AuthAction): AuthState => {
-  switch (action.type) {
-    case 'LOGIN':
-      return {
-        ...state,
-        isAuthenticated: true,
-        user: action.payload.user,
-        token: action.payload.token,
-      };
-    case 'LOGOUT':
-      return {
-        ...state,
-        isAuthenticated: false,
-        user: null,
-        token: null,
-      };
-    default:
-      return state;
-  }
-};
-interface AuthProviderProps {
-  children: ReactNode;
-}
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(authReducer, initialState);
 
-  const login = (user: any, token: string) => {
-    dispatch({ type: 'LOGIN', payload: { user, token } });
-  };
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { user, token, isAuthenticated } = useSelector((state: RootState) => state.auth);
 
-  const logout = () => {
-    dispatch({ type: 'LOGOUT' });
+  const value: AuthContextType = {
+    user,
+    token,
+    isAuthenticated,
+    dispatch,
   };
 
   return (
-    <AuthContext.Provider value={{ state, login, logout }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => {
+export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider');

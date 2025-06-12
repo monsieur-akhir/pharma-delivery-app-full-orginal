@@ -1,56 +1,79 @@
 
 import { NavigatorScreenParams } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 export type RootStackParamList = {
-  Welcome: undefined;
-  Auth: undefined;
-  Login: undefined;
-  MainTabs: NavigatorScreenParams<MainTabParamList>;
-  Onboarding: undefined;
-  OtpVerification: { phone: string; userType: string };
-};
-
-export type MainTabParamList = {
-  Home: undefined;
-  Orders: undefined;
-  Pharmacies: undefined;
-  Reminders: undefined;
-  Profile: undefined;
+  Main: NavigatorScreenParams<MainStackParamList>;
+  Auth: NavigatorScreenParams<AuthStackParamList>;
 };
 
 export type MainStackParamList = {
-  Home: undefined;
-  Orders: undefined;
-  OrdersMain: undefined;
-  Pharmacies: undefined;
-  PharmaciesMain: undefined;
-  Reminders: undefined;
-  RemindersMain: undefined;
-  Profile: undefined;
-  ProfileMain: undefined;
-  MedicineDetail: { medicineId: number };
-  PharmacyDetail: { pharmacyId: number; medicineId?: number };
-  OrderDetails: { orderId: number };
-  TrackOrder: { orderId: number; orderNumber?: string };
-  PrescriptionDetail: { prescriptionId: number };
-  PrescriptionUpload: undefined;
-  VideoChat: { pharmacistId?: number; orderId?: number; roomId?: string };
-  MedicationReminders: undefined;
-  PharmacyMap: { latitude?: number; longitude?: number };
-  CardPayment: { orderId: number; amount: number };
-  MobileMoneyPayment: { orderId: number; amount: number; transactionReference?: string };
+  HomeTabs: NavigatorScreenParams<TabParamList>;
+  MedicineDetail: { medicineId: string };
+  PharmacyDetail: { pharmacyId: string };
+  Payment: { orderId: string; amount: number };
   AddPaymentMethod: undefined;
-  Support: { orderId: number };
-  RateOrder: { orderId: number };
-  Checkout: { items: Array<any> };
-  MainTabs: NavigatorScreenParams<MainTabParamList>;
+  PaymentMethods: undefined;
+  Notifications: undefined;
+  Settings: undefined;
+  OrderDetails: { orderId: string };
+  TrackOrder: { orderId: string };
+  VideoChat: { roomId: string; pharmacistId?: string };
+  PrescriptionDetail: { prescriptionId: string };
+  MedicationReminders: undefined;
+  Checkout: { items: any[] };
+  CardPayment: { orderId: string; amount: number };
+  MobileMoneyPayment: { orderId: string; amount: number; transactionReference?: string };
+  RateOrder: { orderId: string };
+  Support: { orderId: string };
+  MainTabs: undefined;
 };
 
 export type AuthStackParamList = {
   Welcome: undefined;
   Login: undefined;
+  OTP: { phone: string; userType: 'customer' | 'deliverer' };
   Onboarding: undefined;
-  OtpVerification: { phone: string; userType: string };
 };
+
+export type TabParamList = {
+  Home: undefined;
+  Pharmacies: NavigatorScreenParams<PharmaciesStackParamList>;
+  Orders: NavigatorScreenParams<OrdersStackParamList>;
+  Reminders: NavigatorScreenParams<RemindersStackParamList>;
+  Profile: NavigatorScreenParams<ProfileStackParamList>;
+};
+
+export type PharmaciesStackParamList = {
+  PharmaciesList: undefined;
+  PharmacyMap: undefined;
+};
+
+export type OrdersStackParamList = {
+  OrdersList: undefined;
+  OrderDetails: { orderId: string };
+};
+
+export type RemindersStackParamList = {
+  RemindersList: undefined;
+  MedicationDetails: { scheduleId: string };
+};
+
+export type ProfileStackParamList = {
+  ProfileMain: undefined;
+  Settings: undefined;
+  PaymentMethods: undefined;
+};
+
+export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
+  StackScreenProps<RootStackParamList, Screen>;
+
+export type MainStackScreenProps<Screen extends keyof MainStackParamList> =
+  StackScreenProps<MainStackParamList, Screen>;
+
+export type AuthStackScreenProps<Screen extends keyof AuthStackParamList> =
+  StackScreenProps<AuthStackParamList, Screen>;
+
+export type TabScreenProps<Screen extends keyof TabParamList> =
+  BottomTabScreenProps<TabParamList, Screen>;
