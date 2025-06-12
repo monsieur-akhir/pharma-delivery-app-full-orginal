@@ -19,7 +19,7 @@ export type MainStackParamList = {
   TrackOrder: { orderId: string };
   PrescriptionDetail: { prescriptionId: string };
   ScanPrescription: undefined;
-  PrescriptionUpload: undefined;
+  PrescriptionUpload: { orderId?: string };
   PharmacyDetail: { pharmacyId: string };
   MedicationDetails: { scheduleId: string };
   VideoChat: { pharmacistId?: string; orderId?: string };

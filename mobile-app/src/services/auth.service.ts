@@ -129,6 +129,20 @@ class AuthService {
       throw new Error(error.response?.data?.message || 'Failed to reset password');
     }
   }
+
+  async completeProfile(profileData: { name: string; email?: string }): Promise<User> {
+    try {
+      const response = await api.post('/auth/complete-profile', profileData);
+      
+      if (response.data.user) {
+        await AsyncStorage.setItem('@user_data', JSON.stringify(response.data.user));
+      }
+      
+      return response.data.user;
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message || 'Failed to complete profile');
+    }
+  }
 }
 
 const authService = new AuthService();

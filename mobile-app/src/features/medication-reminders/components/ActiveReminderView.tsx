@@ -4,38 +4,18 @@ import { MaterialIcons } from '@expo/vector-icons';
 import ReminderAnimation from '../animations/ReminderAnimation';
 import MedicationTakingSteps from '../animations/MedicationTakingSteps';
 import AdherenceCelebration from '../animations/AdherenceCelebration';
+import { AnimationType, MedicationType } from '@/types/animation';
 
 export interface MedicationReminder {
   id: string;
   medicationName: string;
   dosage: string;
   scheduledTime: Date;
-  type: 'pill' | 'liquid' | 'injection' | 'inhaler';
+  type: MedicationType;
   instructions?: string;
   color?: string;
   isOverdue: boolean;
   timeUntilNext?: string;
-}
-
-export type AnimationType = 'pill' | 'liquid' | 'injection' | 'inhaler' | 'tablet' | 'capsule';
-
-export interface ReminderAnimationProps {
-  type: AnimationType;
-  reminderText: string;
-  onComplete: () => Promise<void>;
-  onDismiss: () => Promise<void>;
-  medicationName: string;
-  dosage: string;
-  instructions: string;
-  color: string;
-}
-
-export interface MedicationTakingStepsProps {
-  type: AnimationType;
-  onComplete: () => Promise<void>;
-  medicationName: string;
-  dosage: string;
-  instructions: string;
 }
 
 interface ActiveReminderViewProps {
@@ -54,11 +34,18 @@ const ActiveReminderView: React.FC<ActiveReminderViewProps> = ({
   const [showAnimation, setShowAnimation] = useState(false);
   const [showSteps, setShowSteps] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
-  const [animationType, setAnimationType] = useState<AnimationType>('pill');
+  const [animationType, setAnimationType] = useState<AnimationType>(AnimationType.PILL);
 
   useEffect(() => {
     if (reminder) {
-      setAnimationType(reminder.type);
+      // Map MedicationType to AnimationType
+      const typeMapping: Record<MedicationType, AnimationType> = {
+        'pill': AnimationType.PILL,
+        'liquid': AnimationType.LIQUID,
+        'injection': AnimationType.INJECTION,
+        'inhaler': AnimationType.INHALER
+      };
+      setAnimationType(typeMapping[reminder.type]);
       setShowAnimation(true);
     }
   }, [reminder]);
@@ -131,7 +118,7 @@ const ActiveReminderView: React.FC<ActiveReminderViewProps> = ({
     return (
       <View style={styles.container}>
         <MedicationTakingSteps
-          type={animationType}
+          type={animationType as MedicationType}
           onComplete={handleStepsComplete}
           medicationName={reminder.medicationName}
           dosage={reminder.dosage}
