@@ -135,15 +135,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   );
 };
 
-// Custom hook to use auth context
-export const useAuth = (): AuthContextType => {
-  const context = useContext(AuthContext);
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../store';
 
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+export const useAuth = () => {
+  const { isAuthenticated, user, token } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
 
-  return context;
+  return {
+    isAuthenticated,
+    user,
+    token,
+    dispatch,
+  };
 };
 
 export default useAuth;
