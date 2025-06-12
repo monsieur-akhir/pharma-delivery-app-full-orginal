@@ -1,0 +1,1824 @@
+~/workspace/mobile-app$ npx tsc --noEmit --strict
+src/config/index.ts:5:10 - error TS2323: Cannot redeclare exported variable 'API_BASE_URL'.
+
+5 export { API_BASE_URL, COLORS, STORAGE_KEYS } from './constants';
+           ~~~~~~~~~~~~
+
+src/config/index.ts:5:10 - error TS2484: Export declaration conflicts with exported declaration of 'API_BASE_URL'.
+
+5 export { API_BASE_URL, COLORS, STORAGE_KEYS } from './constants';
+           ~~~~~~~~~~~~
+
+src/config/index.ts:5:24 - error TS2323: Cannot redeclare exported variable 'COLORS'.
+
+5 export { API_BASE_URL, COLORS, STORAGE_KEYS } from './constants';
+                         ~~~~~~
+
+src/config/index.ts:5:24 - error TS2484: Export declaration conflicts with exported declaration of 'COLORS'.
+
+5 export { API_BASE_URL, COLORS, STORAGE_KEYS } from './constants';
+                         ~~~~~~
+
+src/config/index.ts:6:14 - error TS2323: Cannot redeclare exported variable 'API_BASE_URL'.
+
+6 export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000/api';
+               ~~~~~~~~~~~~
+
+src/config/index.ts:11:14 - error TS2323: Cannot redeclare exported variable 'COLORS'.
+
+11 export const COLORS = {
+                ~~~~~~
+
+src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:52:10 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+52     case AnimationType.PILL:
+            ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:54:10 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+54     case AnimationType.LIQUID:
+            ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:56:10 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+56     case AnimationType.INJECTION:
+            ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:58:10 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+58     case AnimationType.TOPICAL:
+            ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:60:10 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+60     case AnimationType.INHALER:
+            ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:74:12 - error TS2678: Type '"topical"' is not comparable to type 'AnimationType'.
+
+74       case 'topical':
+              ~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:86:12 - error TS2678: Type '"tablet"' is not comparable to type 'AnimationType'.
+
+86       case 'tablet':
+              ~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:92:12 - error TS2678: Type '"capsule"' is not comparable to type 'AnimationType'.
+
+92       case 'capsule':
+              ~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:266:12 - error TS2678: Type '"topical"' is not comparable to type 'AnimationType'.
+
+266       case 'topical':
+               ~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:278:12 - error TS2678: Type '"tablet"' is not comparable to type 'AnimationType'.
+
+278       case 'tablet':
+               ~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:284:12 - error TS2678: Type '"capsule"' is not comparable to type 'AnimationType'.
+
+284       case 'capsule':
+               ~~~~~~~~~
+
+src/features/medication-reminders/components/ActiveReminderView.tsx:134:11 - error TS2322: Type 'AnimationType' is not assignable to type '"pill" | "liquid" | "injection" | "inhaler"'.
+  Type '"tablet"' is not assignable to type '"pill" | "liquid" | "injection" | "inhaler"'.
+
+134           type={animationType}
+              ~~~~
+
+  src/features/medication-reminders/animations/MedicationTakingSteps.tsx:8:3
+    8   type: 'pill' | 'liquid' | 'injection' | 'inhaler';
+        ~~~~
+    The expected type comes from property 'type' which is declared here on type 'IntrinsicAttributes & MedicationTakingStepsProps'
+
+src/features/medication-reminders/components/ActiveReminderView.tsx:148:11 - error TS2322: Type 'import("/home/runner/workspace/mobile-app/src/features/medication-reminders/components/ActiveReminderView").AnimationType' is not assignable to type 'import("/home/runner/workspace/mobile-app/src/features/medication-reminders/animations/ReminderAnimation").AnimationType'.
+  Type '"tablet"' is not assignable to type 'AnimationType'.
+
+148           type={animationType}
+              ~~~~
+
+  src/features/medication-reminders/animations/ReminderAnimation.tsx:20:3
+    20   type: AnimationType;
+         ~~~~
+    The expected type comes from property 'type' which is declared here on type 'IntrinsicAttributes & ReminderAnimationProps'
+
+src/features/medication-reminders/services/ReminderService.ts:310:14 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+310       return AnimationType.PILL;
+                 ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:314:14 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+314       return AnimationType.LIQUID;
+                 ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:317:14 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+317       return AnimationType.INJECTION;
+                 ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:321:14 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+321       return AnimationType.TOPICAL;
+                 ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:324:14 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+324       return AnimationType.INHALER;
+                 ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:326:14 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+326       return AnimationType.PILL;
+                 ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:333:10 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+333     case AnimationType.PILL:
+             ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:335:10 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+335     case AnimationType.LIQUID:
+             ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:337:10 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+337     case AnimationType.INJECTION:
+             ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:339:10 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+339     case AnimationType.TOPICAL:
+             ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:341:10 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+341     case AnimationType.INHALER:
+             ~~~~~~~~~~~~~
+
+src/features/video-chat/PharmacistConsultButton.tsx:77:37 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'never'.
+
+77                 navigation.navigate('VideoChat', {
+                                       ~~~~~~~~~~~
+
+src/features/video-chat/PharmacistConsultButton.tsx:103:27 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'never'.
+
+103       navigation.navigate('VideoChat', {
+                              ~~~~~~~~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:74:15 - error TS2322: Type 'number' is not assignable to type 'Timeout'.
+
+74               durationTimerRef.current = setInterval(() => {
+                 ~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:119:13 - error TS2322: Type 'number' is not assignable to type 'Timeout'.
+
+119             durationTimerRef.current = setInterval(() => {
+                ~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:159:11 - error TS18047: 'user' is possibly 'null'.
+
+159           user.id,
+              ~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:160:11 - error TS18047: 'user' is possibly 'null'.
+
+160           user.username,
+              ~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:160:16 - error TS2339: Property 'username' does not exist on type 'User'.
+
+160           user.username,
+                   ~~~~~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:277:25 - error TS18047: 'user' is possibly 'null'.
+
+277                 userId: user.id,
+                            ~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:362:35 - error TS2339: Property 'toURL' does not exist on type 'MediaStream'.
+
+362                 streamURL={stream.toURL()}
+                                      ~~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:381:38 - error TS2339: Property 'toURL' does not exist on type 'MediaStream'.
+
+381               streamURL={localStream.toURL()}
+                                         ~~~~~
+
+src/navigation/AppNavigator.tsx:37:23 - error TS2322: Type '"HomeTabs"' is not assignable to type 'keyof MainStackParamList'.
+
+37     <MainStack.Screen name="HomeTabs" component={HomeTabs} options={{ headerShown: false }} />
+                         ~~~~
+
+  node_modules/@react-navigation/core/lib/typescript/src/types.d.ts:349:5
+    349     name: RouteName;
+            ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IntrinsicAttributes & RouteConfig<MainStackParamList, keyof MainStackParamList, StackNavigationState<ParamListBase>, StackNavigationOptions, StackNavigationEventMap>'
+
+src/navigation/AppNavigator.tsx:38:23 - error TS2322: Type '"Payment"' is not assignable to type 'keyof MainStackParamList'.
+
+38     <MainStack.Screen name="Payment" component={PaymentScreen} />
+                         ~~~~
+
+  node_modules/@react-navigation/core/lib/typescript/src/types.d.ts:349:5
+    349     name: RouteName;
+            ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IntrinsicAttributes & RouteConfig<MainStackParamList, keyof MainStackParamList, StackNavigationState<ParamListBase>, StackNavigationOptions, StackNavigationEventMap>'
+
+src/navigation/AppNavigator.tsx:38:49 - error TS2304: Cannot find name 'PaymentScreen'.
+
+38     <MainStack.Screen name="Payment" component={PaymentScreen} />
+                                                   ~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:39:23 - error TS2820: Type '"PaymentMethods"' is not assignable to type 'keyof MainStackParamList'. Did you mean '"AddPaymentMethod"'?
+
+39     <MainStack.Screen name="PaymentMethods" component={PaymentMethodsScreen} />
+                         ~~~~
+
+  node_modules/@react-navigation/core/lib/typescript/src/types.d.ts:349:5
+    349     name: RouteName;
+            ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IntrinsicAttributes & RouteConfig<MainStackParamList, keyof MainStackParamList, StackNavigationState<ParamListBase>, StackNavigationOptions, StackNavigationEventMap>'
+
+src/navigation/AppNavigator.tsx:39:56 - error TS2304: Cannot find name 'PaymentMethodsScreen'.
+
+39     <MainStack.Screen name="PaymentMethods" component={PaymentMethodsScreen} />
+                                                          ~~~~~~~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:40:23 - error TS2322: Type '"Notifications"' is not assignable to type 'keyof MainStackParamList'.
+
+40     <MainStack.Screen name="Notifications" component={NotificationsScreen} />
+                         ~~~~
+
+  node_modules/@react-navigation/core/lib/typescript/src/types.d.ts:349:5
+    349     name: RouteName;
+            ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IntrinsicAttributes & RouteConfig<MainStackParamList, keyof MainStackParamList, StackNavigationState<ParamListBase>, StackNavigationOptions, StackNavigationEventMap>'
+
+src/navigation/AppNavigator.tsx:40:55 - error TS2304: Cannot find name 'NotificationsScreen'.
+
+40     <MainStack.Screen name="Notifications" component={NotificationsScreen} />
+                                                         ~~~~~~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:41:23 - error TS2322: Type '"Settings"' is not assignable to type 'keyof MainStackParamList'.
+
+41     <MainStack.Screen name="Settings" component={SettingsScreen} />
+                         ~~~~
+
+  node_modules/@react-navigation/core/lib/typescript/src/types.d.ts:349:5
+    349     name: RouteName;
+            ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IntrinsicAttributes & RouteConfig<MainStackParamList, keyof MainStackParamList, StackNavigationState<ParamListBase>, StackNavigationOptions, StackNavigationEventMap>'
+
+src/navigation/AppNavigator.tsx:70:4 - error TS2304: Cannot find name 'Tab'.
+
+70   <Tab.Navigator
+      ~~~
+
+src/navigation/AppNavigator.tsx:73:36 - error TS2304: Cannot find name 'Ionicons'.
+
+73         let iconName: keyof typeof Ionicons.glyphMap;
+                                      ~~~~~~~~
+
+src/navigation/AppNavigator.tsx:89:17 - error TS2304: Cannot find name 'Ionicons'.
+
+89         return <Ionicons name={iconName} size={size} color={color} />;
+                   ~~~~~~~~
+
+src/navigation/AppNavigator.tsx:95:6 - error TS2304: Cannot find name 'Tab'.
+
+95     <Tab.Screen name="Home" component={HomeScreen} />
+        ~~~
+
+src/navigation/AppNavigator.tsx:96:6 - error TS2304: Cannot find name 'Tab'.
+
+96     <Tab.Screen name="Pharmacies" component={PharmaciesStackNavigator} />
+        ~~~
+
+src/navigation/AppNavigator.tsx:97:6 - error TS2304: Cannot find name 'Tab'.
+
+97     <Tab.Screen name="Orders" component={OrdersStackNavigator} />
+        ~~~
+
+src/navigation/AppNavigator.tsx:98:6 - error TS2304: Cannot find name 'Tab'.
+
+98     <Tab.Screen name="Reminders" component={RemindersStackNavigator} />
+        ~~~
+
+src/navigation/AppNavigator.tsx:99:6 - error TS2304: Cannot find name 'Tab'.
+
+99     <Tab.Screen name="Profile" component={ProfileStackNavigator} />
+        ~~~
+
+src/navigation/AppNavigator.tsx:100:5 - error TS2304: Cannot find name 'Tab'.
+
+100   </Tab.Navigator>
+        ~~~
+
+src/navigation/AppNavigator.tsx:104:4 - error TS2304: Cannot find name 'AuthStack'.
+
+104   <AuthStack.Navigator>
+       ~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:105:6 - error TS2304: Cannot find name 'AuthStack'.
+
+105     <AuthStack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
+         ~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:106:6 - error TS2304: Cannot find name 'AuthStack'.
+
+106     <AuthStack.Screen name="Login" component={LoginScreen} />
+         ~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:107:6 - error TS2304: Cannot find name 'AuthStack'.
+
+107     <AuthStack.Screen name="OTP" component={OtpVerificationScreen} />
+         ~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:107:45 - error TS2304: Cannot find name 'OtpVerificationScreen'.
+
+107     <AuthStack.Screen name="OTP" component={OtpVerificationScreen} />
+                                                ~~~~~~~~~~~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:108:5 - error TS2304: Cannot find name 'AuthStack'.
+
+108   </AuthStack.Navigator>
+        ~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:112:27 - error TS2304: Cannot find name 'useSelector'.
+
+112   const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);
+                              ~~~~~~~~~~~
+
+src/navigation/AppNavigator.tsx:115:6 - error TS2304: Cannot find name 'Stack'.
+
+115     <Stack.Navigator screenOptions={{ headerShown: false }}>
+         ~~~~~
+
+src/navigation/AppNavigator.tsx:117:10 - error TS2304: Cannot find name 'Stack'.
+
+117         <Stack.Screen name="Main" component={MainStackNavigator} />
+             ~~~~~
+
+src/navigation/AppNavigator.tsx:119:10 - error TS2304: Cannot find name 'Stack'.
+
+119         <Stack.Screen name="Auth" component={AuthStackNavigator} />
+             ~~~~~
+
+src/navigation/AppNavigator.tsx:121:7 - error TS2304: Cannot find name 'Stack'.
+
+121     </Stack.Navigator>
+          ~~~~~
+
+src/screens/ActiveDeliveryScreen.tsx:424:32 - error TS2322: Type 'string' is not assignable to type '"filter" | "height" | "title" | "light" | "style" | "accessible" | "key" | "search" | "repeat" | "anchor" | "link" | "article" | "code" | "details" | "html" | "input" | "label" | ... 2217 more ... | undefined'.
+
+424                 <MaterialIcons name={action.icon} size={20} color="#FFFFFF" />
+                                   ~~~~
+
+  node_modules/@expo/vector-icons/build/createIconSet.d.ts:17:5
+    17     name: GLYPHS;
+           ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<IconProps<"filter" | "height" | "title" | "light" | "style" | "accessible" | "key" | "search" | "repeat" | "anchor" | "link" | "article" | ... 2221 more ... | "zoom-out-map">, {}, any>> & Pick<...> & InexactPartial<...> & InexactPartial<...>'
+
+src/screens/AddPaymentMethodScreen.tsx:18:10 - error TS2614: Module '"../services/api.service"' has no exported member 'api'. Did you mean to use 'import api from "../services/api.service"' instead?
+
+18 import { api } from '../services/api.service';
+            ~~~
+
+src/screens/AuthScreen.tsx:39:11 - error TS2339: Property 'isLoading' does not exist on type 'AuthState & PersistPartial'.
+
+39   const { isLoading, error } = useSelector((state: RootState) => state.auth);
+             ~~~~~~~~~
+
+src/screens/AuthScreen.tsx:45:7 - error TS2322: Type 'number' is not assignable to type 'Timeout'.
+
+45       interval = setInterval(() => {
+         ~~~~~~~~
+
+src/screens/CardPaymentScreen.tsx:40:11 - error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+
+40           user?.id,
+             ~~~~~~~~
+
+src/screens/CardPaymentScreen.tsx:79:9 - error TS2345: Argument of type '{ type: string; }' is not assignable to parameter of type 'ConfirmParams | undefined'.
+  Object literal may only specify known properties, and 'type' does not exist in type 'ConfirmParams'.
+
+79         type: 'Card',
+           ~~~~~~~~~~~~
+
+src/screens/CardPaymentScreen.tsx:96:50 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'never'.
+
+96               onPress: () => navigation.navigate('OrderDetails', { orderId }),
+                                                    ~~~~~~~~~~~~~~
+
+src/screens/CardPaymentScreen.tsx:156:19 - error TS2322: Type '{ postalCodeEnabled: false; placeholder: { number: string; }; cardStyle: { backgroundColor: string; textColor: string; borderRadius: number; borderWidth: number; borderColor: string; }; style: { ...; }; onCardChange: (cardDetails: Details) => void; }' is not assignable to type 'IntrinsicAttributes & Props & RefAttributes<Methods>'.
+  Property 'placeholder' does not exist on type 'IntrinsicAttributes & Props & RefAttributes<Methods>'. Did you mean 'placeholders'?
+
+156                   placeholder={{
+                      ~~~~~~~~~~~
+
+src/screens/CardPaymentScreen.tsx:271:5 - error TS2345: Argument of type '{ container: { flex: number; backgroundColor: string; padding: number; }; header: { flexDirection: "row"; alignItems: "center"; marginBottom: number; }; backButton: { marginRight: number; }; headerTitle: { ...; }; ... 21 more ...; retryButtonText: { ...; }; }' is not assignable to parameter of type '{ container: { flex: number; backgroundColor: string; padding: number; }; header: { flexDirection: "row"; alignItems: "center"; marginBottom: number; }; backButton: { marginRight: number; }; headerTitle: { ...; }; ... 21 more ...; retryButtonText: { ...; }; } & NamedStyles<...>'.
+  Type '{ container: { flex: number; backgroundColor: string; padding: number; }; header: { flexDirection: "row"; alignItems: "center"; marginBottom: number; }; backButton: { marginRight: number; }; headerTitle: { ...; }; ... 21 more ...; retryButtonText: { ...; }; }' is not assignable to type 'NamedStyles<any>'.
+    Property 'cardStyle' is incompatible with index signature.
+      Type '{ backgroundColor: string; textColor: string; borderRadius: number; borderWidth: number; borderColor: string; }' is not assignable to type 'ViewStyle | TextStyle | ImageStyle'.
+        Object literal may only specify known properties, and 'textColor' does not exist in type 'ViewStyle | TextStyle | ImageStyle'.
+
+271     textColor: COLORS.text,
+        ~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/CartScreen.tsx:14:10 - error TS2614: Module '"@/navigation/AppNavigator"' has no exported member 'MainStackParamList'. Did you mean to use 'import MainStackParamList from "@/navigation/AppNavigator"' instead?
+
+14 import { MainStackParamList } from '@/navigation/AppNavigator';
+            ~~~~~~~~~~~~~~~~~~
+
+src/screens/CartScreen.tsx:38:71 - error TS2339: Property 'location' does not exist on type '{ auth: AuthState & PersistPartial; medicine: MedicineState; order: OrderState; reminder: ReminderState; }'.
+
+38   const { currentLocation } = useSelector((state: RootState) => state.location);
+                                                                         ~~~~~~~~
+
+src/screens/ChatScreen.tsx:200:22 - error TS2339: Property 'token' does not exist on type 'User'.
+
+200         token: user?.token,
+                         ~~~~~
+
+src/screens/ChatScreen.tsx:289:7 - error TS2322: Type 'number' is not assignable to type 'Timeout'.
+
+289       typingTimeoutRef.current = setTimeout(() => {
+          ~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/DeliveryDashboardScreen.tsx:34:36 - error TS7031: Binding element 'navigation' implicitly has an 'any' type.
+
+34 const DeliveryDashboardScreen = ({ navigation }) => {
+                                      ~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:22:34 - error TS7031: Binding element 'route' implicitly has an 'any' type.
+
+22 const DeliveryDetailsScreen = ({ route, navigation }) => {
+                                    ~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:22:41 - error TS7031: Binding element 'navigation' implicitly has an 'any' type.
+
+22 const DeliveryDetailsScreen = ({ route, navigation }) => {
+                                           ~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:87:72 - error TS18047: 'delivery' is possibly 'null'.
+
+87       action: () => deliveryService.markMedicationPickedUp(deliveryId, delivery.items)
+                                                                          ~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:140:21 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'SetStateAction<null>'.
+
+140       setProofPhoto(result.assets[0].uri);
+                        ~~~~~~~~~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:145:19 - error TS2339: Property 'customerPhone' does not exist on type 'never'.
+
+145     if (delivery?.customerPhone) {
+                      ~~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:146:39 - error TS2339: Property 'customerPhone' does not exist on type 'never'.
+
+146       Linking.openURL(`tel:${delivery.customerPhone}`);
+                                          ~~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:184:12 - error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{ assigned: string; accepted: string; en_route_to_pharmacy: string; arrived_at_pharmacy: string; picked_up: string; en_route_to_customer: string; arrived_at_customer: string; delivered: string; cancelled: string; }'.
+  No index signature with a parameter of type 'string' was found on type '{ assigned: string; accepted: string; en_route_to_pharmacy: string; arrived_at_pharmacy: string; picked_up: string; en_route_to_customer: string; arrived_at_customer: string; delivered: string; cancelled: string; }'.
+
+184     return labels[status] || status;
+               ~~~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:190:22 - error TS2339: Property 'status' does not exist on type 'never'.
+
+190     switch (delivery.status) {
+                         ~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:276:63 - error TS2339: Property 'orderId' does not exist on type 'never'.
+
+276         <Text style={styles.headerTitle}>Livraison #{delivery.orderId}</Text>
+                                                                  ~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:288:72 - error TS2339: Property 'status' does not exist on type 'never'.
+
+288               <Text style={styles.statusText}>{getStatusLabel(delivery.status)}</Text>
+                                                                           ~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:300:57 - error TS2339: Property 'customerName' does not exist on type 'never'.
+
+300             <Text style={styles.customerName}>{delivery.customerName}</Text>
+                                                            ~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:305:56 - error TS2339: Property 'customerPhone' does not exist on type 'never'.
+
+305           <Text style={styles.customerPhone}>{delivery.customerPhone}</Text>
+                                                           ~~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:321:58 - error TS2339: Property 'pickupAddress' does not exist on type 'never'.
+
+321               <Text style={styles.addressText}>{delivery.pickupAddress}</Text>
+                                                             ~~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:324:50 - error TS2339: Property 'pickupAddress' does not exist on type 'never'.
+
+324                 onPress={() => openMaps(delivery.pickupAddress)}
+                                                     ~~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:339:58 - error TS2339: Property 'deliveryAddress' does not exist on type 'never'.
+
+339               <Text style={styles.addressText}>{delivery.deliveryAddress}</Text>
+                                                             ~~~~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:342:50 - error TS2339: Property 'deliveryAddress' does not exist on type 'never'.
+
+342                 onPress={() => openMaps(delivery.deliveryAddress)}
+                                                     ~~~~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:354:67 - error TS2339: Property 'items' does not exist on type 'never'.
+
+354             <Text style={styles.cardTitle}>Médicaments ({delivery.items?.length || 0})</Text>
+                                                                      ~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:356:21 - error TS2339: Property 'items' does not exist on type 'never'.
+
+356           {delivery.items?.map((item, index) => (
+                        ~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:356:33 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+356           {delivery.items?.map((item, index) => (
+                                    ~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:356:39 - error TS7006: Parameter 'index' implicitly has an 'any' type.
+
+356           {delivery.items?.map((item, index) => (
+                                          ~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:366:56 - error TS2339: Property 'totalAmount' does not exist on type 'never'.
+
+366             <Text style={styles.totalAmount}>{delivery.totalAmount} CFA</Text>
+                                                           ~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:383:34 - error TS2322: Type 'string' is not assignable to type '"filter" | "height" | "title" | "light" | "style" | "accessible" | "key" | "search" | "repeat" | "anchor" | "link" | "article" | "code" | "details" | "html" | "input" | "label" | ... 2217 more ... | undefined'.
+
+383                   <MaterialIcons name={action.icon} size={24} color="#FFFFFF" />
+                                     ~~~~
+
+  node_modules/@expo/vector-icons/build/createIconSet.d.ts:17:5
+    17     name: GLYPHS;
+           ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<IconProps<"filter" | "height" | "title" | "light" | "style" | "accessible" | "key" | "search" | "repeat" | "anchor" | "link" | "article" | ... 2221 more ... | "zoom-out-map">, {}, any>> & Pick<...> & InexactPartial<...> & InexactPartial<...>'
+
+src/screens/DeliveryDetailsScreen.tsx:392:20 - error TS2339: Property 'status' does not exist on type 'never'.
+
+392         {(delivery.status === 'arrived_at_customer' || proofPhoto) && (
+                       ~~~~~~
+
+src/screens/DeliveryEarningsScreen.tsx:51:35 - error TS7031: Binding element 'navigation' implicitly has an 'any' type.
+
+51 const DeliveryEarningsScreen = ({ navigation }) => {
+                                     ~~~~~~~~~~
+
+src/screens/DeliveryEarningsScreen.tsx:197:11 - error TS2607: JSX element class does not support attributes because it does not have a 'props' property.
+
+197           <LineChart
+              ~~~~~~~~~~
+198             data={getChartData()!}
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+216             style={styles.chart}
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+217           />
+    ~~~~~~~~~~~~
+
+src/screens/DeliveryEarningsScreen.tsx:197:12 - error TS2786: 'LineChart' cannot be used as a JSX component.
+  Its instance type 'LineChart' is not a valid JSX element.
+    Type 'LineChart' is missing the following properties from type 'ElementClass': context, setState, forceUpdate, props, refs
+
+197           <LineChart
+               ~~~~~~~~~
+
+src/screens/DeliveryEarningsScreen.tsx:224:9 - error TS2607: JSX element class does not support attributes because it does not have a 'props' property.
+
+224         <PieChart
+            ~~~~~~~~~
+225           data={getPieChartData()}
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+234           absolute
+    ~~~~~~~~~~~~~~~~~~
+235         />
+    ~~~~~~~~~~
+
+src/screens/DeliveryEarningsScreen.tsx:224:10 - error TS2786: 'PieChart' cannot be used as a JSX component.
+  Its instance type 'PieChart' is not a valid JSX element.
+    Type 'PieChart' is missing the following properties from type 'ElementClass': context, setState, forceUpdate, props, and 2 more.
+
+224         <PieChart
+             ~~~~~~~~
+
+src/screens/DeliveryEarningsScreen.tsx:268:45 - error TS7053: Element implicitly has an 'any' type because expression of type '`type${string}`' can't be used to index type '{ container: { flex: number; backgroundColor: string; }; header: { flexDirection: "row"; justifyContent: "space-between"; alignItems: "center"; paddingHorizontal: number; paddingVertical: number; backgroundColor: string; borderBottomWidth: number; borderBottomColor: string; }; ... 53 more ...; goalText: { ...; }; }'.
+
+268               <View style={[styles.typeTag, styles[`type${delivery.type.charAt(0).toUpperCase() + delivery.type.slice(1)}`]]}>
+                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/DeliveryEarningsScreen.tsx:379:15 - error TS2322: Type 'string' is not assignable to type '"filter" | "height" | "title" | "light" | "style" | "accessible" | "key" | "search" | "repeat" | "anchor" | "link" | "article" | "code" | "details" | "html" | "input" | "label" | ... 2217 more ... | undefined'.
+
+379               name={tab.icon}
+                  ~~~~
+
+  node_modules/@expo/vector-icons/build/createIconSet.d.ts:17:5
+    17     name: GLYPHS;
+           ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<IconProps<"filter" | "height" | "title" | "light" | "style" | "accessible" | "key" | "search" | "repeat" | "anchor" | "link" | "article" | ... 2221 more ... | "zoom-out-map">, {}, any>> & Pick<...> & InexactPartial<...> & InexactPartial<...>'
+
+src/screens/DeliveryHistoryScreen.tsx:29:34 - error TS7031: Binding element 'navigation' implicitly has an 'any' type.
+
+29 const DeliveryHistoryScreen = ({ navigation }) => {
+                                    ~~~~~~~~~~
+
+src/screens/DeliveryHistoryScreen.tsx:94:12 - error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{ delivered: string; cancelled: string; returned: string; }'.
+  No index signature with a parameter of type 'string' was found on type '{ delivered: string; cancelled: string; returned: string; }'.
+
+94     return labels[status] || status;
+              ~~~~~~~~~~~~~~
+
+src/screens/HomeScreen.tsx:48:11 - error TS2339: Property 'user' does not exist on type 'AuthContextType'.
+
+48   const { user, logout } = useAuth();
+             ~~~~
+
+src/screens/LoginScreen.tsx:21:18 - error TS2339: Property 'isLoading' does not exist on type 'AuthContextType'.
+
+21   const { login, isLoading, error } = useAuth();
+                    ~~~~~~~~~
+
+src/screens/LoginScreen.tsx:21:29 - error TS2339: Property 'error' does not exist on type 'AuthContextType'.
+
+21   const { login, isLoading, error } = useAuth();
+                               ~~~~~
+
+src/screens/LoginScreen.tsx:31:27 - error TS2554: Expected 2 arguments, but got 1.
+
+31     const success = await login(identifier);
+                             ~~~~~~~~~~~~~~~~~
+
+  src/context/AuthContext.tsx:9:22
+    9   login: (user: any, token: string) => void;
+                           ~~~~~~~~~~~~~
+    An argument for 'token' was not provided.
+
+src/screens/LoginScreen.tsx:32:9 - error TS1345: An expression of type 'void' cannot be tested for truthiness.
+
+32     if (success) {
+           ~~~~~~~
+
+src/screens/MedicationDetailsScreen.tsx:24:36 - error TS2339: Property 'scheduleId' does not exist on type 'object'.
+
+24   const scheduleId = route.params?.scheduleId;
+                                      ~~~~~~~~~~
+
+src/screens/MedicationDetailsScreen.tsx:234:48 - error TS7006: Parameter 'reminder' implicitly has an 'any' type.
+
+234               {selectedSchedule.reminders.map((reminder, index) => (
+                                                   ~~~~~~~~
+
+src/screens/MedicationDetailsScreen.tsx:234:58 - error TS7006: Parameter 'index' implicitly has an 'any' type.
+
+234               {selectedSchedule.reminders.map((reminder, index) => (
+                                                             ~~~~~
+
+src/screens/MedicationRemindersDemoScreen.tsx:31:87 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+31   const [selectedMedicationType, setSelectedMedicationType] = useState<AnimationType>(AnimationType.PILL);
+                                                                                         ~~~~~~~~~~~~~
+
+src/screens/MedicationRemindersDemoScreen.tsx:39:13 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+39       type: AnimationType.PILL,
+               ~~~~~~~~~~~~~
+
+src/screens/MedicationRemindersDemoScreen.tsx:62:13 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+62       type: AnimationType.INHALER,
+               ~~~~~~~~~~~~~
+
+src/screens/MedicationRemindersDemoScreen.tsx:147:28 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+147             {Object.values(AnimationType).map((type) => (
+                               ~~~~~~~~~~~~~
+
+src/screens/MedicationRemindersDemoScreen.tsx:149:17 - error TS2322: Type 'unknown' is not assignable to type 'Key | null | undefined'.
+
+149                 key={type}
+                    ~~~
+
+  node_modules/@types/react/ts5.0/index.d.ts:100:9
+    100         key?: Key | null | undefined;
+                ~~~
+    The expected type comes from property 'key' which is declared here on type 'IntrinsicAttributes & TouchableOpacityProps & RefAttributes<View>'
+
+src/screens/MedicationRemindersDemoScreen.tsx:154:58 - error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'SetStateAction<AnimationType>'.
+
+154                 onPress={() => setSelectedMedicationType(type)}
+                                                             ~~~~
+
+src/screens/MedicationRemindersDemoScreen.tsx:162:20 - error TS18046: 'type' is of type 'unknown'.
+
+162                   {type.charAt(0).toUpperCase() + type.slice(1)}
+                       ~~~~
+
+src/screens/MedicationRemindersDemoScreen.tsx:162:51 - error TS18046: 'type' is of type 'unknown'.
+
+162                   {type.charAt(0).toUpperCase() + type.slice(1)}
+                                                      ~~~~
+
+src/screens/MedicationRemindersDemoScreen.tsx:240:11 - error TS2322: Type '{ streakDays: number; adherencePercentage: number; onClose: () => void; }' is not assignable to type 'IntrinsicAttributes & AdherenceCelebrationProps'.
+  Property 'streakDays' does not exist on type 'IntrinsicAttributes & AdherenceCelebrationProps'.
+
+240           streakDays={14}
+              ~~~~~~~~~~
+
+src/screens/MedicationRemindersDemoScreen.tsx:250:29 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+250             medicationType={AnimationType.PILL}
+                                ~~~~~~~~~~~~~
+
+src/screens/MedicationRemindersScreen.tsx:24:11 - error TS2322: Type '{ navigateToDetails: (scheduleId: string | number) => void; }' is not assignable to type 'IntrinsicAttributes & MedicationDashboardProps'.
+  Property 'navigateToDetails' does not exist on type 'IntrinsicAttributes & MedicationDashboardProps'.
+
+24           navigateToDetails={navigateToDetails}
+             ~~~~~~~~~~~~~~~~~
+
+src/screens/MedicineDetailScreen.tsx:127:25 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'never'.
+
+127     navigation.navigate('Checkout', {
+                            ~~~~~~~~~~
+
+src/screens/MedicineDetailScreen.tsx:138:25 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'never'.
+
+138     navigation.navigate('PharmacyDetail', {
+                            ~~~~~~~~~~~~~~~~
+
+src/screens/MedicineSearchScreen.tsx:16:10 - error TS2614: Module '"@/navigation/AppNavigator"' has no exported member 'MainStackParamList'. Did you mean to use 'import MainStackParamList from "@/navigation/AppNavigator"' instead?
+
+16 import { MainStackParamList } from '@/navigation/AppNavigator';
+            ~~~~~~~~~~~~~~~~~~
+
+src/screens/MedicineSearchScreen.tsx:44:71 - error TS2339: Property 'location' does not exist on type '{ auth: AuthState & PersistPartial; medicine: MedicineState; order: OrderState; reminder: ReminderState; }'.
+
+44   const { currentLocation } = useSelector((state: RootState) => state.location);
+                                                                         ~~~~~~~~
+
+src/screens/MedicineSearchScreen.tsx:89:51 - error TS2339: Property 'firstName' does not exist on type 'User'.
+
+89       <Text style={styles.greeting}>Hello, {user?.firstName || 'there'}!</Text>
+                                                     ~~~~~~~~~
+
+src/screens/MobileMoneyPaymentScreen.tsx:16:10 - error TS2614: Module '"@/navigation/AppNavigator"' has no exported member 'MainStackParamList'. Did you mean to use 'import MainStackParamList from "@/navigation/AppNavigator"' instead?
+
+16 import { MainStackParamList } from '@/navigation/AppNavigator';
+            ~~~~~~~~~~~~~~~~~~
+
+src/screens/MobileMoneyPaymentScreen.tsx:19:10 - error TS2614: Module '"@/services/payment.service"' has no exported member 'paymentService'. Did you mean to use 'import paymentService from "@/services/payment.service"' instead?
+
+19 import { paymentService } from '@/services/payment.service';
+            ~~~~~~~~~~~~~~
+
+src/screens/NotificationsScreen.tsx:185:31 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'never'.
+
+185           navigation.navigate('OrderDetails', { orderId: notification.data.orderId });
+                                  ~~~~~~~~~~~~~~
+
+src/screens/NotificationsScreen.tsx:190:31 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'never'.
+
+190           navigation.navigate('TrackOrder', { orderId: notification.data.orderId });
+                                  ~~~~~~~~~~~~
+
+src/screens/NotificationsScreen.tsx:195:31 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'never'.
+
+195           navigation.navigate('PrescriptionDetail', { prescriptionId: notification.data.prescriptionId });
+                                  ~~~~~~~~~~~~~~~~~~~~
+
+src/screens/NotificationsScreen.tsx:199:29 - error TS2769: No overload matches this call.
+  Overload 1 of 2, '(...args: never): void', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(options: never): void', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'never'.
+
+199         navigation.navigate('MedicationReminders');
+                                ~~~~~~~~~~~~~~~~~~~~~
+
+
+src/screens/OrderDetailsScreen.tsx:41:18 - error TS2345: Argument of type '"Network error. Please try again later."' is not assignable to parameter of type 'SetStateAction<null>'.
+
+41         setError('Network error. Please try again later.');
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:51:27 - error TS7006: Parameter 'status' implicitly has an 'any' type.
+
+51   const getStatusColor = (status) => {
+                             ~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:69:34 - error TS7006: Parameter 'status' implicitly has an 'any' type.
+
+69   const getPaymentStatusColor = (status) => {
+                                    ~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:83:23 - error TS7006: Parameter 'dateString' implicitly has an 'any' type.
+
+83   const formatDate = (dateString) => {
+                         ~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:136:56 - error TS2339: Property 'status' does not exist on type 'never'.
+
+136               { backgroundColor: getStatusColor(order?.status) }
+                                                           ~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:139:53 - error TS2339: Property 'status' does not exist on type 'never'.
+
+139             <Text style={styles.statusText}>{order?.status}</Text>
+                                                        ~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:141:63 - error TS2339: Property 'order_number' does not exist on type 'never'.
+
+141           <Text style={styles.orderNumberText}>Order #{order?.order_number}</Text>
+                                                                  ~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:142:60 - error TS2339: Property 'created_at' does not exist on type 'never'.
+
+142           <Text style={styles.dateText}>{formatDate(order?.created_at)}</Text>
+                                                               ~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:148:19 - error TS2339: Property 'order_items' does not exist on type 'never'.
+
+148           {order?.order_items?.map((item) => (
+                      ~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:148:37 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+148           {order?.order_items?.map((item) => (
+                                        ~~~~
+
+src/screens/OrderDetailsScreen.tsx:165:23 - error TS2339: Property 'payment_method' does not exist on type 'never'.
+
+165               {order?.payment_method === 'CARD' ? 'Credit/Debit Card' :
+                          ~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:166:23 - error TS2339: Property 'payment_method' does not exist on type 'never'.
+
+166                order?.payment_method === 'MOBILE_MONEY' ? `Mobile Money (${order?.payment_provider})` :
+                          ~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:166:83 - error TS2339: Property 'payment_provider' does not exist on type 'never'.
+
+166                order?.payment_method === 'MOBILE_MONEY' ? `Mobile Money (${order?.payment_provider})` :
+                                                                                      ~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:167:23 - error TS2339: Property 'payment_method' does not exist on type 'never'.
+
+167                order?.payment_method}
+                          ~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:170:19 - error TS2339: Property 'payment_provider' does not exist on type 'never'.
+
+170           {order?.payment_provider && (
+                      ~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:173:56 - error TS2339: Property 'payment_provider' does not exist on type 'never'.
+
+173               <Text style={styles.detailValue}>{order?.payment_provider}</Text>
+                                                           ~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:181:65 - error TS2339: Property 'payment_status' does not exist on type 'never'.
+
+181                 { backgroundColor: getPaymentStatusColor(order?.payment_status) }
+                                                                    ~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:184:62 - error TS2339: Property 'payment_status' does not exist on type 'never'.
+
+184               <Text style={styles.paymentStatusText}>{order?.payment_status}</Text>
+                                                                 ~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:187:19 - error TS2339: Property 'transaction_reference' does not exist on type 'never'.
+
+187           {order?.transaction_reference && (
+                      ~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:190:56 - error TS2339: Property 'transaction_reference' does not exist on type 'never'.
+
+190               <Text style={styles.detailValue}>{order?.transaction_reference}</Text>
+                                                           ~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:195:53 - error TS2339: Property 'total_amount' does not exist on type 'never'.
+
+195             <Text style={styles.totalValue}>{order?.total_amount.toLocaleString()} XOF</Text>
+                                                        ~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:204:54 - error TS2339: Property 'delivery_address' does not exist on type 'never'.
+
+204             <Text style={styles.detailValue}>{order?.delivery_address}</Text>
+                                                         ~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:206:19 - error TS2339: Property 'expected_delivery_time' does not exist on type 'never'.
+
+206           {order?.expected_delivery_time && (
+                      ~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:209:67 - error TS2339: Property 'expected_delivery_time' does not exist on type 'never'.
+
+209               <Text style={styles.detailValue}>{formatDate(order?.expected_delivery_time)}</Text>
+                                                                      ~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:212:19 - error TS2339: Property 'actual_delivery_time' does not exist on type 'never'.
+
+212           {order?.actual_delivery_time && (
+                      ~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:215:67 - error TS2339: Property 'actual_delivery_time' does not exist on type 'never'.
+
+215               <Text style={styles.detailValue}>{formatDate(order?.actual_delivery_time)}</Text>
+                                                                      ~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:222:19 - error TS2339: Property 'status' does not exist on type 'never'.
+
+222           {order?.status === 'PENDING' && order?.payment_status === 'completed' && (
+                      ~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:222:50 - error TS2339: Property 'payment_status' does not exist on type 'never'.
+
+222           {order?.status === 'PENDING' && order?.payment_status === 'completed' && (
+                                                     ~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:228:19 - error TS2339: Property 'status' does not exist on type 'never'.
+
+228           {order?.status === 'PENDING' && order?.payment_status === 'pending' && (
+                      ~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:228:50 - error TS2339: Property 'payment_status' does not exist on type 'never'.
+
+228           {order?.status === 'PENDING' && order?.payment_status === 'pending' && (
+                                                     ~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:232:28 - error TS2339: Property 'payment_method' does not exist on type 'never'.
+
+232                 if (order?.payment_method === 'MOBILE_MONEY') {
+                               ~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:233:39 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'never'.
+
+233                   navigation.navigate('MobileMoneyPayment', {
+                                          ~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:234:36 - error TS2339: Property 'id' does not exist on type 'never'.
+
+234                     orderId: order.id,
+                                       ~~
+
+src/screens/OrderDetailsScreen.tsx:235:35 - error TS2339: Property 'total_amount' does not exist on type 'never'.
+
+235                     amount: order.total_amount,
+                                      ~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:236:49 - error TS2339: Property 'transaction_reference' does not exist on type 'never'.
+
+236                     transactionReference: order.transaction_reference
+                                                    ~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:239:39 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'never'.
+
+239                   navigation.navigate('CardPayment', {
+                                          ~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:240:36 - error TS2339: Property 'id' does not exist on type 'never'.
+
+240                     orderId: order.id,
+                                       ~~
+
+src/screens/OrderDetailsScreen.tsx:241:35 - error TS2339: Property 'total_amount' does not exist on type 'never'.
+
+241                     amount: order.total_amount
+                                      ~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:250:19 - error TS2339: Property 'status' does not exist on type 'never'.
+
+250           {order?.status === 'DELIVERED' && !order?.rating && (
+                      ~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:250:53 - error TS2339: Property 'rating' does not exist on type 'never'.
+
+250           {order?.status === 'DELIVERED' && !order?.rating && (
+                                                        ~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:253:50 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'never'.
+
+253               onPress={() => navigation.navigate('RateOrder', { orderId: order.id })}
+                                                     ~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:253:80 - error TS2339: Property 'id' does not exist on type 'never'.
+
+253               onPress={() => navigation.navigate('RateOrder', { orderId: order.id })}
+                                                                                   ~~
+
+src/screens/OrderDetailsScreen.tsx:261:48 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'never'.
+
+261             onPress={() => navigation.navigate('Support', { orderId: order.id })}
+                                                   ~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:261:70 - error TS18047: 'order' is possibly 'null'.
+
+261             onPress={() => navigation.navigate('Support', { orderId: order.id })}
+                                                                         ~~~~~
+
+src/screens/OrdersScreen.tsx:151:25 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'never'.
+
+151     navigation.navigate('OrderDetails', { orderId: order.id });
+                            ~~~~~~~~~~~~~~
+
+src/screens/OrdersScreen.tsx:156:27 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'never'.
+
+156       navigation.navigate('TrackOrder', {
+                              ~~~~~~~~~~~~
+
+src/screens/OrdersScreen.tsx:251:48 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'never'.
+
+251             onPress={() => navigation.navigate('RateOrder', { orderId: order.id })}
+                                                   ~~~~~~~~~~~
+
+src/screens/OrdersScreen.tsx:287:46 - error TS2769: No overload matches this call.
+  Overload 1 of 2, '(...args: never): void', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(options: never): void', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'never'.
+
+287           onPress={() => navigation.navigate('Pharmacies')}
+                                                 ~~~~~~~~~~~~
+
+
+src/screens/OtpVerificationScreen.tsx:23:11 - error TS2339: Property 'verifyOtp' does not exist on type '{ isAuthenticated: boolean; user: User | null; token: string | null; dispatch: Dispatch<UnknownAction>; }'.
+
+23   const { verifyOtp, resendOtp, isLoading } = useAuth();
+             ~~~~~~~~~
+
+src/screens/OtpVerificationScreen.tsx:23:22 - error TS2339: Property 'resendOtp' does not exist on type '{ isAuthenticated: boolean; user: User | null; token: string | null; dispatch: Dispatch<UnknownAction>; }'.
+
+23   const { verifyOtp, resendOtp, isLoading } = useAuth();
+                        ~~~~~~~~~
+
+src/screens/OtpVerificationScreen.tsx:23:33 - error TS2339: Property 'isLoading' does not exist on type '{ isAuthenticated: boolean; user: User | null; token: string | null; dispatch: Dispatch<UnknownAction>; }'.
+
+23   const { verifyOtp, resendOtp, isLoading } = useAuth();
+                                   ~~~~~~~~~
+
+src/screens/OtpVerificationScreen.tsx:81:22 - error TS2322: Type 'string' is not assignable to type 'never'.
+
+81           routes: [{ name: 'MainTabs' }],
+                        ~~~~
+
+  node_modules/@react-navigation/routers/lib/typescript/src/types.d.ts:59:5
+    59     name: RouteName;
+           ~~~~
+    The expected type comes from property 'name' which is declared here on type 'NavigationRoute<RootParamList, never> | PartialRoute<Route<never, object | undefined>>'
+
+src/screens/PaymentMethodScreen.tsx:45:27 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'never'.
+
+45       navigation.navigate('CardPayment', { orderId, amount });
+                             ~~~~~~~~~~~~~
+
+src/screens/PaymentMethodScreen.tsx:47:27 - error TS2345: Argument of type 'string' is not assignable to parameter of type 'never'.
+
+47       navigation.navigate('MobileMoneyPayment', { orderId, amount });
+                             ~~~~~~~~~~~~~~~~~~~~
+
+src/screens/PaymentMethodsScreen.tsx:208:46 - error TS2769: No overload matches this call.
+  Overload 1 of 2, '(...args: never): void', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(options: never): void', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'never'.
+
+208           onPress={() => navigation.navigate('AddPaymentMethod')}
+                                                 ~~~~~~~~~~~~~~~~~~
+
+
+src/screens/PaymentMethodsScreen.tsx:229:50 - error TS2769: No overload matches this call.
+  Overload 1 of 2, '(...args: never): void', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(options: never): void', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'never'.
+
+229               onPress={() => navigation.navigate('AddPaymentMethod')}
+                                                     ~~~~~~~~~~~~~~~~~~
+
+
+src/screens/PaymentScreen.tsx:15:10 - error TS2614: Module '"@/navigation/AppNavigator"' has no exported member 'MainStackParamList'. Did you mean to use 'import MainStackParamList from "@/navigation/AppNavigator"' instead?
+
+15 import { MainStackParamList } from '@/navigation/AppNavigator';
+            ~~~~~~~~~~~~~~~~~~
+
+src/screens/PaymentScreen.tsx:215:11 - error TS2322: Type '{ selectedMethod: string; onSelect: Dispatch<SetStateAction<string>>; }' is not assignable to type 'IntrinsicAttributes & PaymentMethodSelectorProps'.
+  Property 'onSelect' does not exist on type 'IntrinsicAttributes & PaymentMethodSelectorProps'.
+
+215           onSelect={setPaymentMethod}
+              ~~~~~~~~
+
+src/screens/PharmacyMapScreen.tsx:14:10 - error TS2614: Module '"@/navigation/AppNavigator"' has no exported member 'MainStackParamList'. Did you mean to use 'import MainStackParamList from "@/navigation/AppNavigator"' instead?
+
+14 import { MainStackParamList } from '@/navigation/AppNavigator';
+            ~~~~~~~~~~~~~~~~~~
+
+src/screens/PharmacyMapScreen.tsx:39:71 - error TS2339: Property 'location' does not exist on type '{ auth: AuthState & PersistPartial; medicine: MedicineState; order: OrderState; reminder: ReminderState; }'.
+
+39   const { currentLocation } = useSelector((state: RootState) => state.location);
+                                                                         ~~~~~~~~
+
+src/screens/PrescriptionUploadScreen.tsx:16:10 - error TS2614: Module '"@/navigation/AppNavigator"' has no exported member 'MainStackParamList'. Did you mean to use 'import MainStackParamList from "@/navigation/AppNavigator"' instead?
+
+16 import { MainStackParamList } from '@/navigation/AppNavigator';
+            ~~~~~~~~~~~~~~~~~~
+
+src/screens/PrescriptionUploadScreen.tsx:38:107 - error TS2339: Property 'prescription' does not exist on type '{ auth: AuthState & PersistPartial; medicine: MedicineState; order: OrderState; reminder: ReminderState; }'.
+
+38   const { previewImage, isLoading, error, currentPrescription } = useSelector((state: RootState) => state.prescription);
+                                                                                                             ~~~~~~~~~~~~
+
+src/screens/PrescriptionUploadScreen.tsx:57:34 - error TS18048: 'photo' is possibly 'undefined'.
+
+57         dispatch(setPreviewImage(photo.uri));
+                                    ~~~~~
+
+src/screens/RemindersScreen.tsx:479:26 - error TS7006: Parameter 'event' implicitly has an 'any' type.
+
+479               onChange={(event, selectedTime) => {
+                             ~~~~~
+
+src/screens/RemindersScreen.tsx:479:33 - error TS7006: Parameter 'selectedTime' implicitly has an 'any' type.
+
+479               onChange={(event, selectedTime) => {
+                                    ~~~~~~~~~~~~
+
+src/screens/ScanPrescriptionScreen.tsx:66:26 - error TS18048: 'photo' is possibly 'undefined'.
+
+66         setCapturedImage(photo.uri);
+                            ~~~~~
+
+src/screens/ScanPrescriptionScreen.tsx:67:29 - error TS18048: 'photo' is possibly 'undefined'.
+
+67         analyzePrescription(photo.base64!, photo.uri);
+                               ~~~~~
+
+src/screens/ScanPrescriptionScreen.tsx:67:44 - error TS18048: 'photo' is possibly 'undefined'.
+
+67         analyzePrescription(photo.base64!, photo.uri);
+                                              ~~~~~
+
+src/screens/SettingsScreen.tsx:209:24 - error TS2322: Type 'string' is not assignable to type '"filter" | "height" | "title" | "light" | "style" | "accessible" | "key" | "search" | "repeat" | "anchor" | "link" | "article" | "code" | "details" | "html" | "input" | "label" | ... 2217 more ... | undefined'.
+
+209         <MaterialIcons name={icon} size={24} color="#0C6B58" />
+                           ~~~~
+
+  node_modules/@expo/vector-icons/build/createIconSet.d.ts:17:5
+    17     name: GLYPHS;
+           ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<IconProps<"filter" | "height" | "title" | "light" | "style" | "accessible" | "key" | "search" | "repeat" | "anchor" | "link" | "article" | ... 2221 more ... | "zoom-out-map">, {}, any>> & Pick<...> & InexactPartial<...> & InexactPartial<...>'
+
+src/screens/SettingsScreen.tsx:232:22 - error TS2322: Type 'string' is not assignable to type '"filter" | "height" | "title" | "light" | "style" | "accessible" | "key" | "search" | "repeat" | "anchor" | "link" | "article" | "code" | "details" | "html" | "input" | "label" | ... 2217 more ... | undefined'.
+
+232       <MaterialIcons name={icon} size={24} color={isDestructive ? '#F44336' : '#0C6B58'} />
+                         ~~~~
+
+  node_modules/@expo/vector-icons/build/createIconSet.d.ts:17:5
+    17     name: GLYPHS;
+           ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<IconProps<"filter" | "height" | "title" | "light" | "style" | "accessible" | "key" | "search" | "repeat" | "anchor" | "link" | "article" | ... 2221 more ... | "zoom-out-map">, {}, any>> & Pick<...> & InexactPartial<...> & InexactPartial<...>'
+
+src/screens/TrackOrderScreen.tsx:262:57 - error TS2339: Property 'id' does not exist on type '{ name: string; phone: string; }'.
+
+262                 deliveryPersonId: order.deliveryPerson?.id,
+                                                            ~~
+
+src/screens/WelcomeScreen.tsx:60:50 - error TS2769: No overload matches this call.
+  Overload 1 of 2, '(...args: never): void', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(options: never): void', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'never'.
+
+60               onPress={() => navigation.navigate('Auth')}
+                                                    ~~~~~~
+
+
+src/screens/WelcomeScreen.tsx:67:50 - error TS2769: No overload matches this call.
+  Overload 1 of 2, '(...args: never): void', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(options: never): void', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'never'.
+
+67               onPress={() => navigation.navigate('Login')}
+                                                    ~~~~~~~
+
+
+src/screens/auth/OnboardingScreen.tsx:17:10 - error TS2614: Module '"@/navigation/AppNavigator"' has no exported member 'AuthStackParamList'. Did you mean to use 'import AuthStackParamList from "@/navigation/AppNavigator"' instead?
+
+17 import { AuthStackParamList } from '@/navigation/AppNavigator';
+            ~~~~~~~~~~~~~~~~~~
+
+src/screens/auth/OnboardingScreen.tsx:18:10 - error TS2614: Module '"@/store/slices/authSlice"' has no exported member 'sendOtp'. Did you mean to use 'import sendOtp from "@/store/slices/authSlice"' instead?
+
+18 import { sendOtp, resetError } from '@/store/slices/authSlice';
+            ~~~~~~~
+
+src/screens/auth/OnboardingScreen.tsx:18:19 - error TS2614: Module '"@/store/slices/authSlice"' has no exported member 'resetError'. Did you mean to use 'import resetError from "@/store/slices/authSlice"' instead?
+
+18 import { sendOtp, resetError } from '@/store/slices/authSlice';
+                     ~~~~~~~~~~
+
+src/screens/auth/OnboardingScreen.tsx:32:11 - error TS2339: Property 'isLoading' does not exist on type 'AuthState & PersistPartial'.
+
+32   const { isLoading, error } = useSelector((state: RootState) => state.auth);
+             ~~~~~~~~~
+
+src/screens/auth/OtpVerificationScreen.tsx:17:10 - error TS2614: Module '"@/navigation/AppNavigator"' has no exported member 'AuthStackParamList'. Did you mean to use 'import AuthStackParamList from "@/navigation/AppNavigator"' instead?
+
+17 import { AuthStackParamList } from '@/navigation/AppNavigator';
+            ~~~~~~~~~~~~~~~~~~
+
+src/screens/auth/OtpVerificationScreen.tsx:18:10 - error TS2614: Module '"@/store/slices/authSlice"' has no exported member 'verifyOtp'. Did you mean to use 'import verifyOtp from "@/store/slices/authSlice"' instead?
+
+18 import { verifyOtp, sendOtp, resetError } from '@/store/slices/authSlice';
+            ~~~~~~~~~
+
+src/screens/auth/OtpVerificationScreen.tsx:18:21 - error TS2614: Module '"@/store/slices/authSlice"' has no exported member 'sendOtp'. Did you mean to use 'import sendOtp from "@/store/slices/authSlice"' instead?
+
+18 import { verifyOtp, sendOtp, resetError } from '@/store/slices/authSlice';
+                       ~~~~~~~
+
+src/screens/auth/OtpVerificationScreen.tsx:18:30 - error TS2614: Module '"@/store/slices/authSlice"' has no exported member 'resetError'. Did you mean to use 'import resetError from "@/store/slices/authSlice"' instead?
+
+18 import { verifyOtp, sendOtp, resetError } from '@/store/slices/authSlice';
+                                ~~~~~~~~~~
+
+src/screens/auth/OtpVerificationScreen.tsx:36:11 - error TS2339: Property 'isLoading' does not exist on type 'AuthState & PersistPartial'.
+
+36   const { isLoading, error } = useSelector((state: RootState) => state.auth);
+             ~~~~~~~~~
+
+src/screens/auth/OtpVerificationScreen.tsx:46:7 - error TS2322: Type 'number' is not assignable to type 'Timeout'.
+
+46       interval = setInterval(() => {
+         ~~~~~~~~
+
+src/services/auth.service.ts:158:31 - error TS2339: Property 'requestOtp' does not exist on type 'ApiService'.
+
+158       return await apiService.requestOtp(phone, userType);
+                                  ~~~~~~~~~~
+
+src/services/auth.service.ts:174:41 - error TS2339: Property 'login' does not exist on type 'ApiService'.
+
+174       const response = await apiService.login(phone, otp, userType);
+                                            ~~~~~
+
+src/services/auth.service.ts:193:41 - error TS2339: Property 'refreshToken' does not exist on type 'ApiService'.
+
+193       const response = await apiService.refreshToken();
+                                            ~~~~~~~~~~~~
+
+src/services/auth.service.ts:221:41 - error TS2339: Property 'updateProfile' does not exist on type 'ApiService'.
+
+221       const response = await apiService.updateProfile(userData);
+                                            ~~~~~~~~~~~~~
+
+src/services/auth.service.ts:246:24 - error TS2339: Property 'logout' does not exist on type 'ApiService'.
+
+246       await apiService.logout();
+                           ~~~~~~
+
+src/services/chat.service.ts:74:14 - error TS18046: 'response' is of type 'unknown'.
+
+74       return response.data;
+                ~~~~~~~~
+
+src/services/chat.service.ts:87:14 - error TS18046: 'response' is of type 'unknown'.
+
+87       return response.data;
+                ~~~~~~~~
+
+src/services/chat.service.ts:100:14 - error TS18046: 'response' is of type 'unknown'.
+
+100       return response.data;
+                 ~~~~~~~~
+
+src/services/chat.service.ts:120:14 - error TS18046: 'response' is of type 'unknown'.
+
+120       return response.data;
+                 ~~~~~~~~
+
+src/services/chat.service.ts:140:14 - error TS18046: 'response' is of type 'unknown'.
+
+140       return response.data;
+                 ~~~~~~~~
+
+src/services/chat.service.ts:159:14 - error TS18046: 'response' is of type 'unknown'.
+
+159       return response.data;
+                 ~~~~~~~~
+
+src/services/chat.service.ts:171:14 - error TS18046: 'response' is of type 'unknown'.
+
+171       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:104:69 - error TS2554: Expected 1 arguments, but got 2.
+
+104       const response = await apiService.get('/deliveries/assigned', { params });
+                                                                        ~~~~~~~~~~
+
+src/services/delivery.service.ts:105:14 - error TS18046: 'response' is of type 'unknown'.
+
+105       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:118:14 - error TS18046: 'response' is of type 'unknown'.
+
+118       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:131:14 - error TS18046: 'response' is of type 'unknown'.
+
+131       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:146:14 - error TS18046: 'response' is of type 'unknown'.
+
+146       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:161:14 - error TS18046: 'response' is of type 'unknown'.
+
+161       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:174:14 - error TS18046: 'response' is of type 'unknown'.
+
+174       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:187:14 - error TS18046: 'response' is of type 'unknown'.
+
+187       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:200:14 - error TS18046: 'response' is of type 'unknown'.
+
+200       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:216:14 - error TS18046: 'response' is of type 'unknown'.
+
+216       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:229:14 - error TS18046: 'response' is of type 'unknown'.
+
+229       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:242:14 - error TS18046: 'response' is of type 'unknown'.
+
+242       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:257:14 - error TS18046: 'response' is of type 'unknown'.
+
+257       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:275:14 - error TS18046: 'response' is of type 'unknown'.
+
+275       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:294:98 - error TS2554: Expected 1-2 arguments, but got 3.
+
+294       const response = await apiService.post(`/deliveries/${deliveryId}/upload-proof`, formData, {
+                                                                                                     ~
+295         headers: {
+    ~~~~~~~~~~~~~~~~~~
+... 
+297         },
+    ~~~~~~~~~~
+298       });
+    ~~~~~~~
+
+src/services/delivery.service.ts:299:14 - error TS18046: 'response' is of type 'unknown'.
+
+299       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:311:68 - error TS2554: Expected 1 arguments, but got 2.
+
+311       const response = await apiService.get('/deliveries/history', {
+                                                                       ~
+312         params: { page, limit }
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+313       });
+    ~~~~~~~
+
+src/services/delivery.service.ts:314:14 - error TS18046: 'response' is of type 'unknown'.
+
+314       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:327:14 - error TS18046: 'response' is of type 'unknown'.
+
+327       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:340:14 - error TS18046: 'response' is of type 'unknown'.
+
+340       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:353:14 - error TS18046: 'response' is of type 'unknown'.
+
+353       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:366:14 - error TS18046: 'response' is of type 'unknown'.
+
+366       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:379:14 - error TS18046: 'response' is of type 'unknown'.
+
+379       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:398:14 - error TS18046: 'response' is of type 'unknown'.
+
+398       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:416:14 - error TS18046: 'response' is of type 'unknown'.
+
+416       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:439:14 - error TS18046: 'response' is of type 'unknown'.
+
+439       return response.data;
+                 ~~~~~~~~
+
+src/services/location.service.ts:81:5 - error TS2322: Type 'LocationSubscription' is not assignable to type 'number'.
+
+81     this.watchId = await Location.watchPositionAsync(
+       ~~~~~~~~~~~~
+
+src/services/order.service.ts:74:52 - error TS2554: Expected 1 arguments, but got 2.
+
+74       const response = await api.get('/medicines', { params });
+                                                      ~~~~~~~~~~
+
+src/services/order.service.ts:75:14 - error TS18046: 'response' is of type 'unknown'.
+
+75       return response.data.medicines;
+                ~~~~~~~~
+
+src/services/order.service.ts:88:14 - error TS18046: 'response' is of type 'unknown'.
+
+88       return response.data.categories;
+                ~~~~~~~~
+
+src/services/order.service.ts:101:14 - error TS18046: 'response' is of type 'unknown'.
+
+101       return response.data.order;
+                 ~~~~~~~~
+
+src/services/order.service.ts:118:59 - error TS2554: Expected 1 arguments, but got 2.
+
+118       const response = await api.get('/orders/my-orders', { params });
+                                                              ~~~~~~~~~~
+
+src/services/order.service.ts:119:14 - error TS18046: 'response' is of type 'unknown'.
+
+119       return response.data.orders;
+                 ~~~~~~~~
+
+src/services/order.service.ts:132:14 - error TS18046: 'response' is of type 'unknown'.
+
+132       return response.data.order;
+                 ~~~~~~~~
+
+src/services/order.service.ts:145:14 - error TS18046: 'response' is of type 'unknown'.
+
+145       return response.data;
+                 ~~~~~~~~
+
+src/services/order.service.ts:160:74 - error TS2554: Expected 1-2 arguments, but got 3.
+
+160       const response = await api.post('/prescriptions/upload', formData, {
+                                                                             ~
+161         headers: {
+    ~~~~~~~~~~~~~~~~~~
+... 
+163         }
+    ~~~~~~~~~
+164       });
+    ~~~~~~~
+
+src/services/order.service.ts:166:14 - error TS18046: 'response' is of type 'unknown'.
+
+166       return response.data.prescription;
+                 ~~~~~~~~
+
+src/services/order.service.ts:179:14 - error TS18046: 'response' is of type 'unknown'.
+
+179       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:3:10 - error TS2305: Module '"../config"' has no exported member 'VITE_STRIPE_PUBLIC_KEY'.
+
+3 import { VITE_STRIPE_PUBLIC_KEY } from '../config';
+           ~~~~~~~~~~~~~~~~~~~~~~
+
+src/services/payment.service.ts:67:14 - error TS18046: 'response' is of type 'unknown'.
+
+67       return response.data;
+                ~~~~~~~~
+
+src/services/payment.service.ts:82:14 - error TS18046: 'response' is of type 'unknown'.
+
+82       return response.data;
+                ~~~~~~~~
+
+src/services/payment.service.ts:108:14 - error TS18046: 'response' is of type 'unknown'.
+
+108       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:121:14 - error TS18046: 'response' is of type 'unknown'.
+
+121       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:133:14 - error TS18046: 'response' is of type 'unknown'.
+
+133       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:148:14 - error TS18046: 'response' is of type 'unknown'.
+
+148       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:161:14 - error TS18046: 'response' is of type 'unknown'.
+
+161       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:173:14 - error TS18046: 'response' is of type 'unknown'.
+
+173       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:185:14 - error TS18046: 'response' is of type 'unknown'.
+
+185       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:204:14 - error TS18046: 'response' is of type 'unknown'.
+
+204       return response.data;
+                 ~~~~~~~~
+
+src/services/pharmacy.service.ts:34:60 - error TS2554: Expected 1 arguments, but got 2.
+
+34       const response = await api.get('/pharmacies/nearby', {
+                                                              ~
+35         params: { latitude, longitude, radius }
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+36       });
+   ~~~~~~~
+
+src/services/pharmacy.service.ts:37:14 - error TS18046: 'response' is of type 'unknown'.
+
+37       return response.data;
+                ~~~~~~~~
+
+src/services/pharmacy.service.ts:50:14 - error TS18046: 'response' is of type 'unknown'.
+
+50       return response.data;
+                ~~~~~~~~
+
+src/services/pharmacy.service.ts:63:77 - error TS2554: Expected 1 arguments, but got 2.
+
+63       const response = await api.get(`/pharmacies/${pharmacyId}/medicines`, {
+                                                                               ~
+64         params: searchQuery ? { search: searchQuery } : {}
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+65       });
+   ~~~~~~~
+
+src/services/pharmacy.service.ts:66:14 - error TS18046: 'response' is of type 'unknown'.
+
+66       return response.data;
+                ~~~~~~~~
+
+src/services/prescription.service.ts:52:14 - error TS18046: 'response' is of type 'unknown'.
+
+52       return response.data;
+                ~~~~~~~~
+
+src/services/prescription.service.ts:64:14 - error TS18046: 'response' is of type 'unknown'.
+
+64       return response.data;
+                ~~~~~~~~
+
+src/services/prescription.service.ts:77:14 - error TS18046: 'response' is of type 'unknown'.
+
+77       return response.data;
+                ~~~~~~~~
+
+src/services/prescription.service.ts:90:14 - error TS18046: 'response' is of type 'unknown'.
+
+90       return response.data;
+                ~~~~~~~~
+
+src/services/prescription.service.ts:108:95 - error TS2554: Expected 1 arguments, but got 2.
+
+108       const response = await api.get(`/prescriptions/${prescriptionId}/available-pharmacies`, {
+                                                                                                  ~
+109         params: { latitude, longitude }
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+110       });
+    ~~~~~~~
+
+src/services/prescription.service.ts:111:14 - error TS18046: 'response' is of type 'unknown'.
+
+111       return response.data;
+                 ~~~~~~~~
+
+src/services/reminder.service.ts:50:14 - error TS18046: 'response' is of type 'unknown'.
+
+50       return response.data;
+                ~~~~~~~~
+
+src/services/reminder.service.ts:63:14 - error TS18046: 'response' is of type 'unknown'.
+
+63       return response.data;
+                ~~~~~~~~
+
+src/services/reminder.service.ts:77:14 - error TS18046: 'response' is of type 'unknown'.
+
+77       return response.data;
+                ~~~~~~~~
+
+src/services/reminder.service.ts:90:14 - error TS18046: 'response' is of type 'unknown'.
+
+90       return response.data;
+                ~~~~~~~~
+
+src/services/reminder.service.ts:103:14 - error TS18046: 'response' is of type 'unknown'.
+
+103       return response.data;
+                 ~~~~~~~~
+
+src/services/reminder.service.ts:115:14 - error TS18046: 'response' is of type 'unknown'.
+
+115       return response.data;
+                 ~~~~~~~~
+
+src/services/reminder.service.ts:127:14 - error TS18046: 'response' is of type 'unknown'.
+
+127       return response.data;
+                 ~~~~~~~~
+
+src/services/video.service.ts:90:14 - error TS18046: 'response' is of type 'unknown'.
+
+90       return response.data;
+                ~~~~~~~~
+
+src/services/video.service.ts:102:14 - error TS18046: 'response' is of type 'unknown'.
+
+102       return response.data;
+                 ~~~~~~~~
+
+src/services/video.service.ts:104:11 - error TS18046: 'error' is of type 'unknown'.
+
+104       if (error.response && error.response.status === 404) {
+              ~~~~~
+
+src/services/video.service.ts:104:29 - error TS18046: 'error' is of type 'unknown'.
+
+104       if (error.response && error.response.status === 404) {
+                                ~~~~~
+
+src/services/video.service.ts:271:34 - error TS2339: Property '_senders' does not exist on type 'Instance'.
+
+271         const sender = this.peer._senders.find((s: any) => s.track.kind === 'video');
+                                     ~~~~~~~~
+
+src/services/video.service.ts:297:14 - error TS18046: 'response' is of type 'unknown'.
+
+297       return response.data;
+                 ~~~~~~~~
+
+src/services/video.service.ts:312:14 - error TS18046: 'response' is of type 'unknown'.
+
+312       return response.data;
+                 ~~~~~~~~
+
+src/utils/permissions.ts:52:39 - error TS2551: Property 'requestCameraPermissionsAsync' does not exist on type 'typeof import("/home/runner/workspace/mobile-app/node_modules/expo-camera/build/index")'. Did you mean 'useCameraPermissions'?
+
+52       const { status } = await Camera.requestCameraPermissionsAsync();
+                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  node_modules/expo-camera/build/index.d.ts:24:22
+    24 export declare const useCameraPermissions: (options?: import("expo-modules-core").PermissionHookOptions<object> | undefined) => [PermissionResponse | null, () => Promise<PermissionResponse>, () => Promise<PermissionResponse>];
+                            ~~~~~~~~~~~~~~~~~~~~
+    'useCameraPermissions' is declared here.
+
+src/utils/permissions.ts:99:14 - error TS2551: Property 'getCameraPermissionsAsync' does not exist on type 'typeof import("/home/runner/workspace/mobile-app/node_modules/expo-camera/build/index")'. Did you mean 'useCameraPermissions'?
+
+99       Camera.getCameraPermissionsAsync(),
+                ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  node_modules/expo-camera/build/index.d.ts:24:22
+    24 export declare const useCameraPermissions: (options?: import("expo-modules-core").PermissionHookOptions<object> | undefined) => [PermissionResponse | null, () => Promise<PermissionResponse>, () => Promise<PermissionResponse>];
+                            ~~~~~~~~~~~~~~~~~~~~
+    'useCameraPermissions' is declared here.
+
+src/utils/validation.ts:77:54 - error TS2345: Argument of type '(phone: string) => boolean' is not assignable to parameter of type 'TestFunction<string | undefined, AnyObject>'.
+  Types of parameters 'phone' and 'value' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+
+77       .test('phone', 'Numéro de téléphone invalide', validatePhone)
+                                                        ~~~~~~~~~~~~~
+
+src/utils/validation.ts:149:54 - error TS2345: Argument of type '(phone: string) => boolean' is not assignable to parameter of type 'TestFunction<string | undefined, AnyObject>'.
+
+149       .test('phone', 'Numéro de téléphone invalide', validatePhone)
+                                                         ~~~~~~~~~~~~~
+
+
+Found 317 errors in 54 files.
+
+Errors  Files
+     6  src/config/index.ts:5
+     5  src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:52
+     6  src/features/medication-reminders/animations/ReminderAnimation.tsx:74
+     2  src/features/medication-reminders/components/ActiveReminderView.tsx:134
+    11  src/features/medication-reminders/services/ReminderService.ts:310
+     2  src/features/video-chat/PharmacistConsultButton.tsx:77
+     8  src/features/video-chat/VideoChatScreen.tsx:74
+    28  src/navigation/AppNavigator.tsx:37
+     1  src/screens/ActiveDeliveryScreen.tsx:424
+     1  src/screens/AddPaymentMethodScreen.tsx:18
+     2  src/screens/AuthScreen.tsx:39
+     5  src/screens/CardPaymentScreen.tsx:40
+     2  src/screens/CartScreen.tsx:14
+     2  src/screens/ChatScreen.tsx:200
+     1  src/screens/DeliveryDashboardScreen.tsx:34
+    23  src/screens/DeliveryDetailsScreen.tsx:22
+     7  src/screens/DeliveryEarningsScreen.tsx:51
+     2  src/screens/DeliveryHistoryScreen.tsx:29
+     1  src/screens/HomeScreen.tsx:48
+     4  src/screens/LoginScreen.tsx:21
+     3  src/screens/MedicationDetailsScreen.tsx:24
+    10  src/screens/MedicationRemindersDemoScreen.tsx:31
+     1  src/screens/MedicationRemindersScreen.tsx:24
+     2  src/screens/MedicineDetailScreen.tsx:127
+     3  src/screens/MedicineSearchScreen.tsx:16
+     2  src/screens/MobileMoneyPaymentScreen.tsx:16
+     4  src/screens/NotificationsScreen.tsx:185
+    44  src/screens/OrderDetailsScreen.tsx:41
+     4  src/screens/OrdersScreen.tsx:151
+     4  src/screens/OtpVerificationScreen.tsx:23
+     2  src/screens/PaymentMethodScreen.tsx:45
+     2  src/screens/PaymentMethodsScreen.tsx:208
+     2  src/screens/PaymentScreen.tsx:15
+     2  src/screens/PharmacyMapScreen.tsx:14
+     3  src/screens/PrescriptionUploadScreen.tsx:16
+     2  src/screens/RemindersScreen.tsx:479
+     3  src/screens/ScanPrescriptionScreen.tsx:66
+     2  src/screens/SettingsScreen.tsx:209
+     1  src/screens/TrackOrderScreen.tsx:262
+     2  src/screens/WelcomeScreen.tsx:60
+     4  src/screens/auth/OnboardingScreen.tsx:17
+     6  src/screens/auth/OtpVerificationScreen.tsx:17
+     5  src/services/auth.service.ts:158
+     7  src/services/chat.service.ts:74
+    26  src/services/delivery.service.ts:104
+     1  src/services/location.service.ts:81
+    11  src/services/order.service.ts:74
+    11  src/services/payment.service.ts:3
+     5  src/services/pharmacy.service.ts:34
+     6  src/services/prescription.service.ts:52
+     7  src/services/reminder.service.ts:50
+     7  src/services/video.service.ts:90
+     2  src/utils/permissions.ts:52
+     2  src/utils/validation.ts:77
