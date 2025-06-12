@@ -1,214 +1,81 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { API_URL } from '../config';
-import { store } from '../store';
-import { loginSuccess, logoutUser } from '../store/auth/authSlice';
+import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert } from 'react-native';
+
+const API_BASE_URL = 'http://0.0.0.0:8000/api'; // Use 0.0.0.0 for Replit
 
 class ApiService {
   private api: AxiosInstance;
-  
+
   constructor() {
     this.api = axios.create({
-      baseURL: API_URL,
+      baseURL: API_BASE_URL,
+      timeout: 30000,
       headers: {
         'Content-Type': 'application/json',
       },
     });
-    
+
     this.setupInterceptors();
   }
-  
-  private setupInterceptors(): void {
-    // Add token to all requests
+
+  private setupInterceptors() {
+    // Request interceptor to add auth token
     this.api.interceptors.request.use(
-      (config) => {
-        const state = store.getState();
-        const token = state.auth.token;
-        
-        if (token && config.headers) {
-          config.headers['Authorization'] = `Bearer ${token}`;
+      async (config) => {
+        const token = await AsyncStorage.getItem('authToken');
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
         }
-        
         return config;
       },
-      (error) => Promise.reject(error)
+      (error) => {
+        return Promise.reject(error);
+      }
     );
-    
-    // Handle errors
+
+    // Response interceptor for error handling
     this.api.interceptors.response.use(
       (response: AxiosResponse) => response,
-      (error) => {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          const { status } = error.response;
-          
-          if (status === 401) {
-            store.dispatch(logoutUser());
-          }
+      async (error: AxiosError) => {
+        if (error.response?.status === 401) {
+          // Token expired, logout user
+          await AsyncStorage.multiRemove(['authToken', 'user']);
+          Alert.alert('Session expirée', 'Veuillez vous reconnecter');
         }
-        
         return Promise.reject(error);
       }
     );
   }
-  
-  // Generic request methods
-  public async get<T = any>(url: string, config?: AxiosRequestConfig): Promise<T> {
-    try {
-      const response = await this.api.get<T>(url, config);
-      return response.data;
-    } catch (error) {
-      return this.handleError(error);
-    }
+
+  async get<T>(url: string, params?: any): Promise<T> {
+    const response = await this.api.get(url, { params });
+    return response.data;
   }
-  
-  public async post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
-    try {
-      const response = await this.api.post<T>(url, data, config);
-      return response.data;
-    } catch (error) {
-      return this.handleError(error);
-    }
+
+  async post<T>(url: string, data?: any): Promise<T> {
+    const response = await this.api.post(url, data);
+    return response.data;
   }
-  
-  public async put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
-    try {
-      const response = await this.api.put<T>(url, data, config);
-      return response.data;
-    } catch (error) {
-      return this.handleError(error);
-    }
+
+  async put<T>(url: string, data?: any): Promise<T> {
+    const response = await this.api.put(url, data);
+    return response.data;
   }
-  
-  public async delete<T = any>(url: string, config?: AxiosRequestConfig): Promise<T> {
-    try {
-      const response = await this.api.delete<T>(url, config);
-      return response.data;
-    } catch (error) {
-      return this.handleError(error);
-    }
+
+  async delete<T>(url: string): Promise<T> {
+    const response = await this.api.delete(url);
+    return response.data;
   }
-  
-  public async patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
-    try {
-      const response = await this.api.patch<T>(url, data, config);
-      return response.data;
-    } catch (error) {
-      return this.handleError(error);
-    }
-  }
-  
-  // Auth specific methods
-  public async login(phone: string, otp: string, userType: 'customer' | 'delivery' = 'customer'): Promise<any> {
-    try {
-      const response = await this.api.post('/auth/verify-otp', { phone, otp, userType });
-      const userData = response.data;
-      
-      // Store user data in Redux
-      store.dispatch(loginSuccess(userData));
-      
-      return userData;
-    } catch (error) {
-      return this.handleError(error);
-    }
-  }
-  
-  public async requestOtp(phone: string, userType: 'customer' | 'delivery' = 'customer'): Promise<any> {
-    try {
-      const response = await this.api.post('/auth/send-otp', { phone, userType });
-      return response.data;
-    } catch (error) {
-      return this.handleError(error);
-    }
-  }
-  
-  public async refreshToken(): Promise<any> {
-    try {
-      const state = store.getState();
-      const currentToken = state.auth.token;
-      
-      if (!currentToken) {
-        throw new Error('Aucun token à rafraîchir');
-      }
-      
-      const response = await this.api.post('/auth/refresh-token', {}, {
-        headers: {
-          'Authorization': `Bearer ${currentToken}`
-        }
-      });
-      
-      return response.data;
-    } catch (error) {
-      return this.handleError(error);
-    }
-  }
-  
-  public async logout(): Promise<any> {
-    try {
-      const state = store.getState();
-      const currentToken = state.auth.token;
-      
-      if (currentToken) {
-        // Invalider le token côté serveur
-        await this.api.post('/auth/logout', {}, {
-          headers: {
-            'Authorization': `Bearer ${currentToken}`
-          }
-        });
-      }
-      
-      // Déconnecter dans le store
-      store.dispatch(logoutUser());
-      return { success: true };
-    } catch (error) {
-      // Même en cas d'erreur, déconnecter côté client
-      store.dispatch(logoutUser());
-      return this.handleError(error);
-    }
-  }
-  
-  // Utilisateurs et profils
-  public async updateProfile(userData: Partial<any>): Promise<any> {
-    try {
-      const response = await this.api.put('/users/profile', userData);
-      return response.data;
-    } catch (error) {
-      return this.handleError(error);
-    }
-  }
-  
-  private handleError(error: any): never {
-    console.error('API Service Error:', error.response || error);
-    
-    // Create a more user-friendly error message
-    let message = 'Une erreur est survenue. Veuillez réessayer plus tard.';
-    
-    if (error.response) {
-      const { status, data } = error.response;
-      
-      switch (status) {
-        case 400:
-          message = data.message || 'Données invalides. Veuillez vérifier vos informations.';
-          break;
-        case 401:
-          message = 'Session expirée. Veuillez vous reconnecter.';
-          break;
-        case 403:
-          message = 'Accès refusé. Vous n\'avez pas les permissions nécessaires.';
-          break;
-        case 404:
-          message = 'La ressource demandée n\'a pas été trouvée.';
-          break;
-        case 500:
-          message = 'Erreur serveur. Veuillez réessayer plus tard.';
-          break;
-      }
-    }
-    
-    throw new Error(message);
+
+  async uploadFile<T>(url: string, file: FormData): Promise<T> {
+    const response = await this.api.post(url, file, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
   }
 }
 
-// Create a singleton instance
-const apiService = new ApiService();
-export default apiService;
+export default new ApiService();
