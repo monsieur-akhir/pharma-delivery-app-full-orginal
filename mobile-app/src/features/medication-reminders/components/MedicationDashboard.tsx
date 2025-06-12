@@ -33,43 +33,49 @@ const MedicationDashboard: React.FC<MedicationDashboardProps> = ({
     fetchReminders,
     markReminderAsTaken,
   } = useReminders();
-  
+
   const [refreshing, setRefreshing] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [selectedSchedule, setSelectedSchedule] = useState<any>(null);
-  
+
   // Check for achievements when schedules change
   useEffect(() => {
     if (schedules.length > 0) {
+      // Filter out schedules without reminders
+      const filteredSchedules = schedules.filter(schedule => schedule.reminders && schedule.reminders.length > 0);
+
+      // If no schedules with reminders, return
+      if (filteredSchedules.length === 0) return;
+
       // Find the schedule with the highest streak
-      const highestStreakSchedule = schedules.reduce(
-        (prev, current) => (current.streakDays > prev.streakDays ? current : prev),
-        schedules[0]
+      const highestStreakSchedule = filteredSchedules.reduce(
+        (prev, current) => (current.streakDays > (prev?.streakDays || 0) ? current : prev),
+        filteredSchedules[0]
       );
-      
+
       // Find the schedule with the highest adherence
-      const highestAdherenceSchedule = schedules.reduce(
-        (prev, current) => (current.adherenceRate > prev.adherenceRate ? current : prev),
-        schedules[0]
+      const highestAdherenceSchedule = filteredSchedules.reduce(
+        (prev, current) => (current.adherenceRate > (prev?.adherenceRate || 0) ? current : prev),
+        filteredSchedules[0]
       );
-      
-      // Show celebration if any streak or adherence is notable
-      if (
-        (highestStreakSchedule.streakDays >= 7 && highestStreakSchedule.streakDays % 7 === 0) ||
-        (highestAdherenceSchedule.adherenceRate >= 0.9 && highestAdherenceSchedule.reminders.length >= 10)
-      ) {
+
+      const shouldCelebrate = 
+        (highestStreakSchedule?.streakDays >= 7 && highestStreakSchedule?.streakDays % 7 === 0) ||
+        (highestAdherenceSchedule?.adherenceRate >= 0.9 && highestAdherenceSchedule?.reminders.length >= 10);
+
+      if (shouldCelebrate && highestStreakSchedule && highestAdherenceSchedule) {
         if (highestStreakSchedule.streakDays >= highestAdherenceSchedule.adherenceRate * 100) {
           setSelectedSchedule(highestStreakSchedule);
         } else {
           setSelectedSchedule(highestAdherenceSchedule);
         }
-        
+
         // Only show once when the component mounts or data refreshes
         setShowCelebration(true);
       }
     }
   }, [schedules]);
-  
+
   // Refresh the data
   const onRefresh = async () => {
     setRefreshing(true);
@@ -81,23 +87,23 @@ const MedicationDashboard: React.FC<MedicationDashboardProps> = ({
       setRefreshing(false);
     }
   };
-  
+
   // Handle press on a medication schedule
   const handlePressSchedule = (scheduleId: string | number) => {
     if (navigateToDetails) {
       navigateToDetails(scheduleId);
     }
   };
-  
+
   // Handle press on a specific dose
   const handlePressDose = async (scheduleId: string | number, doseId: string | number) => {
     // Find the schedule and dose
     const schedule = schedules.find(s => s.id === scheduleId);
     if (!schedule) return;
-    
+
     const reminder = schedule.reminders.find(r => r.id === doseId);
     if (!reminder) return;
-    
+
     // If already taken, show message
     if (reminder.taken) {
       Alert.alert(
@@ -106,7 +112,7 @@ const MedicationDashboard: React.FC<MedicationDashboardProps> = ({
       );
       return;
     }
-    
+
     // Otherwise, prompt to take
     Alert.alert(
       'Take Medication',
@@ -132,15 +138,15 @@ const MedicationDashboard: React.FC<MedicationDashboardProps> = ({
       ]
     );
   };
-  
+
   // Calculate overall adherence rate for all medications
   const calculateOverallAdherence = () => {
     if (schedules.length === 0) return 0;
-    
+
     const total = schedules.reduce((sum, schedule) => sum + schedule.adherenceRate, 0);
     return total / schedules.length;
   };
-  
+
   if (isLoading && !refreshing) {
     return (
       <View style={styles.loadingContainer}>
@@ -149,7 +155,7 @@ const MedicationDashboard: React.FC<MedicationDashboardProps> = ({
       </View>
     );
   }
-  
+
   if (error && !refreshing) {
     return (
       <View style={styles.errorContainer}>
@@ -163,16 +169,16 @@ const MedicationDashboard: React.FC<MedicationDashboardProps> = ({
       </View>
     );
   }
-  
+
   const overallAdherence = calculateOverallAdherence();
-  
+
   return (
     <View style={styles.container}>
       {/* Active reminder view for upcoming medications */}
       <View style={styles.activeReminderContainer}>
         <ActiveReminderView onComplete={fetchReminders} />
       </View>
-      
+
       <ScrollView
         style={styles.scrollView}
         refreshControl={
@@ -215,7 +221,7 @@ const MedicationDashboard: React.FC<MedicationDashboardProps> = ({
             </Text>
           </View>
         </View>
-        
+
         {/* Medication schedules */}
         <View style={styles.schedulesContainer}>
           <Text style={styles.sectionTitle}>Your Medications</Text>
@@ -244,11 +250,11 @@ const MedicationDashboard: React.FC<MedicationDashboardProps> = ({
             </View>
           )}
         </View>
-        
+
         {/* Padding at the bottom for better scrolling */}
         <View style={{ height: 40 }} />
       </ScrollView>
-      
+
       {/* Celebration pop-up */}
       {showCelebration && selectedSchedule && (
         <AdherenceCelebration

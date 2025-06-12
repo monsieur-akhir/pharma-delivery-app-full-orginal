@@ -34,7 +34,7 @@ const MedicineItem: React.FC<MedicineItemProps> = ({ medicine, onPress }) => {
           <Image source={{ uri: medicine.imageUrl }} style={styles.image} />
         ) : (
           <View style={styles.placeholderImage}>
-            <MaterialIcons name="medication" size={32} color="#ccc" />
+            <MaterialIcons name="medical-services" size={32} color="#ccc" />
           </View>
         )}
         {medicine.requiresPrescription && (

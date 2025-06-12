@@ -38,31 +38,31 @@ export const getCurrentLocation = createAsyncThunk(
     try {
       // Check permission status first
       const { status } = await Location.getForegroundPermissionsAsync();
-      
+
       if (status !== 'granted') {
         // Request permission if not granted
         const permissionResult = await dispatch(requestLocationPermission());
-        
+
         if (permissionResult.payload !== 'granted') {
           return rejectWithValue('Location permission not granted');
         }
       }
-      
+
       // Get location
       const location = await Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.Balanced,
       });
-      
+
       // Get address for the location
       const address = await Location.reverseGeocodeAsync({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
       });
-      
+
       const formattedAddress = address[0]
         ? `${address[0].street || ''}, ${address[0].city || ''}, ${address[0].region || ''}`
         : undefined;
-      
+
       return {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
@@ -100,7 +100,7 @@ const locationSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     });
-    
+
     // Get Current Location
     builder.addCase(getCurrentLocation.pending, (state) => {
       state.isLoading = true;
@@ -108,7 +108,11 @@ const locationSlice = createSlice({
     });
     builder.addCase(getCurrentLocation.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.currentLocation = action.payload;
+      state.currentLocation = {
+        latitude: action.payload.latitude,
+        longitude: action.payload.longitude,
+        address: action.payload.address || '',
+      };
     });
     builder.addCase(getCurrentLocation.rejected, (state, action: PayloadAction<any>) => {
       state.isLoading = false;

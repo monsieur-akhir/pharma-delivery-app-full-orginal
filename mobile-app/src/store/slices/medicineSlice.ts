@@ -184,7 +184,6 @@ export const {
 } = medicineSlice.actions;
 
 export default medicineSlice.reducer;
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 export interface Medicine {
   id: string;

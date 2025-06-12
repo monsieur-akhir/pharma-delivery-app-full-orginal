@@ -96,6 +96,19 @@ args = "cd backend && npm install"
 task = "shell.exec"
 args = "cd backend && npm run start:dev"
 
+[[workflows.workflow]]
+name = "Mobile App Fixed"
+author = 42346629
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd mobile-app && npm install"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd mobile-app && npx expo start --tunnel"
+
 [deployment]
 run = ["sh", "-c", "cd backend && npm install && npm run start:dev"]
 

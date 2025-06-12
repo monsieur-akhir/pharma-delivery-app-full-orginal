@@ -17,8 +17,8 @@ interface ChatState {
 const initialState: ChatState = {
   conversations: [],
   activeConversation: {
-    userId: undefined,
-    orderId: undefined,
+    userId: 0,
+    orderId: 0,
     messages: [],
   },
   unreadCount: 0,
@@ -121,8 +121,8 @@ const chatSlice = createSlice({
     },
     clearActiveConversation(state) {
       state.activeConversation = {
-        userId: undefined,
-        orderId: undefined,
+        userId: 0,
+        orderId: 0,
         messages: [],
       };
     },

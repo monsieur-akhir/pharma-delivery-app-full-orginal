@@ -1,5 +1,5 @@
 // API Configuration
-export const API_URL = 'http://localhost:8000';
+export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000/api';
 
 // App Configuration
 export const APP_NAME = 'Medi-Delivery';
@@ -24,7 +24,9 @@ export const OCR_MIN_CONFIDENCE = 0.7;
 export const SUPPORTED_LANGUAGES = ['eng', 'fra']; // English and French
 
 // Stripe Configuration
-export const STRIPE_PUBLISHABLE_KEY = process.env.VITE_STRIPE_PUBLIC_KEY;
+export const STRIPE_PUBLIC_KEY = process.env.EXPO_PUBLIC_STRIPE_KEY || '';
+export const VITE_STRIPE_PUBLIC_KEY = STRIPE_PUBLIC_KEY;
+export const WEBSOCKET_URL = process.env.EXPO_PUBLIC_WS_URL || 'ws://localhost:3000';
 
 // Legal URLs
 export const TERMS_URL = 'https://example.com/terms';

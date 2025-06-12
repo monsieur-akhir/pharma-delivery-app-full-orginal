@@ -28,18 +28,18 @@ const ActiveReminderView: React.FC<ActiveReminderViewProps> = ({ onComplete }) =
     skipReminder,
     fetchReminders,
   } = useReminders();
-  
+
   const [showAnimation, setShowAnimation] = useState(false);
   const [showTakingSteps, setShowTakingSteps] = useState(false);
   const [selectedReminder, setSelectedReminder] = useState<MedicationReminder | null>(null);
-  
+
   // Show animation for upcoming reminder if it's time or past due
   useEffect(() => {
     if (upcomingReminder) {
       const now = new Date();
       const reminderTime = new Date(upcomingReminder.scheduledTime);
       const timeDiff = Math.abs(now.getTime() - reminderTime.getTime()) / 60000; // diff in minutes
-      
+
       // Show animation if it's within 5 minutes of the scheduled time or past due
       if (timeDiff <= 5 || reminderTime < now) {
         setSelectedReminder(upcomingReminder);
@@ -47,31 +47,31 @@ const ActiveReminderView: React.FC<ActiveReminderViewProps> = ({ onComplete }) =
       }
     }
   }, [upcomingReminder]);
-  
+
   // Handle marking a reminder as taken
   const handleTaken = async () => {
     if (!selectedReminder) return;
-    
+
     // Hide animation and show steps
     setShowAnimation(false);
     setShowTakingSteps(true);
   };
-  
+
   // Handle completing medication taking steps
   const handleStepsComplete = async () => {
     if (!selectedReminder) return;
-    
+
     try {
       const success = await markReminderAsTaken(selectedReminder.id);
-      
+
       if (success) {
         // Clear selected reminder and close the steps view
         setSelectedReminder(null);
         setShowTakingSteps(false);
-        
+
         // Fetch updated reminders
         fetchReminders();
-        
+
         // Notify parent component
         if (onComplete) {
           onComplete();
@@ -87,11 +87,11 @@ const ActiveReminderView: React.FC<ActiveReminderViewProps> = ({ onComplete }) =
       console.error('Error completing medication steps:', error);
     }
   };
-  
+
   // Handle dismissing a reminder
   const handleDismiss = async () => {
     if (!selectedReminder) return;
-    
+
     Alert.alert(
       'Skip Medication',
       'Are you sure you want to skip this medication? This will affect your adherence record.',
@@ -106,13 +106,13 @@ const ActiveReminderView: React.FC<ActiveReminderViewProps> = ({ onComplete }) =
           onPress: async () => {
             try {
               const success = await skipReminder(selectedReminder.id);
-              
+
               if (success) {
                 // Clear selected reminder and close animations
                 setSelectedReminder(null);
                 setShowAnimation(false);
                 setShowTakingSteps(false);
-                
+
                 // Fetch updated reminders
                 fetchReminders();
               } else {
@@ -130,12 +130,12 @@ const ActiveReminderView: React.FC<ActiveReminderViewProps> = ({ onComplete }) =
       ]
     );
   };
-  
+
   // Handle manually checking for due reminders
   const checkForDueReminders = () => {
     fetchReminders();
   };
-  
+
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
@@ -144,7 +144,7 @@ const ActiveReminderView: React.FC<ActiveReminderViewProps> = ({ onComplete }) =
       </View>
     );
   }
-  
+
   if (error) {
     return (
       <View style={styles.errorContainer}>
@@ -158,7 +158,7 @@ const ActiveReminderView: React.FC<ActiveReminderViewProps> = ({ onComplete }) =
       </View>
     );
   }
-  
+
   if (!upcomingReminder && !showAnimation && !showTakingSteps) {
     return (
       <View style={styles.noReminderContainer}>
@@ -172,7 +172,7 @@ const ActiveReminderView: React.FC<ActiveReminderViewProps> = ({ onComplete }) =
       </View>
     );
   }
-  
+
   return (
     <View style={styles.container}>
       {showAnimation && selectedReminder && (
@@ -183,11 +183,11 @@ const ActiveReminderView: React.FC<ActiveReminderViewProps> = ({ onComplete }) =
           onDismiss={handleDismiss}
           medicationName={selectedReminder.medicationName}
           dosage={selectedReminder.dosage}
-          instructions={selectedReminder.instructions}
+          instructions={selectedReminder.instructions || ''}
           color={selectedReminder.color}
         />
       )}
-      
+
       {showTakingSteps && selectedReminder && (
         <View style={styles.fullScreenContainer}>
           <MedicationTakingSteps
@@ -195,11 +195,11 @@ const ActiveReminderView: React.FC<ActiveReminderViewProps> = ({ onComplete }) =
             onComplete={handleStepsComplete}
             medicationName={selectedReminder.medicationName}
             dosage={selectedReminder.dosage}
-            instructions={selectedReminder.instructions}
+            instructions={selectedReminder.instructions || ''}
           />
         </View>
       )}
-      
+
       {!showAnimation && !showTakingSteps && upcomingReminder && (
         <View style={styles.upcomingReminderContainer}>
           <Text style={styles.upcomingReminderTitle}>Upcoming Medication:</Text>
@@ -211,7 +211,7 @@ const ActiveReminderView: React.FC<ActiveReminderViewProps> = ({ onComplete }) =
               minute: '2-digit',
             })}
           </Text>
-          
+
           <TouchableOpacity
             style={styles.takeMedicationButton}
             onPress={() => {

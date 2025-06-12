@@ -68,19 +68,19 @@ export const useReminders = () => {
   const [schedules, setSchedules] = useState<MedicationSchedule[]>([]);
   const [upcomingReminder, setUpcomingReminder] = useState<MedicationReminder | null>(null);
   const [error, setError] = useState<string | null>(null);
-  
+
   // Fetch reminders from API
   const fetchReminders = async () => {
     try {
       setIsLoading(true);
       const response = await fetch(`${API_BASE_URL}/api/reminders/user/active`);
-      
+
       if (!response.ok) {
         throw new Error('Failed to fetch reminders');
       }
-      
+
       const data = await response.json();
-      
+
       if (data.success) {
         // Transform API data to our format
         const transformedReminders = data.data.map((item: any) => ({
@@ -94,46 +94,47 @@ export const useReminders = () => {
           instructions: item.instructions,
           color: getColorForMedicationType(getMedicationType(item.medicine_type)),
         }));
-        
+
         setReminders(transformedReminders);
-        
+
         // Group reminders by medication to create schedules
         const medicationMap = new Map<string | number, MedicationReminder[]>();
-        
+
         transformedReminders.forEach(reminder => {
           if (!medicationMap.has(reminder.medicationId)) {
             medicationMap.set(reminder.medicationId, []);
           }
-          
+
           medicationMap.get(reminder.medicationId)?.push(reminder);
         });
-        
+
         // Create schedules
         const medicationSchedules: MedicationSchedule[] = [];
-        
+
         medicationMap.forEach((medicationReminders, medicationId) => {
           if (medicationReminders.length > 0) {
             const firstReminder = medicationReminders[0];
-            
-            medicationSchedules.push({
-              id: medicationId,
-              medicationName: firstReminder.medicationName,
-              dosage: firstReminder.dosage,
-              type: firstReminder.type,
-              reminders: medicationReminders,
-              adherenceRate: calculateAdherenceRate(medicationReminders),
-              instructions: firstReminder.instructions,
-              color: firstReminder.color,
-              streakDays: data.data.find((item: any) => item.medicine_id === medicationId)?.streak_days || 0,
-            });
+            if (firstReminder) {
+              medicationSchedules.push({
+                id: medicationId,
+                medicationName: firstReminder.medicationName,
+                dosage: firstReminder.dosage,
+                type: firstReminder.type,
+                reminders: transformedReminders,
+                adherenceRate: data.data.find((item: any) => item.medicine_id === medicationId)?.adherence_rate || 0,
+                instructions: firstReminder.instructions || '',
+                color: firstReminder.color || '#4CAF50',
+                streakDays: data.data.find((item: any) => item.medicine_id === medicationId)?.streak_days || 0,
+              });
+            }
           }
         });
-        
+
         setSchedules(medicationSchedules);
-        
+
         // Find upcoming reminder (closest to current time that hasn't been taken)
         findUpcomingReminder(transformedReminders);
-        
+
       } else {
         throw new Error(data.message || 'Failed to fetch reminders');
       }
@@ -144,35 +145,33 @@ export const useReminders = () => {
       setIsLoading(false);
     }
   };
-  
+
   // Calculate adherence rate based on taken reminders
   const calculateAdherenceRate = (medicationReminders: MedicationReminder[]): number => {
     if (medicationReminders.length === 0) return 0;
-    
+
     const takenCount = medicationReminders.filter(r => r.taken).length;
     return takenCount / medicationReminders.length;
   };
-  
+
   // Find the upcoming reminder
   const findUpcomingReminder = (medicationReminders: MedicationReminder[]): void => {
     const now = new Date();
     const upcomingReminders = medicationReminders
       .filter(r => !r.taken && r.scheduledTime > now)
       .sort((a, b) => a.scheduledTime.getTime() - b.scheduledTime.getTime());
-    
+
     const pastDueReminders = medicationReminders
       .filter(r => !r.taken && r.scheduledTime <= now)
       .sort((a, b) => b.scheduledTime.getTime() - a.scheduledTime.getTime());
-    
+
     if (upcomingReminders.length > 0) {
-      setUpcomingReminder(upcomingReminders[0]);
-    } else if (pastDueReminders.length > 0) {
-      setUpcomingReminder(pastDueReminders[0]);
+      setUpcomingReminder(upcomingReminders[0] || null);
     } else {
-      setUpcomingReminder(null);
+      setUpcomingReminder(pastDueReminders[0] || null);
     }
   };
-  
+
   // Mark a reminder as taken
   const markReminderAsTaken = async (reminderId: string | number) => {
     try {
@@ -182,37 +181,37 @@ export const useReminders = () => {
           'Content-Type': 'application/json',
         },
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to mark reminder as taken');
       }
-      
+
       const data = await response.json();
-      
+
       if (data.success) {
         // Update local state
         setReminders(prev => prev.map(r => 
           r.id === reminderId ? { ...r, taken: true } : r
         ));
-        
+
         // Update schedules
         setSchedules(prev => prev.map(schedule => {
           const updatedReminders = schedule.reminders.map(r => 
             r.id === reminderId ? { ...r, taken: true } : r
           );
-          
+
           return {
             ...schedule,
             reminders: updatedReminders,
             adherenceRate: calculateAdherenceRate(updatedReminders),
           };
         }));
-        
+
         // Update upcoming reminder
         findUpcomingReminder(
           reminders.map(r => r.id === reminderId ? { ...r, taken: true } : r)
         );
-        
+
         return true;
       } else {
         throw new Error(data.message || 'Failed to mark reminder as taken');
@@ -223,7 +222,7 @@ export const useReminders = () => {
       return false;
     }
   };
-  
+
   // Skip a reminder
   const skipReminder = async (reminderId: string | number) => {
     try {
@@ -233,34 +232,34 @@ export const useReminders = () => {
           'Content-Type': 'application/json',
         },
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to skip reminder');
       }
-      
+
       const data = await response.json();
-      
+
       if (data.success) {
         // Update local state to remove this reminder
         setReminders(prev => prev.filter(r => r.id !== reminderId));
-        
+
         // Update schedules
         setSchedules(prev => prev.map(schedule => {
           const updatedReminders = schedule.reminders.filter(r => r.id !== reminderId);
-          
+
           return {
             ...schedule,
             reminders: updatedReminders,
             adherenceRate: calculateAdherenceRate(updatedReminders),
           };
         }));
-        
+
         // Filter out empty schedules
         setSchedules(prev => prev.filter(s => s.reminders.length > 0));
-        
+
         // Update upcoming reminder
         findUpcomingReminder(reminders.filter(r => r.id !== reminderId));
-        
+
         return true;
       } else {
         throw new Error(data.message || 'Failed to skip reminder');
@@ -271,7 +270,7 @@ export const useReminders = () => {
       return false;
     }
   };
-  
+
   // Check for reminders when app comes to foreground
   useEffect(() => {
     const handleAppStateChange = (nextAppState: AppStateStatus) => {
@@ -279,17 +278,17 @@ export const useReminders = () => {
         fetchReminders();
       }
     };
-    
+
     const subscription = AppState.addEventListener('change', handleAppStateChange);
-    
+
     // Initial fetch
     fetchReminders();
-    
+
     return () => {
       subscription.remove();
     };
   }, []);
-  
+
   return {
     isLoading,
     reminders,

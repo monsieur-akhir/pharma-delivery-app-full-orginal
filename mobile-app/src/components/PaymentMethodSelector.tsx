@@ -78,7 +78,7 @@ const PaymentMethodSelector: React.FC<PaymentMethodSelectorProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    gap: 12,
+    paddingVertical: 6,
   },
   methodCard: {
     backgroundColor: '#fff',

@@ -60,7 +60,7 @@ const AdherenceCelebration: React.FC<AdherenceCelebrationProps> = ({
         x: new Animated.Value(screenWidth / 2),
         y: new Animated.Value(-20),
         rotate: new Animated.Value(0),
-        color: getRandomColor(),
+        color: getRandomColor() || '#4CAF50',
         size: Math.random() * 8 + 6, // Random size between 6 and 14
         shape: Math.random() < 0.33 ? 'circle' : (Math.random() < 0.5 ? 'square' : 'triangle'),
         opacity: new Animated.Value(1),

@@ -4,7 +4,34 @@ import { Alert } from 'react-native';
 
 const API_BASE_URL = 'http://0.0.0.0:8000/api'; // Use 0.0.0.0 for Replit
 
-class ApiService {
+export class ApiService {
+  setToken(token: string) {
+    this.instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  }
+
+  clearToken() {
+    delete this.instance.defaults.headers.common['Authorization'];
+  }
+
+  async requestOtp(phone: string, userType: string) {
+    return this.post('/auth/request-otp', { phone, userType });
+  }
+
+  async login(phone: string, otp: string, userType: string) {
+    return this.post('/auth/verify-otp', { phone, otp, userType });
+  }
+
+  async refreshToken() {
+    return this.post('/auth/refresh-token');
+  }
+
+  async updateProfile(userData: any) {
+    return this.put('/auth/profile', userData);
+  }
+
+  async logout() {
+    return this.post('/auth/logout');
+  }
   private api: AxiosInstance;
 
   constructor() {

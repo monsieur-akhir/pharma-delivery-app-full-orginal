@@ -1,4 +1,3 @@
-
 import * as Location from 'expo-location';
 import apiService from './api.service';
 
@@ -51,10 +50,10 @@ class LocationService {
       return {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
-        timestamp: Date.now(),
-        accuracy: location.coords.accuracy || undefined,
-        speed: location.coords.speed || undefined,
-        heading: location.coords.heading || undefined,
+        timestamp: location.timestamp,
+        accuracy: location.coords.accuracy || 0,
+        speed: location.coords.speed || 0,
+        heading: location.coords.heading || 0,
       };
     } catch (error) {
       console.error('Erreur lors de l\'obtention de la position:', error);
@@ -89,10 +88,10 @@ class LocationService {
         this.handleLocationUpdate({
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
-          timestamp: Date.now(),
-          accuracy: location.coords.accuracy || undefined,
-          speed: location.coords.speed || undefined,
-          heading: location.coords.heading || undefined,
+          timestamp: location.timestamp,
+          accuracy: location.coords.accuracy || 0,
+          speed: location.coords.speed || 0,
+          heading: location.coords.heading || 0,
         });
       }
     );

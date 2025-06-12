@@ -701,7 +701,7 @@ const styles = StyleSheet.create({
   distanceOptions: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 8,
+    paddingVertical: 4,
   },
   distanceOption: {
     paddingVertical: 8,
@@ -720,7 +720,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   ratingOptions: {
-    gap: 8,
+    paddingVertical: 4,
   },
   ratingOption: {
     paddingVertical: 12,
