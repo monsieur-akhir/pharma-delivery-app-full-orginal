@@ -1,4 +1,3 @@
-
 import { StackNavigationProp } from '@react-navigation/stack';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
@@ -36,28 +35,36 @@ export type RootStackParamList = {
 
 export type AuthStackParamList = {
   Welcome: undefined;
-  Auth: undefined;
   Login: undefined;
-  OTP: { phone: string; userType: 'customer' | 'deliverer' };
+  Auth: undefined;
+  OTP: undefined;
+  Onboarding: undefined;
   OtpVerification: { phone: string; userType: 'customer' | 'deliverer' };
 };
 
 export type TabParamList = {
   Home: undefined;
-  Medicine: undefined;
+  Search: undefined;
   Orders: undefined;
-  Prescriptions: undefined;
   Profile: undefined;
-  PharmacyMap: { 
-    latitude?: number; 
-    longitude?: number; 
-  };
-  Cart: undefined;
-  Notifications: undefined;
-  Reminders: undefined;
-  Settings: undefined;
-  PaymentMethods: undefined;
-  Chat: undefined;
+  PharmacyMap: undefined;
+  Pharmacies: undefined;
+};
+
+export type MainStackParamList = {
+  MainTabs: undefined;
+  VideoChat: { roomId: string };
+  OrderDetails: { orderId: string };
+  TrackOrder: { orderId: string };
+  PrescriptionDetail: { prescriptionId: string };
+  MedicationReminders: undefined;
+  Checkout: { items: any[] };
+  PharmacyDetail: { pharmacyId: string };
+  RateOrder: { orderId: string };
+  Support: { orderId: string };
+  CardPayment: { orderId: string; amount: number };
+  MobileMoneyPayment: { orderId: string; amount: number; transactionReference?: string };
+  AddPaymentMethod: undefined;
 };
 
 export type HomeStackParamList = {

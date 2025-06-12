@@ -1,6 +1,11 @@
-
 // Material Icons type definition
 export type MaterialIconName = 
+  | 'home' | 'search' | 'favorite' | 'settings' | 'person'
+  | 'local-pharmacy' | 'delivery-dining' | 'phone' | 'location-on'
+  | 'notifications' | 'shopping-cart' | 'history' | 'account-circle'
+  | 'add' | 'remove' | 'edit' | 'delete' | 'check' | 'close'
+  | 'arrow-back' | 'arrow-forward' | 'refresh' | 'share'
+  | 'menu' | 'more-vert' | 'visibility' | 'visibility-off'
   | 'home'
   | 'search'
   | 'favorite'

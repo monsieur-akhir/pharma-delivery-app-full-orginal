@@ -34,6 +34,15 @@ class AuthService {
     return user?.role === 'delivery_person';
   }
 
+  async requestOtp(phone: string, userType: 'customer' | 'deliverer'): Promise<void> {
+    await this.api.post('/auth/request-otp', { phone, userType });
+  }
+
+  async completeProfile(data: any): Promise<LoginResponse> {
+    const response = await this.api.post('/auth/complete-profile', data);
+    return response.data;
+  }
+
   async verifyOtp(phone: string, otp: string, userType: 'customer' | 'deliverer'): Promise<LoginResponse> {
     try {
       const response = await fetch(`${this.baseURL}/auth/verify-otp`, {

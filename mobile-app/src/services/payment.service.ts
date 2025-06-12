@@ -37,6 +37,21 @@ class PaymentService {
     }
   }
 
+  async getMobileMoneyProviders(): Promise<string[]> {
+    try {
+      const response = await fetch(`${this.baseURL}/payments/mobile-money/providers`);
+
+      if (!response.ok) {
+        throw new Error('Failed to get mobile money providers');
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error getting mobile money providers:', error);
+      throw error;
+    }
+  }
+
   async processMobileMoneyPayment(payment: MobileMoneyPayment): Promise<any> {
     try {
       const response = await fetch(`${this.baseURL}/payments/mobile-money`, {

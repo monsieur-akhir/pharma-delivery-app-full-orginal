@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../store';
-import { User } from '../store/slices/authSlice';
+import { User } from '../types/auth';
 import { Dispatch, UnknownAction } from 'redux';
 
 export interface AuthContextType {

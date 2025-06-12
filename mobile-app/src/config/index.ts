@@ -1,5 +1,17 @@
 // API Configuration
-export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://0.0.0.0:3000/api';
+export const config = {
+  API_BASE_URL: process.env.EXPO_PUBLIC_API_URL || 'http://localhost:5000/api',
+  STRIPE_PUBLISHABLE_KEY: process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY || '',
+  WEBRTC_CONFIG: {
+    iceServers: [
+      { urls: 'stun:stun.l.google.com:19302' },
+    ],
+  },
+};
+
+// Export direct pour compatibilité
+export const API_BASE_URL = config.API_BASE_URL;
+
 export const API_URL = API_BASE_URL;
 
 // App Configuration

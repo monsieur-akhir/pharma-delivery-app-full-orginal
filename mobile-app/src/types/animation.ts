@@ -1,11 +1,18 @@
-
-export type AnimationType = 'pill' | 'liquid' | 'injection' | 'inhaler' | 'tablet' | 'capsule' | 'topical' | 'drops';
+export enum AnimationType {
+  PILL = 'pill',
+  LIQUID = 'liquid',
+  INJECTION = 'injection',
+  INHALER = 'inhaler'
+}
 
 export type MedicationType = 'pill' | 'liquid' | 'injection' | 'inhaler';
 
 export interface MedicationTakingStepsProps {
   type: MedicationType;
   onComplete?: () => void;
+  medicationName?: string;
+  dosage?: string;
+  instructions?: string;
   isVisible?: boolean;
 }
 

@@ -143,10 +143,17 @@ export const useAuth = () => {
   const dispatch = useDispatch();
 
   return {
-    isAuthenticated,
     user,
     token,
+    isAuthenticated,
     dispatch,
+    verifyOtp: async (phone: string, code: string, userType: 'customer' | 'deliverer') => {
+      // Implementation placeholder
+    },
+    resendOtp: async (phone: string) => {
+      // Implementation placeholder  
+    },
+    isLoading: false,
   };
 };
 

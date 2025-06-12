@@ -30,19 +30,19 @@ export interface StripeCardFieldProps {
   postalCodeEnabled?: boolean;
   placeholders?: {
     number?: string;
-    expiry?: string;
-    cvc?: string;
-    postalCode?: string;
   };
   cardStyle?: {
     backgroundColor?: string;
-    textColor?: string;
     borderRadius?: number;
     borderWidth?: number;
     borderColor?: string;
   };
   style?: any;
-  onCardChange?: (cardDetails: StripeCardDetails) => void;
+  onCardChange?: (cardDetails: any) => void;
+}
+
+export interface ConfirmParams {
+  paymentMethodType?: string;
 }
 
 export interface StripeMethods {

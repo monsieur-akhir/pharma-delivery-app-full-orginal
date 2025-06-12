@@ -28,13 +28,10 @@ export interface PaymentIntent {
 }
 
 export interface MobileMoneyPayment {
-  transactionReference: string;
-  provider: MobileMoneyProvider;
-  phoneNumber: string;
+  orderId: string;
   amount: number;
-  currency: string;
-  status: 'pending' | 'completed' | 'failed';
-  message?: string;
+  provider: string;
+  phoneNumber: string;
 }
 
 export interface PaymentMethodOption {
