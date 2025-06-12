@@ -37,4 +37,8 @@ const locationSlice = createSlice({
 });
 
 export const { setCurrentLocation, setAddress, setLoading, setError } = locationSlice.actions;
+
+// Export getCurrentLocation as a selector function
+export const getCurrentLocation = (state: any) => state.location.currentLocation;
+
 export default locationSlice.reducer;

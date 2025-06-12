@@ -381,7 +381,7 @@ const VideoChatScreen: React.FC = () => {
         {localStream && (
           <View style={styles.localVideoContainer}>
             <RTCView
-              streamURL={localStream.toURL()}
+              streamURL={localStream.toURL?.() || ''}
               style={styles.localVideo}
               objectFit="cover"
               zOrder={1}

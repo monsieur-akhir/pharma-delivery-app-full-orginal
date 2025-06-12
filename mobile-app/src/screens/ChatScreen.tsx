@@ -20,6 +20,7 @@ import { useAuth } from '../hooks/useAuth';
 import { api } from '../services/api';
 import { COLORS, SIZES } from '../constants';
 import io from 'socket.io-client';
+import { Timeout } from '@/types/timer';
 
 interface Message {
   id: number;
@@ -85,7 +86,7 @@ const ChatScreen = () => {
   
   const flatListRef = useRef<FlatList>(null);
   const socketRef = useRef<any>(null);
-  const typingTimeoutRef = useRef<NodeJS.Timeout>();
+  const typingTimeoutRef = useRef<Timeout>();
 
   useEffect(() => {
     initializeChat();
@@ -197,7 +198,7 @@ const ChatScreen = () => {
   const setupSocketConnection = () => {
     socketRef.current = io(process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000', {
       auth: {
-        token: user?.token,
+        token: user?.token || '',
       },
     });
 
