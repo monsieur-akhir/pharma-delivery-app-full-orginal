@@ -200,4 +200,30 @@ const authSlice = createSlice({
 });
 
 export const { clearError, setLoading, resetAuth } = authSlice.actions;
+export const logout = authSlice.actions.logout;
+export const resetError = authSlice.actions.resetError;
+export const sendOtp = createAsyncThunk(
+  'auth/sendOtp',
+  async (data: { phone: string; userType: 'customer' | 'deliverer' }) => {
+    const response = await fetch(`${API_URL}/auth/send-otp`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    return response.json();
+  }
+);
+
+export const verifyOtp = createAsyncThunk(
+  'auth/verifyOtp',
+  async (data: { phone: string; otp: string; userType: 'customer' | 'deliverer' }) => {
+    const response = await fetch(`${API_URL}/auth/verify-otp`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    return response.json();
+  }
+);
+
 export default authSlice.reducer;

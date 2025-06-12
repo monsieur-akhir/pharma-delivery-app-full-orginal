@@ -2,12 +2,19 @@ import React, { createContext, useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../store';
 import { User } from '../store/slices/authSlice';
+import { Dispatch, UnknownAction } from 'redux';
 
 export interface AuthContextType {
+  isAuthenticated: boolean;
   user: User | null;
   token: string | null;
-  isAuthenticated: boolean;
-  dispatch: AppDispatch;
+  dispatch: Dispatch<UnknownAction>;
+  login: (credentials: any) => Promise<void>;
+  logout: () => void;
+  verifyOtp: (data: any) => Promise<void>;
+  resendOtp: (phone: string) => Promise<void>;
+  isLoading: boolean;
+  error: string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -21,6 +28,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     token,
     isAuthenticated,
     dispatch,
+    login: async (credentials: any) => {
+      console.log('login function called')
+    },
+    logout: () => {
+      console.log('logout function called')
+    },
+    verifyOtp: async (data: any) => {
+      console.log('verifyOtp function called')
+    },
+    resendOtp: async (phone: string) => {
+      console.log('resendOtp function called')
+    },
+    isLoading: false,
+    error: null,
   };
 
   return (

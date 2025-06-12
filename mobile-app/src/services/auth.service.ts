@@ -70,6 +70,25 @@ class AuthService {
     }
   }
 
+  async sendOtp(phone: string): Promise<void> {
+    try {
+      await apiService.post('/auth/send-otp', { phone });
+    } catch (error) {
+      console.error('Error sending OTP:', error);
+      throw error;
+    }
+  }
+
+  isCustomer(): boolean {
+    const user = this.getCurrentUser();
+    return user?.role === 'customer';
+  }
+
+  isDeliveryPerson(): boolean {
+    const user = this.getCurrentUser();
+    return user?.role === 'delivery_person';
+  }
+
   async verifyOtp(phone: string, otp: string, userType: 'customer' | 'deliverer'): Promise<LoginResponse> {
     try {
       const response = await api.post('/auth/verify-otp', {

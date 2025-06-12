@@ -31,15 +31,18 @@ export type MainStackParamList = {
   DeliveryDashboard: undefined;
   DeliveryDetail: { deliveryId: string };
   ActiveDelivery: { deliveryId: string };
+  PharmacyMap: { latitude?: number; longitude?: number };
 };
 
 export type TabParamList = {
   Home: undefined;
   Pharmacies: undefined;
-  PharmacyMap: undefined;
+  PharmacyMap: { latitude?: number; longitude?: number };
   Orders: undefined;
   Reminders: undefined;
   Profile: undefined;
+  MedicineSearch: undefined;
+  Cart: undefined;
 };
 
 export type AuthStackParamList = {
@@ -48,10 +51,31 @@ export type AuthStackParamList = {
   Login: undefined;
   OTP: { phone: string; userType: 'customer' | 'deliverer' };
   Onboarding: undefined;
+  OtpVerification: { phone: string; userType: 'customer' | 'deliverer' };
 };
 
-export type RootParamList = MainStackParamList & {
+export type RootParamList = {
+  Auth: undefined;
   MainTabs: undefined;
+  VideoChat: {
+    pharmacistId?: string;
+    orderId?: string;
+    roomId?: string;
+  };
+  OrderDetails: { orderId: string };
+  TrackOrder: { orderId: string };
+  PrescriptionDetail: { prescriptionId: string };
+  MedicationReminders: undefined;
+  OrderTracking: { orderId: string };
+  Support: { orderId: string };
+  RateOrder: { orderId: string };
+  Checkout: { medicineId: string; quantity: number };
+  PharmacyDetail: { pharmacyId: string };
+  Pharmacies: undefined;
+  AddPaymentMethod: undefined;
+  MobileMoneyPayment: { orderId: string; amount: number; transactionReference?: string };
+  CardPayment: { orderId: string; amount: number };
+  OtpVerification: { phone: string; userType: 'customer' | 'deliverer' };
 };
 
 // Navigation prop types

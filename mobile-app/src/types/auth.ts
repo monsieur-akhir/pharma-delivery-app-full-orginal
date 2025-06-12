@@ -1,23 +1,24 @@
 export interface User {
   id: number;
-  phone: string;
-  name?: string;
+  email: string;
+  first_name?: string;
+  last_name?: string;
+  firstName?: string;
   username?: string;
   fullName?: string;
-  email?: string;
-  role: 'customer' | 'deliverer' | 'pharmacist' | 'admin';
-  isVerified: boolean;
-  stripeCustomerId?: string;
-  stripeSubscriptionId?: string;
   token?: string;
-  createdAt: string;
-  updatedAt: string;
+  phone?: string;
+  address?: string;
+  role: 'customer' | 'pharmacist' | 'delivery_person' | 'admin';
+  isVerified?: boolean;
+  preferences?: UserPreferences;
 }
 
 export interface LoginResponse {
-  user: User;
-  token: string;
-  refreshToken: string;
+  success: boolean;
+  user?: User;
+  token?: string;
+  message?: string;
   isNewUser?: boolean;
 }
 

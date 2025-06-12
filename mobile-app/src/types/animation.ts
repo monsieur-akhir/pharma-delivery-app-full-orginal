@@ -1,13 +1,11 @@
-
 // Animation types for medication reminders
 export enum AnimationType {
   PILL = 'pill',
-  LIQUID = 'liquid',
+  LIQUID = 'liquid', 
   INJECTION = 'injection',
   INHALER = 'inhaler'
 }
 
-// Medication type union for consistency
 export type MedicationType = 'pill' | 'liquid' | 'injection' | 'inhaler';
 
 // Medication taking step props

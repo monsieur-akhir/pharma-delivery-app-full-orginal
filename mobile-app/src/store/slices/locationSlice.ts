@@ -39,6 +39,23 @@ const locationSlice = createSlice({
 export const { setCurrentLocation, setAddress, setLoading, setError } = locationSlice.actions;
 
 // Export getCurrentLocation as a selector function
-export const getCurrentLocation = (state: any) => state.location.currentLocation;
+export const getCurrentLocation = createAsyncThunk(
+  'location/getCurrentLocation',
+  async () => {
+    // Implementation pour récupérer la position actuelle
+    return new Promise<{latitude: number; longitude: number}>((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          resolve({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          });
+        },
+        (error) => reject(error),
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+      );
+    });
+  }
+);
 
 export default locationSlice.reducer;
