@@ -1,4 +1,5 @@
 
+// Animation types for medication reminders
 export enum AnimationType {
   PILL = 'pill',
   LIQUID = 'liquid',
@@ -9,29 +10,43 @@ export enum AnimationType {
   CAPSULE = 'capsule'
 }
 
-export interface AnimationProps {
-  type: AnimationType;
-  isVisible?: boolean;
-  onComplete?: () => void;
-  duration?: number;
-}
-
+// Medication taking step props
 export interface MedicationTakingStepsProps {
   type: 'pill' | 'liquid' | 'injection' | 'inhaler';
-  onComplete?: () => void;
+  onComplete: () => void;
+  medicationName: string;
+  dosage: string;
 }
 
-export interface ReminderAnimationProps {
-  type: AnimationType;
-  isVisible?: boolean;
-  onComplete?: () => void;
-}
-
+// Adherence celebration props
 export interface AdherenceCelebrationProps {
+  streakDays: number;
   adherencePercentage: number;
   onClose: () => void;
 }
 
+// Reminder animation props
+export interface ReminderAnimationProps {
+  type: AnimationType;
+  isActive: boolean;
+  onAnimationComplete?: () => void;
+}
+
+// Medication dashboard props
 export interface MedicationDashboardProps {
-  onMedicationSelect?: (medicationId: string) => void;
+  navigateToDetails: (scheduleId: string | number) => void;
+}
+
+// Active reminder view props
+export interface ActiveReminderViewProps {
+  reminderData: {
+    id: string;
+    medicationName: string;
+    dosage: string;
+    time: string;
+    type: string;
+  };
+  onTaken: () => void;
+  onSkipped: () => void;
+  onSnooze: () => void;
 }

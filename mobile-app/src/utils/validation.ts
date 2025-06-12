@@ -1,4 +1,17 @@
-import * as yup from 'yup';
+import * as Yup from 'yup';
+
+// Phone number validation function
+export const validatePhone = (phone: string): boolean => {
+  if (!phone) return false;
+
+  // Remove spaces, dashes, and parentheses
+  const cleanPhone = phone.replace(/[\s\-\(\)]/g, '');
+
+  // Check if it's a valid format (starts with + and has 8-15 digits)
+  const phoneRegex = /^\+?[1-9]\d{7,14}$/;
+
+  return phoneRegex.test(cleanPhone);
+};
 
 // Email validation
 export const validateEmail = (email: string): boolean => {
@@ -6,231 +19,136 @@ export const validateEmail = (email: string): boolean => {
   return emailRegex.test(email);
 };
 
-// Phone validation for international formats
-export const validatePhone = (phone: string): boolean => {
-  const cleanPhone = phone.replace(/[\s\-\(\)]/g, '');
-  const phoneRegex = /^(\+[1-9]\d{1,14}|0[1-9]\d{7,9})$/;
-  return phoneRegex.test(cleanPhone);
-};
-
 // Password validation
-export const validatePassword = (password: string): {
-  isValid: boolean;
-  errors: string[];
-} => {
-  const errors: string[] = [];
-
-  if (password.length < 8) {
-    errors.push('Le mot de passe doit contenir au moins 8 caractères');
-  }
-
-  if (!/[A-Z]/.test(password)) {
-    errors.push('Le mot de passe doit contenir au moins une majuscule');
-  }
-
-  if (!/[a-z]/.test(password)) {
-    errors.push('Le mot de passe doit contenir au moins une minuscule');
-  }
-
-  if (!/\d/.test(password)) {
-    errors.push('Le mot de passe doit contenir au moins un chiffre');
-  }
-
-  if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-    errors.push('Le mot de passe doit contenir au moins un caractère spécial');
-  }
-
-  return {
-    isValid: errors.length === 0,
-    errors
-  };
+export const validatePassword = (password: string): boolean => {
+  // At least 8 characters, 1 uppercase, 1 lowercase, 1 number
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$/;
+  return passwordRegex.test(password);
 };
 
-// Validation schemas with Yup
-export const authSchemas = {
-  login: yup.object().shape({
-    email: yup
-      .string()
-      .email('Email invalide')
-      .required('Email requis'),
-    password: yup
-      .string()
-      .min(6, 'Mot de passe trop court')
-      .required('Mot de passe requis'),
-  }),
-
-  register: yup.object().shape({
-    firstName: yup
-      .string()
-      .min(2, 'Prénom trop court')
-      .required('Prénom requis'),
-    lastName: yup
-      .string()
-      .min(2, 'Nom trop court')
-      .required('Nom requis'),
-    email: yup
-      .string()
-      .email('Email invalide')
-      .required('Email requis'),
-    phone: yup
-      .string()
-      .test('phone', 'Numéro de téléphone invalide', (value) => value ? validatePhone(value) : false)
-      .required('Numéro de téléphone requis'),
-    password: yup
-      .string()
-      .min(8, 'Mot de passe trop court')
-      .required('Mot de passe requis'),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref('password')], 'Les mots de passe ne correspondent pas')
-      .required('Confirmation requise'),
-  }),
-
-  otp: yup.object().shape({
-    code: yup
-      .string()
-      .length(6, 'Le code doit contenir 6 chiffres')
-      .matches(/^\d+$/, 'Le code doit contenir uniquement des chiffres')
-      .required('Code OTP requis'),
-  }),
+// OTP validation
+export const validateOtp = (otp: string): boolean => {
+  // 6 digit OTP
+  const otpRegex = /^\d{6}$/;
+  return otpRegex.test(otp);
 };
 
-export const prescriptionSchemas = {
-  upload: yup.object().shape({
-    image: yup
-      .mixed()
-      .required('Image de prescription requise'),
-    notes: yup
-      .string()
-      .max(500, 'Notes trop longues (max 500 caractères)')
-      .optional(),
-  }),
-};
+// Validation schemas using Yup
+export const loginSchema = Yup.object().shape({
+  phone: Yup.string()
+    .required('Numéro de téléphone requis')
+    .test('phone', 'Numéro de téléphone invalide', (value) => {
+      return value ? validatePhone(value) : false;
+    }),
+  password: Yup.string()
+    .required('Mot de passe requis')
+    .min(8, 'Le mot de passe doit contenir au moins 8 caractères'),
+});
 
-export const orderSchemas = {
-  create: yup.object().shape({
-    pharmacyId: yup
-      .string()
-      .required('Pharmacie requise'),
-    deliveryAddress: yup
-      .string()
-      .min(10, 'Adresse trop courte')
-      .required('Adresse de livraison requise'),
-    paymentMethod: yup
-      .string()
-      .oneOf(['card', 'mobile_money', 'cash'], 'Méthode de paiement invalide')
-      .required('Méthode de paiement requise'),
-  }),
-};
+export const otpSchema = Yup.object().shape({
+  phone: Yup.string()
+    .required('Numéro de téléphone requis')
+    .test('phone', 'Numéro de téléphone invalide', (value) => {
+      return value ? validatePhone(value) : false;
+    }),
+  otp: Yup.string()
+    .required('Code OTP requis')
+    .test('otp', 'Code OTP invalide', validateOtp),
+});
 
-export const paymentSchemas = {
-  card: yup.object().shape({
-    cardNumber: yup
-      .string()
-      .matches(/^\d{16}$/, 'Numéro de carte invalide')
-      .required('Numéro de carte requis'),
-    expiryDate: yup
-      .string()
-      .matches(/^(0[1-9]|1[0-2])\/\d{2}$/, 'Date d\'expiration invalide (MM/YY)')
-      .required('Date d\'expiration requise'),
-    cvv: yup
-      .string()
-      .matches(/^\d{3,4}$/, 'CVV invalide')
-      .required('CVV requis'),
-    holderName: yup
-      .string()
-      .min(2, 'Nom du porteur requis')
-      .required('Nom du porteur requis'),
-  }),
+export const registerSchema = Yup.object().shape({
+  firstName: Yup.string()
+    .required('Prénom requis')
+    .min(2, 'Le prénom doit contenir au moins 2 caractères'),
+  lastName: Yup.string()
+    .required('Nom requis')
+    .min(2, 'Le nom doit contenir au moins 2 caractères'),
+  phone: Yup.string()
+    .required('Numéro de téléphone requis')
+    .test('phone', 'Numéro de téléphone invalide', (value) => {
+      return value ? validatePhone(value) : false;
+    }),
+  email: Yup.string()
+    .email('Email invalide')
+    .required('Email requis'),
+  password: Yup.string()
+    .required('Mot de passe requis')
+    .test('password', 'Mot de passe invalide', validatePassword),
+  confirmPassword: Yup.string()
+    .required('Confirmation du mot de passe requise')
+    .oneOf([Yup.ref('password')], 'Les mots de passe doivent correspondre'),
+});
 
-  mobileMoney: yup.object().shape({
-    phoneNumber: yup
-      .string()
-      .test('phone', 'Numéro de téléphone invalide', validatePhone)
-      .required('Numéro de téléphone requis'),
-    provider: yup
-      .string()
-      .oneOf(['orange', 'mtn', 'moov'], 'Opérateur invalide')
-      .required('Opérateur requis'),
-  }),
-};
+export const passwordResetSchema = Yup.object().shape({
+  phone: Yup.string()
+    .required('Numéro de téléphone requis')
+    .test('phone', 'Numéro de téléphone invalide', (value) => {
+      return value ? validatePhone(value) : false;
+    }),
+  otp: Yup.string()
+    .required('Code OTP requis')
+    .test('otp', 'Code OTP invalide', validateOtp),
+  newPassword: Yup.string()
+    .required('Nouveau mot de passe requis')
+    .test('password', 'Mot de passe invalide', validatePassword),
+  confirmPassword: Yup.string()
+    .required('Confirmation du mot de passe requise')
+    .oneOf([Yup.ref('newPassword')], 'Les mots de passe doivent correspondre'),
+});
 
-// Helper function to validate against schema
-export const validateSchema = async (schema: yup.Schema, data: any): Promise<{
-  isValid: boolean;
-  errors: Record<string, string>;
-}> => {
-  try {
-    await schema.validate(data, { abortEarly: false });
-    return { isValid: true, errors: {} };
-  } catch (error) {
-    if (error instanceof yup.ValidationError) {
-      const errors: Record<string, string> = {};
-      error.inner.forEach((err) => {
-        if (err.path) {
-          errors[err.path] = err.message;
-        }
-      });
-      return { isValid: false, errors };
-    }
-    return { isValid: false, errors: { general: 'Erreur de validation' } };
-  }
-};
+// Address validation
+export const addressSchema = Yup.object().shape({
+  street: Yup.string()
+    .required('Rue requise')
+    .min(5, 'L\'adresse doit être plus détaillée'),
+  city: Yup.string()
+    .required('Ville requise')
+    .min(2, 'Nom de ville invalide'),
+  postalCode: Yup.string()
+    .required('Code postal requis')
+    .matches(/^\d{5}$/, 'Code postal invalide'),
+  country: Yup.string()
+    .required('Pays requis'),
+});
 
-export const ValidationRules = {
-  required: (value: any) => {
-    if (!value || (typeof value === 'string' && value.trim() === '')) {
-      return 'Ce champ est requis';
-    }
-    return null;
-  },
+// Payment validation
+export const paymentSchema = Yup.object().shape({
+  cardNumber: Yup.string()
+    .required('Numéro de carte requis')
+    .matches(/^\d{16}$/, 'Numéro de carte invalide'),
+  expiryDate: Yup.string()
+    .required('Date d\'expiration requise')
+    .matches(/^(0[1-9]|1[0-2])\/\d{2}$/, 'Format: MM/YY'),
+  cvv: Yup.string()
+    .required('CVV requis')
+    .matches(/^\d{3,4}$/, 'CVV invalide'),
+  cardholderName: Yup.string()
+    .required('Nom du titulaire requis')
+    .min(2, 'Nom invalide'),
+});
 
-  email: (value: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(value)) {
-      return 'Format d\'email invalide';
-    }
-    return null;
-  },
+// Mobile money validation
+export const mobileMoneySchema = Yup.object().shape({
+  phoneNumber: Yup.string()
+    .required('Numéro de téléphone requis')
+    .test('phone', 'Numéro de téléphone invalide', (value) => {
+      return value ? validatePhone(value) : false;
+    }),
+  provider: Yup.string()
+    .required('Fournisseur requis')
+    .oneOf(['mtn', 'orange', 'airtel'], 'Fournisseur non supporté'),
+});
 
-  phone: (value: string) => {
-    const phoneRegex = /^(\+225)?[0-9]{8,10}$/;
-    if (!phoneRegex.test(value.replace(/\s/g, ''))) {
-      return 'Numéro de téléphone invalide';
-    }
-    return null;
-  },
-
-  minLength: (min: number) => (value: string) => {
-    if (value.length < min) {
-      return `Minimum ${min} caractères requis`;
-    }
-    return null;
-  },
-
-  maxLength: (max: number) => (value: string) => {
-    if (value.length > max) {
-      return `Maximum ${max} caractères autorisés`;
-    }
-    return null;
-  }
-};
-
-export const validateForm = (values: Record<string, any>, rules: Record<string, Function[]>) => {
-  const errors: Record<string, string> = {};
-
-  Object.keys(rules).forEach(field => {
-    const fieldRules = rules[field];
-    const value = values[field];
-
-    for (const rule of fieldRules) {
-      const error = rule(value);
-      if (error) {
-        errors[field] = error;
-        break;
-      }
-    }
-  });
-
-  return errors;
+export default {
+  validatePhone,
+  validateEmail,
+  validatePassword,
+  validateOtp,
+  loginSchema,
+  otpSchema,
+  registerSchema,
+  passwordResetSchema,
+  addressSchema,
+  paymentSchema,
+  mobileMoneySchema,
 };

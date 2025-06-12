@@ -1,6 +1,6 @@
 
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { authService } from '../../services/auth.service';
+import authService from '../../services/auth.service';
 
 export interface User {
   id: number;
@@ -9,9 +9,6 @@ export interface User {
   last_name?: string;
   email?: string;
   role: string;
-  is_active: boolean;
-  created_at: string;
-  updated_at: string;
 }
 
 export interface AuthState {
@@ -30,24 +27,65 @@ const initialState: AuthState = {
   error: null,
 };
 
+// Async thunks
+export const loginUser = createAsyncThunk(
+  'auth/login',
+  async ({ phone, password }: { phone: string; password: string }, { rejectWithValue }) => {
+    try {
+      const response = await authService.login(phone, password);
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.message || 'Login failed');
+    }
+  }
+);
+
 export const sendOtp = createAsyncThunk(
   'auth/sendOtp',
-  async ({ phone, userType }: { phone: string; userType: 'customer' | 'deliverer' }) => {
-    return await authService.requestOtp(phone, userType);
+  async ({ phone, userType }: { phone: string; userType: 'customer' | 'deliverer' }, { rejectWithValue }) => {
+    try {
+      const response = await authService.requestOtp(phone, userType);
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.message || 'Failed to send OTP');
+    }
   }
 );
 
 export const verifyOtp = createAsyncThunk(
   'auth/verifyOtp',
-  async ({ phone, otp, userType }: { phone: string; otp: string; userType: 'customer' | 'deliverer' }) => {
-    return await authService.login(phone, otp, userType);
+  async ({ phone, otp, userType }: { phone: string; otp: string; userType: 'customer' | 'deliverer' }, { rejectWithValue }) => {
+    try {
+      const response = await authService.verifyOtp(phone, otp, userType);
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.message || 'OTP verification failed');
+    }
   }
 );
 
-export const refreshToken = createAsyncThunk(
-  'auth/refreshToken',
-  async () => {
-    return await authService.refreshToken();
+export const logoutUser = createAsyncThunk(
+  'auth/logout',
+  async (_, { rejectWithValue }) => {
+    try {
+      await authService.logout();
+      return {};
+    } catch (error: any) {
+      return rejectWithValue(error.message || 'Logout failed');
+    }
+  }
+);
+
+export const getCurrentUser = createAsyncThunk(
+  'auth/getCurrentUser',
+  async (_, { rejectWithValue }) => {
+    try {
+      const user = await authService.getCurrentUser();
+      const token = await authService.getToken();
+      return { user, token };
+    } catch (error: any) {
+      return rejectWithValue(error.message || 'Failed to get current user');
+    }
   }
 );
 
@@ -55,26 +93,40 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setCredentials: (state, action: PayloadAction<{ user: User; token: string }>) => {
-      state.user = action.payload.user;
-      state.token = action.payload.token;
-      state.isAuthenticated = true;
-      state.error = null;
-    },
-    logout: (state) => {
-      state.user = null;
-      state.token = null;
-      state.isAuthenticated = false;
-      state.error = null;
-    },
-    resetError: (state) => {
+    clearError: (state) => {
       state.error = null;
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
+    resetAuth: (state) => {
+      state.user = null;
+      state.token = null;
+      state.isAuthenticated = false;
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
+    // Login
+    builder
+      .addCase(loginUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.isAuthenticated = true;
+        state.error = null;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+        state.isAuthenticated = false;
+      });
+
+    // Send OTP
     builder
       .addCase(sendOtp.pending, (state) => {
         state.isLoading = true;
@@ -82,11 +134,15 @@ const authSlice = createSlice({
       })
       .addCase(sendOtp.fulfilled, (state) => {
         state.isLoading = false;
+        state.error = null;
       })
       .addCase(sendOtp.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message || 'Failed to send OTP';
-      })
+        state.error = action.payload as string;
+      });
+
+    // Verify OTP
+    builder
       .addCase(verifyOtp.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -96,17 +152,52 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isAuthenticated = true;
+        state.error = null;
       })
       .addCase(verifyOtp.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message || 'Invalid OTP';
+        state.error = action.payload as string;
+        state.isAuthenticated = false;
+      });
+
+    // Logout
+    builder
+      .addCase(logoutUser.pending, (state) => {
+        state.isLoading = true;
       })
-      .addCase(refreshToken.fulfilled, (state, action) => {
-        state.token = action.payload.token;
-        state.user = action.payload.user;
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.isLoading = false;
+        state.user = null;
+        state.token = null;
+        state.isAuthenticated = false;
+        state.error = null;
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      });
+
+    // Get current user
+    builder
+      .addCase(getCurrentUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getCurrentUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        if (action.payload.user && action.payload.token) {
+          state.user = action.payload.user;
+          state.token = action.payload.token;
+          state.isAuthenticated = true;
+        }
+        state.error = null;
+      })
+      .addCase(getCurrentUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+        state.isAuthenticated = false;
       });
   },
 });
 
-export const { setCredentials, logout, resetError, setLoading } = authSlice.actions;
+export const { clearError, setLoading, resetAuth } = authSlice.actions;
 export default authSlice.reducer;

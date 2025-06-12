@@ -2,7 +2,6 @@
 import * as Location from 'expo-location';
 import * as Notifications from 'expo-notifications';
 import { Camera } from 'expo-camera';
-// MediaLibrary import removed as it's not available in current Expo version
 import { Alert, Platform } from 'react-native';
 
 export interface PermissionStatus {
@@ -60,12 +59,16 @@ export class PermissionManager {
     }
   }
 
+  // Note: MediaLibrary is no longer available in current Expo versions
+  // Use expo-image-picker instead for gallery access
   static async requestMediaLibraryPermission(): Promise<PermissionStatus> {
     try {
-      const { status } = await MediaLibrary.requestPermissionsAsync();
+      // For now, we'll use a placeholder implementation
+      // In a real app, you would use expo-image-picker permissions
+      console.warn('MediaLibrary permission not available - use expo-image-picker instead');
       return {
-        granted: status === 'granted',
-        status,
+        granted: false,
+        status: 'unavailable',
       };
     } catch (error) {
       console.error('Error requesting media library permission:', error);
@@ -76,50 +79,88 @@ export class PermissionManager {
     }
   }
 
-  static async checkAllPermissions(): Promise<{
-    location: PermissionStatus;
-    notifications: PermissionStatus;
-    camera: PermissionStatus;
-  }> {
+  static async checkPermission(type: 'location' | 'notification' | 'camera' | 'mediaLibrary'): Promise<PermissionStatus> {
     try {
-      const locationStatus = await Location.getForegroundPermissionsAsync();
-      const notificationStatus = await Notifications.getPermissionsAsync();
-      const cameraStatus = await Camera.getCameraPermissionsAsync();
+      switch (type) {
+        case 'location':
+          const locationStatus = await Location.getForegroundPermissionsAsync();
+          return {
+            granted: locationStatus.status === 'granted',
+            status: locationStatus.status,
+            canAskAgain: locationStatus.canAskAgain,
+          };
 
-      return {
-        location: {
-          granted: locationStatus.granted,
-          status: locationStatus.status,
-        },
-        notifications: {
-          granted: notificationStatus.granted,
-          status: notificationStatus.status,
-        },
-        camera: {
-          granted: cameraStatus.granted,
-          status: cameraStatus.status,
-        },
-      };
+        case 'notification':
+          const notificationStatus = await Notifications.getPermissionsAsync();
+          return {
+            granted: notificationStatus.status === 'granted',
+            status: notificationStatus.status,
+            canAskAgain: notificationStatus.canAskAgain,
+          };
+
+        case 'camera':
+          const cameraStatus = await Camera.getCameraPermissionsAsync();
+          return {
+            granted: cameraStatus.status === 'granted',
+            status: cameraStatus.status,
+            canAskAgain: cameraStatus.canAskAgain,
+          };
+
+        case 'mediaLibrary':
+          // MediaLibrary not available - return placeholder
+          return {
+            granted: false,
+            status: 'unavailable',
+            canAskAgain: false,
+          };
+
+        default:
+          return {
+            granted: false,
+            status: 'unknown',
+          };
+      }
     } catch (error) {
-      console.error('Error checking permissions:', error);
-      throw error;
+      console.error(`Error checking ${type} permission:`, error);
+      return {
+        granted: false,
+        status: 'error',
+      };
     }
   }
 
-  static showPermissionAlert(permissionType: string, onSettings?: () => void) {
+  static async requestAllPermissions(): Promise<{ [key: string]: PermissionStatus }> {
+    const results: { [key: string]: PermissionStatus } = {};
+
+    try {
+      results.location = await this.requestLocationPermission();
+      results.notification = await this.requestNotificationPermission();
+      results.camera = await this.requestCameraPermission();
+      // Skip mediaLibrary as it's not available
+
+      return results;
+    } catch (error) {
+      console.error('Error requesting permissions:', error);
+      return results;
+    }
+  }
+
+  static showPermissionAlert(type: string, onRetry?: () => void): void {
     Alert.alert(
-      `Permission ${permissionType} requise`,
-      `Cette application nécessite l'accès ${permissionType} pour fonctionner correctement.`,
+      'Permission Required',
+      `This app needs ${type} permission to function properly. Please enable it in your device settings.`,
       [
         {
-          text: 'Annuler',
+          text: 'Cancel',
           style: 'cancel',
         },
         {
-          text: 'Paramètres',
-          onPress: onSettings,
+          text: 'Retry',
+          onPress: onRetry,
         },
       ]
     );
   }
 }
+
+export default PermissionManager;

@@ -1,73 +1,65 @@
-
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
-export type RootStackParamList = {
-  Main: NavigatorScreenParams<MainStackParamList>;
-  Auth: NavigatorScreenParams<AuthStackParamList>;
-};
-
 export type MainStackParamList = {
-  HomeTabs: NavigatorScreenParams<TabParamList>;
+  Welcome: undefined;
+  Auth: undefined;
+  Login: undefined;
+  OTP: { phone: string; userType: 'customer' | 'deliverer' };
+  MainTabs: undefined;
   MedicineDetail: { medicineId: string };
-  PharmacyDetail: { pharmacyId: string };
+  MedicineSearch: undefined;
+  Cart: undefined;
+  Checkout: { items: any[] };
   Payment: { orderId: string; amount: number };
-  AddPaymentMethod: undefined;
-  PaymentMethods: undefined;
-  Notifications: undefined;
-  Settings: undefined;
+  CardPayment: { orderId: string; amount: number };
+  MobileMoneyPayment: { orderId: string; amount: number };
   OrderDetails: { orderId: string };
   TrackOrder: { orderId: string };
-  VideoChat: { roomId: string; pharmacistId?: string };
   PrescriptionDetail: { prescriptionId: string };
-  MedicationReminders: undefined;
-  Checkout: { items: any[] };
-  CardPayment: { orderId: string; amount: number };
-  MobileMoneyPayment: { orderId: string; amount: number; transactionReference?: string };
+  ScanPrescription: undefined;
+  PrescriptionUpload: undefined;
+  PharmacyDetail: { pharmacyId: string };
+  MedicationDetails: { scheduleId: string };
+  VideoChat: { pharmacistId?: string; orderId?: string };
   RateOrder: { orderId: string };
   Support: { orderId: string };
-  MainTabs: undefined;
+  AddPaymentMethod: undefined;
+  PaymentMethods: undefined;
+  MedicationReminders: undefined;
+};
+
+export type TabParamList = {
+  Home: undefined;
+  Pharmacies: undefined;
+  PharmacyMap: undefined;
+  Orders: undefined;
+  Reminders: undefined;
+  Profile: undefined;
 };
 
 export type AuthStackParamList = {
   Welcome: undefined;
+  Auth: undefined;
   Login: undefined;
   OTP: { phone: string; userType: 'customer' | 'deliverer' };
   Onboarding: undefined;
 };
 
-export type TabParamList = {
-  Home: undefined;
-  Pharmacies: NavigatorScreenParams<PharmaciesStackParamList>;
-  Orders: NavigatorScreenParams<OrdersStackParamList>;
-  Reminders: NavigatorScreenParams<RemindersStackParamList>;
-  Profile: NavigatorScreenParams<ProfileStackParamList>;
+export type RootParamList = MainStackParamList & {
+  MainTabs: undefined;
 };
 
-export type PharmaciesStackParamList = {
-  PharmaciesList: undefined;
-  PharmacyMap: undefined;
-};
+// Navigation prop types
+import { NavigationProp } from '@react-navigation/native';
 
-export type OrdersStackParamList = {
-  OrdersList: undefined;
-  OrderDetails: { orderId: string };
-};
+export type MainStackNavigationProp = NavigationProp<MainStackParamList>;
+export type TabNavigationProp = NavigationProp<TabParamList>;
+export type AuthStackNavigationProp = NavigationProp<AuthStackParamList>;
 
-export type RemindersStackParamList = {
-  RemindersList: undefined;
-  MedicationDetails: { scheduleId: string };
-};
-
-export type ProfileStackParamList = {
-  ProfileMain: undefined;
-  Settings: undefined;
-  PaymentMethods: undefined;
-};
-
-export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
-  StackScreenProps<RootStackParamList, Screen>;
+export type RootStackScreenProps<Screen extends keyof RootParamList> =
+  StackScreenProps<RootParamList, Screen>;
 
 export type MainStackScreenProps<Screen extends keyof MainStackParamList> =
   StackScreenProps<MainStackParamList, Screen>;

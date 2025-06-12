@@ -1,352 +1,293 @@
-import { useState, useEffect } from 'react';
-import { Platform, AppState, AppStateStatus } from 'react-native';
-import { AnimationType } from '../animations';
-import { API_BASE_URL } from '../../../config/constants';
+import { AnimationType } from '../../../types/animation';
 
-// Types for medication reminders
 export interface MedicationReminder {
-  id: string | number;
-  medicationId: string | number;
+  id: string;
   medicationName: string;
   dosage: string;
-  type: AnimationType;
-  scheduledTime: Date;
-  taken: boolean;
-  instructions?: string;
-  color?: string;
+  frequency: string;
+  times: string[];
+  startDate: Date;
+  endDate: Date;
+  isActive: boolean;
+  adherenceRate: number;
 }
 
 export interface MedicationSchedule {
-  id: string | number;
+  id: string;
   medicationName: string;
   dosage: string;
-  type: AnimationType;
+  frequency: number;
+  interval: 'daily' | 'weekly' | 'monthly';
+  times: string[];
+  startDate: Date;
+  endDate?: Date;
+  isActive: boolean;
   reminders: MedicationReminder[];
-  adherenceRate: number; // 0 to 1
-  instructions?: string;
-  color?: string;
-  streakDays: number;
-}
-
-export interface ReminderNotification {
-  id: string | number;
-  title: string;
-  body: string;
-  data: {
-    medicationId: string | number;
-    reminderId: string | number;
-    scheduledTime: string;
-    type: AnimationType;
+  adherenceData: {
+    taken: number;
+    missed: number;
+    total: number;
+    percentage: number;
   };
 }
 
-// Mock functions for local reminder storage
-// In a real app, these would use AsyncStorage or another storage mechanism
-const saveReminderToStorage = async (reminder: MedicationReminder): Promise<void> => {
-  console.log('Saving reminder to storage:', reminder);
-  // Implementation would use AsyncStorage
-};
+export interface AdherenceEntry {
+  id: string;
+  scheduleId: string;
+  plannedTime: Date;
+  actualTime?: Date;
+  status: 'taken' | 'missed' | 'skipped' | 'snoozed';
+  notes?: string;
+}
 
-const getReminderFromStorage = async (reminderId: string | number): Promise<MedicationReminder | null> => {
-  console.log('Getting reminder from storage:', reminderId);
-  // Implementation would use AsyncStorage
-  return null;
-};
+class ReminderService {
+  private schedules: MedicationSchedule[] = [];
+  private adherenceEntries: AdherenceEntry[] = [];
 
-const getAllRemindersFromStorage = async (): Promise<MedicationReminder[]> => {
-  console.log('Getting all reminders from storage');
-  // Implementation would use AsyncStorage
-  return [];
-};
+  // Get all medication schedules
+  getMedicationSchedules(): MedicationSchedule[] {
+    return this.schedules;
+  }
 
-/**
- * Hook to manage medication reminders
- */
-export const useReminders = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [reminders, setReminders] = useState<MedicationReminder[]>([]);
-  const [schedules, setSchedules] = useState<MedicationSchedule[]>([]);
-  const [upcomingReminder, setUpcomingReminder] = useState<MedicationReminder | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  // Get active reminders for today
+  getTodaysReminders(): MedicationReminder[] {
+    const today = new Date();
+    const todayStr = today.toDateString();
 
-  // Fetch reminders from API
-  const fetchReminders = async () => {
-    try {
-      setIsLoading(true);
-      const response = await fetch(`${API_BASE_URL}/api/reminders/user/active`);
+    return this.schedules
+      .filter(schedule => schedule.isActive)
+      .flatMap(schedule => schedule.reminders)
+      .filter(reminder => {
+        const reminderDate = new Date(reminder.startDate);
+        return reminderDate.toDateString() === todayStr;
+      });
+  }
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch reminders');
-      }
-
-      const data = await response.json();
-
-      if (data.success) {
-        // Transform API data to our format
-        const transformedReminders = data.data.map((item: any) => ({
-          id: item.id,
-          medicationId: item.medicine_id,
-          medicationName: item.medicine_name,
-          dosage: item.dosage,
-          type: getMedicationType(item.medicine_type),
-          scheduledTime: new Date(item.next_reminder),
-          taken: false,
-          instructions: item.instructions,
-          color: getColorForMedicationType(getMedicationType(item.medicine_type)),
-        }));
-
-        setReminders(transformedReminders);
-
-        // Group reminders by medication to create schedules
-        const medicationMap = new Map<string | number, MedicationReminder[]>();
-
-        transformedReminders.forEach((reminder: any) => {
-          if (!medicationMap.has(reminder.medicationId)) {
-            medicationMap.set(reminder.medicationId, []);
-          }
-
-          medicationMap.get(reminder.medicationId)?.push(reminder);
-        });
-
-        // Create schedules
-        const medicationSchedules: MedicationSchedule[] = [];
-
-        medicationMap.forEach((medicationReminders, medicationId) => {
-          if (medicationReminders.length > 0) {
-            const firstReminder = medicationReminders[0];
-            if (firstReminder) {
-              medicationSchedules.push({
-                id: medicationId,
-                medicationName: firstReminder.medicationName,
-                dosage: firstReminder.dosage,
-                type: firstReminder.type,
-                reminders: transformedReminders,
-                adherenceRate: data.data.find((item: any) => item.medicine_id === medicationId)?.adherence_rate || 0,
-                instructions: firstReminder.instructions || '',
-                color: firstReminder.color || '#4CAF50',
-                streakDays: data.data.find((item: any) => item.medicine_id === medicationId)?.streak_days || 0,
-              });
-            }
-          }
-        });
-
-        setSchedules(medicationSchedules);
-
-        // Find upcoming reminder (closest to current time that hasn't been taken)
-        findUpcomingReminder(transformedReminders);
-
-      } else {
-        throw new Error(data.message || 'Failed to fetch reminders');
-      }
-    } catch (err: any) {
-      console.error('Error fetching reminders:', err);
-      setError(err.message || 'Failed to fetch reminders');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // Calculate adherence rate based on taken reminders
-  const calculateAdherenceRate = (medicationReminders: MedicationReminder[]): number => {
-    if (medicationReminders.length === 0) return 0;
-
-    const takenCount = medicationReminders.filter(r => r.taken).length;
-    return takenCount / medicationReminders.length;
-  };
-
-  // Find the upcoming reminder
-  const findUpcomingReminder = (medicationReminders: MedicationReminder[]): void => {
+  // Get upcoming reminders
+  getUpcomingReminders(hours: number = 24): MedicationReminder[] {
     const now = new Date();
-    const upcomingReminders = medicationReminders
-      .filter(r => !r.taken && r.scheduledTime > now)
-      .sort((a, b) => a.scheduledTime.getTime() - b.scheduledTime.getTime());
+    const futureTime = new Date(now.getTime() + hours * 60 * 60 * 1000);
 
-    const pastDueReminders = medicationReminders
-      .filter(r => !r.taken && r.scheduledTime <= now)
-      .sort((a, b) => b.scheduledTime.getTime() - a.scheduledTime.getTime());
+    return this.schedules
+      .filter(schedule => schedule.isActive)
+      .flatMap(schedule => schedule.reminders)
+      .filter(reminder => {
+        const reminderDate = new Date(reminder.startDate);
+        return reminderDate >= now && reminderDate <= futureTime;
+      });
+  }
 
-    if (upcomingReminders.length > 0) {
-      setUpcomingReminder(upcomingReminders[0] || null);
-    } else {
-      setUpcomingReminder(pastDueReminders[0] || null);
+  // Mark medication as taken
+  markMedicationTaken(reminderId: string, actualTime?: Date): void {
+    const adherenceEntry: AdherenceEntry = {
+      id: Date.now().toString(),
+      scheduleId: reminderId,
+      plannedTime: new Date(),
+      actualTime: actualTime || new Date(),
+      status: 'taken',
+    };
+
+    this.adherenceEntries.push(adherenceEntry);
+    this.updateAdherenceRates();
+  }
+
+  // Mark medication as missed
+  markMedicationMissed(reminderId: string): void {
+    const adherenceEntry: AdherenceEntry = {
+      id: Date.now().toString(),
+      scheduleId: reminderId,
+      plannedTime: new Date(),
+      status: 'missed',
+    };
+
+    this.adherenceEntries.push(adherenceEntry);
+    this.updateAdherenceRates();
+  }
+
+  // Skip medication dose
+  skipMedication(reminderId: string, reason?: string): void {
+    const adherenceEntry: AdherenceEntry = {
+      id: Date.now().toString(),
+      scheduleId: reminderId,
+      plannedTime: new Date(),
+      status: 'skipped',
+      notes: reason,
+    };
+
+    this.adherenceEntries.push(adherenceEntry);
+    this.updateAdherenceRates();
+  }
+
+  // Snooze reminder
+  snoozeReminder(reminderId: string, minutes: number = 15): void {
+    const adherenceEntry: AdherenceEntry = {
+      id: Date.now().toString(),
+      scheduleId: reminderId,
+      plannedTime: new Date(Date.now() + minutes * 60 * 1000),
+      status: 'snoozed',
+    };
+
+    this.adherenceEntries.push(adherenceEntry);
+  }
+
+  // Get adherence statistics
+  getAdherenceStats(scheduleId?: string): {
+    taken: number;
+    missed: number;
+    skipped: number;
+    total: number;
+    percentage: number;
+  } {
+    let entries = this.adherenceEntries;
+
+    if (scheduleId) {
+      entries = entries.filter(entry => entry.scheduleId === scheduleId);
     }
-  };
 
-  // Mark a reminder as taken
-  const markReminderAsTaken = async (reminderId: string | number) => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/reminders/${reminderId}/record`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+    const taken = entries.filter(entry => entry.status === 'taken').length;
+    const missed = entries.filter(entry => entry.status === 'missed').length;
+    const skipped = entries.filter(entry => entry.status === 'skipped').length;
+    const total = entries.length;
+    const percentage = total > 0 ? (taken / total) * 100 : 0;
+
+    return { taken, missed, skipped, total, percentage };
+  }
+
+  // Create new medication schedule
+  createMedicationSchedule(
+    medicationName: string,
+    dosage: string,
+    frequency: number,
+    interval: 'daily' | 'weekly' | 'monthly',
+    times: string[],
+    startDate: Date,
+    endDate?: Date
+  ): MedicationSchedule {
+    const schedule: MedicationSchedule = {
+      id: Date.now().toString(),
+      medicationName,
+      dosage,
+      frequency,
+      interval,
+      times,
+      startDate,
+      endDate,
+      isActive: true,
+      reminders: [],
+      adherenceData: {
+        taken: 0,
+        missed: 0,
+        total: 0,
+        percentage: 0,
+      },
+    };
+
+    this.schedules.push(schedule);
+    this.generateReminders(schedule);
+
+    return schedule;
+  }
+
+  // Generate reminders for a schedule
+  private generateReminders(schedule: MedicationSchedule): void {
+    const reminders: MedicationReminder[] = [];
+    const currentDate = new Date(schedule.startDate);
+    const endDate = schedule.endDate || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // Default 30 days
+
+    while (currentDate <= endDate) {
+      schedule.times.forEach(time => {
+        const [hours, minutes] = time.split(':').map(Number);
+        const reminderDate = new Date(currentDate);
+        reminderDate.setHours(hours, minutes, 0, 0);
+
+        const reminder: MedicationReminder = {
+          id: `${schedule.id}_${reminderDate.getTime()}`,
+          medicationName: schedule.medicationName,
+          dosage: schedule.dosage,
+          frequency: `${schedule.frequency} times ${schedule.interval}`,
+          times: [time],
+          startDate: reminderDate,
+          endDate: reminderDate,
+          isActive: true,
+          adherenceRate: 0,
+        };
+
+        reminders.push(reminder);
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to mark reminder as taken');
+      // Advance date based on interval
+      if (schedule.interval === 'daily') {
+        currentDate.setDate(currentDate.getDate() + 1);
+      } else if (schedule.interval === 'weekly') {
+        currentDate.setDate(currentDate.getDate() + 7);
+      } else if (schedule.interval === 'monthly') {
+        currentDate.setMonth(currentDate.getMonth() + 1);
       }
+    }
 
-      const data = await response.json();
+    schedule.reminders = reminders;
+  }
 
-      if (data.success) {
-        // Update local state
-        setReminders(prev => prev.map(r => 
-          r.id === reminderId ? { ...r, taken: true } : r
-        ));
+  // Update adherence rates
+  private updateAdherenceRates(): void {
+    this.schedules.forEach(schedule => {
+      const stats = this.getAdherenceStats(schedule.id);
+      schedule.adherenceData = stats;
 
-        // Update schedules
-        setSchedules(prev => prev.map(schedule => {
-          const updatedReminders = schedule.reminders.map(r => 
-            r.id === reminderId ? { ...r, taken: true } : r
-          );
-
-          return {
-            ...schedule,
-            reminders: updatedReminders,
-            adherenceRate: calculateAdherenceRate(updatedReminders),
-          };
-        }));
-
-        // Update upcoming reminder
-        findUpcomingReminder(
-          reminders.map(r => r.id === reminderId ? { ...r, taken: true } : r)
+      schedule.reminders.forEach(reminder => {
+        const reminderEntries = this.adherenceEntries.filter(
+          entry => entry.scheduleId === reminder.id
         );
-
-        return true;
-      } else {
-        throw new Error(data.message || 'Failed to mark reminder as taken');
-      }
-    } catch (err: any) {
-      console.error('Error marking reminder as taken:', err);
-      setError(err.message || 'Failed to mark reminder as taken');
-      return false;
-    }
-  };
-
-  // Skip a reminder
-  const skipReminder = async (reminderId: string | number) => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/reminders/${reminderId}/skip`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        const taken = reminderEntries.filter(entry => entry.status === 'taken').length;
+        const total = reminderEntries.length;
+        reminder.adherenceRate = total > 0 ? (taken / total) * 100 : 0;
       });
+    });
+  }
 
-      if (!response.ok) {
-        throw new Error('Failed to skip reminder');
-      }
-
-      const data = await response.json();
-
-      if (data.success) {
-        // Update local state to remove this reminder
-        setReminders(prev => prev.filter(r => r.id !== reminderId));
-
-        // Update schedules
-        setSchedules(prev => prev.map(schedule => {
-          const updatedReminders = schedule.reminders.filter(r => r.id !== reminderId);
-
-          return {
-            ...schedule,
-            reminders: updatedReminders,
-            adherenceRate: calculateAdherenceRate(updatedReminders),
-          };
-        }));
-
-        // Filter out empty schedules
-        setSchedules(prev => prev.filter(s => s.reminders.length > 0));
-
-        // Update upcoming reminder
-        findUpcomingReminder(reminders.filter(r => r.id !== reminderId));
-
-        return true;
-      } else {
-        throw new Error(data.message || 'Failed to skip reminder');
-      }
-    } catch (err: any) {
-      console.error('Error skipping reminder:', err);
-      setError(err.message || 'Failed to skip reminder');
-      return false;
+  // Get animation type based on medication type
+  getAnimationType(medicationType: string): AnimationType {
+    switch (medicationType.toLowerCase()) {
+      case 'pill':
+      case 'tablet':
+        return AnimationType.PILL;
+      case 'capsule':
+        return AnimationType.CAPSULE;
+      case 'liquid':
+      case 'syrup':
+        return AnimationType.LIQUID;
+      case 'injection':
+      case 'shot':
+        return AnimationType.INJECTION;
+      case 'cream':
+      case 'ointment':
+        return AnimationType.TOPICAL;
+      case 'inhaler':
+      case 'spray':
+        return AnimationType.INHALER;
+      default:
+        return AnimationType.PILL;
     }
-  };
-
-  // Check for reminders when app comes to foreground
-  useEffect(() => {
-    const handleAppStateChange = (nextAppState: AppStateStatus) => {
-      if (nextAppState === 'active') {
-        fetchReminders();
-      }
-    };
-
-    const subscription = AppState.addEventListener('change', handleAppStateChange);
-
-    // Initial fetch
-    fetchReminders();
-
-    return () => {
-      subscription.remove();
-    };
-  }, []);
-
-  return {
-    isLoading,
-    reminders,
-    schedules,
-    upcomingReminder,
-    error,
-    fetchReminders,
-    markReminderAsTaken,
-    skipReminder,
-  };
-};
-
-// Helper function to determine medication type from API data
-export const getMedicationType = (typeString: string): AnimationType => {
-  switch (typeString?.toLowerCase()) {
-    case 'pill':
-    case 'tablet':
-    case 'capsule':
-      return AnimationType.PILL;
-    case 'liquid':
-    case 'syrup':
-    case 'solution':
-      return AnimationType.LIQUID;
-    case 'injection':
-    case 'shot':
-      return AnimationType.INJECTION;
-    case 'topical':
-    case 'cream':
-    case 'ointment':
-      return AnimationType.TOPICAL;
-    case 'inhaler':
-    case 'nebulizer':
-      return AnimationType.INHALER;
-    default:
-      return AnimationType.PILL;
   }
-};
 
-// Helper function to get color based on medication type
-export const getColorForMedicationType = (type: AnimationType): string => {
-  switch (type) {
-    case AnimationType.PILL:
-      return '#FF5733';
-    case AnimationType.LIQUID:
-      return '#4CA6FF';
-    case AnimationType.INJECTION:
-      return '#FF4CAA';
-    case AnimationType.TOPICAL:
-      return '#4CFF7B';
-    case AnimationType.INHALER:
-      return '#D94CFF';
-    default:
-      return '#FF5733';
+  // Get medication instructions based on type
+  getMedicationInstructions(type: AnimationType): string[] {
+    switch (type) {
+      case AnimationType.PILL:
+        return ['Take with water', 'Swallow whole', 'Do not chew'];
+      case AnimationType.LIQUID:
+        return ['Measure carefully', 'Use provided measuring cup', 'Shake well before use'];
+      case AnimationType.INJECTION:
+        return ['Clean injection site', 'Use sterile technique', 'Dispose of needle safely'];
+      case AnimationType.TOPICAL:
+        return ['Clean area first', 'Apply thin layer', 'Wash hands after application'];
+      case AnimationType.INHALER:
+        return ['Shake before use', 'Exhale fully', 'Press and inhale slowly'];
+      default:
+        return ['Follow doctor\'s instructions'];
+    }
   }
-};
+}
 
-export default {
-  useReminders,
-  getMedicationType,
-  getColorForMedicationType,
-};
+export const reminderService = new ReminderService();
+export default reminderService;
