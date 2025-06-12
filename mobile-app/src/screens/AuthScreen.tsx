@@ -34,13 +34,14 @@ const AuthScreen: React.FC = () => {
   const [completingProfile, setCompletingProfile] = useState(false);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
+  const [userType, setUserType] = useState<'customer' | 'deliverer'>('customer');
 
   // Redux state
   const { isLoading, error } = useSelector((state: RootState) => state.auth);
 
   // Start countdown timer when OTP is sent
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: ReturnType<typeof setInterval>;
     if (countdown > 0) {
       interval = setInterval(() => {
         setCountdown((prevCountdown) => prevCountdown - 1);
@@ -60,7 +61,7 @@ const AuthScreen: React.FC = () => {
 
     try {
       setLoading(true);
-      await authService.requestOtp(phoneNumber);
+      await authService.requestOtp(phoneNumber, userType);
       setOtpSent(true);
       setCountdown(60); // 60 seconds countdown
       setLoading(false);
@@ -84,7 +85,7 @@ const AuthScreen: React.FC = () => {
 
     try {
       setLoading(true);
-      const result = await authService.verifyOtp(phoneNumber, otp);
+      const result = await authService.verifyOtp(phoneNumber, otp, userType);
       
       if (result.isNewUser) {
         // New user needs to complete their profile
