@@ -1,7 +1,7 @@
 
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { API_BASE_URL } from '../config';
+import { API_BASE_URL } from '../config/index';
 
 export interface ApiResponse<T = any> {
   data: T;

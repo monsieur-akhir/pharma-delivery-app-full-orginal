@@ -49,15 +49,15 @@ const isPastDue = (doseTime: Date) => {
 // Utility function to get the appropriate icon based on medication type
 const getMedicationIcon = (type: AnimationType) => {
   switch (type) {
-    case AnimationType.PILL:
+    case 'pill':
       return '💊';
-    case AnimationType.LIQUID:
+    case 'liquid':
       return '💧';
-    case AnimationType.INJECTION:
+    case 'injection':
       return '💉';
-    case AnimationType.TOPICAL:
+    case 'topical':
       return '🧴';
-    case AnimationType.INHALER:
+    case 'inhaler':
       return '🌬️';
     default:
       return '💊';
@@ -76,17 +76,17 @@ const MedicationScheduleProgress: React.FC<MedicationScheduleProgressProps> = ({
   const sortedSchedules = [...schedules].sort((a, b) => {
     const aNextDose = a.doses.find(d => !d.taken);
     const bNextDose = b.doses.find(d => !d.taken);
-    
+
     if (!aNextDose) return 1;
     if (!bNextDose) return -1;
-    
+
     return aNextDose.scheduledTime.getTime() - bNextDose.scheduledTime.getTime();
   });
-  
+
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Today's Medication Schedule</Text>
-      
+
       {sortedSchedules.map(schedule => (
         <MedicationCard
           key={schedule.id}
@@ -112,7 +112,7 @@ const MedicationCard: React.FC<MedicationCardProps> = ({
 }) => {
   const progressAnim = useRef(new Animated.Value(0)).current;
   const [expanded, setExpanded] = useState(false);
-  
+
   useEffect(() => {
     Animated.timing(progressAnim, {
       toValue: schedule.adherenceRate,
@@ -120,19 +120,19 @@ const MedicationCard: React.FC<MedicationCardProps> = ({
       useNativeDriver: false,
     }).start();
   }, [schedule.adherenceRate]);
-  
+
   const progressWidth = Dimensions.get('window').width - 40; // Full width minus padding
   const animatedWidth = progressAnim.interpolate({
     inputRange: [0, 1],
     outputRange: [0, progressWidth - 40], // Subtract padding
   });
-  
+
   const color = schedule.color || '#FF5733';
   const icon = getMedicationIcon(schedule.type);
-  
+
   // Find the next dose that hasn't been taken
   const nextDose = schedule.doses.find(dose => !dose.taken);
-  
+
   return (
     <TouchableOpacity
       style={[styles.card, { borderColor: color }]}
@@ -147,7 +147,7 @@ const MedicationCard: React.FC<MedicationCardProps> = ({
             <Text style={styles.dosage}>{schedule.dosage}</Text>
           </View>
         </View>
-        
+
         <TouchableOpacity
           style={[styles.expandButton, expanded && styles.expandButtonActive]}
           onPress={() => setExpanded(!expanded)}
@@ -157,7 +157,7 @@ const MedicationCard: React.FC<MedicationCardProps> = ({
           </Text>
         </TouchableOpacity>
       </View>
-      
+
       <View style={styles.progressSection}>
         <View style={styles.progressInfo}>
           <Text style={styles.progressLabel}>Today's Progress:</Text>
@@ -165,7 +165,7 @@ const MedicationCard: React.FC<MedicationCardProps> = ({
             {Math.round(schedule.adherenceRate * 100)}%
           </Text>
         </View>
-        
+
         <View style={styles.progressBarContainer}>
           <Animated.View
             style={[
@@ -175,7 +175,7 @@ const MedicationCard: React.FC<MedicationCardProps> = ({
           />
         </View>
       </View>
-      
+
       {nextDose && (
         <View style={styles.nextDoseContainer}>
           <Text style={styles.nextDoseLabel}>Next dose:</Text>
@@ -190,11 +190,11 @@ const MedicationCard: React.FC<MedicationCardProps> = ({
           </Text>
         </View>
       )}
-      
+
       {expanded && (
         <View style={styles.dosesContainer}>
           <Text style={styles.dosesTitle}>All Doses</Text>
-          
+
           {schedule.doses.map(dose => (
             <TouchableOpacity
               key={dose.id}

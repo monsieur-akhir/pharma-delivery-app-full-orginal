@@ -131,9 +131,13 @@ class AuthService {
     return this.token;
   }
 
-  async requestOtp(phone: string, userType: string = 'customer'): Promise<{ success: boolean; message: string; }> {
+  async requestOtp(phone: string, userType: 'customer' | 'deliverer'): Promise<{ success: boolean; message: string }> {
     try {
-      return await apiService.post('/auth/request-otp', { phone, userType });
+      const response = await apiService.post('/auth/request-otp', { phone, userType });
+      return {
+        success: response.success,
+        message: response.message || 'OTP sent successfully'
+      };
     } catch (error) {
       throw error;
     }

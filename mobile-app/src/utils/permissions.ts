@@ -2,7 +2,7 @@
 import * as Location from 'expo-location';
 import * as Notifications from 'expo-notifications';
 import { Camera } from 'expo-camera';
-import * as MediaLibrary from 'expo-media-library';
+// MediaLibrary import removed as it's not available in current Expo version
 import { Alert, Platform } from 'react-native';
 
 export interface PermissionStatus {
@@ -46,27 +46,10 @@ export class PermissionManager {
 
   static async requestCameraPermission(): Promise<PermissionStatus> {
     try {
-      const [permission, requestPermission] = Camera.useCameraPermissions();
-      
-      if (!permission) {
-        const result = await requestPermission();
-        return {
-          granted: result.granted,
-          status: result.status,
-        };
-      }
-      
-      if (!permission.granted) {
-        const result = await requestPermission();
-        return {
-          granted: result.granted,
-          status: result.status,
-        };
-      }
-
+      const { status } = await Camera.requestCameraPermissionsAsync();
       return {
-        granted: permission.granted,
-        status: permission.status,
+        granted: status === 'granted',
+        status,
       };
     } catch (error) {
       console.error('Error requesting camera permission:', error);
@@ -97,13 +80,11 @@ export class PermissionManager {
     location: PermissionStatus;
     notifications: PermissionStatus;
     camera: PermissionStatus;
-    mediaLibrary: PermissionStatus;
   }> {
     try {
-      const [locationStatus] = await Location.getForegroundPermissionsAsync();
+      const locationStatus = await Location.getForegroundPermissionsAsync();
       const notificationStatus = await Notifications.getPermissionsAsync();
-      const [cameraPermission] = Camera.useCameraPermissions();
-      const mediaLibraryStatus = await MediaLibrary.getPermissionsAsync();
+      const cameraStatus = await Camera.getCameraPermissionsAsync();
 
       return {
         location: {
@@ -115,12 +96,8 @@ export class PermissionManager {
           status: notificationStatus.status,
         },
         camera: {
-          granted: cameraPermission?.granted || false,
-          status: cameraPermission?.status || 'undetermined',
-        },
-        mediaLibrary: {
-          granted: mediaLibraryStatus.granted,
-          status: mediaLibraryStatus.status,
+          granted: cameraStatus.granted,
+          status: cameraStatus.status,
         },
       };
     } catch (error) {

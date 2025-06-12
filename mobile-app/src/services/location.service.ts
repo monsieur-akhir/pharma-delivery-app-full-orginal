@@ -11,7 +11,7 @@ interface LocationData {
 }
 
 class LocationService {
-  private watchId: number | null = null;
+  private watchId: Location.LocationSubscription | null = null;
   private isTracking: boolean = false;
   private currentDeliveryId: number | null = null;
 

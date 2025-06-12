@@ -14,7 +14,7 @@ import {
 /**
  * Types of animations available for medication reminders
  */
-export type AnimationType = 'pill' | 'liquid' | 'injection' | 'inhaler';
+export type AnimationType = 'pill' | 'liquid' | 'injection' | 'inhaler' | 'topical' | 'tablet' | 'capsule';
 
 interface ReminderAnimationProps {
   type: AnimationType;

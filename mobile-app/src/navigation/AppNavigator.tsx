@@ -55,32 +55,28 @@ const MainStackNavigator = () => (
 );
 
 const PharmaciesStackNavigator = () => (
-  <MainStack.Navigator>
-    <MainStack.Screen name="PharmaciesList" component={PharmaciesScreen} />
-    <MainStack.Screen name="PharmacyMap" component={PharmacyMapScreen} />
-  </MainStack.Navigator>
+  <Tab.Navigator>
+    <Tab.Screen name="PharmaciesList" component={PharmaciesScreen} />
+    <Tab.Screen name="PharmacyMap" component={PharmacyMapScreen} />
+  </Tab.Navigator>
 );
 
 const OrdersStackNavigator = () => (
-  <MainStack.Navigator>
-    <MainStack.Screen name="OrdersList" component={OrdersScreen} />
-    <MainStack.Screen name="OrderDetails" component={OrderDetailsScreen} />
-  </MainStack.Navigator>
+  <Tab.Navigator>
+    <Tab.Screen name="OrdersList" component={OrdersScreen} />
+  </Tab.Navigator>
 );
 
 const RemindersStackNavigator = () => (
-  <MainStack.Navigator>
-    <MainStack.Screen name="RemindersList" component={MedicationRemindersScreen} />
-    <MainStack.Screen name="MedicationDetails" component={MedicationDetailsScreen} />
-  </MainStack.Navigator>
+  <Tab.Navigator>
+    <Tab.Screen name="RemindersList" component={MedicationRemindersScreen} />
+  </Tab.Navigator>
 );
 
 const ProfileStackNavigator = () => (
-  <MainStack.Navigator>
-    <MainStack.Screen name="ProfileMain" component={SettingsScreen} />
-    <MainStack.Screen name="Settings" component={SettingsScreen} />
-    <MainStack.Screen name="PaymentMethods" component={PaymentMethodsScreen} />
-  </MainStack.Navigator>
+  <Tab.Navigator>
+    <Tab.Screen name="ProfileMain" component={SettingsScreen} />
+  </Tab.Navigator>
 );
 
 const HomeTabs = () => (

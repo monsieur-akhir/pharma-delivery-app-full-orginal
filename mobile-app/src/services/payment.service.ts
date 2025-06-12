@@ -1,6 +1,6 @@
 import api from './api.service';
 import { initStripe } from '@stripe/stripe-react-native';
-import { VITE_STRIPE_PUBLIC_KEY } from '../config';
+import { VITE_STRIPE_PUBLIC_KEY } from '../config/index';
 
 /**
  * Payment method type

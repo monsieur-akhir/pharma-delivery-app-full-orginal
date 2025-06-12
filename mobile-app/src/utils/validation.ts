@@ -74,7 +74,7 @@ export const authSchemas = {
       .required('Email requis'),
     phone: yup
       .string()
-      .test('phone', 'Numéro de téléphone invalide', validatePhone)
+      .test('phone', 'Numéro de téléphone invalide', (value) => value ? validatePhone(value) : false)
       .required('Numéro de téléphone requis'),
     password: yup
       .string()
