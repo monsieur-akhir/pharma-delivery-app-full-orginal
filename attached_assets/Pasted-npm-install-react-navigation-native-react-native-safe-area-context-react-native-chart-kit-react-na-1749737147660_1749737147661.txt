@@ -1,0 +1,39 @@
+npm install @react-navigation/native react-native-safe-area-context react-native-chart-kit @react-native-community/datetimepicker expo-status-bar expo-splash-screen redux-persist @react-navigation/bottom-tabs react-native-vector-icons react-native-webrtc expo-camera @react-navigation/stack @stripe/stripe-react-native react-redux
+npm error code ERESOLVE
+npm error ERESOLVE could not resolve
+npm error
+npm error While resolving: @react-native-community/datetimepicker@8.4.1
+npm error Found: expo@49.0.23
+npm error node_modules/expo
+npm error   peer expo@"^49.0.7" from @expo/webpack-config@19.0.0
+npm error   node_modules/@expo/webpack-config
+npm error     @expo/webpack-config@"19.0.0" from xdl@60.0.12
+npm error     node_modules/xdl
+npm error       xdl@"60.0.12" from expo-cli@6.3.12
+npm error       node_modules/expo-cli
+npm error         expo-cli@"^6.3.12" from the root project
+npm error   peer expo@"*" from expo-application@5.3.1
+npm error   node_modules/expo-application
+npm error     expo-application@"~5.3.0" from expo@49.0.23
+npm error   16 more (expo-constants, expo-file-system, expo-font, ...)
+npm error
+npm error Could not resolve dependency:
+npm error peerOptional expo@">=52.0.0" from @react-native-community/datetimepicker@8.4.1
+npm error node_modules/@react-native-community/datetimepicker
+npm error   @react-native-community/datetimepicker@"*" from the root project
+npm error
+npm error Conflicting peer dependency: expo@53.0.11
+npm error node_modules/expo
+npm error   peerOptional expo@">=52.0.0" from @react-native-community/datetimepicker@8.4.1
+npm error   node_modules/@react-native-community/datetimepicker
+npm error     @react-native-community/datetimepicker@"*" from the root project
+npm error
+npm error Fix the upstream dependency conflict, or retry
+npm error this command with --force or --legacy-peer-deps
+npm error to accept an incorrect (and potentially broken) dependency resolution.
+npm error
+npm error
+npm error For a full report see:
+npm error /home/runner/.npm/_logs/2025-06-12T14_02_25_755Z-eresolve-report.txt
+npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2025-06-12T14_02_25_755Z-debug-0.log
+exit status 1
