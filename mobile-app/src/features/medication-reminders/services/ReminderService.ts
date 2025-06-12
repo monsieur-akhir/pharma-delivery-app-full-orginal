@@ -252,7 +252,7 @@ class ReminderService {
       case 'tablet':
         return AnimationType.PILL;
       case 'capsule':
-        return AnimationType.CAPSULE;
+        return AnimationType.PILL;
       case 'liquid':
       case 'syrup':
         return AnimationType.LIQUID;
@@ -261,7 +261,7 @@ class ReminderService {
         return AnimationType.INJECTION;
       case 'cream':
       case 'ointment':
-        return AnimationType.TOPICAL;
+        return AnimationType.PILL;
       case 'inhaler':
       case 'spray':
         return AnimationType.INHALER;
@@ -279,8 +279,8 @@ class ReminderService {
         return ['Measure carefully', 'Use provided measuring cup', 'Shake well before use'];
       case AnimationType.INJECTION:
         return ['Clean injection site', 'Use sterile technique', 'Dispose of needle safely'];
-      case AnimationType.TOPICAL:
-        return ['Clean area first', 'Apply thin layer', 'Wash hands after application'];
+      // case AnimationType.TOPICAL:
+      //   return ['Clean area first', 'Apply thin layer', 'Wash hands after application'];
       case AnimationType.INHALER:
         return ['Shake before use', 'Exhale fully', 'Press and inhale slowly'];
       default:
