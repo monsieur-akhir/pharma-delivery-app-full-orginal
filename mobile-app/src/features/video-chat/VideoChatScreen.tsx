@@ -159,7 +159,7 @@ const VideoChatScreen: React.FC = () => {
         if (user) {
           await videoChatService.initialize(
             user.id,
-            user.username || user.name || 'User',
+            user.username || user.fullName || 'User',
             params.fromPharmacist || false
           );
         }
