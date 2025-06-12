@@ -30,6 +30,7 @@ import DeliveryDashboardScreen from '../screens/DeliveryDashboardScreen';
 import DeliveryDetailsScreen from '../screens/DeliveryDetailsScreen';
 import DeliveryHistoryScreen from '../screens/DeliveryHistoryScreen';
 import DeliveryEarningsScreen from '../screens/DeliveryEarningsScreen';
+import ActiveDeliveryScreen from '../screens/ActiveDeliveryScreen';
 
 // Create navigators
 const Stack = createStackNavigator();
@@ -109,6 +110,7 @@ const ProfileStack = () => (
           component={DeliveryEarningsScreen}
           options={{ title: 'Mes gains' }}
         />
+        <Stack.Screen name="ActiveDelivery" component={ActiveDeliveryScreen} />
     <Stack.Screen name="PaymentMethods" component={PaymentMethodsScreen} />
     <Stack.Screen name="AddPaymentMethod" component={AddPaymentMethodScreen} />
     <Stack.Screen name="Notifications" component={NotificationsScreen} />

@@ -4,313 +4,407 @@ import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
   TouchableOpacity,
+  ScrollView,
   RefreshControl,
-  ActivityIndicator,
-  StatusBar,
+  Alert,
   Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
-import { LineChart, BarChart } from 'react-native-chart-kit';
+import { LineChart, BarChart, PieChart } from 'react-native-chart-kit';
 import deliveryService from '../services/delivery.service';
 
-const { width } = Dimensions.get('window');
+interface EarningsData {
+  today: number;
+  week: number;
+  month: number;
+  total: number;
+  deliveries: {
+    today: number;
+    week: number;
+    month: number;
+    total: number;
+  };
+  averagePerDelivery: number;
+  weeklyData: number[];
+  monthlyData: number[];
+  categoryBreakdown: {
+    standard: number;
+    express: number;
+    priority: number;
+  };
+}
+
+interface DeliveryHistory {
+  id: number;
+  orderId: number;
+  date: string;
+  customerName: string;
+  amount: number;
+  commission: number;
+  distance: number;
+  duration: number;
+  type: 'standard' | 'express' | 'priority';
+}
 
 const DeliveryEarningsScreen = ({ navigation }) => {
-  const [selectedPeriod, setSelectedPeriod] = useState<'today' | 'week' | 'month'>('today');
-  const [earnings, setEarnings] = useState(null);
+  const [selectedPeriod, setSelectedPeriod] = useState<'today' | 'week' | 'month'>('week');
+  const [earnings, setEarnings] = useState<EarningsData | null>(null);
+  const [history, setHistory] = useState<DeliveryHistory[]>([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
+  const [selectedTab, setSelectedTab] = useState<'overview' | 'history' | 'analytics'>('overview');
 
-  const periods = [
-    { key: 'today', label: "Aujourd'hui" },
-    { key: 'week', label: 'Cette semaine' },
-    { key: 'month', label: 'Ce mois' },
-  ];
+  const screenWidth = Dimensions.get('window').width;
 
   useEffect(() => {
-    loadEarnings();
-  }, [selectedPeriod]);
+    loadData();
+  }, []);
 
-  const loadEarnings = async () => {
+  const loadData = async () => {
     try {
       setLoading(true);
-      const data = await deliveryService.getEarnings(selectedPeriod);
-      setEarnings(data);
+      const [earningsData, historyData] = await Promise.all([
+        deliveryService.getEarnings(selectedPeriod),
+        deliveryService.getDeliveryHistory(1, 50),
+      ]);
+      
+      setEarnings(earningsData);
+      setHistory(historyData);
     } catch (error) {
-      console.error('Erreur lors du chargement des gains:', error);
+      Alert.alert('Erreur', 'Impossible de charger les données des gains');
     } finally {
       setLoading(false);
     }
   };
 
   const onRefresh = async () => {
-    setRefreshing(true);
-    await loadEarnings();
-    setRefreshing(false);
-  };
-
-  const formatCurrency = (amount: number) => {
-    return `${amount.toFixed(2)} CFA`;
+    setIsRefreshing(true);
+    await loadData();
+    setIsRefreshing(false);
   };
 
   const getChartData = () => {
-    if (!earnings?.chartData) {
-      return {
-        labels: [],
-        datasets: [{ data: [] }],
-      };
-    }
+    if (!earnings) return null;
+
+    const data = selectedPeriod === 'week' ? earnings.weeklyData : earnings.monthlyData;
+    const labels = selectedPeriod === 'week' 
+      ? ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim']
+      : ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'];
 
     return {
-      labels: earnings.chartData.labels,
-      datasets: [
-        {
-          data: earnings.chartData.values,
-          color: (opacity = 1) => `rgba(12, 107, 88, ${opacity})`,
-          strokeWidth: 2,
-        },
-      ],
+      labels,
+      datasets: [{
+        data: data.length > 0 ? data : [0, 0, 0, 0, 0, 0, 0],
+        color: (opacity = 1) => `rgba(12, 107, 88, ${opacity})`,
+        strokeWidth: 2,
+      }],
     };
   };
 
-  const getBarChartData = () => {
-    if (!earnings?.deliveryStats) {
-      return {
-        labels: [],
-        datasets: [{ data: [] }],
-      };
-    }
+  const getPieChartData = () => {
+    if (!earnings) return [];
 
-    return {
-      labels: earnings.deliveryStats.labels,
-      datasets: [
-        {
-          data: earnings.deliveryStats.values,
-        },
-      ],
-    };
+    return [
+      {
+        name: 'Standard',
+        amount: earnings.categoryBreakdown.standard,
+        color: '#4CAF50',
+        legendFontColor: '#333',
+        legendFontSize: 15,
+      },
+      {
+        name: 'Express',
+        amount: earnings.categoryBreakdown.express,
+        color: '#FF9800',
+        legendFontColor: '#333',
+        legendFontSize: 15,
+      },
+      {
+        name: 'Priorité',
+        amount: earnings.categoryBreakdown.priority,
+        color: '#F44336',
+        legendFontColor: '#333',
+        legendFontSize: 15,
+      },
+    ];
   };
 
-  const chartConfig = {
-    backgroundColor: '#FFFFFF',
-    backgroundGradientFrom: '#FFFFFF',
-    backgroundGradientTo: '#FFFFFF',
-    decimalPlaces: 0,
-    color: (opacity = 1) => `rgba(12, 107, 88, ${opacity})`,
-    labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-    style: {
-      borderRadius: 16,
-    },
-    propsForDots: {
-      r: '6',
-      strokeWidth: '2',
-      stroke: '#0C6B58',
-    },
-  };
-
-  if (loading) {
-    return (
-      <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" color="#0C6B58" />
-        <Text style={styles.loadingText}>Chargement des gains...</Text>
+  const renderOverview = () => (
+    <ScrollView
+      refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}
+      showsVerticalScrollIndicator={false}
+    >
+      {/* Period Selector */}
+      <View style={styles.periodSelector}>
+        {(['today', 'week', 'month'] as const).map((period) => (
+          <TouchableOpacity
+            key={period}
+            style={[
+              styles.periodButton,
+              selectedPeriod === period && styles.periodButtonActive,
+            ]}
+            onPress={() => setSelectedPeriod(period)}
+          >
+            <Text style={[
+              styles.periodButtonText,
+              selectedPeriod === period && styles.periodButtonTextActive,
+            ]}>
+              {period === 'today' ? 'Aujourd\'hui' : period === 'week' ? 'Semaine' : 'Mois'}
+            </Text>
+          </TouchableOpacity>
+        ))}
       </View>
-    );
-  }
+
+      {/* Main Stats */}
+      <View style={styles.statsGrid}>
+        <View style={styles.statCard}>
+          <MaterialIcons name="attach-money" size={24} color="#4CAF50" />
+          <Text style={styles.statValue}>
+            {earnings?.[selectedPeriod]?.toFixed(0) || '0'} CFA
+          </Text>
+          <Text style={styles.statLabel}>Gains</Text>
+        </View>
+
+        <View style={styles.statCard}>
+          <MaterialIcons name="local-shipping" size={24} color="#2196F3" />
+          <Text style={styles.statValue}>
+            {earnings?.deliveries[selectedPeriod] || 0}
+          </Text>
+          <Text style={styles.statLabel}>Livraisons</Text>
+        </View>
+
+        <View style={styles.statCard}>
+          <MaterialIcons name="trending-up" size={24} color="#FF9800" />
+          <Text style={styles.statValue}>
+            {earnings?.averagePerDelivery?.toFixed(0) || '0'} CFA
+          </Text>
+          <Text style={styles.statLabel}>Moy./Livraison</Text>
+        </View>
+
+        <View style={styles.statCard}>
+          <MaterialIcons name="star" size={24} color="#9C27B0" />
+          <Text style={styles.statValue}>4.8</Text>
+          <Text style={styles.statLabel}>Note moyenne</Text>
+        </View>
+      </View>
+
+      {/* Chart */}
+      {getChartData() && (
+        <View style={styles.chartContainer}>
+          <Text style={styles.chartTitle}>Évolution des gains</Text>
+          <LineChart
+            data={getChartData()!}
+            width={screenWidth - 40}
+            height={220}
+            chartConfig={{
+              backgroundColor: '#FFFFFF',
+              backgroundGradientFrom: '#FFFFFF',
+              backgroundGradientTo: '#FFFFFF',
+              decimalPlaces: 0,
+              color: (opacity = 1) => `rgba(12, 107, 88, ${opacity})`,
+              labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              style: { borderRadius: 16 },
+              propsForDots: {
+                r: '6',
+                strokeWidth: '2',
+                stroke: '#0C6B58',
+              },
+            }}
+            bezier
+            style={styles.chart}
+          />
+        </View>
+      )}
+
+      {/* Category Breakdown */}
+      <View style={styles.chartContainer}>
+        <Text style={styles.chartTitle}>Répartition par type</Text>
+        <PieChart
+          data={getPieChartData()}
+          width={screenWidth - 40}
+          height={220}
+          chartConfig={{
+            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          }}
+          accessor="amount"
+          backgroundColor="transparent"
+          paddingLeft="15"
+          absolute
+        />
+      </View>
+    </ScrollView>
+  );
+
+  const renderHistory = () => (
+    <ScrollView
+      refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}
+      showsVerticalScrollIndicator={false}
+    >
+      <View style={styles.historyContainer}>
+        {history.map((delivery) => (
+          <View key={delivery.id} style={styles.historyCard}>
+            <View style={styles.historyHeader}>
+              <View style={styles.historyInfo}>
+                <Text style={styles.historyOrderId}>#{delivery.orderId}</Text>
+                <Text style={styles.historyCustomer}>{delivery.customerName}</Text>
+              </View>
+              <View style={styles.historyAmount}>
+                <Text style={styles.historyEarnings}>+{delivery.commission} CFA</Text>
+                <Text style={styles.historyDate}>{new Date(delivery.date).toLocaleDateString()}</Text>
+              </View>
+            </View>
+            
+            <View style={styles.historyDetails}>
+              <View style={styles.historyDetailItem}>
+                <MaterialIcons name="navigation" size={16} color="#666" />
+                <Text style={styles.historyDetailText}>{delivery.distance.toFixed(1)} km</Text>
+              </View>
+              <View style={styles.historyDetailItem}>
+                <MaterialIcons name="access-time" size={16} color="#666" />
+                <Text style={styles.historyDetailText}>{delivery.duration} min</Text>
+              </View>
+              <View style={[styles.typeTag, styles[`type${delivery.type.charAt(0).toUpperCase() + delivery.type.slice(1)}`]]}>
+                <Text style={styles.typeTagText}>
+                  {delivery.type === 'standard' ? 'Standard' : 
+                   delivery.type === 'express' ? 'Express' : 'Priorité'}
+                </Text>
+              </View>
+            </View>
+          </View>
+        ))}
+      </View>
+    </ScrollView>
+  );
+
+  const renderAnalytics = () => (
+    <ScrollView
+      refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}
+      showsVerticalScrollIndicator={false}
+    >
+      {/* Performance Metrics */}
+      <View style={styles.metricsContainer}>
+        <Text style={styles.sectionTitle}>Métriques de performance</Text>
+        
+        <View style={styles.metricCard}>
+          <View style={styles.metricHeader}>
+            <MaterialIcons name="speed" size={24} color="#4CAF50" />
+            <Text style={styles.metricTitle}>Efficacité</Text>
+          </View>
+          <View style={styles.metricValues}>
+            <Text style={styles.metricValue}>92%</Text>
+            <Text style={styles.metricLabel}>Taux de livraison</Text>
+          </View>
+        </View>
+
+        <View style={styles.metricCard}>
+          <View style={styles.metricHeader}>
+            <MaterialIcons name="timer" size={24} color="#2196F3" />
+            <Text style={styles.metricTitle}>Temps moyen</Text>
+          </View>
+          <View style={styles.metricValues}>
+            <Text style={styles.metricValue}>28 min</Text>
+            <Text style={styles.metricLabel}>Par livraison</Text>
+          </View>
+        </View>
+
+        <View style={styles.metricCard}>
+          <View style={styles.metricHeader}>
+            <MaterialIcons name="thumb-up" size={24} color="#FF9800" />
+            <Text style={styles.metricTitle}>Satisfaction</Text>
+          </View>
+          <View style={styles.metricValues}>
+            <Text style={styles.metricValue}>4.8/5</Text>
+            <Text style={styles.metricLabel}>Note clients</Text>
+          </View>
+        </View>
+      </View>
+
+      {/* Goals */}
+      <View style={styles.goalsContainer}>
+        <Text style={styles.sectionTitle}>Objectifs du mois</Text>
+        
+        <View style={styles.goalCard}>
+          <View style={styles.goalHeader}>
+            <Text style={styles.goalTitle}>Gains mensuel</Text>
+            <Text style={styles.goalProgress}>78%</Text>
+          </View>
+          <View style={styles.progressBar}>
+            <View style={[styles.progressFill, { width: '78%' }]} />
+          </View>
+          <Text style={styles.goalText}>156,000 / 200,000 CFA</Text>
+        </View>
+
+        <View style={styles.goalCard}>
+          <View style={styles.goalHeader}>
+            <Text style={styles.goalTitle}>Livraisons</Text>
+            <Text style={styles.goalProgress}>85%</Text>
+          </View>
+          <View style={styles.progressBar}>
+            <View style={[styles.progressFill, { width: '85%' }]} />
+          </View>
+          <Text style={styles.goalText}>85 / 100 livraisons</Text>
+        </View>
+      </View>
+    </ScrollView>
+  );
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
-      
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <MaterialIcons name="arrow-back" size={24} color="#333" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Mes gains</Text>
-        <View style={{ width: 24 }} />
+        <Text style={styles.headerTitle}>Gains & Statistiques</Text>
+        <TouchableOpacity>
+          <MaterialIcons name="more-vert" size={24} color="#333" />
+        </TouchableOpacity>
       </View>
 
-      <ScrollView
-        style={styles.content}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Period Selector */}
-        <View style={styles.periodSelector}>
-          {periods.map((period) => (
-            <TouchableOpacity
-              key={period.key}
-              style={[
-                styles.periodButton,
-                selectedPeriod === period.key && styles.selectedPeriodButton,
-              ]}
-              onPress={() => setSelectedPeriod(period.key as any)}
-            >
-              <Text
-                style={[
-                  styles.periodButtonText,
-                  selectedPeriod === period.key && styles.selectedPeriodButtonText,
-                ]}
-              >
-                {period.label}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-
-        {/* Summary Cards */}
-        <View style={styles.summaryContainer}>
-          <View style={styles.summaryCard}>
-            <View style={styles.summaryIcon}>
-              <MaterialIcons name="attach-money" size={24} color="#0C6B58" />
-            </View>
-            <Text style={styles.summaryValue}>
-              {formatCurrency(earnings?.totalEarnings || 0)}
-            </Text>
-            <Text style={styles.summaryLabel}>Gains totaux</Text>
-          </View>
-
-          <View style={styles.summaryCard}>
-            <View style={styles.summaryIcon}>
-              <FontAwesome5 name="shipping-fast" size={20} color="#2196F3" />
-            </View>
-            <Text style={styles.summaryValue}>{earnings?.totalDeliveries || 0}</Text>
-            <Text style={styles.summaryLabel}>Livraisons</Text>
-          </View>
-
-          <View style={styles.summaryCard}>
-            <View style={styles.summaryIcon}>
-              <MaterialIcons name="trending-up" size={24} color="#4CAF50" />
-            </View>
-            <Text style={styles.summaryValue}>
-              {formatCurrency(earnings?.averageEarningsPerDelivery || 0)}
-            </Text>
-            <Text style={styles.summaryLabel}>Moyenne/livraison</Text>
-          </View>
-        </View>
-
-        {/* Earnings Chart */}
-        {earnings?.chartData && earnings.chartData.values.length > 0 && (
-          <View style={styles.chartCard}>
-            <Text style={styles.chartTitle}>Évolution des gains</Text>
-            <LineChart
-              data={getChartData()}
-              width={width - 60}
-              height={220}
-              chartConfig={chartConfig}
-              bezier
-              style={styles.chart}
+      {/* Tab Bar */}
+      <View style={styles.tabBar}>
+        {[
+          { key: 'overview', label: 'Aperçu', icon: 'dashboard' },
+          { key: 'history', label: 'Historique', icon: 'history' },
+          { key: 'analytics', label: 'Analyses', icon: 'analytics' },
+        ].map((tab) => (
+          <TouchableOpacity
+            key={tab.key}
+            style={[styles.tab, selectedTab === tab.key && styles.tabActive]}
+            onPress={() => setSelectedTab(tab.key as any)}
+          >
+            <MaterialIcons 
+              name={tab.icon} 
+              size={20} 
+              color={selectedTab === tab.key ? '#0C6B58' : '#666'} 
             />
+            <Text style={[
+              styles.tabText,
+              selectedTab === tab.key && styles.tabTextActive,
+            ]}>
+              {tab.label}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      {/* Content */}
+      <View style={styles.content}>
+        {loading ? (
+          <View style={styles.loadingContainer}>
+            <MaterialIcons name="attach-money" size={64} color="#0C6B58" />
+            <Text style={styles.loadingText}>Chargement des données...</Text>
           </View>
+        ) : (
+          <>
+            {selectedTab === 'overview' && renderOverview()}
+            {selectedTab === 'history' && renderHistory()}
+            {selectedTab === 'analytics' && renderAnalytics()}
+          </>
         )}
-
-        {/* Delivery Stats Chart */}
-        {earnings?.deliveryStats && earnings.deliveryStats.values.length > 0 && (
-          <View style={styles.chartCard}>
-            <Text style={styles.chartTitle}>Livraisons par jour</Text>
-            <BarChart
-              data={getBarChartData()}
-              width={width - 60}
-              height={220}
-              chartConfig={chartConfig}
-              style={styles.chart}
-            />
-          </View>
-        )}
-
-        {/* Performance Metrics */}
-        <View style={styles.metricsCard}>
-          <Text style={styles.metricsTitle}>Indicateurs de performance</Text>
-          
-          <View style={styles.metricRow}>
-            <View style={styles.metricItem}>
-              <MaterialIcons name="star" size={20} color="#FFD700" />
-              <Text style={styles.metricLabel}>Note moyenne</Text>
-              <Text style={styles.metricValue}>
-                {(earnings?.averageRating || 0).toFixed(1)} ⭐
-              </Text>
-            </View>
-            
-            <View style={styles.metricItem}>
-              <MaterialIcons name="check-circle" size={20} color="#4CAF50" />
-              <Text style={styles.metricLabel}>Taux de réussite</Text>
-              <Text style={styles.metricValue}>
-                {(earnings?.successRate || 0)}%
-              </Text>
-            </View>
-          </View>
-
-          <View style={styles.metricRow}>
-            <View style={styles.metricItem}>
-              <MaterialIcons name="schedule" size={20} color="#FF9800" />
-              <Text style={styles.metricLabel}>Temps moyen</Text>
-              <Text style={styles.metricValue}>
-                {earnings?.averageDeliveryTime || 0} min
-              </Text>
-            </View>
-            
-            <View style={styles.metricItem}>
-              <FontAwesome5 name="route" size={16} color="#2196F3" />
-              <Text style={styles.metricLabel}>Distance totale</Text>
-              <Text style={styles.metricValue}>
-                {(earnings?.totalDistance || 0).toFixed(1)} km
-              </Text>
-            </View>
-          </View>
-        </View>
-
-        {/* Recent Earnings */}
-        <View style={styles.recentCard}>
-          <Text style={styles.recentTitle}>Dernières livraisons</Text>
-          {earnings?.recentDeliveries?.map((delivery, index) => (
-            <View key={index} style={styles.recentItem}>
-              <View style={styles.recentLeft}>
-                <Text style={styles.recentOrderId}>#{delivery.orderId}</Text>
-                <Text style={styles.recentDate}>
-                  {new Date(delivery.completedAt).toLocaleDateString('fr-FR')}
-                </Text>
-              </View>
-              <Text style={styles.recentEarning}>
-                {formatCurrency(delivery.earnings)}
-              </Text>
-            </View>
-          ))}
-          
-          {(!earnings?.recentDeliveries || earnings.recentDeliveries.length === 0) && (
-            <Text style={styles.noRecentText}>Aucune livraison récente</Text>
-          )}
-        </View>
-
-        {/* Goals Section */}
-        {earnings?.goals && (
-          <View style={styles.goalsCard}>
-            <Text style={styles.goalsTitle}>Objectifs</Text>
-            
-            <View style={styles.goalItem}>
-              <View style={styles.goalHeader}>
-                <Text style={styles.goalLabel}>Objectif de gains</Text>
-                <Text style={styles.goalProgress}>
-                  {formatCurrency(earnings.goals.current)} / {formatCurrency(earnings.goals.target)}
-                </Text>
-              </View>
-              <View style={styles.goalBar}>
-                <View 
-                  style={[
-                    styles.goalFill,
-                    { width: `${Math.min((earnings.goals.current / earnings.goals.target) * 100, 100)}%` }
-                  ]}
-                />
-              </View>
-              <Text style={styles.goalPercentage}>
-                {((earnings.goals.current / earnings.goals.target) * 100).toFixed(0)}% atteint
-              </Text>
-            </View>
-          </View>
-        )}
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
@@ -320,20 +414,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F5F5F5',
   },
-  centerContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loadingText: {
-    marginTop: 16,
-    fontSize: 16,
-    color: '#666',
-  },
   header: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
+    alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 16,
     backgroundColor: '#FFFFFF',
@@ -345,234 +429,292 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
   },
+  tabBar: {
+    flexDirection: 'row',
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E0E0E0',
+  },
+  tab: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 16,
+    gap: 8,
+  },
+  tabActive: {
+    borderBottomWidth: 2,
+    borderBottomColor: '#0C6B58',
+  },
+  tabText: {
+    fontSize: 14,
+    color: '#666',
+  },
+  tabTextActive: {
+    color: '#0C6B58',
+    fontWeight: '600',
+  },
   content: {
     flex: 1,
-    padding: 20,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 16,
+    color: '#666',
   },
   periodSelector: {
     flexDirection: 'row',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
+    margin: 20,
+    backgroundColor: '#F0F0F0',
+    borderRadius: 8,
     padding: 4,
-    marginBottom: 20,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
   },
   periodButton: {
     flex: 1,
-    paddingVertical: 10,
+    paddingVertical: 12,
     alignItems: 'center',
-    borderRadius: 8,
+    borderRadius: 6,
   },
-  selectedPeriodButton: {
-    backgroundColor: '#0C6B58',
+  periodButtonActive: {
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   periodButtonText: {
     fontSize: 14,
-    fontWeight: '500',
     color: '#666',
   },
-  selectedPeriodButtonText: {
-    color: '#FFFFFF',
+  periodButtonTextActive: {
+    color: '#0C6B58',
+    fontWeight: '600',
   },
-  summaryContainer: {
+  statsGrid: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingHorizontal: 20,
     gap: 12,
-    marginBottom: 20,
   },
-  summaryCard: {
+  statCard: {
     flex: 1,
+    minWidth: '45%',
     backgroundColor: '#FFFFFF',
-    borderRadius: 12,
     padding: 16,
+    borderRadius: 12,
     alignItems: 'center',
-    elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
+    elevation: 2,
   },
-  summaryIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#F5F5F5',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  summaryValue: {
-    fontSize: 16,
+  statValue: {
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#333',
-    textAlign: 'center',
+    marginTop: 8,
   },
-  summaryLabel: {
+  statLabel: {
     fontSize: 12,
     color: '#666',
-    textAlign: 'center',
     marginTop: 4,
   },
-  chartCard: {
+  chartContainer: {
     backgroundColor: '#FFFFFF',
+    margin: 20,
     borderRadius: 12,
     padding: 16,
-    marginBottom: 20,
-    elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
+    elevation: 2,
   },
   chartTitle: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: 'bold',
     color: '#333',
     marginBottom: 16,
   },
   chart: {
-    marginVertical: 8,
     borderRadius: 16,
   },
-  metricsCard: {
+  historyContainer: {
+    padding: 20,
+  },
+  historyCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 12,
     padding: 16,
-    marginBottom: 20,
-    elevation: 2,
+    marginBottom: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
+    elevation: 2,
   },
-  metricsTitle: {
+  historyHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: 12,
+  },
+  historyInfo: {
+    flex: 1,
+  },
+  historyOrderId: {
     fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  historyCustomer: {
+    fontSize: 14,
+    color: '#666',
+    marginTop: 2,
+  },
+  historyAmount: {
+    alignItems: 'flex-end',
+  },
+  historyEarnings: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#4CAF50',
+  },
+  historyDate: {
+    fontSize: 12,
+    color: '#666',
+    marginTop: 2,
+  },
+  historyDetails: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16,
+  },
+  historyDetailItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  historyDetailText: {
+    fontSize: 12,
+    color: '#666',
+  },
+  typeTag: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    marginLeft: 'auto',
+  },
+  typeStandard: {
+    backgroundColor: '#E8F5E8',
+  },
+  typeExpress: {
+    backgroundColor: '#FFF3E0',
+  },
+  typePriority: {
+    backgroundColor: '#FFEBEE',
+  },
+  typeTagText: {
+    fontSize: 10,
     fontWeight: '600',
+    color: '#333',
+  },
+  metricsContainer: {
+    padding: 20,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
     color: '#333',
     marginBottom: 16,
   },
-  metricRow: {
-    flexDirection: 'row',
-    gap: 16,
-    marginBottom: 16,
+  metricCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
-  metricItem: {
-    flex: 1,
+  metricHeader: {
+    flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 12,
+  },
+  metricTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+    marginLeft: 12,
+  },
+  metricValues: {
+    alignItems: 'center',
+  },
+  metricValue: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#0C6B58',
   },
   metricLabel: {
     fontSize: 12,
     color: '#666',
-    textAlign: 'center',
     marginTop: 4,
   },
-  metricValue: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
-    marginTop: 4,
+  goalsContainer: {
+    padding: 20,
   },
-  recentCard: {
+  goalCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 12,
     padding: 16,
-    marginBottom: 20,
-    elevation: 2,
+    marginBottom: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-  },
-  recentTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#333',
-    marginBottom: 16,
-  },
-  recentItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F0F0F0',
-  },
-  recentLeft: {
-    flex: 1,
-  },
-  recentOrderId: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#333',
-  },
-  recentDate: {
-    fontSize: 12,
-    color: '#666',
-  },
-  recentEarning: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#0C6B58',
-  },
-  noRecentText: {
-    fontSize: 14,
-    color: '#666',
-    textAlign: 'center',
-    paddingVertical: 20,
-  },
-  goalsCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 20,
     elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-  },
-  goalsTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#333',
-    marginBottom: 16,
-  },
-  goalItem: {
-    marginBottom: 16,
   },
   goalHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 12,
   },
-  goalLabel: {
-    fontSize: 14,
+  goalTitle: {
+    fontSize: 16,
+    fontWeight: '600',
     color: '#333',
   },
   goalProgress: {
-    fontSize: 14,
-    fontWeight: '500',
+    fontSize: 16,
+    fontWeight: 'bold',
     color: '#0C6B58',
   },
-  goalBar: {
+  progressBar: {
     height: 8,
-    backgroundColor: '#E0E0E0',
+    backgroundColor: '#F0F0F0',
     borderRadius: 4,
-    marginBottom: 4,
+    marginBottom: 8,
   },
-  goalFill: {
+  progressFill: {
     height: '100%',
     backgroundColor: '#0C6B58',
     borderRadius: 4,
   },
-  goalPercentage: {
-    fontSize: 12,
+  goalText: {
+    fontSize: 14,
     color: '#666',
-    textAlign: 'center',
   },
 });
 

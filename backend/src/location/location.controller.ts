@@ -121,3 +121,64 @@ export class LocationController {
     return this.locationService.getNearbyDeliveries(latitude, longitude, radius);
   }
 }
+import { Controller, Post, Get, Body, Param, UseGuards, Req } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { LocationService } from './location.service';
+
+@ApiTags('location')
+@Controller('location')
+@UseGuards(AuthGuard('jwt'), RolesGuard)
+@ApiBearerAuth()
+export class LocationController {
+  constructor(private readonly locationService: LocationService) {}
+
+  @Post('update')
+  @ApiOperation({ summary: 'Update deliverer location' })
+  @Roles('delivery')
+  async updateLocation(
+    @Body() locationData: {
+      deliveryId: number;
+      latitude: number;
+      longitude: number;
+      timestamp: number;
+      accuracy?: number;
+      speed?: number;
+      heading?: number;
+    },
+    @Req() req
+  ) {
+    return this.locationService.updateLocation(req.user.id, locationData);
+  }
+
+  @Get('current/:deliveryId')
+  @ApiOperation({ summary: 'Get current deliverer location for delivery' })
+  @Roles('delivery', 'customer', 'pharmacy_admin', 'pharmacist')
+  async getCurrentLocation(@Param('deliveryId') deliveryId: string) {
+    return this.locationService.getCurrentLocation(+deliveryId);
+  }
+
+  @Get('history/:deliveryId')
+  @ApiOperation({ summary: 'Get location history for delivery' })
+  @Roles('delivery', 'customer', 'pharmacy_admin', 'pharmacist')
+  async getLocationHistory(@Param('deliveryId') deliveryId: string) {
+    return this.locationService.getLocationHistory(+deliveryId);
+  }
+
+  @Post('eta')
+  @ApiOperation({ summary: 'Calculate ETA for delivery' })
+  @Roles('delivery', 'customer', 'pharmacy_admin', 'pharmacist')
+  async calculateETA(
+    @Body() data: {
+      deliveryId: number;
+      currentLatitude: number;
+      currentLongitude: number;
+      destinationLatitude: number;
+      destinationLongitude: number;
+    }
+  ) {
+    return this.locationService.calculateETA(data);
+  }
+}

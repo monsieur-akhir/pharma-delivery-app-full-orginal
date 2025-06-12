@@ -1,10 +1,95 @@
 import apiService from './api.service';
 import authService from './auth.service';
+import io from 'socket.io-client';
+import { API_URL } from '../config';
 
 /**
  * Service de gestion des livraisons pour les coursiers
  */
 class DeliveryService {
+  private socket: any = null;
+  private deliveryListeners: { [key: string]: Function[] } = {};
+
+  /**
+   * Initialiser la connexion WebSocket
+   */
+  initializeSocket(): void {
+    if (this.socket) {
+      this.socket.disconnect();
+    }
+
+    const token = authService.getToken();
+    if (!token) return;
+
+    this.socket = io(API_URL, {
+      auth: { token },
+      transports: ['websocket'],
+    });
+
+    this.socket.on('connect', () => {
+      console.log('WebSocket connecté pour les livraisons');
+    });
+
+    this.socket.on('disconnect', () => {
+      console.log('WebSocket déconnecté');
+    });
+
+    // Écouter les nouvelles livraisons disponibles
+    this.socket.on('new_delivery_available', (delivery: any) => {
+      this.notifyListeners('new_delivery_available', delivery);
+    });
+
+    // Écouter les mises à jour de statut
+    this.socket.on('delivery_status_update', (update: any) => {
+      this.notifyListeners('delivery_status_update', update);
+    });
+
+    // Écouter les notifications urgentes
+    this.socket.on('urgent_notification', (notification: any) => {
+      this.notifyListeners('urgent_notification', notification);
+    });
+  }
+
+  /**
+   * Ajouter un listener pour les événements WebSocket
+   */
+  addListener(event: string, callback: Function): void {
+    if (!this.deliveryListeners[event]) {
+      this.deliveryListeners[event] = [];
+    }
+    this.deliveryListeners[event].push(callback);
+  }
+
+  /**
+   * Supprimer un listener
+   */
+  removeListener(event: string, callback: Function): void {
+    if (this.deliveryListeners[event]) {
+      this.deliveryListeners[event] = this.deliveryListeners[event].filter(
+        (listener) => listener !== callback
+      );
+    }
+  }
+
+  /**
+   * Notifier tous les listeners d'un événement
+   */
+  private notifyListeners(event: string, data: any): void {
+    if (this.deliveryListeners[event]) {
+      this.deliveryListeners[event].forEach((callback) => callback(data));
+    }
+  }
+
+  /**
+   * Fermer la connexion WebSocket
+   */
+  disconnectSocket(): void {
+    if (this.socket) {
+      this.socket.disconnect();
+      this.socket = null;
+    }
+    this.deliveryListeners = {};
+  }
   /**
    * Récupère les livraisons assignées au coursier connecté
    */

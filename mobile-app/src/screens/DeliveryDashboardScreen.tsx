@@ -44,6 +44,11 @@ const DeliveryDashboardScreen = ({ navigation }) => {
     rating: 0,
     completionRate: 0,
   });
+  const [filterDistance, setFilterDistance] = useState<number>(10);
+  const [filterPriority, setFilterPriority] = useState<string>('all');
+  const [showFilters, setShowFilters] = useState(false);
+  const [notifications, setNotifications] = useState<any[]>([]);
+  const [showNotifications, setShowNotifications] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -133,6 +138,51 @@ const DeliveryDashboardScreen = ({ navigation }) => {
     } catch (error) {
       Alert.alert('Erreur', 'Impossible d\'accepter cette livraison.');
     }
+  };
+
+  const loadNotifications = async () => {
+    try {
+      const notifs = await deliveryService.getDelivererNotifications();
+      setNotifications(notifs);
+    } catch (error) {
+      console.error('Erreur lors du chargement des notifications:', error);
+    }
+  };
+
+  const markNotificationAsRead = async (notificationId: number) => {
+    try {
+      await deliveryService.markNotificationAsRead(notificationId);
+      setNotifications(prev => 
+        prev.map(notif => 
+          notif.id === notificationId ? { ...notif, isRead: true } : notif
+        )
+      );
+    } catch (error) {
+      console.error('Erreur lors du marquage de la notification:', error);
+    }
+  };
+
+  const filterDeliveries = (deliveries: DeliveryTask[]) => {
+    return deliveries.filter(delivery => {
+      // Filtre par distance
+      if (delivery.distance > filterDistance) return false;
+      
+      // Filtre par priorité
+      if (filterPriority !== 'all' && delivery.priority !== filterPriority) return false;
+      
+      return true;
+    }).sort((a, b) => {
+      // Tri par priorité puis par distance
+      const priorityOrder = { high: 3, medium: 2, low: 1 };
+      const aPriority = priorityOrder[a.priority] || 0;
+      const bPriority = priorityOrder[b.priority] || 0;
+      
+      if (aPriority !== bPriority) {
+        return bPriority - aPriority; // Priorité décroissante
+      }
+      
+      return a.distance - b.distance; // Distance croissante
+    });
   };
 
   const startDelivery = (delivery: DeliveryTask) => {
