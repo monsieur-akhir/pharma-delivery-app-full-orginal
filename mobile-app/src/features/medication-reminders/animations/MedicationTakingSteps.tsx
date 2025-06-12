@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Animated, Dimensions } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { MedicationTakingStepsProps, MedicationType } from '@/types/animation';
 
 const { width } = Dimensions.get('window');
-
-export interface MedicationTakingStepsProps {
-  type: 'pill' | 'liquid' | 'injection' | 'inhaler';
-  onComplete: () => Promise<void>;
-  medicationName: string;
-  dosage: string;
-  instructions: string;
-}
 
 const MedicationTakingSteps: React.FC<MedicationTakingStepsProps> = ({
   type,

@@ -4,18 +4,19 @@ export enum AnimationType {
   PILL = 'pill',
   LIQUID = 'liquid',
   INJECTION = 'injection',
-  TOPICAL = 'topical',
-  INHALER = 'inhaler',
-  TABLET = 'tablet',
-  CAPSULE = 'capsule'
+  INHALER = 'inhaler'
 }
+
+// Medication type union for consistency
+export type MedicationType = 'pill' | 'liquid' | 'injection' | 'inhaler';
 
 // Medication taking step props
 export interface MedicationTakingStepsProps {
-  type: 'pill' | 'liquid' | 'injection' | 'inhaler';
-  onComplete: () => void;
+  type: MedicationType;
+  onComplete: () => Promise<void>;
   medicationName: string;
   dosage: string;
+  instructions: string;
 }
 
 // Adherence celebration props
