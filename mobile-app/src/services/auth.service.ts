@@ -37,7 +37,7 @@ class AuthService {
       const state = store.getState();
       if (state.auth && state.auth.token) {
         const token = state.auth.token;
-        
+
         // Vérifier si le token est valide
         if (token && this.isTokenValid(token)) {
           // Configurer le timer pour rafraîchir avant expiration
@@ -72,22 +72,22 @@ class AuthService {
     if (this.tokenRefreshTimer) {
       clearTimeout(this.tokenRefreshTimer);
     }
-    
+
     try {
       const decoded = this.parseJwt(token);
       if (!decoded || !decoded.exp) return;
-      
+
       const expiryTime = decoded.exp * 1000;
-      
+
       // Calculer le délai avant rafraîchissement (5 minutes avant expiration)
       const now = Date.now();
       const timeToRefresh = expiryTime - now - 5 * 60 * 1000; // 5 minutes avant expiration
-      
+
       if (timeToRefresh > 0) {
         this.tokenRefreshTimer = setTimeout(() => {
           this.refreshCurrentToken();
         }, timeToRefresh);
-        
+
         console.log(`Token sera rafraîchi dans ${Math.round(timeToRefresh / 60000)} minutes`);
       } else if (timeToRefresh > -30 * 60 * 1000) { 
         // Si le token expire dans moins de 5 minutes mais n'est pas expiré depuis plus de 30 minutes
@@ -146,12 +146,12 @@ class AuthService {
   async verifyOtp(phone: string, otp: string, userType: 'customer' | 'delivery' = 'customer'): Promise<any> {
     try {
       const response = await apiService.login(phone, otp, userType);
-      
+
       if (response && response.token) {
         // Configurer le timer de rafraîchissement pour le nouveau token
         this.setupTokenRefresh(response.token);
       }
-      
+
       return response;
     } catch (error) {
       console.error('Error verifying OTP:', error);
@@ -165,14 +165,14 @@ class AuthService {
   private async refreshCurrentToken() {
     try {
       const response = await apiService.refreshToken();
-      
+
       if (response && response.token) {
         // Mettre à jour le token dans le store
         store.dispatch(refreshToken(response.token));
-        
+
         // Reconfigurer le timer pour le nouveau token
         this.setupTokenRefresh(response.token);
-        
+
         console.log('Token rafraîchi avec succès');
         return response.token;
       }
@@ -194,10 +194,10 @@ class AuthService {
       // Implement profile update logic
       const response = await apiService.updateProfile(userData);
       const updatedProfile = response.data.user;
-      
+
       // Update user in the store
       store.dispatch(updateUserProfile(updatedProfile));
-      
+
       return updatedProfile;
     } catch (error) {
       console.error('Error updating profile:', error);
@@ -215,7 +215,7 @@ class AuthService {
         clearTimeout(this.tokenRefreshTimer);
         this.tokenRefreshTimer = null;
       }
-      
+
       // Appeler l'API pour invalider le token côté serveur
       await apiService.logout();
     } catch (error) {
@@ -232,13 +232,9 @@ class AuthService {
     return !!state.auth.token && this.isTokenValid(state.auth.token);
   }
 
-  /**
-   * Check if user is a delivery person
-   * @returns Boolean indicating if user is a delivery person
-   */
   isDeliveryPerson(): boolean {
     const state = store.getState();
-    return !!state.auth.user && state.auth.user.role === 'DELIVERY_PERSON';
+    return !!state.auth.user && (state.auth.user.role === 'DELIVERY_PERSON' || state.auth.user.role === 'delivery');
   }
 
   /**

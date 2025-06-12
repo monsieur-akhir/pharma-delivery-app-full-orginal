@@ -25,6 +25,11 @@ import OrderDetailsScreen from '../screens/OrderDetailsScreen';
 import DeliveryTrackingScreen from '../screens/DeliveryTrackingScreen';
 import MedicationRemindersScreen from '../screens/MedicationRemindersScreen';
 import MedicationDetailsScreen from '../screens/MedicationDetailsScreen';
+import AddPaymentMethodScreen from '../screens/AddPaymentMethodScreen';
+import DeliveryDashboardScreen from '../screens/DeliveryDashboardScreen';
+import DeliveryDetailsScreen from '../screens/DeliveryDetailsScreen';
+import DeliveryHistoryScreen from '../screens/DeliveryHistoryScreen';
+import DeliveryEarningsScreen from '../screens/DeliveryEarningsScreen';
 
 // Create navigators
 const Stack = createStackNavigator();
@@ -79,6 +84,31 @@ const ProfileStack = () => (
     <Stack.Screen name="ProfileMain" component={ProfileScreen} />
     <Stack.Screen name="Prescriptions" component={PrescriptionsScreen} />
     <Stack.Screen name="PrescriptionDetail" component={PrescriptionDetailScreen} />
+    <Stack.Screen
+          name="AddPaymentMethod"
+          component={AddPaymentMethodScreen}
+          options={{ title: 'Ajouter un mode de paiement' }}
+        />
+        <Stack.Screen
+          name="DeliveryDashboard"
+          component={DeliveryDashboardScreen}
+          options={{ title: 'Tableau de bord coursier' }}
+        />
+        <Stack.Screen
+          name="DeliveryDetails"
+          component={DeliveryDetailsScreen}
+          options={{ title: 'Détails de la livraison' }}
+        />
+        <Stack.Screen
+          name="DeliveryHistory"
+          component={DeliveryHistoryScreen}
+          options={{ title: 'Historique des livraisons' }}
+        />
+        <Stack.Screen
+          name="DeliveryEarnings"
+          component={DeliveryEarningsScreen}
+          options={{ title: 'Mes gains' }}
+        />
     <Stack.Screen name="PaymentMethods" component={PaymentMethodsScreen} />
     <Stack.Screen name="AddPaymentMethod" component={AddPaymentMethodScreen} />
     <Stack.Screen name="Notifications" component={NotificationsScreen} />
