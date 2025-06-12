@@ -53,43 +53,43 @@ const ReminderAnimation: React.FC<ReminderAnimationProps> = ({
   // Animation configurations based on medication type
   const getAnimationConfig = () => {
     switch (type) {
-      case AnimationType.PILL:
+      case 'pill':
         return {
           icon: require('../assets/pill-icon.png'), // This will be replaced later
           vibratePattern: [0, 100, 100, 100],
           animationDuration: 1000,
         };
-      case AnimationType.LIQUID:
+      case 'liquid':
         return {
           icon: require('../assets/liquid-icon.png'), // This will be replaced later
           vibratePattern: [0, 200, 200, 200],
           animationDuration: 1500,
         };
-      case AnimationType.INJECTION:
+      case 'injection':
         return {
           icon: require('../assets/injection-icon.png'), // This will be replaced later
           vibratePattern: [0, 300, 200, 300],
           animationDuration: 1200,
         };
-      case AnimationType.TOPICAL:
+      case 'topical':
         return {
           icon: require('../assets/topical-icon.png'), // This will be replaced later
           vibratePattern: [0, 100, 100, 100, 100, 100],
           animationDuration: 900,
         };
-      case AnimationType.INHALER:
+      case 'inhaler':
         return {
           icon: require('../assets/inhaler-icon.png'), // This will be replaced later
           vibratePattern: [0, 200, 100, 200, 100, 200],
           animationDuration: 1300,
         };
-      case AnimationType.TABLET:
+      case 'tablet':
         return {
           icon: require('../assets/pill-icon.png'), // This will be replaced later
           vibratePattern: [0, 100, 100, 100],
           animationDuration: 1000,
         };
-      case AnimationType.CAPSULE:
+      case 'capsule':
         return {
           icon: require('../assets/pill-icon.png'), // This will be replaced later
           vibratePattern: [0, 100, 100, 100],
@@ -151,7 +151,7 @@ const ReminderAnimation: React.FC<ReminderAnimationProps> = ({
     ).start();
 
     // Rotation animation for some medication types
-    if (type === AnimationType.LIQUID || type === AnimationType.INJECTION) {
+    if (type === 'liquid' || type === 'injection') {
       Animated.loop(
         Animated.timing(rotateAnim, {
           toValue: 1,
@@ -245,43 +245,43 @@ const ReminderAnimation: React.FC<ReminderAnimationProps> = ({
   // Component styling based on type
   const getTypeStyle = () => {
     switch (type) {
-      case AnimationType.PILL:
+      case 'pill':
         return {
           backgroundColor: color,
           borderRadius: 20,
           padding: 15,
         };
-      case AnimationType.LIQUID:
+      case 'liquid':
         return {
           backgroundColor: '#4CA6FF',
           borderRadius: 15,
           padding: 15,
         };
-      case AnimationType.INJECTION:
+      case 'injection':
         return {
           backgroundColor: '#FF4CAA',
           borderRadius: 10,
           padding: 15,
         };
-      case AnimationType.TOPICAL:
+      case 'topical':
         return {
           backgroundColor: '#4CFF7B',
           borderRadius: 15,
           padding: 15,
         };
-      case AnimationType.INHALER:
+      case 'inhaler':
         return {
           backgroundColor: '#D94CFF',
           borderRadius: 15,
           padding: 15,
         };
-      case AnimationType.TABLET:
+      case 'tablet':
         return {
           backgroundColor: color,
           borderRadius: 20,
           padding: 15,
         };
-      case AnimationType.CAPSULE:
+      case 'capsule':
         return {
           backgroundColor: color,
           borderRadius: 20,

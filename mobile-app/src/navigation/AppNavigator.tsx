@@ -1,62 +1,36 @@
 import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useSelector } from 'react-redux';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
-// Import screens
-import HomeScreen from '../screens/HomeScreen';
-import PharmaciesScreen from '../screens/PharmaciesScreen';
-import MedicineSearchScreen from '../screens/MedicineSearchScreen';
-import CartScreen from '../screens/CartScreen';
-import OrdersScreen from '../screens/OrdersScreen';
-import ProfileScreen from '../screens/SettingsScreen';
-import LoginScreen from '../screens/LoginScreen';
-import AuthScreen from '../screens/AuthScreen';
+// Screens imports
 import WelcomeScreen from '../screens/WelcomeScreen';
-import OtpVerificationScreen from '../screens/OtpVerificationScreen';
-import PaymentScreen from '../screens/PaymentScreen';
-import NotificationsScreen from '../screens/NotificationsScreen';
-import SettingsScreen from '../screens/SettingsScreen';
-import PaymentMethodsScreen from '../screens/PaymentMethodsScreen';
+import AuthScreen from '../screens/AuthScreen';
+import LoginScreen from '../screens/LoginScreen';
+import HomeScreen from '../screens/HomeScreen';
+import OrdersScreen from '../screens/OrdersScreen';
+import PharmaciesScreen from '../screens/PharmaciesScreen';
 import MedicationRemindersScreen from '../screens/MedicationRemindersScreen';
-import VideoConsultationScreen from '../screens/VideoConsultationScreen';
+import SettingsScreen from '../screens/SettingsScreen';
+import MedicineDetailScreen from '../screens/MedicineDetailScreen';
+import OrderDetailsScreen from '../screens/OrderDetailsScreen';
+import VideoChatScreen from '../features/video-chat/VideoChatScreen';
+import TrackOrderScreen from '../screens/TrackOrderScreen';
+import PrescriptionDetailScreen from '../screens/PrescriptionDetailScreen';
+import PrescriptionUploadScreen from '../screens/PrescriptionUploadScreen';
+import PharmacyMapScreen from '../screens/PharmacyMapScreen';
 
-export type RootStackParamList = {
-  Welcome: undefined;
-  Auth: undefined;
-  Login: undefined;
-  OTP: { phoneNumber: string };
-  Main: undefined;
-};
+// Types
+import { 
+  RootStackParamList, 
+  MainStackParamList, 
+  MainTabParamList 
+} from '../types/navigation';
 
-export type MainStackParamList = {
-  HomeTabs: undefined;
-  PharmacyDetail: { pharmacyId: string };
-  MedicineDetail: { medicineId: string };
-  Cart: undefined;
-  Checkout: undefined;
-  ScanPrescription: undefined;
-  PrescriptionDetail: { prescriptionId: string };
-  VideoConsultation: { pharmacistId?: string };
-  Chat: { orderId?: string; pharmacistId?: string };
-  TrackOrder: { orderId: string };
-  Payment: { orderId: string; amount: number };
-  PaymentMethods: undefined;
-  Notifications: undefined;
-  Settings: undefined;
-};
-
-export type AuthStackParamList = {
-  Welcome: undefined;
-  Login: undefined;
-  OTP: { phoneNumber: string };
-};
-
-const Stack = createStackNavigator<RootStackParamList>();
+const RootStack = createStackNavigator<RootStackParamList>();
 const MainStack = createStackNavigator<MainStackParamList>();
-const AuthStack = createStackNavigator<AuthStackParamList>();
-const Tab = createBottomTabNavigator();
+const MainTabs = createBottomTabNavigator<MainTabParamList>();
 
 const MainStackNavigator = () => (
   <MainStack.Navigator>
@@ -70,25 +44,25 @@ const MainStackNavigator = () => (
 
 const OrdersStackNavigator = () => (
   <MainStack.Navigator>
-    <MainStack.Screen name="OrdersMain" component={OrdersScreen} />
+    <MainStack.Screen name="Orders" component={OrdersScreen} />
   </MainStack.Navigator>
 );
 
 const PharmaciesStackNavigator = () => (
   <MainStack.Navigator>
-    <MainStack.Screen name="PharmaciesMain" component={PharmaciesScreen} />
+    <MainStack.Screen name="Pharmacies" component={PharmaciesScreen} />
   </MainStack.Navigator>
 );
 
 const RemindersStackNavigator = () => (
   <MainStack.Navigator>
-    <MainStack.Screen name="RemindersMain" component={MedicationRemindersScreen} />
+    <MainStack.Screen name="Reminders" component={MedicationRemindersScreen} />
   </MainStack.Navigator>
 );
 
 const ProfileStackNavigator = () => (
   <MainStack.Navigator>
-    <MainStack.Screen name="ProfileMain" component={SettingsScreen} />
+    <MainStack.Screen name="Profile" component={SettingsScreen} />
   </MainStack.Navigator>
 );
 
