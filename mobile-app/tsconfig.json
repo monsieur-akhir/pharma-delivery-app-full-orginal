@@ -1,12 +1,17 @@
 {
   "compilerOptions": {
     "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
     "esModuleInterop": true,
     "jsx": "react-native",
     "target": "esnext",
     "lib": [
-      "es2019"
+      "es2020",
+      "es2021"
     ],
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
@@ -14,6 +19,13 @@
     "resolveJsonModule": true,
     "noEmit": true,
     "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": false,
+    "removeComments": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
     "paths": {
       "@/*": [
         "src/*"
@@ -35,13 +47,30 @@
       ],
       "@assets/*": [
         "assets/*"
+      ],
+      "@types/*": [
+        "src/types/*"
+      ],
+      "@hooks/*": [
+        "src/hooks/*"
+      ],
+      "@constants/*": [
+        "src/constants/*"
       ]
     }
   },
+  "include": [
+    "src/**/*",
+    "App.tsx",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
   "exclude": [
     "node_modules",
     "babel.config.js",
-    "metro.config.js"
+    "metro.config.js",
+    "**/*.test.ts",
+    "**/*.test.tsx"
   ],
   "extends": "expo/tsconfig.base"
 }

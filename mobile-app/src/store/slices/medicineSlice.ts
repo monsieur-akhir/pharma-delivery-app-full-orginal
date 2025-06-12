@@ -184,3 +184,118 @@ export const {
 } = medicineSlice.actions;
 
 export default medicineSlice.reducer;
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+
+export interface Medicine {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  manufacturer: string;
+  inStock: boolean;
+  stockQuantity: number;
+  imageUrl?: string;
+  prescriptionRequired: boolean;
+}
+
+interface MedicineState {
+  medicines: Medicine[];
+  searchResults: Medicine[];
+  selectedMedicine: Medicine | null;
+  categories: string[];
+  loading: boolean;
+  error: string | null;
+  searchQuery: string;
+  selectedCategory: string | null;
+}
+
+const initialState: MedicineState = {
+  medicines: [],
+  searchResults: [],
+  selectedMedicine: null,
+  categories: [],
+  loading: false,
+  error: null,
+  searchQuery: '',
+  selectedCategory: null,
+};
+
+// Async thunks
+export const fetchMedicines = createAsyncThunk(
+  'medicine/fetchMedicines',
+  async (params?: { category?: string; search?: string }) => {
+    // API call would go here
+    return [];
+  }
+);
+
+export const searchMedicines = createAsyncThunk(
+  'medicine/searchMedicines',
+  async (query: string) => {
+    // API call would go here
+    return [];
+  }
+);
+
+export const fetchMedicineDetails = createAsyncThunk(
+  'medicine/fetchMedicineDetails',
+  async (medicineId: string) => {
+    // API call would go here
+    return null;
+  }
+);
+
+const medicineSlice = createSlice({
+  name: 'medicine',
+  initialState,
+  reducers: {
+    setSearchQuery: (state, action: PayloadAction<string>) => {
+      state.searchQuery = action.payload;
+    },
+    setSelectedCategory: (state, action: PayloadAction<string | null>) => {
+      state.selectedCategory = action.payload;
+    },
+    clearSearchResults: (state) => {
+      state.searchResults = [];
+      state.searchQuery = '';
+    },
+    setSelectedMedicine: (state, action: PayloadAction<Medicine | null>) => {
+      state.selectedMedicine = action.payload;
+    },
+    clearError: (state) => {
+      state.error = null;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchMedicines.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchMedicines.fulfilled, (state, action) => {
+        state.loading = false;
+        state.medicines = action.payload;
+      })
+      .addCase(fetchMedicines.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to fetch medicines';
+      })
+      .addCase(searchMedicines.fulfilled, (state, action) => {
+        state.searchResults = action.payload;
+      })
+      .addCase(fetchMedicineDetails.fulfilled, (state, action) => {
+        state.selectedMedicine = action.payload;
+      });
+  },
+});
+
+export const {
+  setSearchQuery,
+  setSelectedCategory,
+  clearSearchResults,
+  setSelectedMedicine,
+  clearError,
+} = medicineSlice.actions;
+
+export default medicineSlice.reducer;

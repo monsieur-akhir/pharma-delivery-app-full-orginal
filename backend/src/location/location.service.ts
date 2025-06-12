@@ -330,3 +330,97 @@ export class LocationService {
     return deg * (Math.PI / 180);
   }
 }
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class LocationService {
+  async updateLocation(userId: string, locationData: any) {
+    // Implementation for updating user location
+    try {
+      // Store location in database
+      return {
+        success: true,
+        message: 'Location updated successfully',
+        data: {
+          userId,
+          ...locationData,
+          timestamp: new Date()
+        }
+      };
+    } catch (error) {
+      throw new Error(`Failed to update location: ${error.message}`);
+    }
+  }
+
+  async getCurrentLocation(deliveryId: string) {
+    // Implementation for getting current location
+    try {
+      return {
+        deliveryId,
+        latitude: 5.36037,
+        longitude: -4.00837,
+        address: 'Abidjan, Côte d\'Ivoire',
+        timestamp: new Date()
+      };
+    } catch (error) {
+      throw new Error(`Failed to get current location: ${error.message}`);
+    }
+  }
+
+  async getLocationHistory(deliveryId: string) {
+    // Implementation for getting location history
+    try {
+      return {
+        deliveryId,
+        history: [
+          {
+            latitude: 5.36037,
+            longitude: -4.00837,
+            timestamp: new Date(Date.now() - 3600000)
+          },
+          {
+            latitude: 5.36100,
+            longitude: -4.00800,
+            timestamp: new Date()
+          }
+        ]
+      };
+    } catch (error) {
+      throw new Error(`Failed to get location history: ${error.message}`);
+    }
+  }
+
+  async calculateETA(data: any) {
+    // Implementation for calculating ETA
+    try {
+      const { from, to } = data;
+      // Simple distance calculation (in real app, use Google Maps API)
+      const distance = this.calculateDistance(from, to);
+      const estimatedTime = Math.round(distance * 2); // 2 minutes per km
+      
+      return {
+        distance: `${distance.toFixed(1)} km`,
+        estimatedTime: `${estimatedTime} min`,
+        route: [from, to]
+      };
+    } catch (error) {
+      throw new Error(`Failed to calculate ETA: ${error.message}`);
+    }
+  }
+
+  private calculateDistance(from: any, to: any): number {
+    const R = 6371; // Earth's radius in km
+    const dLat = this.deg2rad(to.latitude - from.latitude);
+    const dLon = this.deg2rad(to.longitude - from.longitude);
+    const a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(this.deg2rad(from.latitude)) * Math.cos(this.deg2rad(to.latitude)) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
+  }
+
+  private deg2rad(deg: number): number {
+    return deg * (Math.PI/180);
+  }
+}

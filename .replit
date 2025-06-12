@@ -5,7 +5,7 @@ channel = "stable-24_05"
 packages = ["redis"]
 
 [workflows]
-runButton = "Project"
+runButton = "Backend Server Fixed"
 
 [[workflows.workflow]]
 name = "Project"
@@ -82,6 +82,19 @@ mode = "sequential"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cd mobile-app && npx expo start --tunnel"
+
+[[workflows.workflow]]
+name = "Backend Server Fixed"
+author = 42346629
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd backend && npm install"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd backend && npm run start:dev"
 
 [deployment]
 run = ["sh", "-c", "cd backend && npm install && npm run start:dev"]
