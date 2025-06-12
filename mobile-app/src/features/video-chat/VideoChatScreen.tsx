@@ -14,6 +14,7 @@ import { RTCView } from 'react-native-webrtc';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useAuth } from '../../hooks/useAuth';
 import { VideoChatService, VideoChatParticipant } from './video-chat.service';
+import { Timeout } from '@/types/timer';
 
 // Types for screen parameters
 type VideoChatScreenParams = {
@@ -44,7 +45,7 @@ const VideoChatScreen: React.FC = () => {
   const [pharmacistJoined, setPharmacistJoined] = useState(false);
   const [waitingForPharmacist, setWaitingForPharmacist] = useState(!params.fromPharmacist);
   const [callDuration, setCallDuration] = useState(0);
-  const durationTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const durationTimerRef = useRef<Timeout | null>(null);
 
   // Initialize video chat service
   useEffect(() => {
@@ -155,11 +156,13 @@ const VideoChatScreen: React.FC = () => {
         });
 
         // Initialize video chat service with user info
-        await videoChatService.initialize(
-          user.id,
-          user.username,
-          params.fromPharmacist || false
-        );
+        if (user) {
+          await videoChatService.initialize(
+            user.id,
+            user.username || user.name || 'User',
+            params.fromPharmacist || false
+          );
+        }
 
         // Set up local media stream
         const stream = await videoChatService.setupLocalStream();
@@ -274,7 +277,7 @@ const VideoChatScreen: React.FC = () => {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
-                userId: user.id,
+                userId: user?.id,
                 pharmacistId: pharmacist.userId,
                 roomId,
                 duration: callDuration,
@@ -359,7 +362,7 @@ const VideoChatScreen: React.FC = () => {
             {remoteStreamsArray.map((stream, index) => (
               <RTCView
                 key={index}
-                streamURL={stream.toURL()}
+                streamURL={stream.toURL?.() || ''}
                 style={styles.remoteVideo}
                 objectFit="cover"
               />

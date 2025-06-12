@@ -2,11 +2,14 @@ export interface User {
   id: number;
   phone: string;
   name?: string;
+  username?: string;
+  fullName?: string;
   email?: string;
   role: 'customer' | 'deliverer' | 'pharmacist' | 'admin';
   isVerified: boolean;
   stripeCustomerId?: string;
   stripeSubscriptionId?: string;
+  token?: string;
   createdAt: string;
   updatedAt: string;
 }

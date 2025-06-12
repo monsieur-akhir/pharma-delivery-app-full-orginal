@@ -22,12 +22,15 @@ export type MainStackParamList = {
   PrescriptionUpload: { orderId?: string };
   PharmacyDetail: { pharmacyId: string };
   MedicationDetails: { scheduleId: string };
-  VideoChat: { pharmacistId?: string; orderId?: string };
+  VideoChat: { pharmacistId?: string; orderId?: string; roomId?: string };
   RateOrder: { orderId: string };
   Support: { orderId: string };
   AddPaymentMethod: undefined;
   PaymentMethods: undefined;
   MedicationReminders: undefined;
+  DeliveryDashboard: undefined;
+  DeliveryDetail: { deliveryId: string };
+  ActiveDelivery: { deliveryId: string };
 };
 
 export type TabParamList = {
