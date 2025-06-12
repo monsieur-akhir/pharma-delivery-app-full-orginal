@@ -17,7 +17,7 @@ import { MainStackParamList } from '@/navigation/AppNavigator';
 import { uploadPrescription, setPreviewImage, clearPrescriptionData } from '@/store/slices/prescriptionSlice';
 import { AppDispatch, RootState } from '@/store';
 import * as ImagePicker from 'expo-image-picker';
-import { Camera } from 'expo-camera';
+import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
 import { Feather } from '@expo/vector-icons';
 import PrescriptionPreview from '@/components/PrescriptionPreview';
 
@@ -30,9 +30,9 @@ interface Props {
 }
 
 const PrescriptionUploadScreen: React.FC<Props> = ({ navigation, route }) => {
-  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+  const [permission, requestPermission] = useCameraPermissions();
   const [cameraVisible, setCameraVisible] = useState(false);
-  const [camera, setCamera] = useState<Camera | null>(null);
+  const [camera, setCamera] = useState<CameraView | null>(null);
   
   const dispatch = useDispatch<AppDispatch>();
   const { previewImage, isLoading, error, currentPrescription } = useSelector((state: RootState) => state.prescription);
@@ -40,14 +40,8 @@ const PrescriptionUploadScreen: React.FC<Props> = ({ navigation, route }) => {
   // Get orderId from route params
   const orderId = route.params?.orderId;
 
-  // Request camera permissions
+  // Clean up when component unmounts
   useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === 'granted');
-    })();
-    
-    // Clean up when component unmounts
     return () => {
       dispatch(clearPrescriptionData());
     };
@@ -117,7 +111,7 @@ const PrescriptionUploadScreen: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
-  if (hasPermission === null) {
+  if (!permission) {
     return (
       <View style={styles.centered}>
         <ActivityIndicator size="large" color="#4A80F0" />
@@ -125,12 +119,18 @@ const PrescriptionUploadScreen: React.FC<Props> = ({ navigation, route }) => {
     );
   }
 
-  if (hasPermission === false) {
+  if (!permission.granted) {
     return (
       <View style={styles.centered}>
         <Text style={styles.errorText}>No access to camera</Text>
         <TouchableOpacity 
           style={styles.permissionButton}
+          onPress={requestPermission}
+        >
+          <Text style={styles.permissionButtonText}>Request Camera Permission</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={[styles.permissionButton, { marginTop: 10 }]}
           onPress={pickImage}
         >
           <Text style={styles.permissionButtonText}>Select from Gallery</Text>
@@ -142,9 +142,9 @@ const PrescriptionUploadScreen: React.FC<Props> = ({ navigation, route }) => {
   if (cameraVisible) {
     return (
       <View style={styles.cameraContainer}>
-        <Camera
+        <CameraView
           style={styles.camera}
-          type={Camera.Constants.Type.back}
+          facing="back"
           ref={(ref) => setCamera(ref)}
         >
           <View style={styles.cameraControls}>
@@ -164,7 +164,7 @@ const PrescriptionUploadScreen: React.FC<Props> = ({ navigation, route }) => {
             
             <View style={{ width: 48 }} />
           </View>
-        </Camera>
+        </CameraView>
       </View>
     );
   }

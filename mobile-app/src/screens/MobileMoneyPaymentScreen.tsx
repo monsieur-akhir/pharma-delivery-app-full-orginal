@@ -1,459 +1,340 @@
 import React, { useState, useEffect } from 'react';
 import {
+  StyleSheet,
   View,
   Text,
-  StyleSheet,
-  TextInput,
   TouchableOpacity,
-  ActivityIndicator,
-  Alert,
+  SafeAreaView,
   ScrollView,
-  Image,
+  TextInput,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { useAuth } from '../hooks/useAuth';
-import { api } from '../services/api';
-import { MobileMoneyProvider } from '../types/payment';
-import { COLORS, FONTS, SIZES } from '../constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
+import { MainStackParamList } from '@/navigation/AppNavigator';
+import { AppDispatch, RootState } from '@/store';
+import { Feather } from '@expo/vector-icons';
+import { paymentService } from '@/services/payment.service';
 
-const MobileMoneyPaymentScreen = () => {
-  const navigation = useNavigation();
-  const route = useRoute();
-  const { user } = useAuth();
-  const { orderId, amount } = route.params as { orderId: number; amount: number };
+type MobileMoneyPaymentScreenNavigationProp = StackNavigationProp<MainStackParamList, 'MobileMoneyPayment'>;
+type MobileMoneyPaymentScreenRouteProp = RouteProp<MainStackParamList, 'MobileMoneyPayment'>;
 
+interface Props {
+  navigation: MobileMoneyPaymentScreenNavigationProp;
+  route: MobileMoneyPaymentScreenRouteProp;
+}
+
+interface MobileMoneyProvider {
+  code: string;
+  name: string;
+  icon?: string;
+}
+
+const MobileMoneyPaymentScreen: React.FC<Props> = ({ navigation, route }) => {
+  const [selectedProvider, setSelectedProvider] = useState<string>('');
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
-  const [providers, setProviders] = useState<{ code: string; name: string }[]>([]);
-  const [selectedProvider, setSelectedProvider] = useState<string | null>(null);
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [transactionReference, setTransactionReference] = useState<string | null>(null);
-  const [paymentStatus, setPaymentStatus] = useState<'idle' | 'pending' | 'completed' | 'failed'>('idle');
-  const [statusMessage, setStatusMessage] = useState('');
+  const [providers, setProviders] = useState<MobileMoneyProvider[]>([]);
 
-  // Fetch available mobile money providers
+  const dispatch = useDispatch<AppDispatch>();
+  const { orderId, amount } = route.params;
+
   useEffect(() => {
-    const fetchProviders = async () => {
-      try {
-        setIsLoading(true);
-        const response = await api.get('/api/payments/mobile-money/providers');
-        
-        if (response.data.status === 'success' && response.data.data.enabled) {
-          setProviders(response.data.data.providers);
-          // If user has a phone number, pre-fill it
-          if (user?.phone) {
-            setPhoneNumber(user.phone);
-          }
-        } else {
-          Alert.alert('Error', 'Mobile money payment is not available');
-          navigation.goBack();
-        }
-      } catch (error) {
-        Alert.alert('Error', 'Failed to load payment providers');
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchProviders();
+    loadProviders();
   }, []);
 
-  // Initiate mobile money payment
-  const initiatePayment = async () => {
+  const loadProviders = async () => {
+    try {
+      const response = await paymentService.getMobileMoneyProviders();
+      if (response.enabled) {
+        setProviders(response.providers);
+      }
+    } catch (error) {
+      console.error('Error loading providers:', error);
+      Alert.alert('Error', 'Failed to load mobile money providers');
+    }
+  };
+
+  const handlePayment = async () => {
     if (!selectedProvider) {
-      Alert.alert('Error', 'Please select a payment provider');
+      Alert.alert('Error', 'Please select a mobile money provider');
       return;
     }
 
-    if (!phoneNumber || phoneNumber.length < 8) {
-      Alert.alert('Error', 'Please enter a valid phone number');
+    if (!phoneNumber) {
+      Alert.alert('Error', 'Please enter your phone number');
       return;
     }
+
+    setIsLoading(true);
 
     try {
-      setIsLoading(true);
-      const response = await api.post('/api/payments/mobile-money/initiate', {
-        userId: user?.id,
+      const paymentData = {
         orderId,
         amount,
         provider: selectedProvider,
         phoneNumber,
-        currency: 'XOF', // West African CFA Franc
-      });
+      };
 
-      if (response.data.status === 'success') {
-        setTransactionReference(response.data.data.transactionReference);
-        setPaymentStatus('pending');
-        setStatusMessage(response.data.data.message);
+      const response = await paymentService.processMobileMoneyPayment(paymentData);
+
+      if (response.success) {
+        Alert.alert(
+          'Payment Initiated',
+          'Please check your phone for payment confirmation',
+          [
+            {
+              text: 'OK',
+              onPress: () => navigation.navigate('OrderTracking', { orderId }),
+            },
+          ]
+        );
       } else {
-        Alert.alert('Payment Error', response.data.message || 'Failed to initiate payment');
+        Alert.alert('Payment Failed', response.message || 'Payment processing failed');
       }
     } catch (error) {
-      Alert.alert('Error', 'Failed to initiate payment');
-      console.error(error);
+      console.error('Payment error:', error);
+      Alert.alert('Error', 'Payment processing failed. Please try again.');
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Verify payment status
-  const verifyPayment = async () => {
-    if (!transactionReference) return;
-
-    try {
-      setIsLoading(true);
-      const response = await api.post('/api/payments/mobile-money/verify', {
-        transactionReference,
-        orderId,
-      });
-
-      if (response.data.status === 'success') {
-        const paymentResult = response.data.data;
-        setPaymentStatus(paymentResult.status as any);
-        setStatusMessage(paymentResult.message);
-
-        if (paymentResult.status === 'completed') {
-          Alert.alert('Success', 'Payment completed successfully', [
-            { text: 'OK', onPress: () => navigation.navigate('OrderDetails', { orderId }) }
-          ]);
-        } else if (paymentResult.status === 'failed') {
-          Alert.alert('Payment Failed', paymentResult.message);
-        }
-      } else {
-        Alert.alert('Verification Error', response.data.message || 'Failed to verify payment');
-      }
-    } catch (error) {
-      Alert.alert('Error', 'Failed to verify payment status');
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // Provider selection component
-  const ProviderOption = ({ provider, selected, onSelect }) => (
+  const renderProviderCard = (provider: MobileMoneyProvider) => (
     <TouchableOpacity
-      style={[styles.providerOption, selected && styles.selectedProvider]}
-      onPress={() => onSelect(provider.code)}
+      key={provider.code}
+      style={[
+        styles.providerCard,
+        selectedProvider === provider.code && styles.selectedProviderCard,
+      ]}
+      onPress={() => setSelectedProvider(provider.code)}
     >
       <View style={styles.providerInfo}>
+        <View style={styles.providerIcon}>
+          <Feather name="smartphone" size={24} color="#4A80F0" />
+        </View>
         <Text style={styles.providerName}>{provider.name}</Text>
       </View>
-      {selected && <Icon name="checkmark-circle" size={24} color={COLORS.primary} />}
+      {selectedProvider === provider.code && (
+        <Feather name="check-circle" size={24} color="#10B981" />
+      )}
     </TouchableOpacity>
   );
 
-  // Payment initiation view
-  const renderPaymentForm = () => (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <Text style={styles.sectionTitle}>Select Payment Method</Text>
-      {providers.map((provider) => (
-        <ProviderOption
-          key={provider.code}
-          provider={provider}
-          selected={selectedProvider === provider.code}
-          onSelect={setSelectedProvider}
-        />
-      ))}
-
-      <Text style={styles.sectionTitle}>Enter Phone Number</Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Phone number (e.g., +225XXXXXXXX)"
-          value={phoneNumber}
-          onChangeText={setPhoneNumber}
-          keyboardType="phone-pad"
-        />
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Feather name="arrow-left" size={24} color="#1E293B" />
+        </TouchableOpacity>
+        <Text style={styles.title}>Mobile Money Payment</Text>
+        <View style={{ width: 24 }} />
       </View>
 
-      <View style={styles.summaryContainer}>
-        <Text style={styles.summaryTitle}>Payment Summary</Text>
-        <View style={styles.summaryRow}>
-          <Text style={styles.summaryLabel}>Order ID:</Text>
-          <Text style={styles.summaryValue}>{orderId}</Text>
+      <ScrollView style={styles.content}>
+        <View style={styles.amountContainer}>
+          <Text style={styles.amountLabel}>Amount to Pay</Text>
+          <Text style={styles.amountValue}>${amount}</Text>
         </View>
-        <View style={styles.summaryRow}>
-          <Text style={styles.summaryLabel}>Amount:</Text>
-          <Text style={styles.summaryValue}>{amount.toLocaleString()} XOF</Text>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Select Provider</Text>
+          {providers.map(renderProviderCard)}
         </View>
-      </View>
 
-      <TouchableOpacity
-        style={styles.payButton}
-        onPress={initiatePayment}
-        disabled={isLoading || !selectedProvider || !phoneNumber}
-      >
-        {isLoading ? (
-          <ActivityIndicator color={COLORS.white} />
-        ) : (
-          <Text style={styles.payButtonText}>Pay Now</Text>
-        )}
-      </TouchableOpacity>
-    </ScrollView>
-  );
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Phone Number</Text>
+          <TextInput
+            style={styles.phoneInput}
+            placeholder="Enter your phone number"
+            value={phoneNumber}
+            onChangeText={setPhoneNumber}
+            keyboardType="phone-pad"
+            editable={!isLoading}
+          />
+        </View>
 
-  // Payment status view
-  const renderPaymentStatus = () => (
-    <View style={styles.statusContainer}>
-      <View style={styles.statusIconContainer}>
-        {paymentStatus === 'pending' && (
-          <Icon name="time-outline" size={64} color={COLORS.warning} />
-        )}
-        {paymentStatus === 'completed' && (
-          <Icon name="checkmark-circle-outline" size={64} color={COLORS.success} />
-        )}
-        {paymentStatus === 'failed' && (
-          <Icon name="close-circle-outline" size={64} color={COLORS.error} />
-        )}
-      </View>
-      
-      <Text style={styles.statusTitle}>
-        {paymentStatus === 'pending' && 'Payment Processing'}
-        {paymentStatus === 'completed' && 'Payment Successful'}
-        {paymentStatus === 'failed' && 'Payment Failed'}
-      </Text>
-      
-      <Text style={styles.statusMessage}>{statusMessage}</Text>
-      
-      <Text style={styles.referenceText}>
-        Transaction Reference: {transactionReference}
-      </Text>
+        <View style={styles.instructionsContainer}>
+          <Text style={styles.instructionsTitle}>Payment Instructions</Text>
+          <View style={styles.instruction}>
+            <Feather name="check-circle" size={16} color="#10B981" />
+            <Text style={styles.instructionText}>
+              You will receive a payment prompt on your phone
+            </Text>
+          </View>
+          <View style={styles.instruction}>
+            <Feather name="check-circle" size={16} color="#10B981" />
+            <Text style={styles.instructionText}>
+              Enter your mobile money PIN to confirm
+            </Text>
+          </View>
+          <View style={styles.instruction}>
+            <Feather name="check-circle" size={16} color="#10B981" />
+            <Text style={styles.instructionText}>
+              You will receive a confirmation SMS
+            </Text>
+          </View>
+        </View>
+      </ScrollView>
 
-      {paymentStatus === 'pending' && (
+      <View style={styles.bottomBar}>
         <TouchableOpacity
-          style={styles.verifyButton}
-          onPress={verifyPayment}
-          disabled={isLoading}
+          style={[
+            styles.payButton,
+            (!selectedProvider || !phoneNumber || isLoading) && styles.disabledButton,
+          ]}
+          onPress={handlePayment}
+          disabled={!selectedProvider || !phoneNumber || isLoading}
         >
           {isLoading ? (
-            <ActivityIndicator color={COLORS.white} />
+            <ActivityIndicator color="#fff" size="small" />
           ) : (
-            <Text style={styles.verifyButtonText}>Check Payment Status</Text>
+            <Text style={styles.payButtonText}>Pay ${amount}</Text>
           )}
         </TouchableOpacity>
-      )}
-
-      {paymentStatus === 'failed' && (
-        <TouchableOpacity
-          style={styles.retryButton}
-          onPress={() => setPaymentStatus('idle')}
-        >
-          <Text style={styles.retryButtonText}>Try Again</Text>
-        </TouchableOpacity>
-      )}
-
-      {paymentStatus === 'completed' && (
-        <TouchableOpacity
-          style={styles.doneButton}
-          onPress={() => navigation.navigate('OrderDetails', { orderId })}
-        >
-          <Text style={styles.doneButtonText}>View Order</Text>
-        </TouchableOpacity>
-      )}
-    </View>
-  );
-
-  return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-          <Icon name="arrow-back" size={24} color={COLORS.primary} />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Mobile Money Payment</Text>
       </View>
-
-      {isLoading && paymentStatus === 'idle' ? (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={COLORS.primary} />
-          <Text style={styles.loadingText}>Loading payment options...</Text>
-        </View>
-      ) : paymentStatus === 'idle' ? (
-        renderPaymentForm()
-      ) : (
-        renderPaymentStatus()
-      )}
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
-    padding: SIZES.padding,
+    backgroundColor: '#F8FAFC',
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: SIZES.padding * 2,
+    justifyContent: 'space-between',
+    padding: 16,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E2E8F0',
   },
-  backButton: {
-    marginRight: SIZES.padding,
+  title: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#1E293B',
   },
-  headerTitle: {
-    fontSize: SIZES.large,
-    fontWeight: 'bold',
-    color: COLORS.text,
-  },
-  loadingContainer: {
+  content: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    padding: 16,
   },
-  loadingText: {
-    marginTop: SIZES.padding,
-    fontSize: SIZES.font,
-    color: COLORS.text,
+  amountContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 20,
+    alignItems: 'center',
+    marginBottom: 24,
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+  },
+  amountLabel: {
+    fontSize: 14,
+    color: '#64748B',
+    marginBottom: 8,
+  },
+  amountValue: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#1E293B',
+  },
+  section: {
+    marginBottom: 24,
   },
   sectionTitle: {
-    fontSize: SIZES.font,
-    fontWeight: 'bold',
-    marginVertical: SIZES.padding,
-    color: COLORS.text,
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#1E293B',
+    marginBottom: 12,
   },
-  providerOption: {
+  providerCard: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    padding: SIZES.padding,
-    marginBottom: SIZES.base,
-    borderWidth: 1,
-    borderColor: COLORS.lightGray,
-    borderRadius: SIZES.radius,
+    justifyContent: 'space-between',
+    marginBottom: 12,
+    borderWidth: 2,
+    borderColor: '#E2E8F0',
   },
-  selectedProvider: {
-    borderColor: COLORS.primary,
-    backgroundColor: COLORS.lightPrimary,
+  selectedProviderCard: {
+    borderColor: '#4A80F0',
+    backgroundColor: '#EFF6FF',
   },
   providerInfo: {
     flexDirection: 'row',
     alignItems: 'center',
   },
+  providerIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#EFF6FF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
+  },
   providerName: {
-    fontSize: SIZES.font,
+    fontSize: 16,
     fontWeight: '500',
-    marginLeft: SIZES.base,
-    color: COLORS.text,
+    color: '#1E293B',
   },
-  inputContainer: {
-    marginBottom: SIZES.padding,
-  },
-  input: {
-    height: 50,
+  phoneInput: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 16,
+    fontSize: 16,
     borderWidth: 1,
-    borderColor: COLORS.lightGray,
-    borderRadius: SIZES.radius,
-    paddingHorizontal: SIZES.padding,
-    fontSize: SIZES.font,
+    borderColor: '#E2E8F0',
   },
-  summaryContainer: {
-    backgroundColor: COLORS.lightGray2,
-    padding: SIZES.padding,
-    borderRadius: SIZES.radius,
-    marginVertical: SIZES.padding,
+  instructionsContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
   },
-  summaryTitle: {
-    fontSize: SIZES.font,
-    fontWeight: 'bold',
-    marginBottom: SIZES.base,
-    color: COLORS.text,
+  instructionsTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#1E293B',
+    marginBottom: 12,
   },
-  summaryRow: {
+  instruction: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 2,
+    alignItems: 'center',
+    marginBottom: 8,
   },
-  summaryLabel: {
-    color: COLORS.gray,
-    fontSize: SIZES.font,
+  instructionText: {
+    fontSize: 14,
+    color: '#64748B',
+    marginLeft: 8,
+    flex: 1,
   },
-  summaryValue: {
-    fontWeight: 'bold',
-    fontSize: SIZES.font,
-    color: COLORS.text,
+  bottomBar: {
+    backgroundColor: '#fff',
+    borderTopWidth: 1,
+    borderTopColor: '#E2E8F0',
+    padding: 16,
   },
   payButton: {
-    backgroundColor: COLORS.primary,
-    height: 50,
-    borderRadius: SIZES.radius,
+    backgroundColor: '#4A80F0',
+    borderRadius: 12,
+    height: 56,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: SIZES.padding,
+  },
+  disabledButton: {
+    backgroundColor: '#94A3B8',
   },
   payButtonText: {
-    color: COLORS.white,
-    fontSize: SIZES.font,
-    fontWeight: 'bold',
-  },
-  statusContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: SIZES.padding,
-  },
-  statusIconContainer: {
-    marginBottom: SIZES.padding * 2,
-  },
-  statusTitle: {
-    fontSize: SIZES.large,
-    fontWeight: 'bold',
-    marginBottom: SIZES.padding,
-    color: COLORS.text,
-  },
-  statusMessage: {
-    fontSize: SIZES.font,
-    textAlign: 'center',
-    marginBottom: SIZES.padding * 2,
-    color: COLORS.text,
-  },
-  referenceText: {
-    fontSize: SIZES.small,
-    color: COLORS.gray,
-    marginBottom: SIZES.padding * 2,
-  },
-  verifyButton: {
-    backgroundColor: COLORS.primary,
-    width: '100%',
-    height: 50,
-    borderRadius: SIZES.radius,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: SIZES.padding,
-  },
-  verifyButtonText: {
-    color: COLORS.white,
-    fontSize: SIZES.font,
-    fontWeight: 'bold',
-  },
-  retryButton: {
-    backgroundColor: COLORS.warning,
-    width: '100%',
-    height: 50,
-    borderRadius: SIZES.radius,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: SIZES.padding,
-  },
-  retryButtonText: {
-    color: COLORS.white,
-    fontSize: SIZES.font,
-    fontWeight: 'bold',
-  },
-  doneButton: {
-    backgroundColor: COLORS.success,
-    width: '100%',
-    height: 50,
-    borderRadius: SIZES.radius,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: SIZES.padding,
-  },
-  doneButtonText: {
-    color: COLORS.white,
-    fontSize: SIZES.font,
-    fontWeight: 'bold',
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
 

@@ -135,7 +135,7 @@ const AppNavigator = () => {
         setHasSeenWelcome(false);
       }
     }
-    
+
     checkWelcomeStatus();
   }, []);
 
@@ -156,6 +156,31 @@ const AppNavigator = () => {
       ) : (
         <Stack.Screen name="Main" component={TabNavigator} />
       )}
+       <Stack.Screen 
+          name="OrderTracking" 
+          component={DeliveryTrackingScreen} 
+          options={{ title: 'Track Order' }} 
+        />
+        <Stack.Screen 
+          name="MobileMoneyPayment" 
+          component={MobileMoneyPaymentScreen} 
+          options={{ title: 'Mobile Money Payment' }} 
+        />
+        <Stack.Screen 
+          name="OrderDetails" 
+          component={OrderDetailsScreen} 
+          options={{ title: 'Order Details' }} 
+        />
+        <Stack.Screen 
+          name="MedicationDetails" 
+          component={MedicationDetailsScreen} 
+          options={{ title: 'Medication Details' }} 
+        />
+        <Stack.Screen 
+          name="MedicationReminders" 
+          component={MedicationRemindersScreen} 
+          options={{ title: 'Medication Reminders' }} 
+        />
     </Stack.Navigator>
   );
 };

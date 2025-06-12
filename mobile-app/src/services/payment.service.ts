@@ -175,6 +175,38 @@ class PaymentService {
       throw error;
     }
   }
+
+    /**
+   * Get available mobile money providers
+   */
+  async getMobileMoneyProviders() {
+    try {
+      const response = await api.get('/payments/mobile-money/providers');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching mobile money providers:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Process mobile money payment
+   * @param paymentData Payment data
+   */
+  async processMobileMoneyPayment(paymentData: {
+    orderId: string;
+    amount: number;
+    provider: string;
+    phoneNumber: string;
+  }) {
+    try {
+      const response = await api.post('/payments/mobile-money', paymentData);
+      return response.data;
+    } catch (error) {
+      console.error('Error processing mobile money payment:', error);
+      throw error;
+    }
+  }
 }
 
 export default new PaymentService();

@@ -65,7 +65,7 @@
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.43.1",
     "expo": "^49.0.23",
-    "expo-camera": "^16.1.6",
+    "expo-camera": "~15.0.14",
     "expo-cli": "^6.3.12",
     "expo-image-picker": "^16.1.4",
     "expo-location": "^18.1.5",
