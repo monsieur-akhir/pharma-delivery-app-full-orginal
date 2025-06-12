@@ -1,0 +1,3971 @@
+~/workspace/mobile-app$ npx tsc --noEmit --strict
+App.tsx:1:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useEffect, useState } from 'react';
+                                             ~~~~~~~
+
+App.tsx:54:6 - error TS2741: Property 'children' is missing in type '{ store: any; }' but required in type 'ProviderProps<UnknownAction, unknown>'.
+
+54     <Provider store={store}>
+        ~~~~~~~~
+
+  ../node_modules/react-redux/dist/react-redux.d.ts:113:5
+    113     children: ReactNode;
+            ~~~~~~~~
+    'children' is declared here.
+
+App.tsx:57:12 - error TS2322: Type '{}' is not assignable to type 'NavigationContainerProps & { direction?: LocaleDirection | undefined; linking?: LinkingOptions<RootParamList> | undefined; fallback?: any; documentTitle?: DocumentTitleOptions | undefined; } & { ...; }'.
+  Property 'children' is missing in type '{}' but required in type 'NavigationContainerProps'.
+
+57           <NavigationContainer>
+              ~~~~~~~~~~~~~~~~~~~
+
+  ../node_modules/@react-navigation/core/lib/typescript/src/types.d.ts:324:5
+    324     children: React.ReactNode;
+            ~~~~~~~~
+    'children' is declared here.
+
+src/components/MedicineItem.tsx:1:19 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React from 'react';
+                    ~~~~~~~
+
+src/components/MedicineItem.tsx:18:54 - error TS7031: Binding element 'medicine' implicitly has an 'any' type.
+
+18 const MedicineItem: React.FC<MedicineItemProps> = ({ medicine, onPress, onAddToCart }) => {
+                                                        ~~~~~~~~
+
+src/components/MedicineItem.tsx:18:64 - error TS7031: Binding element 'onPress' implicitly has an 'any' type.
+
+18 const MedicineItem: React.FC<MedicineItemProps> = ({ medicine, onPress, onAddToCart }) => {
+                                                                  ~~~~~~~
+
+src/components/MedicineItem.tsx:18:73 - error TS7031: Binding element 'onAddToCart' implicitly has an 'any' type.
+
+18 const MedicineItem: React.FC<MedicineItemProps> = ({ medicine, onPress, onAddToCart }) => {
+                                                                           ~~~~~~~~~~~
+
+src/components/PaymentMethodSelector.tsx:1:19 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React from 'react';
+                    ~~~~~~~
+
+src/components/PaymentMethodSelector.tsx:22:3 - error TS7031: Binding element 'methods' implicitly has an 'any' type.
+
+22   methods,
+     ~~~~~~~
+
+src/components/PaymentMethodSelector.tsx:23:3 - error TS7031: Binding element 'selectedMethodId' implicitly has an 'any' type.
+
+23   selectedMethodId,
+     ~~~~~~~~~~~~~~~~
+
+src/components/PaymentMethodSelector.tsx:24:3 - error TS7031: Binding element 'onSelectMethod' implicitly has an 'any' type.
+
+24   onSelectMethod,
+     ~~~~~~~~~~~~~~
+
+src/components/PaymentMethodSelector.tsx:25:3 - error TS7031: Binding element 'onAddPaymentMethod' implicitly has an 'any' type.
+
+25   onAddPaymentMethod,
+     ~~~~~~~~~~~~~~~~~~
+
+src/components/PaymentMethodSelector.tsx:31:21 - error TS7006: Parameter 'method' implicitly has an 'any' type.
+
+31       {methods.map((method, index) => (
+                       ~~~~~~
+
+src/components/PaymentMethodSelector.tsx:31:29 - error TS7006: Parameter 'index' implicitly has an 'any' type.
+
+31       {methods.map((method, index) => (
+                               ~~~~~
+
+src/components/PharmacyCard.tsx:2:19 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+2 import React from 'react';
+                    ~~~~~~~
+
+src/components/PharmacyCard.tsx:32:54 - error TS7031: Binding element 'pharmacy' implicitly has an 'any' type.
+
+32 const PharmacyCard: React.FC<PharmacyCardProps> = ({ pharmacy, selected, onPress }) => {
+                                                        ~~~~~~~~
+
+src/components/PharmacyCard.tsx:32:64 - error TS7031: Binding element 'selected' implicitly has an 'any' type.
+
+32 const PharmacyCard: React.FC<PharmacyCardProps> = ({ pharmacy, selected, onPress }) => {
+                                                                  ~~~~~~~~
+
+src/components/PharmacyCard.tsx:32:74 - error TS7031: Binding element 'onPress' implicitly has an 'any' type.
+
+32 const PharmacyCard: React.FC<PharmacyCardProps> = ({ pharmacy, selected, onPress }) => {
+                                                                            ~~~~~~~
+
+src/components/PrescriptionPreview.tsx:2:19 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+2 import React from 'react';
+                    ~~~~~~~
+
+src/components/PrescriptionPreview.tsx:18:3 - error TS7031: Binding element 'imageUri' implicitly has an 'any' type.
+
+18   imageUri,
+     ~~~~~~~~
+
+src/components/PrescriptionPreview.tsx:19:3 - error TS7031: Binding element 'onRemove' implicitly has an 'any' type.
+
+19   onRemove,
+     ~~~~~~~~
+
+src/context/AuthContext.tsx:1:71 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { createContext, useState, useContext, useEffect } from 'react';
+                                                                        ~~~~~~~
+
+src/context/AuthContext.tsx:2:26 - error TS2307: Cannot find module '@react-native-async-storage/async-storage' or its corresponding type declarations.
+
+2 import AsyncStorage from '@react-native-async-storage/async-storage';
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/context/AuthContext.tsx:25:71 - error TS7031: Binding element 'children' implicitly has an 'any' type.
+
+25 export const AuthProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
+                                                                         ~~~~~~~~
+
+src/features/medication-reminders/animations/AdherenceCelebration.tsx:1:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useEffect, useState } from 'react';
+                                             ~~~~~~~
+
+src/features/medication-reminders/animations/AdherenceCelebration.tsx:22:3 - error TS7031: Binding element 'isVisible' implicitly has an 'any' type.
+
+22   isVisible,
+     ~~~~~~~~~
+
+src/features/medication-reminders/animations/AdherenceCelebration.tsx:23:3 - error TS7031: Binding element 'onComplete' implicitly has an 'any' type.
+
+23   onComplete,
+     ~~~~~~~~~~
+
+src/features/medication-reminders/animations/AdherenceCelebration.tsx:91:22 - error TS7006: Parameter 'piece' implicitly has an 'any' type.
+
+91       {confetti.map((piece) => {
+                        ~~~~~
+
+src/features/medication-reminders/animations/AdherenceCelebration.tsx:116:12 - error TS2604: JSX element type 'Animated.View' does not have any construct or call signatures.
+
+116           <Animated.View
+               ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationImpactVisualization.tsx:1:52 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useEffect, useRef, useState } from 'react';
+                                                     ~~~~~~~
+
+src/features/medication-reminders/animations/MedicationImpactVisualization.tsx:44:3 - error TS7031: Binding element 'medicationName' implicitly has an 'any' type.
+
+44   medicationName,
+     ~~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationImpactVisualization.tsx:45:3 - error TS7031: Binding element 'medicationType' implicitly has an 'any' type.
+
+45   medicationType,
+     ~~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationImpactVisualization.tsx:46:3 - error TS7031: Binding element 'effects' implicitly has an 'any' type.
+
+46   effects,
+     ~~~~~~~
+
+src/features/medication-reminders/animations/MedicationImpactVisualization.tsx:47:3 - error TS7031: Binding element 'adherence' implicitly has an 'any' type.
+
+47   adherence,
+     ~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationImpactVisualization.tsx:48:3 - error TS7031: Binding element 'onClose' implicitly has an 'any' type.
+
+48   onClose,
+     ~~~~~~~
+
+src/features/medication-reminders/animations/MedicationImpactVisualization.tsx:65:43 - error TS7006: Parameter 'acc' implicitly has an 'any' type.
+
+65   const effectsBySystem = effects.reduce((acc, effect) => {
+                                             ~~~
+
+src/features/medication-reminders/animations/MedicationImpactVisualization.tsx:65:48 - error TS7006: Parameter 'effect' implicitly has an 'any' type.
+
+65   const effectsBySystem = effects.reduce((acc, effect) => {
+                                                  ~~~~~~
+
+src/features/medication-reminders/animations/MedicationImpactVisualization.tsx:180:12 - error TS2604: JSX element type 'Animated.View' does not have any construct or call signatures.
+
+180           <Animated.View
+               ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationImpactVisualization.tsx:227:61 - error TS7006: Parameter 'effect' implicitly has an 'any' type.
+
+227                 {effectsBySystem[system as BodySystem].map((effect, index) => (
+                                                                ~~~~~~
+
+src/features/medication-reminders/animations/MedicationImpactVisualization.tsx:227:69 - error TS7006: Parameter 'index' implicitly has an 'any' type.
+
+227                 {effectsBySystem[system as BodySystem].map((effect, index) => (
+                                                                        ~~~~~
+
+src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:1:52 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useRef, useEffect, useState } from 'react';
+                                                     ~~~~~~~
+
+src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:52:10 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+52     case AnimationType.PILL:
+            ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:54:10 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+54     case AnimationType.LIQUID:
+            ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:56:10 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+56     case AnimationType.INJECTION:
+            ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:58:10 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+58     case AnimationType.TOPICAL:
+            ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:60:10 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+60     case AnimationType.INHALER:
+            ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:71:3 - error TS7031: Binding element 'schedules' implicitly has an 'any' type.
+
+71   schedules,
+     ~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:72:3 - error TS7031: Binding element 'onPressDose' implicitly has an 'any' type.
+
+72   onPressDose,
+     ~~~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:73:3 - error TS7031: Binding element 'onPressSchedule' implicitly has an 'any' type.
+
+73   onPressSchedule,
+     ~~~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:77:36 - error TS7006: Parameter 'd' implicitly has an 'any' type.
+
+77     const aNextDose = a.doses.find(d => !d.taken);
+                                      ~
+
+src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:78:36 - error TS7006: Parameter 'd' implicitly has an 'any' type.
+
+78     const bNextDose = b.doses.find(d => !d.taken);
+                                      ~
+
+src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:109:3 - error TS7031: Binding element 'schedule' implicitly has an 'any' type.
+
+109   schedule,
+      ~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:110:3 - error TS7031: Binding element 'onPressDose' implicitly has an 'any' type.
+
+110   onPressDose,
+      ~~~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:111:3 - error TS7031: Binding element 'onPressSchedule' implicitly has an 'any' type.
+
+111   onPressSchedule,
+      ~~~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:134:40 - error TS7006: Parameter 'dose' implicitly has an 'any' type.
+
+134   const nextDose = schedule.doses.find(dose => !dose.taken);
+                                           ~~~~
+
+src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:170:12 - error TS2604: JSX element type 'Animated.View' does not have any construct or call signatures.
+
+170           <Animated.View
+               ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationScheduleProgress.tsx:198:31 - error TS7006: Parameter 'dose' implicitly has an 'any' type.
+
+198           {schedule.doses.map(dose => (
+                                  ~~~~
+
+src/features/medication-reminders/animations/MedicationTakingSteps.tsx:1:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useEffect, useState } from 'react';
+                                             ~~~~~~~
+
+src/features/medication-reminders/animations/MedicationTakingSteps.tsx:16:3 - error TS7031: Binding element 'type' implicitly has an 'any' type.
+
+16   type,
+     ~~~~
+
+src/features/medication-reminders/animations/MedicationTakingSteps.tsx:17:3 - error TS7031: Binding element 'onComplete' implicitly has an 'any' type.
+
+17   onComplete,
+     ~~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationTakingSteps.tsx:18:3 - error TS7031: Binding element 'medicationName' implicitly has an 'any' type.
+
+18   medicationName,
+     ~~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationTakingSteps.tsx:19:3 - error TS7031: Binding element 'dosage' implicitly has an 'any' type.
+
+19   dosage,
+     ~~~~~~
+
+src/features/medication-reminders/animations/MedicationTakingSteps.tsx:20:3 - error TS7031: Binding element 'instructions' implicitly has an 'any' type.
+
+20   instructions,
+     ~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/MedicationTakingSteps.tsx:178:8 - error TS2604: JSX element type 'Animated.View' does not have any construct or call signatures.
+
+178       <Animated.View
+           ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:1:52 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useEffect, useRef, useState } from 'react';
+                                                     ~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:34:3 - error TS7031: Binding element 'type' implicitly has an 'any' type.
+
+34   type,
+     ~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:35:3 - error TS7031: Binding element 'reminderText' implicitly has an 'any' type.
+
+35   reminderText,
+     ~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:36:3 - error TS7031: Binding element 'onComplete' implicitly has an 'any' type.
+
+36   onComplete,
+     ~~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:37:3 - error TS7031: Binding element 'onDismiss' implicitly has an 'any' type.
+
+37   onDismiss,
+     ~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:38:3 - error TS7031: Binding element 'medicationName' implicitly has an 'any' type.
+
+38   medicationName,
+     ~~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:39:3 - error TS7031: Binding element 'dosage' implicitly has an 'any' type.
+
+39   dosage,
+     ~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:56:12 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+56       case AnimationType.PILL:
+              ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:62:12 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+62       case AnimationType.LIQUID:
+              ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:68:12 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+68       case AnimationType.INJECTION:
+              ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:74:12 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+74       case AnimationType.TOPICAL:
+              ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:80:12 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+80       case AnimationType.INHALER:
+              ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:86:12 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+86       case AnimationType.TABLET:
+              ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:92:12 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+92       case AnimationType.CAPSULE:
+              ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:154:18 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+154     if (type === AnimationType.LIQUID || type === AnimationType.INJECTION) {
+                     ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:154:51 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+154     if (type === AnimationType.LIQUID || type === AnimationType.INJECTION) {
+                                                      ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:248:12 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+248       case AnimationType.PILL:
+               ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:254:12 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+254       case AnimationType.LIQUID:
+               ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:260:12 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+260       case AnimationType.INJECTION:
+               ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:266:12 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+266       case AnimationType.TOPICAL:
+               ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:272:12 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+272       case AnimationType.INHALER:
+               ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:278:12 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+278       case AnimationType.TABLET:
+               ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:284:12 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+284       case AnimationType.CAPSULE:
+               ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:300:6 - error TS2604: JSX element type 'Animated.View' does not have any construct or call signatures.
+
+300     <Animated.View
+         ~~~~~~~~~~~~~
+
+src/features/medication-reminders/animations/ReminderAnimation.tsx:327:10 - error TS2604: JSX element type 'Animated.View' does not have any construct or call signatures.
+
+327         <Animated.View
+             ~~~~~~~~~~~~~
+
+src/features/medication-reminders/components/ActiveReminderView.tsx:1:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/features/medication-reminders/components/ActiveReminderView.tsx:49:3 - error TS7031: Binding element 'reminder' implicitly has an 'any' type.
+
+49   reminder,
+     ~~~~~~~~
+
+src/features/medication-reminders/components/ActiveReminderView.tsx:50:3 - error TS7031: Binding element 'onMarkAsTaken' implicitly has an 'any' type.
+
+50   onMarkAsTaken,
+     ~~~~~~~~~~~~~
+
+src/features/medication-reminders/components/ActiveReminderView.tsx:51:3 - error TS7031: Binding element 'onSnooze' implicitly has an 'any' type.
+
+51   onSnooze,
+     ~~~~~~~~
+
+src/features/medication-reminders/components/ActiveReminderView.tsx:52:3 - error TS7031: Binding element 'onDismiss' implicitly has an 'any' type.
+
+52   onDismiss,
+     ~~~~~~~~~
+
+src/features/medication-reminders/components/MedicationDashboard.tsx:1:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/features/medication-reminders/components/MedicationDashboard.tsx:37:3 - error TS7031: Binding element 'schedules' implicitly has an 'any' type.
+
+37   schedules,
+     ~~~~~~~~~
+
+src/features/medication-reminders/components/MedicationDashboard.tsx:38:3 - error TS7031: Binding element 'onSchedulePress' implicitly has an 'any' type.
+
+38   onSchedulePress,
+     ~~~~~~~~~~~~~~~
+
+src/features/medication-reminders/components/MedicationDashboard.tsx:39:3 - error TS7031: Binding element 'onAddSchedule' implicitly has an 'any' type.
+
+39   onAddSchedule,
+     ~~~~~~~~~~~~~
+
+src/features/medication-reminders/components/MedicationDashboard.tsx:45:25 - error TS7006: Parameter 'sum' implicitly has an 'any' type.
+
+45     ? schedules.reduce((sum, schedule) => sum + schedule.adherenceRate, 0) / schedules.length
+                           ~~~
+
+src/features/medication-reminders/components/MedicationDashboard.tsx:45:30 - error TS7006: Parameter 'schedule' implicitly has an 'any' type.
+
+45     ? schedules.reduce((sum, schedule) => sum + schedule.adherenceRate, 0) / schedules.length
+                                ~~~~~~~~
+
+src/features/medication-reminders/components/MedicationDashboard.tsx:50:25 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+50     ? schedules.reduce((prev, current) => {
+                           ~~~~
+
+src/features/medication-reminders/components/MedicationDashboard.tsx:50:31 - error TS7006: Parameter 'current' implicitly has an 'any' type.
+
+50     ? schedules.reduce((prev, current) => {
+                                 ~~~~~~~
+
+src/features/medication-reminders/components/MedicationDashboard.tsx:58:25 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+58     ? schedules.reduce((prev, current) => {
+                           ~~~~
+
+src/features/medication-reminders/components/MedicationDashboard.tsx:58:31 - error TS7006: Parameter 'current' implicitly has an 'any' type.
+
+58     ? schedules.reduce((prev, current) => {
+                                 ~~~~~~~
+
+src/features/medication-reminders/components/MedicationDashboard.tsx:144:26 - error TS7006: Parameter 'schedule' implicitly has an 'any' type.
+
+144           schedules.map((schedule) => (
+                             ~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:1:37 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import { useState, useEffect } from 'react';
+                                      ~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:193:22 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+193         setReminders(prev => prev.map(r =>
+                         ~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:193:39 - error TS7006: Parameter 'r' implicitly has an 'any' type.
+
+193         setReminders(prev => prev.map(r =>
+                                          ~
+
+src/features/medication-reminders/services/ReminderService.ts:198:22 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+198         setSchedules(prev => prev.map(schedule => {
+                         ~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:198:39 - error TS7006: Parameter 'schedule' implicitly has an 'any' type.
+
+198         setSchedules(prev => prev.map(schedule => {
+                                          ~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:199:59 - error TS7006: Parameter 'r' implicitly has an 'any' type.
+
+199           const updatedReminders = schedule.reminders.map(r =>
+                                                              ~
+
+src/features/medication-reminders/services/ReminderService.ts:212:25 - error TS7006: Parameter 'r' implicitly has an 'any' type.
+
+212           reminders.map(r => r.id === reminderId ? { ...r, taken: true } : r)
+                            ~
+
+src/features/medication-reminders/services/ReminderService.ts:244:22 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+244         setReminders(prev => prev.filter(r => r.id !== reminderId));
+                         ~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:244:42 - error TS7006: Parameter 'r' implicitly has an 'any' type.
+
+244         setReminders(prev => prev.filter(r => r.id !== reminderId));
+                                             ~
+
+src/features/medication-reminders/services/ReminderService.ts:247:22 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+247         setSchedules(prev => prev.map(schedule => {
+                         ~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:247:39 - error TS7006: Parameter 'schedule' implicitly has an 'any' type.
+
+247         setSchedules(prev => prev.map(schedule => {
+                                          ~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:248:62 - error TS7006: Parameter 'r' implicitly has an 'any' type.
+
+248           const updatedReminders = schedule.reminders.filter(r => r.id !== reminderId);
+                                                                 ~
+
+src/features/medication-reminders/services/ReminderService.ts:258:22 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+258         setSchedules(prev => prev.filter(s => s.reminders.length > 0));
+                         ~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:258:42 - error TS7006: Parameter 's' implicitly has an 'any' type.
+
+258         setSchedules(prev => prev.filter(s => s.reminders.length > 0));
+                                             ~
+
+src/features/medication-reminders/services/ReminderService.ts:261:47 - error TS7006: Parameter 'r' implicitly has an 'any' type.
+
+261         findUpcomingReminder(reminders.filter(r => r.id !== reminderId));
+                                                  ~
+
+src/features/medication-reminders/services/ReminderService.ts:310:14 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+310       return AnimationType.PILL;
+                 ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:314:14 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+314       return AnimationType.LIQUID;
+                 ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:317:14 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+317       return AnimationType.INJECTION;
+                 ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:321:14 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+321       return AnimationType.TOPICAL;
+                 ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:324:14 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+324       return AnimationType.INHALER;
+                 ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:326:14 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+326       return AnimationType.PILL;
+                 ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:333:10 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+333     case AnimationType.PILL:
+             ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:335:10 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+335     case AnimationType.LIQUID:
+             ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:337:10 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+337     case AnimationType.INJECTION:
+             ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:339:10 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+339     case AnimationType.TOPICAL:
+             ~~~~~~~~~~~~~
+
+src/features/medication-reminders/services/ReminderService.ts:341:10 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+341     case AnimationType.INHALER:
+             ~~~~~~~~~~~~~
+
+src/features/video-chat/PharmacistConsultButton.tsx:1:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/features/video-chat/PharmacistConsultButton.tsx:11:22 - error TS7016: Could not find a declaration file for module 'react-native-vector-icons/Ionicons'. '/home/runner/workspace/node_modules/react-native-vector-icons/Ionicons.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/react-native-vector-icons` if it exists or add a new declaration (.d.ts) file containing `declare module 'react-native-vector-icons/Ionicons';`
+
+11 import Ionicons from 'react-native-vector-icons/Ionicons';
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/features/video-chat/PharmacistConsultButton.tsx:22:3 - error TS7031: Binding element 'pharmacistId' implicitly has an 'any' type.
+
+22   pharmacistId,
+     ~~~~~~~~~~~~
+
+src/features/video-chat/PharmacistConsultButton.tsx:23:3 - error TS7031: Binding element 'orderId' implicitly has an 'any' type.
+
+23   orderId,
+     ~~~~~~~
+
+src/features/video-chat/PharmacistConsultButton.tsx:25:3 - error TS7031: Binding element 'style' implicitly has an 'any' type.
+
+25   style,
+     ~~~~~
+
+src/features/video-chat/PharmacistConsultButton.tsx:77:37 - error TS2345: Argument of type '[string, { roomId: any; }]' is not assignable to parameter of type 'never'.
+
+77                 navigation.navigate('VideoChat', {
+                                       ~~~~~~~~~~~~~~
+78                   roomId: ongoingCheckData.roomId,
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+79                 });
+   ~~~~~~~~~~~~~~~~~
+
+src/features/video-chat/PharmacistConsultButton.tsx:103:27 - error TS2345: Argument of type '[string, { pharmacistId: any; orderId: any; }]' is not assignable to parameter of type 'never'.
+
+103       navigation.navigate('VideoChat', {
+                              ~~~~~~~~~~~~~~
+104         pharmacistId,
+    ~~~~~~~~~~~~~~~~~~~~~
+105         orderId,
+    ~~~~~~~~~~~~~~~~
+106       });
+    ~~~~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:1:52 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useEffect, useRef, useState } from 'react';
+                                                     ~~~~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:14:22 - error TS7016: Could not find a declaration file for module 'react-native-vector-icons/Ionicons'. '/home/runner/workspace/node_modules/react-native-vector-icons/Ionicons.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/react-native-vector-icons` if it exists or add a new declaration (.d.ts) file containing `declare module 'react-native-vector-icons/Ionicons';`
+
+14 import Ionicons from 'react-native-vector-icons/Ionicons';
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:58:50 - error TS7006: Parameter 'userId' implicitly has an 'any' type.
+
+58         videoChatService.setOnRemoteStreamAdded((userId, stream) => {
+                                                    ~~~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:58:58 - error TS7006: Parameter 'stream' implicitly has an 'any' type.
+
+58         videoChatService.setOnRemoteStreamAdded((userId, stream) => {
+                                                            ~~~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:60:28 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+60           setRemoteStreams(prev => {
+                              ~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:67:54 - error TS7006: Parameter 'p' implicitly has an 'any' type.
+
+67           const isFromPharmacist = participants.find(p => p.userId === userId)?.isPharmacist;
+                                                        ~
+
+src/features/video-chat/VideoChatScreen.tsx:75:33 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+75                 setCallDuration(prev => prev + 1);
+                                   ~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:81:52 - error TS7006: Parameter 'userId' implicitly has an 'any' type.
+
+81         videoChatService.setOnRemoteStreamRemoved((userId) => {
+                                                      ~~~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:83:28 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+83           setRemoteStreams(prev => {
+                              ~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:90:54 - error TS7006: Parameter 'p' implicitly has an 'any' type.
+
+90           const isFromPharmacist = participants.find(p => p.userId === userId)?.isPharmacist;
+                                                        ~
+
+src/features/video-chat/VideoChatScreen.tsx:111:49 - error TS7006: Parameter 'pharmacist' implicitly has an 'any' type.
+
+111         videoChatService.setOnPharmacistJoined((pharmacist) => {
+                                                    ~~~~~~~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:115:27 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+115           setParticipants(prev => [...prev, pharmacist]);
+                              ~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:120:31 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+120               setCallDuration(prev => prev + 1);
+                                  ~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:152:38 - error TS7006: Parameter 'err' implicitly has an 'any' type.
+
+152         videoChatService.setOnError((err) => {
+                                         ~~~
+
+src/features/video-chat/VideoChatScreen.tsx:159:11 - error TS18047: 'user' is possibly 'null'.
+
+159           user.id,
+              ~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:160:11 - error TS18047: 'user' is possibly 'null'.
+
+160           user.username,
+              ~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:202:52 - error TS7006: Parameter 'track' implicitly has an 'any' type.
+
+202         localStreamRef.current.getTracks().forEach(track => track.stop());
+                                                       ~~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:267:46 - error TS7006: Parameter 'p' implicitly has an 'any' type.
+
+267         const pharmacist = participants.find(p => p.isPharmacist);
+                                                 ~
+
+src/features/video-chat/VideoChatScreen.tsx:277:25 - error TS18047: 'user' is possibly 'null'.
+
+277                 userId: user.id,
+                            ~~~~
+
+src/features/video-chat/VideoChatScreen.tsx:361:17 - error TS2322: Type '{ key: number; streamURL: any; style: { flex: number; }; objectFit: "cover"; }' is not assignable to type 'RTCVideoViewProps'.
+  Property 'key' does not exist on type 'RTCVideoViewProps'.
+
+361                 key={index}
+                    ~~~
+
+src/features/video-chat/VideoChatScreen.tsx:362:28 - error TS18046: 'stream' is of type 'unknown'.
+
+362                 streamURL={stream.toURL()}
+                               ~~~~~~
+
+src/hooks/useAuth.tsx:1:71 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { createContext, useContext, useState, useEffect } from 'react';
+                                                                        ~~~~~~~
+
+src/hooks/useAuth.tsx:2:26 - error TS2307: Cannot find module '@react-native-async-storage/async-storage' or its corresponding type declarations.
+
+2 import AsyncStorage from '@react-native-async-storage/async-storage';
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/hooks/useAuth.tsx:31:73 - error TS7031: Binding element 'children' implicitly has an 'any' type.
+
+31 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+                                                                           ~~~~~~~~
+
+src/navigation/AppNavigator.tsx:1:19 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React from 'react';
+                    ~~~~~~~
+
+src/navigation/AppNavigator.tsx:73:23 - error TS2322: Type '"OrdersMain"' is not assignable to type 'keyof MainStackParamList'.
+
+73     <MainStack.Screen name="OrdersMain" component={OrdersScreen} />
+                         ~~~~
+
+  ../node_modules/@react-navigation/core/lib/typescript/src/types.d.ts:448:5
+    448     name: RouteName;
+            ~~~~
+    The expected type comes from property 'name' which is declared here on type 'RouteConfig<MainStackParamList, keyof MainStackParamList, StackNavigationState<MainStackParamList>, StackNavigationOptions, StackNavigationEventMap, StackNavigationProp<...> | ... 12 more ... | StackNavigationProp<...>>'
+
+src/navigation/AppNavigator.tsx:79:23 - error TS2322: Type '"PharmaciesMain"' is not assignable to type 'keyof MainStackParamList'.
+
+79     <MainStack.Screen name="PharmaciesMain" component={PharmaciesScreen} />
+                         ~~~~
+
+  ../node_modules/@react-navigation/core/lib/typescript/src/types.d.ts:448:5
+    448     name: RouteName;
+            ~~~~
+    The expected type comes from property 'name' which is declared here on type 'RouteConfig<MainStackParamList, keyof MainStackParamList, StackNavigationState<MainStackParamList>, StackNavigationOptions, StackNavigationEventMap, StackNavigationProp<...> | ... 12 more ... | StackNavigationProp<...>>'
+
+src/navigation/AppNavigator.tsx:85:23 - error TS2322: Type '"RemindersMain"' is not assignable to type 'keyof MainStackParamList'.
+
+85     <MainStack.Screen name="RemindersMain" component={MedicationRemindersScreen} />
+                         ~~~~
+
+  ../node_modules/@react-navigation/core/lib/typescript/src/types.d.ts:448:5
+    448     name: RouteName;
+            ~~~~
+    The expected type comes from property 'name' which is declared here on type 'RouteConfig<MainStackParamList, keyof MainStackParamList, StackNavigationState<MainStackParamList>, StackNavigationOptions, StackNavigationEventMap, StackNavigationProp<...> | ... 12 more ... | StackNavigationProp<...>>'
+
+src/navigation/AppNavigator.tsx:91:23 - error TS2322: Type '"ProfileMain"' is not assignable to type 'keyof MainStackParamList'.
+
+91     <MainStack.Screen name="ProfileMain" component={SettingsScreen} />
+                         ~~~~
+
+  ../node_modules/@react-navigation/core/lib/typescript/src/types.d.ts:448:5
+    448     name: RouteName;
+            ~~~~
+    The expected type comes from property 'name' which is declared here on type 'RouteConfig<MainStackParamList, keyof MainStackParamList, StackNavigationState<MainStackParamList>, StackNavigationOptions, StackNavigationEventMap, StackNavigationProp<...> | ... 12 more ... | StackNavigationProp<...>>'
+
+src/navigation/RootNavigation.ts:1:27 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import { createRef } from 'react';
+                            ~~~~~~~
+
+src/screens/ActiveDeliveryScreen.tsx:2:52 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+2 import React, { useState, useEffect, useRef } from 'react';
+                                                     ~~~~~~~
+
+src/screens/ActiveDeliveryScreen.tsx:41:70 - error TS7031: Binding element 'route' implicitly has an 'any' type.
+
+41 const ActiveDeliveryScreen: React.FC<ActiveDeliveryScreenProps> = ({ route, navigation }) => {
+                                                                        ~~~~~
+
+src/screens/ActiveDeliveryScreen.tsx:41:77 - error TS7031: Binding element 'navigation' implicitly has an 'any' type.
+
+41 const ActiveDeliveryScreen: React.FC<ActiveDeliveryScreenProps> = ({ route, navigation }) => {
+                                                                               ~~~~~~~~~~
+
+src/screens/ActiveDeliveryScreen.tsx:325:11 - error TS2322: Type '{ ref: any; style: { flex: number; }; showsUserLocation: true; showsMyLocationButton: true; initialRegion: { latitude: any; longitude: any; latitudeDelta: number; longitudeDelta: number; }; }' is not assignable to type 'MapViewProps'.
+  Property 'ref' does not exist on type 'MapViewProps'.
+
+325           ref={mapRef}
+              ~~~
+
+src/screens/ActiveDeliveryScreen.tsx:400:34 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+400             {delivery.items.map((item, index) => (
+                                     ~~~~
+
+src/screens/ActiveDeliveryScreen.tsx:400:40 - error TS7006: Parameter 'index' implicitly has an 'any' type.
+
+400             {delivery.items.map((item, index) => (
+                                           ~~~~~
+
+src/screens/ActiveDeliveryScreen.tsx:424:32 - error TS2322: Type 'string' is not assignable to type '"filter" | "height" | "title" | "opacity" | "android" | "web" | "transform" | "local-drink" | "check-circle" | "local-pharmacy" | "straighten" | "clean-hands" | "science" | "medical-services" | ... 1547 more ... | "zoom-out-map"'.
+
+424                 <MaterialIcons name={action.icon} size={20} color="#FFFFFF" />
+                                   ~~~~
+
+  ../node_modules/@expo/vector-icons/build/createIconSet.d.ts:17:5
+    17     name: GLYPHS;
+           ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IconProps<"filter" | "height" | "title" | "opacity" | "android" | "web" | "transform" | "local-drink" | "check-circle" | "local-pharmacy" | "straighten" | "clean-hands" | "science" | ... 1548 more ... | "zoom-out-map">'
+
+src/screens/AddPaymentMethodScreen.tsx:2:33 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+2 import React, { useState } from 'react';
+                                  ~~~~~~~
+
+src/screens/AddPaymentMethodScreen.tsx:15:18 - error TS7016: Could not find a declaration file for module 'react-native-vector-icons/Ionicons'. '/home/runner/workspace/node_modules/react-native-vector-icons/Ionicons.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/react-native-vector-icons` if it exists or add a new declaration (.d.ts) file containing `declare module 'react-native-vector-icons/Ionicons';`
+
+15 import Icon from 'react-native-vector-icons/Ionicons';
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/AddPaymentMethodScreen.tsx:18:10 - error TS2614: Module '"../services/api.service"' has no exported member 'api'. Did you mean to use 'import api from "../services/api.service"' instead?
+
+18 import { api } from '../services/api.service';
+            ~~~
+
+src/screens/AddPaymentMethodScreen.tsx:261:26 - error TS7006: Parameter 'text' implicitly has an 'any' type.
+
+261           onChangeText={(text) => setCardData(prev => ({ ...prev, cardholderName: text }))}
+                             ~~~~
+
+src/screens/AddPaymentMethodScreen.tsx:261:47 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+261           onChangeText={(text) => setCardData(prev => ({ ...prev, cardholderName: text }))}
+                                                  ~~~~
+
+src/screens/AddPaymentMethodScreen.tsx:272:26 - error TS7006: Parameter 'text' implicitly has an 'any' type.
+
+272           onChangeText={(text) => setCardData(prev => ({ ...prev, cardNumber: formatCardNumber(text) }))}
+                             ~~~~
+
+src/screens/AddPaymentMethodScreen.tsx:272:47 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+272           onChangeText={(text) => setCardData(prev => ({ ...prev, cardNumber: formatCardNumber(text) }))}
+                                                  ~~~~
+
+src/screens/AddPaymentMethodScreen.tsx:285:28 - error TS7006: Parameter 'text' implicitly has an 'any' type.
+
+285             onChangeText={(text) => setCardData(prev => ({ ...prev, expiryDate: formatExpiryDate(text) }))}
+                               ~~~~
+
+src/screens/AddPaymentMethodScreen.tsx:285:49 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+285             onChangeText={(text) => setCardData(prev => ({ ...prev, expiryDate: formatExpiryDate(text) }))}
+                                                    ~~~~
+
+src/screens/AddPaymentMethodScreen.tsx:297:28 - error TS7006: Parameter 'text' implicitly has an 'any' type.
+
+297             onChangeText={(text) => setCardData(prev => ({ ...prev, cvv: text.replace(/\D/g, '') }))}
+                               ~~~~
+
+src/screens/AddPaymentMethodScreen.tsx:297:49 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+297             onChangeText={(text) => setCardData(prev => ({ ...prev, cvv: text.replace(/\D/g, '') }))}
+                                                    ~~~~
+
+src/screens/AddPaymentMethodScreen.tsx:322:49 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+322               onPress={() => setMobileMoneyData(prev => ({ ...prev, provider }))}
+                                                    ~~~~
+
+src/screens/AddPaymentMethodScreen.tsx:340:26 - error TS7006: Parameter 'text' implicitly has an 'any' type.
+
+340           onChangeText={(text) => setMobileMoneyData(prev => ({ ...prev, phoneNumber: text.replace(/\D/g, '') }))}
+                             ~~~~
+
+src/screens/AddPaymentMethodScreen.tsx:340:54 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+340           onChangeText={(text) => setMobileMoneyData(prev => ({ ...prev, phoneNumber: text.replace(/\D/g, '') }))}
+                                                         ~~~~
+
+src/screens/AddPaymentMethodScreen.tsx:352:26 - error TS7006: Parameter 'text' implicitly has an 'any' type.
+
+352           onChangeText={(text) => setMobileMoneyData(prev => ({ ...prev, accountName: text }))}
+                             ~~~~
+
+src/screens/AddPaymentMethodScreen.tsx:352:54 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+352           onChangeText={(text) => setMobileMoneyData(prev => ({ ...prev, accountName: text }))}
+                                                         ~~~~
+
+src/screens/AuthScreen.tsx:1:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/AuthScreen.tsx:46:23 - error TS7006: Parameter 'prevCountdown' implicitly has an 'any' type.
+
+46         setCountdown((prevCountdown) => prevCountdown - 1);
+                         ~~~~~~~~~~~~~
+
+src/screens/CardPaymentScreen.tsx:1:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/CardPaymentScreen.tsx:13:18 - error TS7016: Could not find a declaration file for module 'react-native-vector-icons/Ionicons'. '/home/runner/workspace/node_modules/react-native-vector-icons/Ionicons.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/react-native-vector-icons` if it exists or add a new declaration (.d.ts) file containing `declare module 'react-native-vector-icons/Ionicons';`
+
+13 import Icon from 'react-native-vector-icons/Ionicons';
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/CardPaymentScreen.tsx:40:11 - error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+
+40           user?.id,
+             ~~~~~~~~
+
+src/screens/CardPaymentScreen.tsx:79:9 - error TS2353: Object literal may only specify known properties, and 'type' does not exist in type 'ConfirmParams'.
+
+79         type: 'Card',
+           ~~~~
+
+src/screens/CardPaymentScreen.tsx:96:50 - error TS2345: Argument of type '[string, { orderId: number; }]' is not assignable to parameter of type 'never'.
+
+96               onPress: () => navigation.navigate('OrderDetails', { orderId }),
+                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/CardPaymentScreen.tsx:111:6 - error TS2322: Type '{ publishableKey: string; }' is not assignable to type 'Props'.
+  Property 'children' is missing in type '{ publishableKey: string; }' but required in type '{ children: any; }'.
+
+111     <StripeProvider publishableKey={STRIPE_PUBLISHABLE_KEY}>
+         ~~~~~~~~~~~~~~
+
+  ../node_modules/@stripe/stripe-react-native/lib/typescript/src/components/StripeProvider.d.ts:7:5
+    7     children: React.ReactElement | React.ReactElement[];
+          ~~~~~~~~
+    'children' is declared here.
+
+src/screens/CardPaymentScreen.tsx:161:34 - error TS7006: Parameter 'cardDetails' implicitly has an 'any' type.
+
+161                   onCardChange={(cardDetails) => {
+                                     ~~~~~~~~~~~
+
+src/screens/CardPaymentScreen.tsx:271:5 - error TS2345: Argument of type '{ container: { flex: number; backgroundColor: string; padding: number; }; header: { flexDirection: "row"; alignItems: "center"; marginBottom: number; }; backButton: { marginRight: number; }; headerTitle: { ...; }; ... 21 more ...; retryButtonText: { ...; }; }' is not assignable to parameter of type '{ container: { flex: number; backgroundColor: string; padding: number; }; header: { flexDirection: "row"; alignItems: "center"; marginBottom: number; }; backButton: { marginRight: number; }; headerTitle: { ...; }; ... 21 more ...; retryButtonText: { ...; }; } & NamedStyles<...>'.
+  Property 'cardStyle' is incompatible with index signature.
+    Object literal may only specify known properties, and 'textColor' does not exist in type 'ViewStyle | TextStyle | ImageStyle'.
+
+271     textColor: COLORS.text,
+        ~~~~~~~~~
+
+src/screens/CartScreen.tsx:1:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/CartScreen.tsx:32:40 - error TS7031: Binding element 'navigation' implicitly has an 'any' type.
+
+32 const CartScreen: React.FC<Props> = ({ navigation }) => {
+                                          ~~~~~~~~~~
+
+src/screens/CartScreen.tsx:41:39 - error TS7006: Parameter 'sum' implicitly has an 'any' type.
+
+41   const subtotal = cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                                         ~~~
+
+src/screens/CartScreen.tsx:41:44 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+41   const subtotal = cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                                              ~~~~
+
+src/screens/CartScreen.tsx:46:48 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+46   const requiresPrescription = cart.items.some(item => item.requiresPrescription);
+                                                  ~~~~
+
+src/screens/CartScreen.tsx:195:28 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+195             keyExtractor={(item) => item.medicineId.toString()}
+                               ~~~~
+
+src/screens/ChatScreen.tsx:2:52 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+2 import React, { useState, useEffect, useRef } from 'react';
+                                                     ~~~~~~~
+
+src/screens/ChatScreen.tsx:18:18 - error TS7016: Could not find a declaration file for module 'react-native-vector-icons/Ionicons'. '/home/runner/workspace/node_modules/react-native-vector-icons/Ionicons.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/react-native-vector-icons` if it exists or add a new declaration (.d.ts) file containing `declare module 'react-native-vector-icons/Ionicons';`
+
+18 import Icon from 'react-native-vector-icons/Ionicons';
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/ChatScreen.tsx:200:22 - error TS2339: Property 'token' does not exist on type 'User'.
+
+200         token: user?.token,
+                         ~~~~~
+
+src/screens/ChatScreen.tsx:209:19 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+209       setMessages(prev => [...prev, message]);
+                      ~~~~
+
+src/screens/ChatScreen.tsx:224:19 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+224       setMessages(prev =>
+                      ~~~~
+
+src/screens/ChatScreen.tsx:225:18 - error TS7006: Parameter 'msg' implicitly has an 'any' type.
+
+225         prev.map(msg =>
+                     ~~~
+
+src/screens/ChatScreen.tsx:248:21 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+248         setMessages(prev => [...prev, message]);
+                        ~~~~
+
+src/screens/ChatScreen.tsx:446:26 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+446           keyExtractor={(item) => item.id.toString()}
+                             ~~~~
+
+src/screens/DeliveryDashboardScreen.tsx:2:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+2 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/DeliveryDashboardScreen.tsx:34:36 - error TS7031: Binding element 'navigation' implicitly has an 'any' type.
+
+34 const DeliveryDashboardScreen = ({ navigation }) => {
+                                      ~~~~~~~~~~
+
+src/screens/DeliveryDashboardScreen.tsx:155:24 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+155       setNotifications(prev =>
+                           ~~~~
+
+src/screens/DeliveryDashboardScreen.tsx:156:18 - error TS7006: Parameter 'notif' implicitly has an 'any' type.
+
+156         prev.map(notif =>
+                     ~~~~~
+
+src/screens/DeliveryDashboardScreen.tsx:346:24 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+346         keyExtractor={(item) => item.id.toString()}
+                           ~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:2:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+2 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:22:34 - error TS7031: Binding element 'route' implicitly has an 'any' type.
+
+22 const DeliveryDetailsScreen = ({ route, navigation }) => {
+                                    ~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:22:41 - error TS7031: Binding element 'navigation' implicitly has an 'any' type.
+
+22 const DeliveryDetailsScreen = ({ route, navigation }) => {
+                                           ~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:184:12 - error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{ assigned: string; accepted: string; en_route_to_pharmacy: string; arrived_at_pharmacy: string; picked_up: string; en_route_to_customer: string; arrived_at_customer: string; delivered: string; cancelled: string; }'.
+  No index signature with a parameter of type 'string' was found on type '{ assigned: string; accepted: string; en_route_to_pharmacy: string; arrived_at_pharmacy: string; picked_up: string; en_route_to_customer: string; arrived_at_customer: string; delivered: string; cancelled: string; }'.
+
+184     return labels[status] || status;
+               ~~~~~~~~~~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:356:33 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+356           {delivery.items?.map((item, index) => (
+                                    ~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:356:39 - error TS7006: Parameter 'index' implicitly has an 'any' type.
+
+356           {delivery.items?.map((item, index) => (
+                                          ~~~~~
+
+src/screens/DeliveryDetailsScreen.tsx:383:34 - error TS2322: Type 'string' is not assignable to type '"filter" | "height" | "title" | "opacity" | "android" | "web" | "transform" | "local-drink" | "check-circle" | "local-pharmacy" | "straighten" | "clean-hands" | "science" | "medical-services" | ... 1547 more ... | "zoom-out-map"'.
+
+383                   <MaterialIcons name={action.icon} size={24} color="#FFFFFF" />
+                                     ~~~~
+
+  ../node_modules/@expo/vector-icons/build/createIconSet.d.ts:17:5
+    17     name: GLYPHS;
+           ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IconProps<"filter" | "height" | "title" | "opacity" | "android" | "web" | "transform" | "local-drink" | "check-circle" | "local-pharmacy" | "straighten" | "clean-hands" | "science" | ... 1548 more ... | "zoom-out-map">'
+
+src/screens/DeliveryEarningsScreen.tsx:2:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+2 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/DeliveryEarningsScreen.tsx:51:35 - error TS7031: Binding element 'navigation' implicitly has an 'any' type.
+
+51 const DeliveryEarningsScreen = ({ navigation }) => {
+                                     ~~~~~~~~~~
+
+src/screens/DeliveryEarningsScreen.tsx:246:23 - error TS7006: Parameter 'delivery' implicitly has an 'any' type.
+
+246         {history.map((delivery) => (
+                          ~~~~~~~~
+
+src/screens/DeliveryEarningsScreen.tsx:268:45 - error TS7053: Element implicitly has an 'any' type because expression of type '`type${any}`' can't be used to index type '{ container: { flex: number; backgroundColor: string; }; header: { flexDirection: "row"; justifyContent: "space-between"; alignItems: "center"; paddingHorizontal: number; paddingVertical: number; backgroundColor: string; borderBottomWidth: number; borderBottomColor: string; }; ... 53 more ...; goalText: { ...; }; }'.
+
+268               <View style={[styles.typeTag, styles[`type${delivery.type.charAt(0).toUpperCase() + delivery.type.slice(1)}`]]}>
+                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/DeliveryEarningsScreen.tsx:379:15 - error TS2322: Type 'string' is not assignable to type '"filter" | "height" | "title" | "opacity" | "android" | "web" | "transform" | "local-drink" | "check-circle" | "local-pharmacy" | "straighten" | "clean-hands" | "science" | "medical-services" | ... 1547 more ... | "zoom-out-map"'.
+
+379               name={tab.icon}
+                  ~~~~
+
+  ../node_modules/@expo/vector-icons/build/createIconSet.d.ts:17:5
+    17     name: GLYPHS;
+           ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IconProps<"filter" | "height" | "title" | "opacity" | "android" | "web" | "transform" | "local-drink" | "check-circle" | "local-pharmacy" | "straighten" | "clean-hands" | "science" | ... 1548 more ... | "zoom-out-map">'
+
+src/screens/DeliveryHistoryScreen.tsx:2:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+2 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/DeliveryHistoryScreen.tsx:29:34 - error TS7031: Binding element 'navigation' implicitly has an 'any' type.
+
+29 const DeliveryHistoryScreen = ({ navigation }) => {
+                                    ~~~~~~~~~~
+
+src/screens/DeliveryHistoryScreen.tsx:54:23 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+54         setDeliveries(prev => [...prev, ...response.deliveries]);
+                         ~~~~
+
+src/screens/DeliveryHistoryScreen.tsx:94:12 - error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{ delivered: string; cancelled: string; returned: string; }'.
+  No index signature with a parameter of type 'string' was found on type '{ delivered: string; cancelled: string; returned: string; }'.
+
+94     return labels[status] || status;
+              ~~~~~~~~~~~~~~
+
+src/screens/DeliveryHistoryScreen.tsx:187:24 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+187         keyExtractor={(item) => item.id.toString()}
+                           ~~~~
+
+src/screens/HomeScreen.tsx:1:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/HomeScreen.tsx:134:33 - error TS7006: Parameter 'delivery' implicitly has an 'any' type.
+
+134     return activeDeliveries.map(delivery => (
+                                    ~~~~~~~~
+
+src/screens/HomeScreen.tsx:185:34 - error TS7006: Parameter 'reminder' implicitly has an 'any' type.
+
+185     return upcomingReminders.map(reminder => (
+                                     ~~~~~~~~
+
+src/screens/HomeScreen.tsx:214:29 - error TS7006: Parameter 'order' implicitly has an 'any' type.
+
+214     return recentOrders.map(order => (
+                                ~~~~~
+
+src/screens/LoginScreen.tsx:1:33 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useState } from 'react';
+                                  ~~~~~~~
+
+src/screens/MedicationDetailsScreen.tsx:1:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/MedicationDetailsScreen.tsx:24:36 - error TS2339: Property 'scheduleId' does not exist on type 'object'.
+
+24   const scheduleId = route.params?.scheduleId;
+                                      ~~~~~~~~~~
+
+src/screens/MedicationDetailsScreen.tsx:36:39 - error TS7006: Parameter 's' implicitly has an 'any' type.
+
+36       const schedule = schedules.find(s => s.id === scheduleId);
+                                         ~
+
+src/screens/MedicationDetailsScreen.tsx:234:48 - error TS7006: Parameter 'reminder' implicitly has an 'any' type.
+
+234               {selectedSchedule.reminders.map((reminder, index) => (
+                                                   ~~~~~~~~
+
+src/screens/MedicationDetailsScreen.tsx:234:58 - error TS7006: Parameter 'index' implicitly has an 'any' type.
+
+234               {selectedSchedule.reminders.map((reminder, index) => (
+                                                             ~~~~~
+
+src/screens/MedicationRemindersDemoScreen.tsx:1:33 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useState } from 'react';
+                                  ~~~~~~~
+
+src/screens/MedicationRemindersDemoScreen.tsx:31:87 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+31   const [selectedMedicationType, setSelectedMedicationType] = useState<AnimationType>(AnimationType.PILL);
+                                                                                         ~~~~~~~~~~~~~
+
+src/screens/MedicationRemindersDemoScreen.tsx:39:13 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+39       type: AnimationType.PILL,
+               ~~~~~~~~~~~~~
+
+src/screens/MedicationRemindersDemoScreen.tsx:62:13 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+62       type: AnimationType.INHALER,
+               ~~~~~~~~~~~~~
+
+src/screens/MedicationRemindersDemoScreen.tsx:147:28 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+147             {Object.values(AnimationType).map((type) => (
+                               ~~~~~~~~~~~~~
+
+src/screens/MedicationRemindersDemoScreen.tsx:162:20 - error TS18046: 'type' is of type 'unknown'.
+
+162                   {type.charAt(0).toUpperCase() + type.slice(1)}
+                       ~~~~
+
+src/screens/MedicationRemindersDemoScreen.tsx:162:51 - error TS18046: 'type' is of type 'unknown'.
+
+162                   {type.charAt(0).toUpperCase() + type.slice(1)}
+                                                      ~~~~
+
+src/screens/MedicationRemindersDemoScreen.tsx:250:29 - error TS2693: 'AnimationType' only refers to a type, but is being used as a value here.
+
+250             medicationType={AnimationType.PILL}
+                                ~~~~~~~~~~~~~
+
+src/screens/MedicationRemindersScreen.tsx:1:19 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React from 'react';
+                    ~~~~~~~
+
+src/screens/MedicineDetailScreen.tsx:2:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+2 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/MedicineDetailScreen.tsx:15:18 - error TS7016: Could not find a declaration file for module 'react-native-vector-icons/Ionicons'. '/home/runner/workspace/node_modules/react-native-vector-icons/Ionicons.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/react-native-vector-icons` if it exists or add a new declaration (.d.ts) file containing `declare module 'react-native-vector-icons/Ionicons';`
+
+15 import Icon from 'react-native-vector-icons/Ionicons';
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/MedicineDetailScreen.tsx:127:25 - error TS2345: Argument of type '[string, { items: { medicine_id: number; pharmacy_id: number; quantity: any; price: number; }[]; }]' is not assignable to parameter of type 'never'.
+
+127     navigation.navigate('Checkout', {
+                            ~~~~~~~~~~~~~
+128       items: [{
+    ~~~~~~~~~~~~~~~
+... 
+133       }]
+    ~~~~~~~~
+134     });
+    ~~~~~
+
+src/screens/MedicineDetailScreen.tsx:138:25 - error TS2345: Argument of type '[string, { pharmacyId: number; medicineId: number; }]' is not assignable to parameter of type 'never'.
+
+138     navigation.navigate('PharmacyDetail', {
+                            ~~~~~~~~~~~~~~~~~~~
+139       pharmacyId: pharmacy.pharmacy_id,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+140       medicineId: medicineId
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+141     });
+    ~~~~~
+
+src/screens/MedicineDetailScreen.tsx:209:45 - error TS7006: Parameter 'ingredient' implicitly has an 'any' type.
+
+209           {medicine.active_ingredients.map((ingredient, index) => (
+                                                ~~~~~~~~~~
+
+src/screens/MedicineDetailScreen.tsx:209:57 - error TS7006: Parameter 'index' implicitly has an 'any' type.
+
+209           {medicine.active_ingredients.map((ingredient, index) => (
+                                                            ~~~~~
+
+src/screens/MedicineDetailScreen.tsx:222:38 - error TS7006: Parameter 'indication' implicitly has an 'any' type.
+
+222           {medicine.indications.map((indication, index) => (
+                                         ~~~~~~~~~~
+
+src/screens/MedicineDetailScreen.tsx:222:50 - error TS7006: Parameter 'index' implicitly has an 'any' type.
+
+222           {medicine.indications.map((indication, index) => (
+                                                     ~~~~~
+
+src/screens/MedicineDetailScreen.tsx:235:44 - error TS7006: Parameter 'contraindication' implicitly has an 'any' type.
+
+235           {medicine.contraindications.map((contraindication, index) => (
+                                               ~~~~~~~~~~~~~~~~
+
+src/screens/MedicineDetailScreen.tsx:235:62 - error TS7006: Parameter 'index' implicitly has an 'any' type.
+
+235           {medicine.contraindications.map((contraindication, index) => (
+                                                                 ~~~~~
+
+src/screens/MedicineDetailScreen.tsx:248:39 - error TS7006: Parameter 'sideEffect' implicitly has an 'any' type.
+
+248           {medicine.side_effects.map((sideEffect, index) => (
+                                          ~~~~~~~~~~
+
+src/screens/MedicineDetailScreen.tsx:248:51 - error TS7006: Parameter 'index' implicitly has an 'any' type.
+
+248           {medicine.side_effects.map((sideEffect, index) => (
+                                                      ~~~~~
+
+src/screens/MedicineDetailScreen.tsx:280:32 - error TS7006: Parameter 'stock' implicitly has an 'any' type.
+
+280           {pharmacyStocks.map((stock, index) => (
+                                   ~~~~~
+
+src/screens/MedicineDetailScreen.tsx:280:39 - error TS7006: Parameter 'index' implicitly has an 'any' type.
+
+280           {pharmacyStocks.map((stock, index) => (
+                                          ~~~~~
+
+src/screens/MedicineSearchScreen.tsx:1:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/MedicineSearchScreen.tsx:29:73 - error TS2344: Type '"MainTabs"' does not satisfy the constraint 'keyof MainStackParamList'.
+
+29 type HomeScreenNavigationProp = StackNavigationProp<MainStackParamList, 'MainTabs'>;
+                                                                           ~~~~~~~~~~
+
+src/screens/MedicineSearchScreen.tsx:35:50 - error TS7031: Binding element 'navigation' implicitly has an 'any' type.
+
+35 const MedicineSearchScreen: React.FC<Props> = ({ navigation }) => {
+                                                    ~~~~~~~~~~
+
+src/screens/MedicineSearchScreen.tsx:139:28 - error TS7031: Binding element 'item' implicitly has an 'any' type.
+
+139             renderItem={({ item }) => (
+                               ~~~~
+
+src/screens/MedicineSearchScreen.tsx:148:28 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+148             keyExtractor={(item) => item.id.toString()}
+                               ~~~~
+
+src/screens/MedicineSearchScreen.tsx:176:26 - error TS7031: Binding element 'item' implicitly has an 'any' type.
+
+176           renderItem={({ item }) => (
+                             ~~~~
+
+src/screens/MedicineSearchScreen.tsx:184:26 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+184           keyExtractor={(item) => item.id.toString()}
+                             ~~~~
+
+src/screens/MobileMoneyPaymentScreen.tsx:1:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/MobileMoneyPaymentScreen.tsx:19:10 - error TS2614: Module '"@/services/payment.service"' has no exported member 'paymentService'. Did you mean to use 'import paymentService from "@/services/payment.service"' instead?
+
+19 import { paymentService } from '@/services/payment.service';
+            ~~~~~~~~~~~~~~
+
+src/screens/MobileMoneyPaymentScreen.tsx:21:87 - error TS2344: Type '"MobileMoneyPayment"' does not satisfy the constraint 'keyof MainStackParamList'.
+
+21 type MobileMoneyPaymentScreenNavigationProp = StackNavigationProp<MainStackParamList, 'MobileMoneyPayment'>;
+                                                                                         ~~~~~~~~~~~~~~~~~~~~
+
+src/screens/MobileMoneyPaymentScreen.tsx:22:72 - error TS2344: Type '"MobileMoneyPayment"' does not satisfy the constraint 'keyof MainStackParamList'.
+
+22 type MobileMoneyPaymentScreenRouteProp = RouteProp<MainStackParamList, 'MobileMoneyPayment'>;
+                                                                          ~~~~~~~~~~~~~~~~~~~~
+
+src/screens/MobileMoneyPaymentScreen.tsx:35:54 - error TS7031: Binding element 'navigation' implicitly has an 'any' type.
+
+35 const MobileMoneyPaymentScreen: React.FC<Props> = ({ navigation, route }) => {
+                                                        ~~~~~~~~~~
+
+src/screens/MobileMoneyPaymentScreen.tsx:35:66 - error TS7031: Binding element 'route' implicitly has an 'any' type.
+
+35 const MobileMoneyPaymentScreen: React.FC<Props> = ({ navigation, route }) => {
+                                                                    ~~~~~
+
+src/screens/NotificationsScreen.tsx:1:57 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useState, useEffect, useCallback } from 'react';
+                                                          ~~~~~~~
+
+src/screens/NotificationsScreen.tsx:16:18 - error TS7016: Could not find a declaration file for module 'react-native-vector-icons/Ionicons'. '/home/runner/workspace/node_modules/react-native-vector-icons/Ionicons.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/react-native-vector-icons` if it exists or add a new declaration (.d.ts) file containing `declare module 'react-native-vector-icons/Ionicons';`
+
+16 import Icon from 'react-native-vector-icons/Ionicons';
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/NotificationsScreen.tsx:112:24 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+112       setNotifications(prev =>
+                           ~~~~
+
+src/screens/NotificationsScreen.tsx:113:18 - error TS7006: Parameter 'notification' implicitly has an 'any' type.
+
+113         prev.map(notification =>
+                     ~~~~~~~~~~~~
+
+src/screens/NotificationsScreen.tsx:129:26 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+129         setNotifications(prev =>
+                             ~~~~
+
+src/screens/NotificationsScreen.tsx:130:20 - error TS7006: Parameter 'notification' implicitly has an 'any' type.
+
+130           prev.map(notification => ({ ...notification, isRead: true }))
+                       ~~~~~~~~~~~~
+
+src/screens/NotificationsScreen.tsx:152:32 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+152               setNotifications(prev => prev.filter(n => n.id !== notificationId));
+                                   ~~~~
+
+src/screens/NotificationsScreen.tsx:152:52 - error TS7006: Parameter 'n' implicitly has an 'any' type.
+
+152               setNotifications(prev => prev.filter(n => n.id !== notificationId));
+                                                       ~
+
+src/screens/NotificationsScreen.tsx:185:31 - error TS2345: Argument of type '[string, { orderId: any; }]' is not assignable to parameter of type 'never'.
+
+185           navigation.navigate('OrderDetails', { orderId: notification.data.orderId });
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/NotificationsScreen.tsx:190:31 - error TS2345: Argument of type '[string, { orderId: any; }]' is not assignable to parameter of type 'never'.
+
+190           navigation.navigate('TrackOrder', { orderId: notification.data.orderId });
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/NotificationsScreen.tsx:195:31 - error TS2345: Argument of type '[string, { prescriptionId: any; }]' is not assignable to parameter of type 'never'.
+
+195           navigation.navigate('PrescriptionDetail', { prescriptionId: notification.data.prescriptionId });
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/NotificationsScreen.tsx:199:29 - error TS2769: No overload matches this call.
+  Argument of type '[string]' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(options: never): void', gave the following error.
+    Argument of type '"MedicationReminders"' is not assignable to parameter of type 'never'.
+
+199         navigation.navigate('MedicationReminders');
+                                ~~~~~~~~~~~~~~~~~~~~~
+
+
+src/screens/NotificationsScreen.tsx:269:37 - error TS7006: Parameter 'n' implicitly has an 'any' type.
+
+269         return notifications.filter(n => !n.isRead);
+                                        ~
+
+src/screens/NotificationsScreen.tsx:352:29 - error TS7006: Parameter 'value' implicitly has an 'any' type.
+
+352             onValueChange={(value) => updatePreference('orderUpdates', value)}
+                                ~~~~~
+
+src/screens/NotificationsScreen.tsx:362:29 - error TS7006: Parameter 'value' implicitly has an 'any' type.
+
+362             onValueChange={(value) => updatePreference('deliveryNotifications', value)}
+                                ~~~~~
+
+src/screens/NotificationsScreen.tsx:372:29 - error TS7006: Parameter 'value' implicitly has an 'any' type.
+
+372             onValueChange={(value) => updatePreference('medicationReminders', value)}
+                                ~~~~~
+
+src/screens/NotificationsScreen.tsx:382:29 - error TS7006: Parameter 'value' implicitly has an 'any' type.
+
+382             onValueChange={(value) => updatePreference('prescriptionStatus', value)}
+                                ~~~~~
+
+src/screens/NotificationsScreen.tsx:392:29 - error TS7006: Parameter 'value' implicitly has an 'any' type.
+
+392             onValueChange={(value) => updatePreference('promotions', value)}
+                                ~~~~~
+
+src/screens/NotificationsScreen.tsx:406:29 - error TS7006: Parameter 'value' implicitly has an 'any' type.
+
+406             onValueChange={(value) => updatePreference('pushNotifications', value)}
+                                ~~~~~
+
+src/screens/NotificationsScreen.tsx:416:29 - error TS7006: Parameter 'value' implicitly has an 'any' type.
+
+416             onValueChange={(value) => updatePreference('emailNotifications', value)}
+                                ~~~~~
+
+src/screens/NotificationsScreen.tsx:426:29 - error TS7006: Parameter 'value' implicitly has an 'any' type.
+
+426             onValueChange={(value) => updatePreference('smsNotifications', value)}
+                                ~~~~~
+
+src/screens/NotificationsScreen.tsx:460:44 - error TS7006: Parameter 'n' implicitly has an 'any' type.
+
+460   const unreadCount = notifications.filter(n => !n.isRead).length;
+                                               ~
+
+src/screens/NotificationsScreen.tsx:526:28 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+526             keyExtractor={(item) => item.id.toString()}
+                               ~~~~
+
+src/screens/OrderDetailsScreen.tsx:1:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:12:18 - error TS7016: Could not find a declaration file for module 'react-native-vector-icons/Ionicons'. '/home/runner/workspace/node_modules/react-native-vector-icons/Ionicons.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/react-native-vector-icons` if it exists or add a new declaration (.d.ts) file containing `declare module 'react-native-vector-icons/Ionicons';`
+
+12 import Icon from 'react-native-vector-icons/Ionicons';
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:51:27 - error TS7006: Parameter 'status' implicitly has an 'any' type.
+
+51   const getStatusColor = (status) => {
+                             ~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:69:34 - error TS7006: Parameter 'status' implicitly has an 'any' type.
+
+69   const getPaymentStatusColor = (status) => {
+                                    ~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:83:23 - error TS7006: Parameter 'dateString' implicitly has an 'any' type.
+
+83   const formatDate = (dateString) => {
+                         ~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:148:37 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+148           {order?.order_items?.map((item) => (
+                                        ~~~~
+
+src/screens/OrderDetailsScreen.tsx:233:39 - error TS2345: Argument of type '[string, { orderId: any; amount: any; transactionReference: any; }]' is not assignable to parameter of type 'never'.
+
+233                   navigation.navigate('MobileMoneyPayment', {
+                                          ~~~~~~~~~~~~~~~~~~~~~~~
+234                     orderId: order.id,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+236                     transactionReference: order.transaction_reference
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+237                   });
+    ~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:239:39 - error TS2345: Argument of type '[string, { orderId: any; amount: any; }]' is not assignable to parameter of type 'never'.
+
+239                   navigation.navigate('CardPayment', {
+                                          ~~~~~~~~~~~~~~~~
+240                     orderId: order.id,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+241                     amount: order.total_amount
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+242                   });
+    ~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:253:50 - error TS2345: Argument of type '[string, { orderId: any; }]' is not assignable to parameter of type 'never'.
+
+253               onPress={() => navigation.navigate('RateOrder', { orderId: order.id })}
+                                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrderDetailsScreen.tsx:261:48 - error TS2345: Argument of type '[string, { orderId: any; }]' is not assignable to parameter of type 'never'.
+
+261             onPress={() => navigation.navigate('Support', { orderId: order.id })}
+                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrdersScreen.tsx:2:57 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+2 import React, { useState, useEffect, useCallback } from 'react';
+                                                          ~~~~~~~
+
+src/screens/OrdersScreen.tsx:15:18 - error TS7016: Could not find a declaration file for module 'react-native-vector-icons/Ionicons'. '/home/runner/workspace/node_modules/react-native-vector-icons/Ionicons.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/react-native-vector-icons` if it exists or add a new declaration (.d.ts) file containing `declare module 'react-native-vector-icons/Ionicons';`
+
+15 import Icon from 'react-native-vector-icons/Ionicons';
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrdersScreen.tsx:138:30 - error TS7006: Parameter 'order' implicitly has an 'any' type.
+
+138         return orders.filter(order =>
+                                 ~~~~~
+
+src/screens/OrdersScreen.tsx:142:30 - error TS7006: Parameter 'order' implicitly has an 'any' type.
+
+142         return orders.filter(order =>
+                                 ~~~~~
+
+src/screens/OrdersScreen.tsx:151:25 - error TS2345: Argument of type '[string, { orderId: number; }]' is not assignable to parameter of type 'never'.
+
+151     navigation.navigate('OrderDetails', { orderId: order.id });
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrdersScreen.tsx:156:27 - error TS2345: Argument of type '[string, { orderId: number; orderNumber: string; }]' is not assignable to parameter of type 'never'.
+
+156       navigation.navigate('TrackOrder', {
+                              ~~~~~~~~~~~~~~~
+157         orderId: order.id,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+158         orderNumber: order.order_number
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+159       });
+    ~~~~~~~
+
+src/screens/OrdersScreen.tsx:251:48 - error TS2345: Argument of type '[string, { orderId: number; }]' is not assignable to parameter of type 'never'.
+
+251             onPress={() => navigation.navigate('RateOrder', { orderId: order.id })}
+                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/OrdersScreen.tsx:287:46 - error TS2769: No overload matches this call.
+  Argument of type '[string]' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(options: never): void', gave the following error.
+    Argument of type '"Pharmacies"' is not assignable to parameter of type 'never'.
+
+287           onPress={() => navigation.navigate('Pharmacies')}
+                                                 ~~~~~~~~~~~~
+
+
+src/screens/OrdersScreen.tsx:327:24 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+327         keyExtractor={(item) => item.id.toString()}
+                           ~~~~
+
+src/screens/OtpVerificationScreen.tsx:2:52 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+2 import React, { useState, useEffect, useRef } from 'react';
+                                                     ~~~~~~~
+
+src/screens/OtpVerificationScreen.tsx:34:21 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+34       setCountdown((prev) => {
+                       ~~~~
+
+src/screens/OtpVerificationScreen.tsx:81:22 - error TS2322: Type 'string' is not assignable to type 'never'.
+
+81           routes: [{ name: 'MainTabs' }],
+                        ~~~~
+
+  ../node_modules/@react-navigation/routers/lib/typescript/src/types.d.ts:59:5
+    59     name: RouteName;
+           ~~~~
+    The expected type comes from property 'name' which is declared here on type 'NavigationRoute<RootParamList, never> | PartialRoute<Route<never, object | undefined>>'
+
+src/screens/OtpVerificationScreen.tsx:141:21 - error TS7006: Parameter 'digit' implicitly has an 'any' type.
+
+141           {otp.map((digit, index) => (
+                        ~~~~~
+
+src/screens/OtpVerificationScreen.tsx:141:28 - error TS7006: Parameter 'index' implicitly has an 'any' type.
+
+141           {otp.map((digit, index) => (
+                               ~~~~~
+
+src/screens/OtpVerificationScreen.tsx:144:21 - error TS7006: Parameter 'ref' implicitly has an 'any' type.
+
+144               ref={(ref) => (inputRefs.current[index] = ref)}
+                        ~~~
+
+src/screens/OtpVerificationScreen.tsx:150:30 - error TS7006: Parameter 'text' implicitly has an 'any' type.
+
+150               onChangeText={(text) => handleOtpChange(text, index)}
+                                 ~~~~
+
+src/screens/OtpVerificationScreen.tsx:151:45 - error TS7031: Binding element 'key' implicitly has an 'any' type.
+
+151               onKeyPress={({ nativeEvent: { key } }) => handleKeyPress(key, index)}
+                                                ~~~
+
+src/screens/OtpVerificationScreen.tsx:177:23 - error TS7006: Parameter 'digit' implicitly has an 'any' type.
+
+177             (otp.some(digit => !digit) || isLoading) && styles.disabledButton
+                          ~~~~~
+
+src/screens/OtpVerificationScreen.tsx:180:30 - error TS7006: Parameter 'digit' implicitly has an 'any' type.
+
+180           disabled={otp.some(digit => !digit) || isLoading}
+                                 ~~~~~
+
+src/screens/PaymentMethodScreen.tsx:1:33 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useState } from 'react';
+                                  ~~~~~~~
+
+src/screens/PaymentMethodScreen.tsx:11:18 - error TS7016: Could not find a declaration file for module 'react-native-vector-icons/Ionicons'. '/home/runner/workspace/node_modules/react-native-vector-icons/Ionicons.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/react-native-vector-icons` if it exists or add a new declaration (.d.ts) file containing `declare module 'react-native-vector-icons/Ionicons';`
+
+11 import Icon from 'react-native-vector-icons/Ionicons';
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/PaymentMethodScreen.tsx:45:27 - error TS2345: Argument of type '[string, { orderId: number; amount: number; }]' is not assignable to parameter of type 'never'.
+
+45       navigation.navigate('CardPayment', { orderId, amount });
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/PaymentMethodScreen.tsx:47:27 - error TS2345: Argument of type '[string, { orderId: number; amount: number; }]' is not assignable to parameter of type 'never'.
+
+47       navigation.navigate('MobileMoneyPayment', { orderId, amount });
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/PaymentMethodsScreen.tsx:2:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+2 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/PaymentMethodsScreen.tsx:14:18 - error TS7016: Could not find a declaration file for module 'react-native-vector-icons/Ionicons'. '/home/runner/workspace/node_modules/react-native-vector-icons/Ionicons.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/react-native-vector-icons` if it exists or add a new declaration (.d.ts) file containing `declare module 'react-native-vector-icons/Ionicons';`
+
+14 import Icon from 'react-native-vector-icons/Ionicons';
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/PaymentMethodsScreen.tsx:63:27 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+63         setPaymentMethods(prev =>
+                             ~~~~
+
+src/screens/PaymentMethodsScreen.tsx:64:20 - error TS7006: Parameter 'method' implicitly has an 'any' type.
+
+64           prev.map(method => ({
+                      ~~~~~~
+
+src/screens/PaymentMethodsScreen.tsx:94:35 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+94                 setPaymentMethods(prev => prev.filter(method => method.id !== methodId));
+                                     ~~~~
+
+src/screens/PaymentMethodsScreen.tsx:94:55 - error TS7006: Parameter 'method' implicitly has an 'any' type.
+
+94                 setPaymentMethods(prev => prev.filter(method => method.id !== methodId));
+                                                         ~~~~~~
+
+src/screens/PaymentMethodsScreen.tsx:208:46 - error TS2769: No overload matches this call.
+  Argument of type '[string]' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(options: never): void', gave the following error.
+    Argument of type '"AddPaymentMethod"' is not assignable to parameter of type 'never'.
+
+208           onPress={() => navigation.navigate('AddPaymentMethod')}
+                                                 ~~~~~~~~~~~~~~~~~~
+
+
+src/screens/PaymentMethodsScreen.tsx:229:50 - error TS2769: No overload matches this call.
+  Argument of type '[string]' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(options: never): void', gave the following error.
+    Argument of type '"AddPaymentMethod"' is not assignable to parameter of type 'never'.
+
+229               onPress={() => navigation.navigate('AddPaymentMethod')}
+                                                     ~~~~~~~~~~~~~~~~~~
+
+
+src/screens/PaymentScreen.tsx:1:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/PaymentScreen.tsx:30:43 - error TS7031: Binding element 'navigation' implicitly has an 'any' type.
+
+30 const PaymentScreen: React.FC<Props> = ({ navigation, route }) => {
+                                             ~~~~~~~~~~
+
+src/screens/PaymentScreen.tsx:30:55 - error TS7031: Binding element 'route' implicitly has an 'any' type.
+
+30 const PaymentScreen: React.FC<Props> = ({ navigation, route }) => {
+                                                         ~~~~~
+
+src/screens/PharmaciesScreen.tsx:2:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+2 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/PharmaciesScreen.tsx:78:38 - error TS7006: Parameter 'pharmacy' implicitly has an 'any' type.
+
+78     let filtered = pharmacies.filter(pharmacy => {
+                                        ~~~~~~~~
+
+src/screens/PharmaciesScreen.tsx:95:31 - error TS7006: Parameter 'service' implicitly has an 'any' type.
+
+95         filters.services.some(service => pharmacy.services.includes(service));
+                                 ~~~~~~~
+
+src/screens/PharmaciesScreen.tsx:101:20 - error TS7006: Parameter 'a' implicitly has an 'any' type.
+
+101     filtered.sort((a, b) => {
+                       ~
+
+src/screens/PharmaciesScreen.tsx:101:23 - error TS7006: Parameter 'b' implicitly has an 'any' type.
+
+101     filtered.sort((a, b) => {
+                          ~
+
+src/screens/PharmaciesScreen.tsx:122:11 - error TS2322: Type '{ key: number; name: "star" | "star-border"; size: number; color: string; }' is not assignable to type 'IconProps<"filter" | "height" | "title" | "opacity" | "android" | "web" | "transform" | "local-drink" | "check-circle" | "local-pharmacy" | "straighten" | "clean-hands" | "science" | ... 1548 more ... | "zoom-out-map">'.
+  Property 'key' does not exist on type 'IconProps<"filter" | "height" | "title" | "opacity" | "android" | "web" | "transform" | "local-drink" | "check-circle" | "local-pharmacy" | "straighten" | "clean-hands" | "science" | ... 1548 more ... | "zoom-out-map">'.
+
+122           key={i}
+              ~~~
+
+src/screens/PharmaciesScreen.tsx:396:24 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+396         keyExtractor={(item) => item.id.toString()}
+                           ~~~~
+
+src/screens/PharmacyMapScreen.tsx:1:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/PharmacyMapScreen.tsx:22:80 - error TS2344: Type '"PharmacyMap"' does not satisfy the constraint 'keyof MainStackParamList'.
+
+22 type PharmacyMapScreenNavigationProp = StackNavigationProp<MainStackParamList, 'PharmacyMap'>;
+                                                                                  ~~~~~~~~~~~~~
+
+src/screens/PharmacyMapScreen.tsx:23:65 - error TS2344: Type '"PharmacyMap"' does not satisfy the constraint 'keyof MainStackParamList'.
+
+23 type PharmacyMapScreenRouteProp = RouteProp<MainStackParamList, 'PharmacyMap'>;
+                                                                   ~~~~~~~~~~~~~
+
+src/screens/PharmacyMapScreen.tsx:32:47 - error TS7031: Binding element 'navigation' implicitly has an 'any' type.
+
+32 const PharmacyMapScreen: React.FC<Props> = ({ navigation, route }) => {
+                                                 ~~~~~~~~~~
+
+src/screens/PharmacyMapScreen.tsx:32:59 - error TS7031: Binding element 'route' implicitly has an 'any' type.
+
+32 const PharmacyMapScreen: React.FC<Props> = ({ navigation, route }) => {
+                                                             ~~~~~
+
+src/screens/PharmacyMapScreen.tsx:57:9 - error TS7006: Parameter 'p' implicitly has an 'any' type.
+
+57         p => p.latitude === route.params?.latitude && p.longitude === route.params?.longitude
+           ~
+
+src/screens/PharmacyMapScreen.tsx:97:38 - error TS7006: Parameter 'p' implicitly has an 'any' type.
+
+97     const pharmacy = pharmacies.find(p => p.id === id);
+                                        ~
+
+src/screens/PharmacyMapScreen.tsx:121:40 - error TS7006: Parameter 'p' implicitly has an 'any' type.
+
+121       const pharmacy = pharmacies.find(p => p.id === selectedMarkerId);
+                                           ~
+
+src/screens/PharmacyMapScreen.tsx:144:9 - error TS2322: Type '{ ref: any; style: { position: "absolute"; left: 0; right: 0; top: 0; bottom: 0; }; provider: "google"; initialRegion: { latitude: any; longitude: any; latitudeDelta: number; longitudeDelta: number; }; showsUserLocation: true; showsMyLocationButton: true; onMapReady: () => void; }' is not assignable to type 'MapViewProps'.
+  Property 'ref' does not exist on type 'MapViewProps'.
+
+144         ref={mapRef}
+            ~~~
+
+src/screens/PharmacyMapScreen.tsx:157:26 - error TS7006: Parameter 'pharmacy' implicitly has an 'any' type.
+
+157         {pharmacies.map((pharmacy) => (
+                             ~~~~~~~~
+
+src/screens/PharmacyMapScreen.tsx:159:13 - error TS2322: Type '{ key: any; coordinate: { latitude: any; longitude: any; }; title: any; description: any; onPress: () => Promise<void>; pinColor: string; }' is not assignable to type 'MapMarkerProps'.
+  Property 'key' does not exist on type 'MapMarkerProps'.
+
+159             key={pharmacy.id}
+                ~~~
+
+src/screens/PharmacyMapScreen.tsx:201:26 - error TS7031: Binding element 'item' implicitly has an 'any' type.
+
+201           renderItem={({ item }) => (
+                             ~~~~
+
+src/screens/PharmacyMapScreen.tsx:208:26 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+208           keyExtractor={(item) => item.id.toString()}
+                             ~~~~
+
+src/screens/PharmacyMapScreen.tsx:215:33 - error TS7006: Parameter 'event' implicitly has an 'any' type.
+
+215           onMomentumScrollEnd={(event) => {
+                                    ~~~~~
+
+src/screens/PrescriptionDetailScreen.tsx:2:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+2 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/PrescriptionDetailScreen.tsx:67:62 - error TS7006: Parameter 'm' implicitly has an 'any' type.
+
+67     const availableMedicines = prescription.medicines.filter(m => m.inStock);
+                                                                ~
+
+src/screens/PrescriptionDetailScreen.tsx:224:60 - error TS7006: Parameter 'warning' implicitly has an 'any' type.
+
+224                 {prescription.analysisResult.warnings.map((warning, index) => (
+                                                               ~~~~~~~
+
+src/screens/PrescriptionDetailScreen.tsx:224:69 - error TS7006: Parameter 'index' implicitly has an 'any' type.
+
+224                 {prescription.analysisResult.warnings.map((warning, index) => (
+                                                                        ~~~~~
+
+src/screens/PrescriptionDetailScreen.tsx:235:40 - error TS7006: Parameter 'medicine' implicitly has an 'any' type.
+
+235           {prescription.medicines.map((medicine, index) => renderMedicine(medicine, index))}
+                                           ~~~~~~~~
+
+src/screens/PrescriptionDetailScreen.tsx:235:50 - error TS7006: Parameter 'index' implicitly has an 'any' type.
+
+235           {prescription.medicines.map((medicine, index) => renderMedicine(medicine, index))}
+                                                     ~~~~~
+
+src/screens/PrescriptionUploadScreen.tsx:1:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/PrescriptionUploadScreen.tsx:24:87 - error TS2344: Type '"PrescriptionUpload"' does not satisfy the constraint 'keyof MainStackParamList'.
+
+24 type PrescriptionUploadScreenNavigationProp = StackNavigationProp<MainStackParamList, 'PrescriptionUpload'>;
+                                                                                         ~~~~~~~~~~~~~~~~~~~~
+
+src/screens/PrescriptionUploadScreen.tsx:25:72 - error TS2344: Type '"PrescriptionUpload"' does not satisfy the constraint 'keyof MainStackParamList'.
+
+25 type PrescriptionUploadScreenRouteProp = RouteProp<MainStackParamList, 'PrescriptionUpload'>;
+                                                                          ~~~~~~~~~~~~~~~~~~~~
+
+src/screens/PrescriptionUploadScreen.tsx:32:54 - error TS7031: Binding element 'navigation' implicitly has an 'any' type.
+
+32 const PrescriptionUploadScreen: React.FC<Props> = ({ navigation, route }) => {
+                                                        ~~~~~~~~~~
+
+src/screens/PrescriptionUploadScreen.tsx:32:66 - error TS7031: Binding element 'route' implicitly has an 'any' type.
+
+32 const PrescriptionUploadScreen: React.FC<Props> = ({ navigation, route }) => {
+                                                                    ~~~~~
+
+src/screens/PrescriptionUploadScreen.tsx:148:17 - error TS7006: Parameter 'ref' implicitly has an 'any' type.
+
+148           ref={(ref) => setCamera(ref)}
+                    ~~~
+
+src/screens/RemindersScreen.tsx:2:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+2 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/RemindersScreen.tsx:197:49 - error TS7006: Parameter '_' implicitly has an 'any' type.
+
+197     const newTimes = reminderForm.times.filter((_, i) => i !== index);
+                                                    ~
+
+src/screens/RemindersScreen.tsx:197:52 - error TS7006: Parameter 'i' implicitly has an 'any' type.
+
+197     const newTimes = reminderForm.times.filter((_, i) => i !== index);
+                                                       ~
+
+src/screens/RemindersScreen.tsx:334:26 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+334           keyExtractor={(item) => item.id.toString()}
+                             ~~~~
+
+src/screens/RemindersScreen.tsx:385:32 - error TS7006: Parameter 'text' implicitly has an 'any' type.
+
+385                 onChangeText={(text) => setReminderForm({
+                                   ~~~~
+
+src/screens/RemindersScreen.tsx:398:32 - error TS7006: Parameter 'text' implicitly has an 'any' type.
+
+398                 onChangeText={(text) => setReminderForm({
+                                   ~~~~
+
+src/screens/RemindersScreen.tsx:434:40 - error TS7006: Parameter 'time' implicitly has an 'any' type.
+
+434               {reminderForm.times.map((time, index) => (
+                                           ~~~~
+
+src/screens/RemindersScreen.tsx:434:46 - error TS7006: Parameter 'index' implicitly has an 'any' type.
+
+434               {reminderForm.times.map((time, index) => (
+                                                 ~~~~~
+
+src/screens/RemindersScreen.tsx:463:32 - error TS7006: Parameter 'text' implicitly has an 'any' type.
+
+463                 onChangeText={(text) => setReminderForm({
+                                   ~~~~
+
+src/screens/RemindersScreen.tsx:479:26 - error TS7006: Parameter 'event' implicitly has an 'any' type.
+
+479               onChange={(event, selectedTime) => {
+                             ~~~~~
+
+src/screens/RemindersScreen.tsx:479:33 - error TS7006: Parameter 'selectedTime' implicitly has an 'any' type.
+
+479               onChange={(event, selectedTime) => {
+                                    ~~~~~~~~~~~~
+
+src/screens/ScanPrescriptionScreen.tsx:2:52 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+2 import React, { useState, useEffect, useRef } from 'react';
+                                                     ~~~~~~~
+
+src/screens/ScanPrescriptionScreen.tsx:198:40 - error TS7006: Parameter 'medicine' implicitly has an 'any' type.
+
+198         {analysisResult.medicines.map((medicine, index) => (
+                                           ~~~~~~~~
+
+src/screens/ScanPrescriptionScreen.tsx:198:50 - error TS7006: Parameter 'index' implicitly has an 'any' type.
+
+198         {analysisResult.medicines.map((medicine, index) => (
+                                                     ~~~~~
+
+src/screens/ScanPrescriptionScreen.tsx:215:43 - error TS7006: Parameter 'warning' implicitly has an 'any' type.
+
+215             {analysisResult.warnings.map((warning, index) => (
+                                              ~~~~~~~
+
+src/screens/ScanPrescriptionScreen.tsx:215:52 - error TS7006: Parameter 'index' implicitly has an 'any' type.
+
+215             {analysisResult.warnings.map((warning, index) => (
+                                                       ~~~~~
+
+src/screens/ScanPrescriptionScreen.tsx:289:15 - error TS7006: Parameter 'ref' implicitly has an 'any' type.
+
+289         ref={(ref) => setCameraRef(ref)}
+                  ~~~
+
+src/screens/SettingsScreen.tsx:2:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+2 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/SettingsScreen.tsx:209:24 - error TS2322: Type 'string' is not assignable to type '"filter" | "height" | "title" | "opacity" | "android" | "web" | "transform" | "local-drink" | "check-circle" | "local-pharmacy" | "straighten" | "clean-hands" | "science" | "medical-services" | ... 1547 more ... | "zoom-out-map"'.
+
+209         <MaterialIcons name={icon} size={24} color="#0C6B58" />
+                           ~~~~
+
+  ../node_modules/@expo/vector-icons/build/createIconSet.d.ts:17:5
+    17     name: GLYPHS;
+           ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IconProps<"filter" | "height" | "title" | "opacity" | "android" | "web" | "transform" | "local-drink" | "check-circle" | "local-pharmacy" | "straighten" | "clean-hands" | "science" | ... 1548 more ... | "zoom-out-map">'
+
+src/screens/SettingsScreen.tsx:232:22 - error TS2322: Type 'string' is not assignable to type '"filter" | "height" | "title" | "opacity" | "android" | "web" | "transform" | "local-drink" | "check-circle" | "local-pharmacy" | "straighten" | "clean-hands" | "science" | "medical-services" | ... 1547 more ... | "zoom-out-map"'.
+
+232       <MaterialIcons name={icon} size={24} color={isDestructive ? '#F44336' : '#0C6B58'} />
+                         ~~~~
+
+  ../node_modules/@expo/vector-icons/build/createIconSet.d.ts:17:5
+    17     name: GLYPHS;
+           ~~~~
+    The expected type comes from property 'name' which is declared here on type 'IconProps<"filter" | "height" | "title" | "opacity" | "android" | "web" | "transform" | "local-drink" | "check-circle" | "local-pharmacy" | "straighten" | "clean-hands" | "science" | ... 1548 more ... | "zoom-out-map">'
+
+src/screens/SettingsScreen.tsx:436:32 - error TS7006: Parameter 'text' implicitly has an 'any' type.
+
+436                 onChangeText={(text) => setPasswordData({
+                                   ~~~~
+
+src/screens/SettingsScreen.tsx:450:32 - error TS7006: Parameter 'text' implicitly has an 'any' type.
+
+450                 onChangeText={(text) => setPasswordData({
+                                   ~~~~
+
+src/screens/SettingsScreen.tsx:464:32 - error TS7006: Parameter 'text' implicitly has an 'any' type.
+
+464                 onChangeText={(text) => setPasswordData({
+                                   ~~~~
+
+src/screens/TrackOrderScreen.tsx:2:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+2 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/TrackOrderScreen.tsx:250:39 - error TS7006: Parameter 'step' implicitly has an 'any' type.
+
+250           {order.trackingHistory.map((step, index) =>
+                                          ~~~~
+
+src/screens/TrackOrderScreen.tsx:250:45 - error TS7006: Parameter 'index' implicitly has an 'any' type.
+
+250           {order.trackingHistory.map((step, index) =>
+                                                ~~~~~
+
+src/screens/VideoConsultationScreen.tsx:2:44 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+2 import React, { useState, useEffect } from 'react';
+                                             ~~~~~~~
+
+src/screens/VideoConsultationScreen.tsx:171:30 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+171               keyExtractor={(item) => item.id.toString()}
+                                 ~~~~
+
+src/screens/VideoConsultationScreen.tsx:188:30 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+188               keyExtractor={(item) => item}
+                                 ~~~~
+
+src/screens/WelcomeScreen.tsx:1:42 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useEffect, useRef } from 'react';
+                                           ~~~~~~~
+
+src/screens/WelcomeScreen.tsx:15:26 - error TS2307: Cannot find module '@react-native-async-storage/async-storage' or its corresponding type declarations.
+
+15 import AsyncStorage from '@react-native-async-storage/async-storage';
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:17:32 - error TS2307: Cannot find module 'expo-linear-gradient' or its corresponding type declarations.
+
+17 import { LinearGradient } from 'expo-linear-gradient';
+                                  ~~~~~~~~~~~~~~~~~~~~~~
+
+src/screens/WelcomeScreen.tsx:60:50 - error TS2769: No overload matches this call.
+  Argument of type '[string]' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(options: never): void', gave the following error.
+    Argument of type '"Auth"' is not assignable to parameter of type 'never'.
+
+60               onPress={() => navigation.navigate('Auth')}
+                                                    ~~~~~~
+
+
+src/screens/WelcomeScreen.tsx:67:50 - error TS2769: No overload matches this call.
+  Argument of type '[string]' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(options: never): void', gave the following error.
+    Argument of type '"Login"' is not assignable to parameter of type 'never'.
+
+67               onPress={() => navigation.navigate('Login')}
+                                                    ~~~~~~~
+
+
+src/screens/auth/OnboardingScreen.tsx:1:33 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useState } from 'react';
+                                  ~~~~~~~
+
+src/screens/auth/OnboardingScreen.tsx:22:79 - error TS2344: Type '"Onboarding"' does not satisfy the constraint 'keyof AuthStackParamList'.
+
+22 type OnboardingScreenNavigationProp = StackNavigationProp<AuthStackParamList, 'Onboarding'>;
+                                                                                 ~~~~~~~~~~~~
+
+src/screens/auth/OnboardingScreen.tsx:28:46 - error TS7031: Binding element 'navigation' implicitly has an 'any' type.
+
+28 const OnboardingScreen: React.FC<Props> = ({ navigation }) => {
+                                                ~~~~~~~~~~
+
+src/screens/auth/OtpScreen.tsx:1:52 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useState, useEffect, useRef } from 'react';
+                                                     ~~~~~~~
+
+src/screens/auth/OtpScreen.tsx:28:48 - error TS7031: Binding element 'route' implicitly has an 'any' type.
+
+28 const OtpScreen: React.FC<OtpScreenProps> = ({ route, navigation }) => {
+                                                  ~~~~~
+
+src/screens/auth/OtpScreen.tsx:28:55 - error TS7031: Binding element 'navigation' implicitly has an 'any' type.
+
+28 const OtpScreen: React.FC<OtpScreenProps> = ({ route, navigation }) => {
+                                                         ~~~~~~~~~~
+
+src/screens/auth/OtpScreen.tsx:44:19 - error TS7006: Parameter 'prevTimer' implicitly has an 'any' type.
+
+44         setTimer((prevTimer) => prevTimer - 1);
+                     ~~~~~~~~~
+
+src/screens/auth/OtpScreen.tsx:157:23 - error TS7006: Parameter 'ref' implicitly has an 'any' type.
+
+157                 ref={(ref) => (inputRefs.current[index] = ref)}
+                          ~~~
+
+src/screens/auth/OtpScreen.tsx:164:32 - error TS7006: Parameter 'text' implicitly has an 'any' type.
+
+164                 onChangeText={(text) => handleOtpChange(text, index)}
+                                   ~~~~
+
+src/screens/auth/OtpScreen.tsx:165:30 - error TS7006: Parameter 'e' implicitly has an 'any' type.
+
+165                 onKeyPress={(e) => handleKeyPress(e, index)}
+                                 ~
+
+src/screens/auth/OtpVerificationScreen.tsx:1:52 - error TS2307: Cannot find module 'react' or its corresponding type declarations.
+
+1 import React, { useState, useEffect, useRef } from 'react';
+                                                     ~~~~~~~
+
+src/screens/auth/OtpVerificationScreen.tsx:22:84 - error TS2344: Type '"OtpVerification"' does not satisfy the constraint 'keyof AuthStackParamList'.
+
+22 type OtpVerificationScreenNavigationProp = StackNavigationProp<AuthStackParamList, 'OtpVerification'>;
+                                                                                      ~~~~~~~~~~~~~~~~~
+
+src/screens/auth/OtpVerificationScreen.tsx:23:69 - error TS2344: Type '"OtpVerification"' does not satisfy the constraint 'keyof AuthStackParamList'.
+
+23 type OtpVerificationScreenRouteProp = RouteProp<AuthStackParamList, 'OtpVerification'>;
+                                                                       ~~~~~~~~~~~~~~~~~
+
+src/screens/auth/OtpVerificationScreen.tsx:30:51 - error TS7031: Binding element 'navigation' implicitly has an 'any' type.
+
+30 const OtpVerificationScreen: React.FC<Props> = ({ navigation, route }) => {
+                                                     ~~~~~~~~~~
+
+src/screens/auth/OtpVerificationScreen.tsx:30:63 - error TS7031: Binding element 'route' implicitly has an 'any' type.
+
+30 const OtpVerificationScreen: React.FC<Props> = ({ navigation, route }) => {
+                                                                 ~~~~~
+
+src/screens/auth/OtpVerificationScreen.tsx:47:23 - error TS7006: Parameter 'prev' implicitly has an 'any' type.
+
+47         setCountdown((prev) => prev - 1);
+                         ~~~~
+
+src/screens/auth/OtpVerificationScreen.tsx:137:29 - error TS7006: Parameter 'digit' implicitly has an 'any' type.
+
+137             {otpDigits.map((digit, index) => (
+                                ~~~~~
+
+src/screens/auth/OtpVerificationScreen.tsx:137:36 - error TS7006: Parameter 'index' implicitly has an 'any' type.
+
+137             {otpDigits.map((digit, index) => (
+                                       ~~~~~
+
+src/screens/auth/OtpVerificationScreen.tsx:140:23 - error TS7006: Parameter 'ref' implicitly has an 'any' type.
+
+140                 ref={(ref) => (inputRefs.current[index] = ref)}
+                          ~~~
+
+src/screens/auth/OtpVerificationScreen.tsx:143:32 - error TS7006: Parameter 'text' implicitly has an 'any' type.
+
+143                 onChangeText={(text) => handleOtpChange(text.replace(/[^0-9]/g, ''), index)}
+                                   ~~~~
+
+src/screens/auth/OtpVerificationScreen.tsx:146:32 - error TS7031: Binding element 'nativeEvent' implicitly has an 'any' type.
+
+146                 onKeyPress={({ nativeEvent }) => {
+                                   ~~~~~~~~~~~
+
+src/services/api.service.ts:2:26 - error TS2307: Cannot find module '@react-native-async-storage/async-storage' or its corresponding type declarations.
+
+2 import AsyncStorage from '@react-native-async-storage/async-storage';
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/services/api.service.ts:49:11 - error TS2564: Property 'api' has no initializer and is not definitely assigned in the constructor.
+
+49   private api: AxiosInstance;
+             ~~~
+
+src/services/api.ts:2:26 - error TS2307: Cannot find module '@react-native-async-storage/async-storage' or its corresponding type declarations.
+
+2 import AsyncStorage from '@react-native-async-storage/async-storage';
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/services/auth.service.ts:158:7 - error TS2322: Type 'unknown' is not assignable to type '{ success: boolean; message: string; }'.
+
+158       return await apiService.requestOtp(phone, userType);
+          ~~~~~~
+
+src/services/auth.service.ts:176:32 - error TS2339: Property 'token' does not exist on type '{}'.
+
+176       if (response && response.token) {
+                                   ~~~~~
+
+src/services/auth.service.ts:178:41 - error TS2339: Property 'token' does not exist on type '{}'.
+
+178         this.setupTokenRefresh(response.token);
+                                            ~~~~~
+
+src/services/auth.service.ts:195:32 - error TS2339: Property 'token' does not exist on type '{}'.
+
+195       if (response && response.token) {
+                                   ~~~~~
+
+src/services/auth.service.ts:197:46 - error TS2339: Property 'token' does not exist on type '{}'.
+
+197         store.dispatch(refreshToken(response.token));
+                                                 ~~~~~
+
+src/services/auth.service.ts:200:41 - error TS2339: Property 'token' does not exist on type '{}'.
+
+200         this.setupTokenRefresh(response.token);
+                                            ~~~~~
+
+src/services/auth.service.ts:203:25 - error TS2339: Property 'token' does not exist on type '{}'.
+
+203         return response.token;
+                            ~~~~~
+
+src/services/auth.service.ts:222:30 - error TS18046: 'response' is of type 'unknown'.
+
+222       const updatedProfile = response.data.user;
+                                 ~~~~~~~~
+
+src/services/chat.service.ts:74:14 - error TS18046: 'response' is of type 'unknown'.
+
+74       return response.data;
+                ~~~~~~~~
+
+src/services/chat.service.ts:87:14 - error TS18046: 'response' is of type 'unknown'.
+
+87       return response.data;
+                ~~~~~~~~
+
+src/services/chat.service.ts:100:14 - error TS18046: 'response' is of type 'unknown'.
+
+100       return response.data;
+                 ~~~~~~~~
+
+src/services/chat.service.ts:120:14 - error TS18046: 'response' is of type 'unknown'.
+
+120       return response.data;
+                 ~~~~~~~~
+
+src/services/chat.service.ts:140:14 - error TS18046: 'response' is of type 'unknown'.
+
+140       return response.data;
+                 ~~~~~~~~
+
+src/services/chat.service.ts:159:14 - error TS18046: 'response' is of type 'unknown'.
+
+159       return response.data;
+                 ~~~~~~~~
+
+src/services/chat.service.ts:171:14 - error TS18046: 'response' is of type 'unknown'.
+
+171       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:105:14 - error TS18046: 'response' is of type 'unknown'.
+
+105       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:118:14 - error TS18046: 'response' is of type 'unknown'.
+
+118       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:131:14 - error TS18046: 'response' is of type 'unknown'.
+
+131       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:146:14 - error TS18046: 'response' is of type 'unknown'.
+
+146       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:161:14 - error TS18046: 'response' is of type 'unknown'.
+
+161       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:174:14 - error TS18046: 'response' is of type 'unknown'.
+
+174       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:187:14 - error TS18046: 'response' is of type 'unknown'.
+
+187       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:200:14 - error TS18046: 'response' is of type 'unknown'.
+
+200       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:216:14 - error TS18046: 'response' is of type 'unknown'.
+
+216       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:229:14 - error TS18046: 'response' is of type 'unknown'.
+
+229       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:242:14 - error TS18046: 'response' is of type 'unknown'.
+
+242       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:257:14 - error TS18046: 'response' is of type 'unknown'.
+
+257       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:275:14 - error TS18046: 'response' is of type 'unknown'.
+
+275       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:294:98 - error TS2554: Expected 1-2 arguments, but got 3.
+
+294       const response = await apiService.post(`/deliveries/${deliveryId}/upload-proof`, formData, {
+                                                                                                     ~
+295         headers: {
+    ~~~~~~~~~~~~~~~~~~
+... 
+297         },
+    ~~~~~~~~~~
+298       });
+    ~~~~~~~
+
+src/services/delivery.service.ts:299:14 - error TS18046: 'response' is of type 'unknown'.
+
+299       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:314:14 - error TS18046: 'response' is of type 'unknown'.
+
+314       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:327:14 - error TS18046: 'response' is of type 'unknown'.
+
+327       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:340:14 - error TS18046: 'response' is of type 'unknown'.
+
+340       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:353:14 - error TS18046: 'response' is of type 'unknown'.
+
+353       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:366:14 - error TS18046: 'response' is of type 'unknown'.
+
+366       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:379:14 - error TS18046: 'response' is of type 'unknown'.
+
+379       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:398:14 - error TS18046: 'response' is of type 'unknown'.
+
+398       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:416:14 - error TS18046: 'response' is of type 'unknown'.
+
+416       return response.data;
+                 ~~~~~~~~
+
+src/services/delivery.service.ts:439:14 - error TS18046: 'response' is of type 'unknown'.
+
+439       return response.data;
+                 ~~~~~~~~
+
+src/services/location.service.ts:81:5 - error TS2322: Type 'LocationSubscription' is not assignable to type 'number'.
+
+81     this.watchId = await Location.watchPositionAsync(
+       ~~~~~~~~~~~~
+
+src/services/notification.service.ts:3:26 - error TS2307: Cannot find module '@react-native-async-storage/async-storage' or its corresponding type declarations.
+
+3 import AsyncStorage from '@react-native-async-storage/async-storage';
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/services/order.service.ts:75:14 - error TS18046: 'response' is of type 'unknown'.
+
+75       return response.data.medicines;
+                ~~~~~~~~
+
+src/services/order.service.ts:88:14 - error TS18046: 'response' is of type 'unknown'.
+
+88       return response.data.categories;
+                ~~~~~~~~
+
+src/services/order.service.ts:101:14 - error TS18046: 'response' is of type 'unknown'.
+
+101       return response.data.order;
+                 ~~~~~~~~
+
+src/services/order.service.ts:119:14 - error TS18046: 'response' is of type 'unknown'.
+
+119       return response.data.orders;
+                 ~~~~~~~~
+
+src/services/order.service.ts:132:14 - error TS18046: 'response' is of type 'unknown'.
+
+132       return response.data.order;
+                 ~~~~~~~~
+
+src/services/order.service.ts:145:14 - error TS18046: 'response' is of type 'unknown'.
+
+145       return response.data;
+                 ~~~~~~~~
+
+src/services/order.service.ts:160:74 - error TS2554: Expected 1-2 arguments, but got 3.
+
+160       const response = await api.post('/prescriptions/upload', formData, {
+                                                                             ~
+161         headers: {
+    ~~~~~~~~~~~~~~~~~~
+... 
+163         }
+    ~~~~~~~~~
+164       });
+    ~~~~~~~
+
+src/services/order.service.ts:166:14 - error TS18046: 'response' is of type 'unknown'.
+
+166       return response.data.prescription;
+                 ~~~~~~~~
+
+src/services/order.service.ts:179:14 - error TS18046: 'response' is of type 'unknown'.
+
+179       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:3:10 - error TS2305: Module '"../config"' has no exported member 'VITE_STRIPE_PUBLIC_KEY'.
+
+3 import { VITE_STRIPE_PUBLIC_KEY } from '../config';
+           ~~~~~~~~~~~~~~~~~~~~~~
+
+src/services/payment.service.ts:67:14 - error TS18046: 'response' is of type 'unknown'.
+
+67       return response.data;
+                ~~~~~~~~
+
+src/services/payment.service.ts:82:14 - error TS18046: 'response' is of type 'unknown'.
+
+82       return response.data;
+                ~~~~~~~~
+
+src/services/payment.service.ts:108:14 - error TS18046: 'response' is of type 'unknown'.
+
+108       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:121:14 - error TS18046: 'response' is of type 'unknown'.
+
+121       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:133:14 - error TS18046: 'response' is of type 'unknown'.
+
+133       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:148:14 - error TS18046: 'response' is of type 'unknown'.
+
+148       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:161:14 - error TS18046: 'response' is of type 'unknown'.
+
+161       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:173:14 - error TS18046: 'response' is of type 'unknown'.
+
+173       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:185:14 - error TS18046: 'response' is of type 'unknown'.
+
+185       return response.data;
+                 ~~~~~~~~
+
+src/services/payment.service.ts:204:14 - error TS18046: 'response' is of type 'unknown'.
+
+204       return response.data;
+                 ~~~~~~~~
+
+src/services/pharmacy.service.ts:37:14 - error TS18046: 'response' is of type 'unknown'.
+
+37       return response.data;
+                ~~~~~~~~
+
+src/services/pharmacy.service.ts:50:14 - error TS18046: 'response' is of type 'unknown'.
+
+50       return response.data;
+                ~~~~~~~~
+
+src/services/pharmacy.service.ts:66:14 - error TS18046: 'response' is of type 'unknown'.
+
+66       return response.data;
+                ~~~~~~~~
+
+src/services/prescription.service.ts:52:14 - error TS18046: 'response' is of type 'unknown'.
+
+52       return response.data;
+                ~~~~~~~~
+
+src/services/prescription.service.ts:64:14 - error TS18046: 'response' is of type 'unknown'.
+
+64       return response.data;
+                ~~~~~~~~
+
+src/services/prescription.service.ts:77:14 - error TS18046: 'response' is of type 'unknown'.
+
+77       return response.data;
+                ~~~~~~~~
+
+src/services/prescription.service.ts:90:14 - error TS18046: 'response' is of type 'unknown'.
+
+90       return response.data;
+                ~~~~~~~~
+
+src/services/prescription.service.ts:111:14 - error TS18046: 'response' is of type 'unknown'.
+
+111       return response.data;
+                 ~~~~~~~~
+
+src/services/reminder.service.ts:50:14 - error TS18046: 'response' is of type 'unknown'.
+
+50       return response.data;
+                ~~~~~~~~
+
+src/services/reminder.service.ts:63:14 - error TS18046: 'response' is of type 'unknown'.
+
+63       return response.data;
+                ~~~~~~~~
+
+src/services/reminder.service.ts:77:14 - error TS18046: 'response' is of type 'unknown'.
+
+77       return response.data;
+                ~~~~~~~~
+
+src/services/reminder.service.ts:90:14 - error TS18046: 'response' is of type 'unknown'.
+
+90       return response.data;
+                ~~~~~~~~
+
+src/services/reminder.service.ts:103:14 - error TS18046: 'response' is of type 'unknown'.
+
+103       return response.data;
+                 ~~~~~~~~
+
+src/services/reminder.service.ts:115:14 - error TS18046: 'response' is of type 'unknown'.
+
+115       return response.data;
+                 ~~~~~~~~
+
+src/services/reminder.service.ts:127:14 - error TS18046: 'response' is of type 'unknown'.
+
+127       return response.data;
+                 ~~~~~~~~
+
+src/services/video.service.ts:90:14 - error TS18046: 'response' is of type 'unknown'.
+
+90       return response.data;
+                ~~~~~~~~
+
+src/services/video.service.ts:102:14 - error TS18046: 'response' is of type 'unknown'.
+
+102       return response.data;
+                 ~~~~~~~~
+
+src/services/video.service.ts:104:11 - error TS18046: 'error' is of type 'unknown'.
+
+104       if (error.response && error.response.status === 404) {
+              ~~~~~
+
+src/services/video.service.ts:104:29 - error TS18046: 'error' is of type 'unknown'.
+
+104       if (error.response && error.response.status === 404) {
+                                ~~~~~
+
+src/services/video.service.ts:271:34 - error TS2339: Property '_senders' does not exist on type 'Instance'.
+
+271         const sender = this.peer._senders.find((s: any) => s.track.kind === 'video');
+                                     ~~~~~~~~
+
+src/services/video.service.ts:297:14 - error TS18046: 'response' is of type 'unknown'.
+
+297       return response.data;
+                 ~~~~~~~~
+
+src/services/video.service.ts:312:14 - error TS18046: 'response' is of type 'unknown'.
+
+312       return response.data;
+                 ~~~~~~~~
+
+src/store/auth/authSlice.ts:1:44 - error TS2307: Cannot find module '@reduxjs/toolkit' or its corresponding type declarations.
+
+1 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+                                             ~~~~~~~~~~~~~~~~~~
+
+src/store/index.ts:2:32 - error TS2307: Cannot find module '@reduxjs/toolkit' or its corresponding type declarations.
+
+2 import { configureStore } from '@reduxjs/toolkit';
+                                 ~~~~~~~~~~~~~~~~~~
+
+src/store/index.ts:4:26 - error TS2307: Cannot find module '@react-native-async-storage/async-storage' or its corresponding type declarations.
+
+4 import AsyncStorage from '@react-native-async-storage/async-storage';
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/store/index.ts:5:33 - error TS2307: Cannot find module '@reduxjs/toolkit' or its corresponding type declarations.
+
+5 import { combineReducers } from '@reduxjs/toolkit';
+                                  ~~~~~~~~~~~~~~~~~~
+
+src/store/index.ts:36:16 - error TS7006: Parameter 'getDefaultMiddleware' implicitly has an 'any' type.
+
+36   middleware: (getDefaultMiddleware) =>
+                  ~~~~~~~~~~~~~~~~~~~~
+
+src/store/slices/authSlice.ts:1:62 - error TS2307: Cannot find module '@reduxjs/toolkit' or its corresponding type declarations.
+
+1 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+                                                               ~~~~~~~~~~~~~~~~~~
+
+src/store/slices/authSlice.ts:3:26 - error TS2307: Cannot find module '@react-native-async-storage/async-storage' or its corresponding type declarations.
+
+3 import AsyncStorage from '@react-native-async-storage/async-storage';
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/store/slices/authSlice.ts:24:27 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+24   async (phone: string, { rejectWithValue }) => {
+                             ~~~~~~~~~~~~~~~
+
+src/store/slices/authSlice.ts:36:51 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+36   async (data: { phone: string; code: string }, { rejectWithValue }) => {
+                                                     ~~~~~~~~~~~~~~~
+
+src/store/slices/authSlice.ts:44:11 - error TS2339: Property 'setToken' does not exist on type 'AxiosInstance'.
+
+44       api.setToken(response.data.token);
+             ~~~~~~~~
+
+src/store/slices/authSlice.ts:55:10 - error TS7006: Parameter '_' implicitly has an 'any' type.
+
+55   async (_, { rejectWithValue }) => {
+            ~
+
+src/store/slices/authSlice.ts:55:15 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+55   async (_, { rejectWithValue }) => {
+                 ~~~~~~~~~~~~~~~
+
+src/store/slices/authSlice.ts:65:11 - error TS2339: Property 'setToken' does not exist on type 'AxiosInstance'.
+
+65       api.setToken(token);
+             ~~~~~~~~
+
+src/store/slices/authSlice.ts:81:30 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+81   async (profileData: any, { rejectWithValue }) => {
+                                ~~~~~~~~~~~~~~~
+
+src/store/slices/authSlice.ts:93:10 - error TS7006: Parameter '_' implicitly has an 'any' type.
+
+93   async (_, { rejectWithValue }) => {
+            ~
+
+src/store/slices/authSlice.ts:93:15 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+93   async (_, { rejectWithValue }) => {
+                 ~~~~~~~~~~~~~~~
+
+src/store/slices/authSlice.ts:99:11 - error TS2339: Property 'clearToken' does not exist on type 'AxiosInstance'.
+
+99       api.clearToken();
+             ~~~~~~~~~~
+
+src/store/slices/authSlice.ts:113:16 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+113     resetError(state) {
+                   ~~~~~
+
+src/store/slices/authSlice.ts:117:19 - error TS7006: Parameter 'builder' implicitly has an 'any' type.
+
+117   extraReducers: (builder) => {
+                      ~~~~~~~
+
+src/store/slices/authSlice.ts:119:39 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+119     builder.addCase(sendOtp.pending, (state) => {
+                                          ~~~~~
+
+src/store/slices/authSlice.ts:123:41 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+123     builder.addCase(sendOtp.fulfilled, (state) => {
+                                            ~~~~~
+
+src/store/slices/authSlice.ts:126:40 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+126     builder.addCase(sendOtp.rejected, (state, action: PayloadAction<any>) => {
+                                           ~~~~~
+
+src/store/slices/authSlice.ts:132:41 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+132     builder.addCase(verifyOtp.pending, (state) => {
+                                            ~~~~~
+
+src/store/slices/authSlice.ts:136:43 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+136     builder.addCase(verifyOtp.fulfilled, (state, action) => {
+                                              ~~~~~
+
+src/store/slices/authSlice.ts:136:50 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+136     builder.addCase(verifyOtp.fulfilled, (state, action) => {
+                                                     ~~~~~~
+
+src/store/slices/authSlice.ts:142:42 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+142     builder.addCase(verifyOtp.rejected, (state, action: PayloadAction<any>) => {
+                                             ~~~~~
+
+src/store/slices/authSlice.ts:148:40 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+148     builder.addCase(loadUser.pending, (state) => {
+                                           ~~~~~
+
+src/store/slices/authSlice.ts:152:42 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+152     builder.addCase(loadUser.fulfilled, (state, action) => {
+                                             ~~~~~
+
+src/store/slices/authSlice.ts:152:49 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+152     builder.addCase(loadUser.fulfilled, (state, action) => {
+                                                    ~~~~~~
+
+src/store/slices/authSlice.ts:158:41 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+158     builder.addCase(loadUser.rejected, (state, action: PayloadAction<any>) => {
+                                            ~~~~~
+
+src/store/slices/authSlice.ts:167:45 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+167     builder.addCase(updateProfile.pending, (state) => {
+                                                ~~~~~
+
+src/store/slices/authSlice.ts:171:47 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+171     builder.addCase(updateProfile.fulfilled, (state, action) => {
+                                                  ~~~~~
+
+src/store/slices/authSlice.ts:171:54 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+171     builder.addCase(updateProfile.fulfilled, (state, action) => {
+                                                         ~~~~~~
+
+src/store/slices/authSlice.ts:175:46 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+175     builder.addCase(updateProfile.rejected, (state, action: PayloadAction<any>) => {
+                                                 ~~~~~
+
+src/store/slices/authSlice.ts:181:40 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+181     builder.addCase(logout.fulfilled, (state) => {
+                                           ~~~~~
+
+src/store/slices/chatSlice.ts:1:62 - error TS2307: Cannot find module '@reduxjs/toolkit' or its corresponding type declarations.
+
+1 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+                                                               ~~~~~~~~~~~~~~~~~~
+
+src/store/slices/chatSlice.ts:33:72 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+33   async ({ userId, orderId }: { userId?: number; orderId?: number }, { rejectWithValue }) => {
+                                                                          ~~~~~~~~~~~~~~~
+
+src/store/slices/chatSlice.ts:60:10 - error TS7006: Parameter '_' implicitly has an 'any' type.
+
+60   async (_, { rejectWithValue }) => {
+            ~
+
+src/store/slices/chatSlice.ts:60:15 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+60   async (_, { rejectWithValue }) => {
+                 ~~~~~~~~~~~~~~~
+
+src/store/slices/chatSlice.ts:72:31 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+72   async (messageId: number, { rejectWithValue }) => {
+                                 ~~~~~~~~~~~~~~~
+
+src/store/slices/chatSlice.ts:87:24 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+87     setSocketConnected(state, action: PayloadAction<boolean>) {
+                          ~~~~~
+
+src/store/slices/chatSlice.ts:90:16 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+90     addMessage(state, action: PayloadAction<any>) {
+                  ~~~~~
+
+src/store/slices/chatSlice.ts:107:29 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+107     updateMessageReadStatus(state, action: PayloadAction<{ messageId: number; readAt: Date }>) {
+                                ~~~~~
+
+src/store/slices/chatSlice.ts:111:72 - error TS7006: Parameter 'm' implicitly has an 'any' type.
+
+111       const messageIndex = state.activeConversation.messages.findIndex(m => m.id === messageId);
+                                                                           ~
+
+src/store/slices/chatSlice.ts:122:29 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+122     clearActiveConversation(state) {
+                                ~~~~~
+
+src/store/slices/chatSlice.ts:129:20 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+129     resetChatError(state) {
+                       ~~~~~
+
+src/store/slices/chatSlice.ts:133:19 - error TS7006: Parameter 'builder' implicitly has an 'any' type.
+
+133   extraReducers: (builder) => {
+                      ~~~~~~~
+
+src/store/slices/chatSlice.ts:135:47 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+135     builder.addCase(getConversation.pending, (state) => {
+                                                  ~~~~~
+
+src/store/slices/chatSlice.ts:139:49 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+139     builder.addCase(getConversation.fulfilled, (state, action) => {
+                                                    ~~~~~
+
+src/store/slices/chatSlice.ts:139:56 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+139     builder.addCase(getConversation.fulfilled, (state, action) => {
+                                                           ~~~~~~
+
+src/store/slices/chatSlice.ts:143:48 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+143     builder.addCase(getConversation.rejected, (state, action: PayloadAction<any>) => {
+                                                   ~~~~~
+
+src/store/slices/chatSlice.ts:149:46 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+149     builder.addCase(getUnreadCount.pending, (state) => {
+                                                 ~~~~~
+
+src/store/slices/chatSlice.ts:153:48 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+153     builder.addCase(getUnreadCount.fulfilled, (state, action) => {
+                                                   ~~~~~
+
+src/store/slices/chatSlice.ts:153:55 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+153     builder.addCase(getUnreadCount.fulfilled, (state, action) => {
+                                                          ~~~~~~
+
+src/store/slices/chatSlice.ts:157:47 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+157     builder.addCase(getUnreadCount.rejected, (state, action: PayloadAction<any>) => {
+                                                  ~~~~~
+
+src/store/slices/chatSlice.ts:163:51 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+163     builder.addCase(markMessageAsRead.fulfilled, (state, action) => {
+                                                      ~~~~~
+
+src/store/slices/chatSlice.ts:163:58 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+163     builder.addCase(markMessageAsRead.fulfilled, (state, action) => {
+                                                             ~~~~~~
+
+src/store/slices/chatSlice.ts:167:72 - error TS7006: Parameter 'm' implicitly has an 'any' type.
+
+167       const messageIndex = state.activeConversation.messages.findIndex(m => m.id === message.id);
+                                                                           ~
+
+src/store/slices/locationSlice.ts:1:62 - error TS2307: Cannot find module '@reduxjs/toolkit' or its corresponding type declarations.
+
+1 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+                                                               ~~~~~~~~~~~~~~~~~~
+
+src/store/slices/locationSlice.ts:25:10 - error TS7006: Parameter '_' implicitly has an 'any' type.
+
+25   async (_, { rejectWithValue }) => {
+            ~
+
+src/store/slices/locationSlice.ts:25:15 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+25   async (_, { rejectWithValue }) => {
+                 ~~~~~~~~~~~~~~~
+
+src/store/slices/locationSlice.ts:37:10 - error TS7006: Parameter '_' implicitly has an 'any' type.
+
+37   async (_, { rejectWithValue, dispatch }) => {
+            ~
+
+src/store/slices/locationSlice.ts:37:15 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+37   async (_, { rejectWithValue, dispatch }) => {
+                 ~~~~~~~~~~~~~~~
+
+src/store/slices/locationSlice.ts:37:32 - error TS7031: Binding element 'dispatch' implicitly has an 'any' type.
+
+37   async (_, { rejectWithValue, dispatch }) => {
+                                  ~~~~~~~~
+
+src/store/slices/locationSlice.ts:82:17 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+82     setLocation(state, action: PayloadAction<any>) {
+                   ~~~~~
+
+src/store/slices/locationSlice.ts:85:24 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+85     resetLocationError(state) {
+                          ~~~~~
+
+src/store/slices/locationSlice.ts:89:19 - error TS7006: Parameter 'builder' implicitly has an 'any' type.
+
+89   extraReducers: (builder) => {
+                     ~~~~~~~
+
+src/store/slices/locationSlice.ts:91:57 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+91     builder.addCase(requestLocationPermission.pending, (state) => {
+                                                           ~~~~~
+
+src/store/slices/locationSlice.ts:95:59 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+95     builder.addCase(requestLocationPermission.fulfilled, (state, action) => {
+                                                             ~~~~~
+
+src/store/slices/locationSlice.ts:95:66 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+95     builder.addCase(requestLocationPermission.fulfilled, (state, action) => {
+                                                                    ~~~~~~
+
+src/store/slices/locationSlice.ts:99:58 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+99     builder.addCase(requestLocationPermission.rejected, (state, action: PayloadAction<any>) => {
+                                                            ~~~~~
+
+src/store/slices/locationSlice.ts:105:50 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+105     builder.addCase(getCurrentLocation.pending, (state) => {
+                                                     ~~~~~
+
+src/store/slices/locationSlice.ts:109:52 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+109     builder.addCase(getCurrentLocation.fulfilled, (state, action) => {
+                                                       ~~~~~
+
+src/store/slices/locationSlice.ts:109:59 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+109     builder.addCase(getCurrentLocation.fulfilled, (state, action) => {
+                                                              ~~~~~~
+
+src/store/slices/locationSlice.ts:117:51 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+117     builder.addCase(getCurrentLocation.rejected, (state, action: PayloadAction<any>) => {
+                                                      ~~~~~
+
+src/store/slices/medicineSlice.ts:1:62 - error TS2307: Cannot find module '@reduxjs/toolkit' or its corresponding type declarations.
+
+1 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+                                                               ~~~~~~~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:37:27 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+37   async (query: string, { rejectWithValue }) => {
+                             ~~~~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:49:24 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+49   async (id: number, { rejectWithValue }) => {
+                          ~~~~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:61:80 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+61   async (location: { latitude: number; longitude: number; radius?: number }, { rejectWithValue }) => {
+                                                                                  ~~~~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:74:24 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+74   async (id: number, { rejectWithValue }) => {
+                          ~~~~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:86:80 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+86   async ({ pharmacyId, query = '' }: { pharmacyId: number; query?: string }, { rejectWithValue }) => {
+                                                                                  ~~~~~~~~~~~~~~~
+
+src/store/slices/medicineSlice.ts:101:20 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+101     setSearchQuery(state, action: PayloadAction<string>) {
+                       ~~~~~
+
+src/store/slices/medicineSlice.ts:104:25 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+104     setSelectedPharmacy(state, action: PayloadAction<any>) {
+                            ~~~~~
+
+src/store/slices/medicineSlice.ts:107:24 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+107     resetMedicineError(state) {
+                           ~~~~~
+
+src/store/slices/medicineSlice.ts:110:24 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+110     clearSearchResults(state) {
+                           ~~~~~
+
+src/store/slices/medicineSlice.ts:114:19 - error TS7006: Parameter 'builder' implicitly has an 'any' type.
+
+114   extraReducers: (builder) => {
+                      ~~~~~~~
+
+src/store/slices/medicineSlice.ts:116:47 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+116     builder.addCase(searchMedicines.pending, (state) => {
+                                                  ~~~~~
+
+src/store/slices/medicineSlice.ts:120:49 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+120     builder.addCase(searchMedicines.fulfilled, (state, action) => {
+                                                    ~~~~~
+
+src/store/slices/medicineSlice.ts:120:56 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+120     builder.addCase(searchMedicines.fulfilled, (state, action) => {
+                                                           ~~~~~~
+
+src/store/slices/medicineSlice.ts:124:48 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+124     builder.addCase(searchMedicines.rejected, (state, action: PayloadAction<any>) => {
+                                                   ~~~~~
+
+src/store/slices/medicineSlice.ts:130:47 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+130     builder.addCase(getMedicineById.pending, (state) => {
+                                                  ~~~~~
+
+src/store/slices/medicineSlice.ts:134:49 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+134     builder.addCase(getMedicineById.fulfilled, (state, action) => {
+                                                    ~~~~~
+
+src/store/slices/medicineSlice.ts:134:56 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+134     builder.addCase(getMedicineById.fulfilled, (state, action) => {
+                                                           ~~~~~~
+
+src/store/slices/medicineSlice.ts:138:48 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+138     builder.addCase(getMedicineById.rejected, (state, action: PayloadAction<any>) => {
+                                                   ~~~~~
+
+src/store/slices/medicineSlice.ts:144:51 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+144     builder.addCase(getNearbyPharmacies.pending, (state) => {
+                                                      ~~~~~
+
+src/store/slices/medicineSlice.ts:148:53 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+148     builder.addCase(getNearbyPharmacies.fulfilled, (state, action) => {
+                                                        ~~~~~
+
+src/store/slices/medicineSlice.ts:148:60 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+148     builder.addCase(getNearbyPharmacies.fulfilled, (state, action) => {
+                                                               ~~~~~~
+
+src/store/slices/medicineSlice.ts:152:52 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+152     builder.addCase(getNearbyPharmacies.rejected, (state, action: PayloadAction<any>) => {
+                                                       ~~~~~
+
+src/store/slices/medicineSlice.ts:158:47 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+158     builder.addCase(getPharmacyById.pending, (state) => {
+                                                  ~~~~~
+
+src/store/slices/medicineSlice.ts:162:49 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+162     builder.addCase(getPharmacyById.fulfilled, (state, action) => {
+                                                    ~~~~~
+
+src/store/slices/medicineSlice.ts:162:56 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+162     builder.addCase(getPharmacyById.fulfilled, (state, action) => {
+                                                           ~~~~~~
+
+src/store/slices/medicineSlice.ts:166:48 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+166     builder.addCase(getPharmacyById.rejected, (state, action: PayloadAction<any>) => {
+                                                   ~~~~~
+
+src/store/slices/medicineSlice.ts:172:52 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+172     builder.addCase(getPharmacyMedicines.pending, (state) => {
+                                                       ~~~~~
+
+src/store/slices/medicineSlice.ts:176:54 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+176     builder.addCase(getPharmacyMedicines.fulfilled, (state, action) => {
+                                                         ~~~~~
+
+src/store/slices/medicineSlice.ts:176:61 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+176     builder.addCase(getPharmacyMedicines.fulfilled, (state, action) => {
+                                                                ~~~~~~
+
+src/store/slices/medicineSlice.ts:180:53 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+180     builder.addCase(getPharmacyMedicines.rejected, (state, action: PayloadAction<any>) => {
+                                                        ~~~~~
+
+src/store/slices/orderSlice.ts:1:62 - error TS2307: Cannot find module '@reduxjs/toolkit' or its corresponding type declarations.
+
+1 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+                                                               ~~~~~~~~~~~~~~~~~~
+
+src/store/slices/orderSlice.ts:35:28 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+35   async (orderData: any, { rejectWithValue }) => {
+                              ~~~~~~~~~~~~~~~
+
+src/store/slices/orderSlice.ts:47:10 - error TS7006: Parameter '_' implicitly has an 'any' type.
+
+47   async (_, { rejectWithValue }) => {
+            ~
+
+src/store/slices/orderSlice.ts:47:15 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+47   async (_, { rejectWithValue }) => {
+                 ~~~~~~~~~~~~~~~
+
+src/store/slices/orderSlice.ts:59:10 - error TS7006: Parameter '_' implicitly has an 'any' type.
+
+59   async (_, { rejectWithValue }) => {
+            ~
+
+src/store/slices/orderSlice.ts:59:15 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+59   async (_, { rejectWithValue }) => {
+                 ~~~~~~~~~~~~~~~
+
+src/store/slices/orderSlice.ts:71:24 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+71   async (id: number, { rejectWithValue }) => {
+                          ~~~~~~~~~~~~~~~
+
+src/store/slices/orderSlice.ts:83:60 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+83   async ({ id, status }: { id: number; status: string }, { rejectWithValue }) => {
+                                                              ~~~~~~~~~~~~~~~
+
+src/store/slices/orderSlice.ts:103:7 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+103     { rejectWithValue }
+          ~~~~~~~~~~~~~~~
+
+src/store/slices/orderSlice.ts:124:7 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+124     { rejectWithValue }
+          ~~~~~~~~~~~~~~~
+
+src/store/slices/orderSlice.ts:140:15 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+140     addToCart(state, action: PayloadAction<any>) {
+                  ~~~~~
+
+src/store/slices/orderSlice.ts:162:9 - error TS7006: Parameter 'cartItem' implicitly has an 'any' type.
+
+162         cartItem => cartItem.medicineId === item.medicineId
+            ~~~~~~~~
+
+src/store/slices/orderSlice.ts:173:20 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+173     removeFromCart(state, action: PayloadAction<number>) {
+                       ~~~~~
+
+src/store/slices/orderSlice.ts:175:50 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+175       state.cart.items = state.cart.items.filter(item => item.medicineId !== medicineId);
+                                                     ~~~~
+
+src/store/slices/orderSlice.ts:182:28 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+182     updateCartItemQuantity(state, action: PayloadAction<{ medicineId: number; quantity: number }>) {
+                               ~~~~~
+
+src/store/slices/orderSlice.ts:184:52 - error TS7006: Parameter 'item' implicitly has an 'any' type.
+
+184       const itemIndex = state.cart.items.findIndex(item => item.medicineId === medicineId);
+                                                       ~~~~
+
+src/store/slices/orderSlice.ts:190:21 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+190     setDeliveryType(state, action: PayloadAction<string>) {
+                        ~~~~~
+
+src/store/slices/orderSlice.ts:193:24 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+193     setDeliveryAddress(state, action: PayloadAction<any>) {
+                           ~~~~~
+
+src/store/slices/orderSlice.ts:196:15 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+196     clearCart(state) {
+                  ~~~~~
+
+src/store/slices/orderSlice.ts:204:21 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+204     resetOrderError(state) {
+                        ~~~~~
+
+src/store/slices/orderSlice.ts:208:19 - error TS7006: Parameter 'builder' implicitly has an 'any' type.
+
+208   extraReducers: (builder) => {
+                      ~~~~~~~
+
+src/store/slices/orderSlice.ts:210:43 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+210     builder.addCase(createOrder.pending, (state) => {
+                                              ~~~~~
+
+src/store/slices/orderSlice.ts:214:45 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+214     builder.addCase(createOrder.fulfilled, (state, action) => {
+                                                ~~~~~
+
+src/store/slices/orderSlice.ts:214:52 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+214     builder.addCase(createOrder.fulfilled, (state, action) => {
+                                                       ~~~~~~
+
+src/store/slices/orderSlice.ts:227:44 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+227     builder.addCase(createOrder.rejected, (state, action: PayloadAction<any>) => {
+                                               ~~~~~
+
+src/store/slices/orderSlice.ts:233:43 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+233     builder.addCase(getMyOrders.pending, (state) => {
+                                              ~~~~~
+
+src/store/slices/orderSlice.ts:237:45 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+237     builder.addCase(getMyOrders.fulfilled, (state, action) => {
+                                                ~~~~~
+
+src/store/slices/orderSlice.ts:237:52 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+237     builder.addCase(getMyOrders.fulfilled, (state, action) => {
+                                                       ~~~~~~
+
+src/store/slices/orderSlice.ts:241:44 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+241     builder.addCase(getMyOrders.rejected, (state, action: PayloadAction<any>) => {
+                                               ~~~~~
+
+src/store/slices/orderSlice.ts:247:47 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+247     builder.addCase(getActiveOrders.pending, (state) => {
+                                                  ~~~~~
+
+src/store/slices/orderSlice.ts:251:49 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+251     builder.addCase(getActiveOrders.fulfilled, (state, action) => {
+                                                    ~~~~~
+
+src/store/slices/orderSlice.ts:251:56 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+251     builder.addCase(getActiveOrders.fulfilled, (state, action) => {
+                                                           ~~~~~~
+
+src/store/slices/orderSlice.ts:255:48 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+255     builder.addCase(getActiveOrders.rejected, (state, action: PayloadAction<any>) => {
+                                                   ~~~~~
+
+src/store/slices/orderSlice.ts:261:44 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+261     builder.addCase(getOrderById.pending, (state) => {
+                                               ~~~~~
+
+src/store/slices/orderSlice.ts:265:46 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+265     builder.addCase(getOrderById.fulfilled, (state, action) => {
+                                                 ~~~~~
+
+src/store/slices/orderSlice.ts:265:53 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+265     builder.addCase(getOrderById.fulfilled, (state, action) => {
+                                                        ~~~~~~
+
+src/store/slices/orderSlice.ts:270:49 - error TS7006: Parameter 'order' implicitly has an 'any' type.
+
+270       const orderIndex = state.orders.findIndex(order => order.id === action.payload.id);
+                                                    ~~~~~
+
+src/store/slices/orderSlice.ts:275:61 - error TS7006: Parameter 'order' implicitly has an 'any' type.
+
+275       const activeOrderIndex = state.activeOrders.findIndex(order => order.id === action.payload.id);
+                                                                ~~~~~
+
+src/store/slices/orderSlice.ts:280:45 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+280     builder.addCase(getOrderById.rejected, (state, action: PayloadAction<any>) => {
+                                                ~~~~~
+
+src/store/slices/orderSlice.ts:286:49 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+286     builder.addCase(updateOrderStatus.pending, (state) => {
+                                                    ~~~~~
+
+src/store/slices/orderSlice.ts:290:51 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+290     builder.addCase(updateOrderStatus.fulfilled, (state, action) => {
+                                                      ~~~~~
+
+src/store/slices/orderSlice.ts:290:58 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+290     builder.addCase(updateOrderStatus.fulfilled, (state, action) => {
+                                                             ~~~~~~
+
+src/store/slices/orderSlice.ts:295:49 - error TS7006: Parameter 'order' implicitly has an 'any' type.
+
+295       const orderIndex = state.orders.findIndex(order => order.id === action.payload.id);
+                                                    ~~~~~
+
+src/store/slices/orderSlice.ts:302:56 - error TS7006: Parameter 'order' implicitly has an 'any' type.
+
+302         state.activeOrders = state.activeOrders.filter(order => order.id !== action.payload.id);
+                                                           ~~~~~
+
+src/store/slices/orderSlice.ts:304:63 - error TS7006: Parameter 'order' implicitly has an 'any' type.
+
+304         const activeOrderIndex = state.activeOrders.findIndex(order => order.id === action.payload.id);
+                                                                  ~~~~~
+
+src/store/slices/orderSlice.ts:312:50 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+312     builder.addCase(updateOrderStatus.rejected, (state, action: PayloadAction<any>) => {
+                                                     ~~~~~
+
+src/store/slices/orderSlice.ts:318:53 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+318     builder.addCase(updateOrderTracking.fulfilled, (state, action) => {
+                                                        ~~~~~
+
+src/store/slices/orderSlice.ts:318:60 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+318     builder.addCase(updateOrderTracking.fulfilled, (state, action) => {
+                                                               ~~~~~~
+
+src/store/slices/orderSlice.ts:325:61 - error TS7006: Parameter 'order' implicitly has an 'any' type.
+
+325       const activeOrderIndex = state.activeOrders.findIndex(order => order.id === action.payload.id);
+                                                                ~~~~~
+
+src/store/slices/orderSlice.ts:332:48 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+332     builder.addCase(addOrderReview.fulfilled, (state, action) => {
+                                                   ~~~~~
+
+src/store/slices/orderSlice.ts:332:55 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+332     builder.addCase(addOrderReview.fulfilled, (state, action) => {
+                                                          ~~~~~~
+
+src/store/slices/orderSlice.ts:339:49 - error TS7006: Parameter 'order' implicitly has an 'any' type.
+
+339       const orderIndex = state.orders.findIndex(order => order.id === action.payload.id);
+                                                    ~~~~~
+
+src/store/slices/prescriptionSlice.ts:1:62 - error TS2307: Cannot find module '@reduxjs/toolkit' or its corresponding type declarations.
+
+1 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+                                                               ~~~~~~~~~~~~~~~~~~
+
+src/store/slices/prescriptionSlice.ts:32:8 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+32   }, { rejectWithValue }) => {
+          ~~~~~~~~~~~~~~~
+
+src/store/slices/prescriptionSlice.ts:68:10 - error TS7006: Parameter '_' implicitly has an 'any' type.
+
+68   async (_, { rejectWithValue }) => {
+            ~
+
+src/store/slices/prescriptionSlice.ts:68:15 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+68   async (_, { rejectWithValue }) => {
+                 ~~~~~~~~~~~~~~~
+
+src/store/slices/prescriptionSlice.ts:80:24 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+80   async (id: number, { rejectWithValue }) => {
+                          ~~~~~~~~~~~~~~~
+
+src/store/slices/prescriptionSlice.ts:92:29 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+92   async (orderId: number, { rejectWithValue }) => {
+                               ~~~~~~~~~~~~~~~
+
+src/store/slices/prescriptionSlice.ts:107:21 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+107     setPreviewImage(state, action: PayloadAction<string | null>) {
+                        ~~~~~
+
+src/store/slices/prescriptionSlice.ts:110:18 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+110     setOcrResult(state, action: PayloadAction<string | null>) {
+                     ~~~~~
+
+src/store/slices/prescriptionSlice.ts:113:28 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+113     resetPrescriptionError(state) {
+                               ~~~~~
+
+src/store/slices/prescriptionSlice.ts:116:27 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+116     clearPrescriptionData(state) {
+                              ~~~~~
+
+src/store/slices/prescriptionSlice.ts:122:19 - error TS7006: Parameter 'builder' implicitly has an 'any' type.
+
+122   extraReducers: (builder) => {
+                      ~~~~~~~
+
+src/store/slices/prescriptionSlice.ts:124:50 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+124     builder.addCase(uploadPrescription.pending, (state) => {
+                                                     ~~~~~
+
+src/store/slices/prescriptionSlice.ts:128:52 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+128     builder.addCase(uploadPrescription.fulfilled, (state, action) => {
+                                                       ~~~~~
+
+src/store/slices/prescriptionSlice.ts:128:59 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+128     builder.addCase(uploadPrescription.fulfilled, (state, action) => {
+                                                              ~~~~~~
+
+src/store/slices/prescriptionSlice.ts:133:51 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+133     builder.addCase(uploadPrescription.rejected, (state, action: PayloadAction<any>) => {
+                                                      ~~~~~
+
+src/store/slices/prescriptionSlice.ts:139:50 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+139     builder.addCase(getMyPrescriptions.pending, (state) => {
+                                                     ~~~~~
+
+src/store/slices/prescriptionSlice.ts:143:52 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+143     builder.addCase(getMyPrescriptions.fulfilled, (state, action) => {
+                                                       ~~~~~
+
+src/store/slices/prescriptionSlice.ts:143:59 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+143     builder.addCase(getMyPrescriptions.fulfilled, (state, action) => {
+                                                              ~~~~~~
+
+src/store/slices/prescriptionSlice.ts:147:51 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+147     builder.addCase(getMyPrescriptions.rejected, (state, action: PayloadAction<any>) => {
+                                                      ~~~~~
+
+src/store/slices/prescriptionSlice.ts:153:51 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+153     builder.addCase(getPrescriptionById.pending, (state) => {
+                                                      ~~~~~
+
+src/store/slices/prescriptionSlice.ts:157:53 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+157     builder.addCase(getPrescriptionById.fulfilled, (state, action) => {
+                                                        ~~~~~
+
+src/store/slices/prescriptionSlice.ts:157:60 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+157     builder.addCase(getPrescriptionById.fulfilled, (state, action) => {
+                                                               ~~~~~~
+
+src/store/slices/prescriptionSlice.ts:161:52 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+161     builder.addCase(getPrescriptionById.rejected, (state, action: PayloadAction<any>) => {
+                                                       ~~~~~
+
+src/store/slices/prescriptionSlice.ts:167:53 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+167     builder.addCase(getOrderPrescriptions.pending, (state) => {
+                                                        ~~~~~
+
+src/store/slices/prescriptionSlice.ts:171:55 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+171     builder.addCase(getOrderPrescriptions.fulfilled, (state, action) => {
+                                                          ~~~~~
+
+src/store/slices/prescriptionSlice.ts:171:62 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+171     builder.addCase(getOrderPrescriptions.fulfilled, (state, action) => {
+                                                                 ~~~~~~
+
+src/store/slices/prescriptionSlice.ts:175:54 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+175     builder.addCase(getOrderPrescriptions.rejected, (state, action: PayloadAction<any>) => {
+                                                         ~~~~~
+
+src/store/slices/reminderSlice.ts:1:62 - error TS2307: Cannot find module '@reduxjs/toolkit' or its corresponding type declarations.
+
+1 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+                                                               ~~~~~~~~~~~~~~~~~~
+
+src/store/slices/reminderSlice.ts:21:10 - error TS7006: Parameter '_' implicitly has an 'any' type.
+
+21   async (_, { rejectWithValue }) => {
+            ~
+
+src/store/slices/reminderSlice.ts:21:15 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+21   async (_, { rejectWithValue }) => {
+                 ~~~~~~~~~~~~~~~
+
+src/store/slices/reminderSlice.ts:33:31 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+33   async (reminderData: any, { rejectWithValue }) => {
+                                 ~~~~~~~~~~~~~~~
+
+src/store/slices/reminderSlice.ts:45:69 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+45   async ({ id, reminderData }: { id: number; reminderData: any }, { rejectWithValue }) => {
+                                                                       ~~~~~~~~~~~~~~~
+
+src/store/slices/reminderSlice.ts:57:24 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+57   async (id: number, { rejectWithValue }) => {
+                          ~~~~~~~~~~~~~~~
+
+src/store/slices/reminderSlice.ts:69:24 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+69   async (id: number, { rejectWithValue }) => {
+                          ~~~~~~~~~~~~~~~
+
+src/store/slices/reminderSlice.ts:81:65 - error TS7031: Binding element 'rejectWithValue' implicitly has an 'any' type.
+
+81   async ({ id, duration }: { id: number; duration?: number }, { rejectWithValue }) => {
+                                                                   ~~~~~~~~~~~~~~~
+
+src/store/slices/reminderSlice.ts:96:24 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+96     setCurrentReminder(state, action: PayloadAction<any>) {
+                          ~~~~~
+
+src/store/slices/reminderSlice.ts:99:24 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+99     resetReminderError(state) {
+                          ~~~~~
+
+src/store/slices/reminderSlice.ts:102:26 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+102     resetCurrentReminder(state) {
+                             ~~~~~
+
+src/store/slices/reminderSlice.ts:106:19 - error TS7006: Parameter 'builder' implicitly has an 'any' type.
+
+106   extraReducers: (builder) => {
+                      ~~~~~~~
+
+src/store/slices/reminderSlice.ts:108:46 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+108     builder.addCase(getMyReminders.pending, (state) => {
+                                                 ~~~~~
+
+src/store/slices/reminderSlice.ts:112:48 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+112     builder.addCase(getMyReminders.fulfilled, (state, action) => {
+                                                   ~~~~~
+
+src/store/slices/reminderSlice.ts:112:55 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+112     builder.addCase(getMyReminders.fulfilled, (state, action) => {
+                                                          ~~~~~~
+
+src/store/slices/reminderSlice.ts:116:47 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+116     builder.addCase(getMyReminders.rejected, (state, action: PayloadAction<any>) => {
+                                                  ~~~~~
+
+src/store/slices/reminderSlice.ts:122:46 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+122     builder.addCase(createReminder.pending, (state) => {
+                                                 ~~~~~
+
+src/store/slices/reminderSlice.ts:126:48 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+126     builder.addCase(createReminder.fulfilled, (state, action) => {
+                                                   ~~~~~
+
+src/store/slices/reminderSlice.ts:126:55 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+126     builder.addCase(createReminder.fulfilled, (state, action) => {
+                                                          ~~~~~~
+
+src/store/slices/reminderSlice.ts:131:47 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+131     builder.addCase(createReminder.rejected, (state, action: PayloadAction<any>) => {
+                                                  ~~~~~
+
+src/store/slices/reminderSlice.ts:137:46 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+137     builder.addCase(updateReminder.pending, (state) => {
+                                                 ~~~~~
+
+src/store/slices/reminderSlice.ts:141:48 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+141     builder.addCase(updateReminder.fulfilled, (state, action) => {
+                                                   ~~~~~
+
+src/store/slices/reminderSlice.ts:141:55 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+141     builder.addCase(updateReminder.fulfilled, (state, action) => {
+                                                          ~~~~~~
+
+src/store/slices/reminderSlice.ts:146:47 - error TS7006: Parameter 'reminder' implicitly has an 'any' type.
+
+146       const index = state.reminders.findIndex(reminder => reminder.id === action.payload.id);
+                                                  ~~~~~~~~
+
+src/store/slices/reminderSlice.ts:151:47 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+151     builder.addCase(updateReminder.rejected, (state, action: PayloadAction<any>) => {
+                                                  ~~~~~
+
+src/store/slices/reminderSlice.ts:157:46 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+157     builder.addCase(deleteReminder.pending, (state) => {
+                                                 ~~~~~
+
+src/store/slices/reminderSlice.ts:161:48 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+161     builder.addCase(deleteReminder.fulfilled, (state, action) => {
+                                                   ~~~~~
+
+src/store/slices/reminderSlice.ts:161:55 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+161     builder.addCase(deleteReminder.fulfilled, (state, action) => {
+                                                          ~~~~~~
+
+src/store/slices/reminderSlice.ts:163:48 - error TS7006: Parameter 'reminder' implicitly has an 'any' type.
+
+163       state.reminders = state.reminders.filter(reminder => reminder.id !== action.payload);
+                                                   ~~~~~~~~
+
+src/store/slices/reminderSlice.ts:169:47 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+169     builder.addCase(deleteReminder.rejected, (state, action: PayloadAction<any>) => {
+                                                  ~~~~~
+
+src/store/slices/reminderSlice.ts:175:55 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+175     builder.addCase(markReminderAsCompleted.pending, (state) => {
+                                                          ~~~~~
+
+src/store/slices/reminderSlice.ts:179:57 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+179     builder.addCase(markReminderAsCompleted.fulfilled, (state, action) => {
+                                                            ~~~~~
+
+src/store/slices/reminderSlice.ts:179:64 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+179     builder.addCase(markReminderAsCompleted.fulfilled, (state, action) => {
+                                                                   ~~~~~~
+
+src/store/slices/reminderSlice.ts:184:47 - error TS7006: Parameter 'reminder' implicitly has an 'any' type.
+
+184       const index = state.reminders.findIndex(reminder => reminder.id === action.payload.id);
+                                                  ~~~~~~~~
+
+src/store/slices/reminderSlice.ts:189:56 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+189     builder.addCase(markReminderAsCompleted.rejected, (state, action: PayloadAction<any>) => {
+                                                           ~~~~~
+
+src/store/slices/reminderSlice.ts:195:46 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+195     builder.addCase(snoozeReminder.pending, (state) => {
+                                                 ~~~~~
+
+src/store/slices/reminderSlice.ts:199:48 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+199     builder.addCase(snoozeReminder.fulfilled, (state, action) => {
+                                                   ~~~~~
+
+src/store/slices/reminderSlice.ts:199:55 - error TS7006: Parameter 'action' implicitly has an 'any' type.
+
+199     builder.addCase(snoozeReminder.fulfilled, (state, action) => {
+                                                          ~~~~~~
+
+src/store/slices/reminderSlice.ts:204:47 - error TS7006: Parameter 'reminder' implicitly has an 'any' type.
+
+204       const index = state.reminders.findIndex(reminder => reminder.id === action.payload.id);
+                                                  ~~~~~~~~
+
+src/store/slices/reminderSlice.ts:209:47 - error TS7006: Parameter 'state' implicitly has an 'any' type.
+
+209     builder.addCase(snoozeReminder.rejected, (state, action: PayloadAction<any>) => {
+                                                  ~~~~~
+
+src/utils/errorHandler.ts:2:25 - error TS2307: Cannot find module '@sentry/react-native' or its corresponding type declarations.
+
+2 import * as Sentry from '@sentry/react-native';
+                          ~~~~~~~~~~~~~~~~~~~~~~
+
+src/utils/permissions.ts:52:39 - error TS2551: Property 'requestCameraPermissionsAsync' does not exist on type 'typeof import("/home/runner/workspace/node_modules/expo-camera/build/index")'. Did you mean 'useCameraPermissions'?
+
+52       const { status } = await Camera.requestCameraPermissionsAsync();
+                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  ../node_modules/expo-camera/build/index.d.ts:24:22
+    24 export declare const useCameraPermissions: (options?: import("expo-modules-core").PermissionHookOptions<object> | undefined) => [PermissionResponse | null, () => Promise<PermissionResponse>, () => Promise<PermissionResponse>];
+                            ~~~~~~~~~~~~~~~~~~~~
+    'useCameraPermissions' is declared here.
+
+src/utils/permissions.ts:99:14 - error TS2551: Property 'getCameraPermissionsAsync' does not exist on type 'typeof import("/home/runner/workspace/node_modules/expo-camera/build/index")'. Did you mean 'useCameraPermissions'?
+
+99       Camera.getCameraPermissionsAsync(),
+                ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  ../node_modules/expo-camera/build/index.d.ts:24:22
+    24 export declare const useCameraPermissions: (options?: import("expo-modules-core").PermissionHookOptions<object> | undefined) => [PermissionResponse | null, () => Promise<PermissionResponse>, () => Promise<PermissionResponse>];
+                            ~~~~~~~~~~~~~~~~~~~~
+    'useCameraPermissions' is declared here.
+
+src/utils/validation.ts:77:54 - error TS2769: No overload matches this call.
+  Overload 1 of 4, '(name: string, message: TestOptionsMessage<{}, any>, test: TestFunction<string | null | undefined, object>): StringSchema<string | undefined, object>', gave the following error.
+    Argument of type '(phone: string) => boolean' is not assignable to parameter of type 'TestFunction<string | null | undefined, object>'.
+      Types of parameters 'phone' and 'value' are incompatible.
+        Type 'string | null | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+  Overload 2 of 4, '(name: string, message: TestOptionsMessage<{}, any>, test: AssertingTestFunction<string | undefined, object>): StringSchema<string | undefined, object>', gave the following error.
+    Argument of type '(phone: string) => boolean' is not assignable to parameter of type 'AssertingTestFunction<string | undefined, object>'.
+      Signature '(phone: string): boolean' must be a type predicate.
+
+77       .test('phone', 'Numéro de téléphone invalide', validatePhone)
+                                                        ~~~~~~~~~~~~~
+
+
+src/utils/validation.ts:149:54 - error TS2769: No overload matches this call.
+  Overload 1 of 4, '(name: string, message: TestOptionsMessage<{}, any>, test: TestFunction<string | null | undefined, object>): StringSchema<string | undefined, object>', gave the following error.
+    Argument of type '(phone: string) => boolean' is not assignable to parameter of type 'TestFunction<string | null | undefined, object>'.
+      Types of parameters 'phone' and 'value' are incompatible.
+        Type 'string | null | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+  Overload 2 of 4, '(name: string, message: TestOptionsMessage<{}, any>, test: AssertingTestFunction<string | undefined, object>): StringSchema<string | undefined, object>', gave the following error.
+    Argument of type '(phone: string) => boolean' is not assignable to parameter of type 'AssertingTestFunction<string | undefined, object>'.
+      Signature '(phone: string): boolean' must be a type predicate.
+
+149       .test('phone', 'Numéro de téléphone invalide', validatePhone)
+                                                         ~~~~~~~~~~~~~
+
+
+src/utils/validation.ts:159:46 - error TS2707: Generic type 'Schema<T, C>' requires between 1 and 2 type arguments.
+
+159 export const validateSchema = async (schema: yup.Schema, data: any): Promise<{
+      
